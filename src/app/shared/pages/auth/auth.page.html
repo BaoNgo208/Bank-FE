@@ -1,0 +1,35 @@
+<div
+  class="h-screen w-full flex items-center justify-center bg-[#dae6f0] gray-100 px-8 small_laptop:px-36 font-['Helvetica_Neue']"
+>
+  <div
+    class="w-full h-[90%] flex flex-col small_laptop:flex-row max-w-6xl bg-white mx-auto shadow-xl rounded-2xl overflow-auto"
+  >
+    <div
+      class="flex-1 small_laptop:w-1/2 p-8 tablet:p-12 laptop:p-10 flex items-center justify-center"
+    >
+      <div class="w-full max-w-md">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+
+    <div class="h-full border border-gray-100"></div>
+    <div
+      class="flex-1 flex px-10 flex-col justify-start pt-32 gap-y-3 text-[0.8rem] font-extralight"
+    >
+      <label> Please read the following information carefully: </label>
+
+      <a class="text-[#0000EE] underline">User Agreement</a>
+      <a class="text-[#0000EE] underline">Privacy Policy</a>
+      <a class="text-[#0000EE] underline">Confidentiality Agreement</a>
+      <a class="text-[#0000EE] underline">Disclaimer Agreement</a>
+      <label> Website: <a class="text-[#0000EE] underline"> https://www.jqcard.com</a> </label>
+
+      <label>
+        If you encounter any problems during use, please contact the platform's customer service
+        center.
+      </label>
+
+      <label> Working hours: 9:00 AM - 12:00 AM (weekdays) </label>
+    </div>
+  </div>
+</div>

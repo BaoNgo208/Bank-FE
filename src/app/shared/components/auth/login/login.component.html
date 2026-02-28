@@ -1,0 +1,96 @@
+<div class="flex flex-col gap-y-20">
+  <!-- label -->
+  <div class="flex flex-col items-center">
+    <label class="font-bold">User Login</label>
+    <div class="w-5 h-[4px] bg-[#0d6ab0]"></div>
+  </div>
+
+  <!-- form -->
+  <div>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <!-- Username -->
+      <div class="relative mb-5">
+        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+          <img src="/user.png" alt="logo" class="w-4" />
+        </span>
+        <input
+          type="text"
+          formControlName="username"
+          placeholder="Username"
+          class="w-full border border-gray-200 pl-10 py-3 text-sm focus:outline-none focus:border-blue-500"
+        />
+      </div>
+
+      <!-- Password -->
+      <div class="relative mb-5">
+        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+          <img src="/password.png" alt="logo" class="w-4" />
+        </span>
+        <input
+          type="Password"
+          formControlName="password"
+          placeholder="Password"
+          class="w-full border border-gray-200 pl-10 py-3 text-sm focus:outline-none focus:border-blue-500"
+        />
+      </div>
+
+      <!-- Email Verification -->
+      <div class="relative mb-5 flex gap-3 border border-gray-200">
+        <div class="relative flex-1">
+          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+            <img src="/verified.png" alt="logo" class="w-4" />
+          </span>
+          <input
+            type="text"
+            formControlName="emailCode"
+            placeholder="Email verification code"
+            class="w-full pl-10 py-3 text-sm focus:outline-none focus:border-blue-500"
+          />
+        </div>
+
+        <button class="px-3 text-sm hover:bg-gray-100">Get verification code</button>
+      </div>
+
+      <!-- Captcha -->
+      <div class="flex gap-5 mb-3">
+        <div class="relative flex-1">
+          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+            <i class="fa fa-shield"></i>
+          </span>
+          <input
+            type="text"
+            placeholder="Verification code"
+            class="w-full border border-gray-200 pl-10 py-3 text-sm focus:outline-none focus:border-blue-500"
+          />
+        </div>
+
+        <!-- Fake captcha -->
+        <div
+          class="flex items-center justify-center w-[120px] text-xl tracking-widest font-semibold text-gray-700"
+        >
+          6 8 9 4
+        </div>
+      </div>
+
+      <!-- forget password -->
+      <div>
+        <span class="font-light text-[0.75rem] text-[#013e7f]">forget the password?</span>
+      </div>
+
+      <div class="flex gap-x-4 mt-10">
+        <button
+          class="flex-1 bg-[#0d6ab0] text-white py-4 text-sm font-medium hover:bg-[#185a8a] transition"
+        >
+          Log in
+        </button>
+
+        <button
+          class="flex-1 border border-[#1f6aa5] text-[#1f6aa5] py-3 text-sm font-medium hover:bg-blue-50 transition"
+          (click)="redirectToRegister()"
+        >
+          register
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
