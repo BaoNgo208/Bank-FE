@@ -1,3 +1,176 @@
-<div>
-  <h1>Front page</h1>
+<div class="h-full w-full px-2 pt-5 space-y-10">
+  <div class="text-[0.85rem]">
+    <!-- TITLE -->
+    <div class="mb-4">
+      <label class="font-medium text-gray-700">Overview Information</label>
+    </div>
+
+    <!-- TOP SECTION -->
+    <div class="grid grid-cols-3 gap-1">
+      <!-- Account Balance -->
+      <div>
+        <p class="text-gray-500 mb-2">Account Balance</p>
+        <p class="text-red-600 text-lg font-semibold">3730.16</p>
+      </div>
+
+      <!-- Transaction Overview -->
+      <div class="">
+        <p class="text-gray-500 mb-2">Transaction Overview</p>
+        <div class="flex flex-wrap gap-x-6 gap-y-2">
+          <span>
+            Today's trading price:
+            <span class="text-red-600 font-medium">1807.70</span>
+          </span>
+          <span>
+            This month's transactions:
+            <span class="text-red-600 font-medium">96208.64</span>
+          </span>
+          <span>
+            Total transactions:
+            <span class="text-red-600 font-medium">158210.83</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Card information -->
+      <div>
+        <p class="text-gray-500 mb-2">Card information</p>
+        <div class="flex gap-6">
+          <span>
+            Normal:
+            <span class="text-red-600 font-medium">52</span>
+          </span>
+          <span>
+            Anomaly:
+            <span class="text-red-600 font-medium">21</span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- USER INFORMATION -->
+    <div class="pt-6">
+      <p class="text-gray-500 mb-4">User Information</p>
+
+      <div class="grid grid-cols-5 gap-6">
+        <div>
+          <p class="text-gray-500 mb-1">Total number of users</p>
+          <p class="text-red-600 font-medium">2</p>
+        </div>
+
+        <div>
+          <p class="text-gray-500 mb-1">Total number of cards opened</p>
+          <p class="text-red-600 font-medium">73</p>
+        </div>
+
+        <div>
+          <p class="text-gray-500 mb-1">Total recharge amount</p>
+          <p class="text-red-600 font-medium">180577.94</p>
+        </div>
+
+        <div>
+          <p class="text-gray-500 mb-1">Total user balance</p>
+          <p class="text-red-600 font-medium">0.00</p>
+        </div>
+
+        <div>
+          <p class="text-gray-500 mb-1">Total card balance</p>
+          <p class="text-red-600 font-medium">13035.21</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-col">
+    <table
+      class="w-max min-w-full text-sm text-left text-body border border-default border-collapse [&_th:not(:last-child)]:border-r [&_td:not(:last-child)]:border-r [&_th]:border-default [&_td]:border-default"
+    >
+      <thead class="bg-neutral-secondary-soft border-b border-default text-[0.8rem] bg-gray-200">
+        <tr class="text-center">
+          <th class="py-3 font-medium whitespace-nowrap"></th>
+          <th class="py-3 font-medium whitespace-nowrap"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          class="border-b border-default hover:bg-neutral-secondary-soft/40 transition text-[0.8rem] text-center"
+        >
+          <td class="px-6 py-4 whitespace-nowrap"></td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- PAGINATION -->
+    <div
+      class="flex flex-wrap items-center justify-between gap-3 px-4 py-3 text-[0.8rem] bg-neutral-secondary-soft"
+    >
+      <!-- LEFT: PAGE NUMBERS -->
+      <div class="flex items-center gap-1">
+        <!-- Prev -->
+        <button
+          class="w-7 h-7 flex items-center justify-center rounded border border-default hover:bg-neutral-primary transition"
+        >
+          ‹
+        </button>
+
+        <!-- Page numbers -->
+        <button class="w-7 h-7 flex items-center justify-center rounded bg-red-600 text-white">
+          1
+        </button>
+
+        <button
+          class="w-7 h-7 flex items-center justify-center rounded border border-default hover:bg-neutral-primary transition"
+        >
+          2
+        </button>
+
+        <button
+          class="w-7 h-7 flex items-center justify-center rounded border border-default hover:bg-neutral-primary transition"
+        >
+          3
+        </button>
+
+        <span class="px-1">...</span>
+
+        <button
+          class="w-7 h-7 flex items-center justify-center rounded border border-default hover:bg-neutral-primary transition"
+        >
+          97
+        </button>
+
+        <!-- Next -->
+        <button
+          class="w-7 h-7 flex items-center justify-center rounded border border-default hover:bg-neutral-primary transition"
+        >
+          ›
+        </button>
+      </div>
+
+      <!-- RIGHT: PAGE CONTROL -->
+      <div class="flex flex-wrap items-center gap-2">
+        <span>To the</span>
+
+        <input
+          type="number"
+          class="w-12 h-7 text-center border border-default rounded focus:outline-none focus:ring-1 focus:ring-red-500"
+        />
+
+        <span>Page</span>
+
+        <button
+          class="h-7 px-3 rounded bg-neutral-primary border border-default hover:bg-neutral-secondary-soft transition"
+        >
+          Sure
+        </button>
+
+        <span class="ml-3">A total of 986 items</span>
+
+        <select
+          class="h-7 px-2 border border-default rounded focus:outline-none focus:ring-1 focus:ring-red-500"
+        >
+          <option>10 items/page</option>
+          <option>20 items/page</option>
+          <option>50 items/page</option>
+        </select>
+      </div>
+    </div>
+  </div>
 </div>

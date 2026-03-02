@@ -27,8 +27,40 @@ export const routes: Routes = [
           },
           {
             path: 'wallet',
-            loadComponent: () =>
-              import('./features/top-up/top-up.component').then((m) => m.TopUpComponent),
+            children: [
+              {
+                path: 'top_up',
+                loadComponent: () =>
+                  import('./features/top-up/top-up.component').then((m) => m.TopUpComponent),
+              },
+
+              {
+                path: 'financial_records',
+                loadComponent: () =>
+                  import('./features/financial-records/financial-records.component').then(
+                    (m) => m.FinancialRecordsComponent,
+                  ),
+              },
+            ],
+          },
+          {
+            path: 'card_management',
+            children: [
+              {
+                path: 'card_grouping',
+                loadComponent: () =>
+                  import('./features/card-grouping/card-grouping.component').then(
+                    (m) => m.CardGroupingComponent,
+                  ),
+              },
+              {
+                path: 'appy_a_card',
+                loadComponent: () =>
+                  import('./features/apply-card/apply-card.component').then(
+                    (m) => m.ApplyCardComponent,
+                  ),
+              },
+            ],
           },
         ],
       },

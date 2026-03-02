@@ -1,3 +1,103 @@
-<div>
-  <h1>top up</h1>
+<div class="h-full overflow-auto px-6 py-6 text-[0.85rem] bg-white">
+  <!-- PRECAUTIONS -->
+  <div class="bg-red-50 border border-red-200 p-4 rounded mb-6">
+    <div class="flex items-center gap-2 text-red-600 font-medium mb-2">
+      <span>⚠</span>
+      <span>Precautions</span>
+    </div>
+    <ul class="list-decimal ml-6 text-red-600 space-y-1">
+      <li>Please keep your payment receipts safe and do not disclose them to others.</li>
+      <li>Please ensure the authenticity and completeness of your verification information.</li>
+    </ul>
+  </div>
+
+  <!-- FORM CONTAINER -->
+  <div class="max-w-4xl space-y-6">
+    <!-- Bank -->
+    <div class="grid grid-cols-3 gap-6 items-center">
+      <label class="text-gray-600">Bank of account***** opening:</label>
+      <div class="col-span-2 font-medium text-gray-800">ABC Bank</div>
+    </div>
+
+    <!-- Branch -->
+    <div class="grid grid-cols-3 gap-6 items-center">
+      <label class="text-gray-600">Branch where the***** account was opened:</label>
+      <div class="col-span-2 font-medium text-gray-800">Ho Chi Minh Branch</div>
+    </div>
+
+    <!-- Receiving account -->
+    <div class="grid grid-cols-3 gap-6 items-center">
+      <label class="text-gray-600">Receiving account*****:</label>
+      <div class="col-span-2 font-medium text-gray-800">1234 5678 9999</div>
+    </div>
+
+    <!-- Recipient -->
+    <div class="grid grid-cols-3 gap-6 items-center">
+      <label class="text-gray-600">
+        Recipient**** (Please contact our sales manager for payment details)
+      </label>
+      <div class="col-span-2 font-medium text-gray-800">NGUYEN VAN A</div>
+    </div>
+
+    <!-- Recharge amount -->
+    <div class="grid grid-cols-3 gap-6 items-start">
+      <label class="text-gray-600 pt-2">Recharge amount:</label>
+
+      <div class="col-span-2 flex flex-wrap gap-3">
+        <button class="px-4 py-1 border border-red-600 text-red-600 rounded bg-red-50">200</button>
+
+        <button class="px-4 py-1 border border-gray-300 rounded hover:border-red-500">500</button>
+
+        <button class="px-4 py-1 border border-gray-300 rounded hover:border-red-500">1000</button>
+
+        <button class="px-4 py-1 border border-gray-300 rounded hover:border-red-500">2000</button>
+
+        <button class="px-4 py-1 border border-gray-300 rounded hover:border-red-500">5000</button>
+
+        <button class="px-4 py-1 border border-gray-300 rounded hover:border-red-500">10000</button>
+
+        <button class="px-4 py-1 border border-gray-300 rounded hover:border-red-500">other</button>
+      </div>
+    </div>
+
+    <!-- Upload -->
+    <div class="grid grid-cols-3 gap-6 items-center">
+      <label class="text-gray-600">Payment voucher:</label>
+      <div class="col-span-2">
+        <input type="file" class="border border-gray-300 rounded px-3 py-2 text-sm" />
+        <p class="text-red-500 text-xs mt-1">
+          Please upload your payment receipt only after you have successfully completed the payment!
+        </p>
+      </div>
+    </div>
+
+    <!-- Service fee -->
+    <div class="grid grid-cols-3 gap-6 items-center">
+      <label class="text-gray-600">Service fee:</label>
+      <input
+        type="text"
+        value="0.00"
+        readonly
+        class="col-span-2 border border-gray-300 rounded px-3 py-2 bg-gray-100"
+      />
+    </div>
+
+    <!-- Lump sum -->
+    <div class="grid grid-cols-3 gap-6 items-center">
+      <label class="text-gray-600">lump sum:</label>
+      <input
+        type="text"
+        value="200"
+        readonly
+        class="col-span-2 border border-gray-300 rounded px-3 py-2 bg-gray-100"
+      />
+    </div>
+
+    <!-- Submit -->
+    <div class="pl-[33%]">
+      <button class="px-6 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition">
+        Submit for review
+      </button>
+    </div>
+  </div>
 </div>

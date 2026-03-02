@@ -1,0 +1,225 @@
+<div class="h-full w-full px-2 pt-10">
+  <!-- FILTER -->
+
+  <div class="flex items-center gap-3">
+    <!-- Keywords -->
+    <div class="flex items-center gap-2">
+      <label class="text-[0.8rem] text-gray-600">Keywords:</label>
+      <input
+        type="text"
+        placeholder="Keywords"
+        class="text-[0.8rem] py-1 px-2 border border-gray-300 rounded focus:outline-none focus:ring-1"
+      />
+    </div>
+
+    <!-- Client -->
+    <div class="flex items-center gap-2">
+      <label class="text-[0.8rem] text-gray-600">Client:</label>
+      <input
+        type="text"
+        placeholder="Customer Information"
+        class="text-[0.8rem] py-1 px-2 border border-gray-300 rounded focus:outline-none focus:ring-1"
+      />
+    </div>
+
+    <!-- Scene -->
+    <div class="flex items-center gap-2">
+      <label class="text-[0.8rem] text-gray-600">Scene:</label>
+      <select
+        class="text-[0.8rem] py-1 px-2 border border-gray-300 rounded focus:outline-none focus:ring-1"
+      >
+        <option>No limit</option>
+      </select>
+    </div>
+
+    <!-- State -->
+    <div class="flex items-center gap-2">
+      <label class="text-[0.8rem] text-gray-600">state:</label>
+      <select
+        class="text-[0.8rem] py-1 px-2 border border-gray-300 rounded focus:outline-none focus:ring-1"
+      >
+        <option>No limit</option>
+      </select>
+    </div>
+
+    <!-- Date -->
+    <div class="flex items-center gap-2">
+      <label class="text-sm text-gray-600">date:</label>
+      <input
+        type="date"
+        class="h-9 px-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1"
+      />
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex items-center gap-2 ml-auto">
+      <button class="h-9 px-4 bg-red-600 text-white text-sm rounded hover:bg-red-700 transition">
+        Query
+      </button>
+      <button class="h-9 px-4 bg-red-600 text-white text-sm rounded hover:bg-red-700 transition">
+        Export
+      </button>
+    </div>
+  </div>
+
+  <div class="w-full bg-gray-50 p-4 border-b border-gray-200"></div>
+
+  <div class="rounded-base border border-default bg-neutral-primary overflow-hidden">
+    <!--  TOP TOOLBAR -->
+    <div
+      class="flex items-center justify-between px-4 py-2 bg-neutral-secondary-soft border-b border-default"
+    >
+      <div class="text-sm font-medium text-heading"></div>
+      <div class="flex items-center gap-2">
+        <button class="p-2 rounded hover:bg-neutral-primary transition">
+          <i class="fa-solid fa-filter text-xs"></i>
+        </button>
+        <button class="p-2 rounded hover:bg-neutral-primary transition">
+          <i class="fa-solid fa-download text-xs"></i>
+        </button>
+        <button class="p-2 rounded hover:bg-neutral-primary transition">
+          <i class="fa-solid fa-ellipsis text-xs"></i>
+        </button>
+      </div>
+    </div>
+
+    <!--  TABLE WRAPPER -->
+    <div class="overflow-x-auto">
+      <table
+        class="w-max min-w-full text-sm text-left text-body border-collapse [&_th:not(:last-child)]:border-r [&_td:not(:last-child)]:border-r [&_th]:border-default [&_td]:border-default"
+      >
+        <!-- THEAD -->
+        <thead class="bg-neutral-secondary-soft border-b border-default text-[0.8rem]">
+          <tr class="text-center">
+            <th class="py-3 font-medium whitespace-nowrap">Serial number</th>
+            <th class="py-3 font-medium whitespace-nowrap">User</th>
+            <th class="py-3 font-medium whitespace-nowrap">Scene</th>
+            <th class="px-2 py-3 font-medium whitespace-nowrap">Change in amount</th>
+            <th class="px-2 py-3 font-medium whitespace-normal">Balance after change</th>
+            <th class="px-2 py-3 font-medium whitespace-nowrap">Service fee</th>
+            <th class="py-3 font-medium whitespace-nowrap">State</th>
+            <th class="py-3 font-medium whitespace-nowrap">Describe</th>
+            <th class="font-medium whitespace-nowrap">Date/Time</th>
+          </tr>
+        </thead>
+
+        <!-- TBODY -->
+        <tbody>
+          <tr
+            class="border-b border-default hover:bg-neutral-secondary-soft/40 transition text-[0.8rem] text-center"
+          >
+            <td class="px-6 py-4 whitespace-nowrap">26022010530410079</td>
+            <td class="px-6 py-4 whitespace-nowrap">Ads Vietnam</td>
+            <td class="px-6 py-4 whitespace-nowrap text-blue-600">Card top-up</td>
+            <td class="px-6 py-4 whitespace-nowrap">200.00</td>
+            <td class="px-6 py-4 whitespace-nowrap">3730.16</td>
+            <td class="px-6 py-4 whitespace-nowrap">0.00</td>
+            <td class="px-6 py-4 whitespace-nowrap text-green-600 font-medium">success</td>
+            <td class="px-6 py-4 whitespace-nowrap">Card top-up (...)</td>
+            <td class="px-6 py-4 whitespace-nowrap">2026-02-20 10:50:34</td>
+          </tr>
+          <tr
+            class="border-b border-default hover:bg-neutral-secondary-soft/40 transition text-[0.8rem] text-center"
+          >
+            <td class="px-6 py-4 whitespace-nowrap">26022010530410079</td>
+            <td class="px-6 py-4 whitespace-nowrap">Ads Vietnam</td>
+            <td class="px-6 py-4 whitespace-nowrap text-blue-600">Card top-up</td>
+            <td class="px-6 py-4 whitespace-nowrap">200.00</td>
+            <td class="px-6 py-4 whitespace-nowrap">3730.16</td>
+            <td class="px-6 py-4 whitespace-nowrap">0.00</td>
+            <td class="px-6 py-4 whitespace-nowrap text-green-600 font-medium">success</td>
+            <td class="px-6 py-4 whitespace-nowrap">Card top-up (...)</td>
+            <td class="px-6 py-4 whitespace-nowrap">2026-02-20 10:50:34</td>
+          </tr>
+          <tr
+            class="border-b border-default hover:bg-neutral-secondary-soft/40 transition text-[0.8rem] text-center"
+          >
+            <td class="px-6 py-4 whitespace-nowrap">26022010530410079</td>
+            <td class="px-6 py-4 whitespace-nowrap">Ads Vietnam</td>
+            <td class="px-6 py-4 whitespace-nowrap text-blue-600">Card top-up</td>
+            <td class="px-6 py-4 whitespace-nowrap">200.00</td>
+            <td class="px-6 py-4 whitespace-nowrap">3730.16</td>
+            <td class="px-6 py-4 whitespace-nowrap">0.00</td>
+            <td class="px-6 py-4 whitespace-nowrap text-green-600 font-medium">success</td>
+            <td class="px-6 py-4 whitespace-nowrap">Card top-up (...)</td>
+            <td class="px-6 py-4 whitespace-nowrap">2026-02-20 10:50:34</td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- PAGINATION -->
+      <div
+        class="flex flex-wrap items-center justify-between gap-3 px-4 py-3 text-[0.8rem] bg-neutral-secondary-soft border-t border-default"
+      >
+        <!-- LEFT: PAGE NUMBERS -->
+        <div class="flex items-center gap-1">
+          <!-- Prev -->
+          <button
+            class="w-7 h-7 flex items-center justify-center rounded border border-default hover:bg-neutral-primary transition"
+          >
+            ‹
+          </button>
+
+          <!-- Page numbers -->
+          <button class="w-7 h-7 flex items-center justify-center rounded bg-red-600 text-white">
+            1
+          </button>
+
+          <button
+            class="w-7 h-7 flex items-center justify-center rounded border border-default hover:bg-neutral-primary transition"
+          >
+            2
+          </button>
+
+          <button
+            class="w-7 h-7 flex items-center justify-center rounded border border-default hover:bg-neutral-primary transition"
+          >
+            3
+          </button>
+
+          <span class="px-1">...</span>
+
+          <button
+            class="w-7 h-7 flex items-center justify-center rounded border border-default hover:bg-neutral-primary transition"
+          >
+            97
+          </button>
+
+          <!-- Next -->
+          <button
+            class="w-7 h-7 flex items-center justify-center rounded border border-default hover:bg-neutral-primary transition"
+          >
+            ›
+          </button>
+        </div>
+
+        <!-- RIGHT: PAGE CONTROL -->
+        <div class="flex flex-wrap items-center gap-2">
+          <span>To the</span>
+
+          <input
+            type="number"
+            class="w-12 h-7 text-center border border-default rounded focus:outline-none focus:ring-1 focus:ring-red-500"
+          />
+
+          <span>Page</span>
+
+          <button
+            class="h-7 px-3 rounded bg-neutral-primary border border-default hover:bg-neutral-secondary-soft transition"
+          >
+            Sure
+          </button>
+
+          <span class="ml-3">A total of 986 items</span>
+
+          <select
+            class="h-7 px-2 border border-default rounded focus:outline-none focus:ring-1 focus:ring-red-500"
+          >
+            <option>10 items/page</option>
+            <option>20 items/page</option>
+            <option>50 items/page</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
