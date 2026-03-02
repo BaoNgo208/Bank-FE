@@ -11,8 +11,10 @@ export class SidebarComponent {
   private router = inject(Router);
   private routeMap: Record<string, string> = {
     front: '/home/front-page',
-    top_up: '/home/wallet',
-    card: '/home/card',
+    top_up: '/home/wallet/top_up',
+    financial_records: '/home/wallet/financial_records',
+    card_grouping: '/home/card_management/card_grouping',
+    appy_a_card: '/home/card_management/appy_a_card',
     user: '/home/user',
   };
 
@@ -24,7 +26,7 @@ export class SidebarComponent {
       icon: 'fa-solid fa-lock',
       children: [
         { key: 'top_up', label: 'Top up' },
-        { key: 'financial-records', label: 'Financial records' },
+        { key: 'financial_records', label: 'Financial records' },
       ],
     },
     {
@@ -32,9 +34,10 @@ export class SidebarComponent {
       label: 'Card Management',
       icon: 'fa-solid fa-id-card',
       children: [
-        { key: 'card_list', label: 'All cards' },
-        { key: 'card_create', label: 'Create card' },
-        { key: 'card_trans', label: 'Transactions' },
+        { key: 'appy_a_card', label: 'Apply for a card' },
+        { key: 'card_management', label: 'Card management' },
+        { key: 'card_grouping', label: 'Card grouping' },
+        { key: 'transaction_records', label: 'Transaction records' },
       ],
     },
     {

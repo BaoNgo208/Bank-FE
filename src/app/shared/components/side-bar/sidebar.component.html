@@ -7,7 +7,7 @@
         (click)="toggleMenu(tab)"
         [ngClass]="{
           'text-red-500 font-medium': isActive(tab),
-          'text-gray-600 hover:text-black': !isActive(tab),
+          'text-gray-600 ': !isActive(tab),
         }"
       >
         <div class="flex items-center gap-3">
@@ -21,7 +21,6 @@
         <li
           *ngFor="let child of tab.children"
           (click)="selectChild(child.key, $event)"
-          class="cursor-pointer hover:text-black"
           [ngClass]="{
             'text-red-500 font-medium': activeTab === child.key,
           }"
