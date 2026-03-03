@@ -85,67 +85,78 @@
 
     <!--  TABLE WRAPPER -->
     <div class="overflow-x-auto">
-      <table
-        class="w-max min-w-full text-sm text-left text-body border-collapse [&_th:not(:last-child)]:border-r [&_td:not(:last-child)]:border-r [&_th]:border-default [&_td]:border-default"
-      >
-        <!-- THEAD -->
-        <thead class="bg-neutral-secondary-soft border-b border-default text-[0.8rem]">
-          <tr class="text-center">
-            <th class="py-3 font-medium whitespace-nowrap">Serial number</th>
-            <th class="py-3 font-medium whitespace-nowrap">User</th>
-            <th class="py-3 font-medium whitespace-nowrap">Scene</th>
-            <th class="px-2 py-3 font-medium whitespace-nowrap">Change in amount</th>
-            <th class="px-2 py-3 font-medium whitespace-normal">Balance after change</th>
-            <th class="px-2 py-3 font-medium whitespace-nowrap">Service fee</th>
-            <th class="py-3 font-medium whitespace-nowrap">State</th>
-            <th class="py-3 font-medium whitespace-nowrap">Describe</th>
-            <th class="font-medium whitespace-nowrap">Date/Time</th>
-          </tr>
-        </thead>
+      <form [formGroup]="form">
+        <table
+          class="w-max min-w-full text-sm text-left border-collapse [&_th:not(:last-child)]:border-r [&_td:not(:last-child)]:border-r [&_th]:border-default [&_td]:border-default"
+        >
+          <!-- HEADER -->
+          <thead class="bg-neutral-secondary-soft border-b border-default text-[0.8rem]">
+            <tr class="text-center">
+              <th class="py-3 font-medium whitespace-nowrap">Serial number</th>
+              <th class="py-3 font-medium whitespace-nowrap">User</th>
+              <th class="py-3 font-medium whitespace-nowrap">Scene</th>
+              <th class="py-3 px-2 font-medium whitespace-nowrap">Change in amount</th>
+              <th class="py-3 px-2 font-medium whitespace-nowrap">Balance after change</th>
+              <th class="py-3 px-1 font-medium whitespace-nowrap">Service fee</th>
+              <th class="py-3 font-medium whitespace-nowrap">State</th>
+              <th class="py-3 font-medium whitespace-nowrap">Describe</th>
+              <th class="py-3 font-medium whitespace-nowrap">Date/Time</th>
+            </tr>
+          </thead>
 
-        <!-- TBODY -->
-        <tbody>
-          <tr
-            class="border-b border-default hover:bg-neutral-secondary-soft/40 transition text-[0.8rem] text-center"
-          >
-            <td class="px-6 py-4 whitespace-nowrap">26022010530410079</td>
-            <td class="px-6 py-4 whitespace-nowrap">Ads Vietnam</td>
-            <td class="px-6 py-4 whitespace-nowrap text-blue-600">Card top-up</td>
-            <td class="px-6 py-4 whitespace-nowrap">200.00</td>
-            <td class="px-6 py-4 whitespace-nowrap">3730.16</td>
-            <td class="px-6 py-4 whitespace-nowrap">0.00</td>
-            <td class="px-6 py-4 whitespace-nowrap text-green-600 font-medium">success</td>
-            <td class="px-6 py-4 whitespace-nowrap">Card top-up (...)</td>
-            <td class="px-6 py-4 whitespace-nowrap">2026-02-20 10:50:34</td>
-          </tr>
-          <tr
-            class="border-b border-default hover:bg-neutral-secondary-soft/40 transition text-[0.8rem] text-center"
-          >
-            <td class="px-6 py-4 whitespace-nowrap">26022010530410079</td>
-            <td class="px-6 py-4 whitespace-nowrap">Ads Vietnam</td>
-            <td class="px-6 py-4 whitespace-nowrap text-blue-600">Card top-up</td>
-            <td class="px-6 py-4 whitespace-nowrap">200.00</td>
-            <td class="px-6 py-4 whitespace-nowrap">3730.16</td>
-            <td class="px-6 py-4 whitespace-nowrap">0.00</td>
-            <td class="px-6 py-4 whitespace-nowrap text-green-600 font-medium">success</td>
-            <td class="px-6 py-4 whitespace-nowrap">Card top-up (...)</td>
-            <td class="px-6 py-4 whitespace-nowrap">2026-02-20 10:50:34</td>
-          </tr>
-          <tr
-            class="border-b border-default hover:bg-neutral-secondary-soft/40 transition text-[0.8rem] text-center"
-          >
-            <td class="px-6 py-4 whitespace-nowrap">26022010530410079</td>
-            <td class="px-6 py-4 whitespace-nowrap">Ads Vietnam</td>
-            <td class="px-6 py-4 whitespace-nowrap text-blue-600">Card top-up</td>
-            <td class="px-6 py-4 whitespace-nowrap">200.00</td>
-            <td class="px-6 py-4 whitespace-nowrap">3730.16</td>
-            <td class="px-6 py-4 whitespace-nowrap">0.00</td>
-            <td class="px-6 py-4 whitespace-nowrap text-green-600 font-medium">success</td>
-            <td class="px-6 py-4 whitespace-nowrap">Card top-up (...)</td>
-            <td class="px-6 py-4 whitespace-nowrap">2026-02-20 10:50:34</td>
-          </tr>
-        </tbody>
-      </table>
+          <!-- BODY -->
+          <tbody formArrayName="rows">
+            <tr
+              *ngFor="let row of rows.controls; let i = index"
+              [formGroupName]="i"
+              class="border-b border-default hover:bg-neutral-secondary-soft/40 transition text-[0.8rem] text-center"
+            >
+              <td class="px-6 py-4 whitespace-nowrap">
+                {{ row.get('serial')?.value }}
+              </td>
+
+              <td class="px-6 py-4 whitespace-nowrap">
+                {{ row.get('user')?.value }}
+              </td>
+
+              <td class="px-6 py-4 whitespace-nowrap text-blue-600">
+                {{ row.get('scene')?.value }}
+              </td>
+
+              <td class="px-6 py-4 whitespace-nowrap">
+                {{ row.get('changeAmount')?.value }}
+              </td>
+
+              <td class="px-6 py-4 whitespace-nowrap">
+                {{ row.get('balanceAfter')?.value }}
+              </td>
+
+              <td class="px-6 py-4 whitespace-nowrap">
+                {{ row.get('serviceFee')?.value }}
+              </td>
+
+              <td
+                class="px-6 py-4 whitespace-nowrap font-medium"
+                [ngClass]="{
+                  'text-green-600': row.get('state')?.value === 'success',
+                  'text-red-500': row.get('state')?.value === 'fail',
+                  'text-yellow-500': row.get('state')?.value === 'pending',
+                }"
+              >
+                {{ row.get('state')?.value }}
+              </td>
+
+              <td class="px-6 py-4 whitespace-nowrap">
+                {{ row.get('description')?.value }}
+              </td>
+
+              <td class="px-6 py-4 whitespace-nowrap">
+                {{ row.get('time')?.value }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
       <!-- PAGINATION -->
       <div
         class="flex flex-wrap items-center justify-between gap-3 px-4 py-3 text-[0.8rem] bg-neutral-secondary-soft border-t border-default"

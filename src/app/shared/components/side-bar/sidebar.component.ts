@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { SIDEBAR_ROUTE_MAP, SIDEBAR_TABS } from '../../../utils/sidebar.util';
 
 @Component({
   selector: 'app-sidebar-component',
@@ -9,48 +10,8 @@ import { Router } from '@angular/router';
 })
 export class SidebarComponent {
   private router = inject(Router);
-  private routeMap: Record<string, string> = {
-    front: '/home/front-page',
-    top_up: '/home/wallet/top_up',
-    financial_records: '/home/wallet/financial_records',
-    card_grouping: '/home/card_management/card_grouping',
-    appy_a_card: '/home/card_management/appy_a_card',
-    user: '/home/user',
-  };
 
-  tabs = [
-    { key: 'front', label: 'Front page', icon: 'fa-regular fa-star' },
-    {
-      key: 'wallet',
-      label: 'Wallet',
-      icon: 'fa-solid fa-lock',
-      children: [
-        { key: 'top_up', label: 'Top up' },
-        { key: 'financial_records', label: 'Financial records' },
-      ],
-    },
-    {
-      key: 'card',
-      label: 'Card Management',
-      icon: 'fa-solid fa-id-card',
-      children: [
-        { key: 'appy_a_card', label: 'Apply for a card' },
-        { key: 'card_management', label: 'Card management' },
-        { key: 'card_grouping', label: 'Card grouping' },
-        { key: 'transaction_records', label: 'Transaction records' },
-      ],
-    },
-    {
-      key: 'user',
-      label: 'User Management',
-      icon: 'fa-solid fa-user',
-      children: [
-        { key: 'user_list', label: 'All users' },
-        { key: 'roles', label: 'Roles' },
-      ],
-    },
-  ];
-
+  tabs = SIDEBAR_TABS;
   activeTab = 'front';
   openMenus: string[] = [];
 
@@ -72,7 +33,7 @@ export class SidebarComponent {
   }
 
   selectChild(key: string, event: Event) {
-    event.stopPropagation(); // không trigger parent
+    event.stopPropagation();
     this.activeTab = key;
   }
 
@@ -90,7 +51,7 @@ export class SidebarComponent {
 
   navigate(tabKey: string) {
     console.log(tabKey);
-    const route = this.routeMap[tabKey];
+    const route = SIDEBAR_ROUTE_MAP[tabKey];
     if (route) {
       this.router.navigate([route]);
     }
