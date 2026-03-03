@@ -60,6 +60,13 @@ export const routes: Routes = [
                     (m) => m.ApplyCardComponent,
                   ),
               },
+              {
+                path: 'transaction_records',
+                loadComponent: () =>
+                  import('./features/transaction-records/transaction-records.compnent').then(
+                    (m) => m.TransactionRecordsComponent,
+                  ),
+              },
             ],
           },
         ],
