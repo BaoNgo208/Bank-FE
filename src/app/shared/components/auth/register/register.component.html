@@ -2,7 +2,7 @@
   <!-- label -->
   <div class="flex flex-col items-center">
     <label class="font-bold">User Registration</label>
-    <div class="w-5 h-[4px] bg-[#0d6ab0]"></div>
+    <div class="w-5 h-[4px] bg-red-400"></div>
   </div>
 
   <!-- form -->
@@ -17,7 +17,7 @@
           type="text"
           formControlName="username"
           placeholder="Username"
-          class="w-full border border-gray-200 pl-10 py-3 text-sm focus:outline-none focus:border-blue-500"
+          class="w-full border border-gray-200 pl-10 py-3 text-sm focus:outline-none focus:border-red-500"
         />
       </div>
 
@@ -29,7 +29,7 @@
           type="email"
           formControlName="email"
           placeholder="Email"
-          class="w-full border border-gray-200 pl-10 py-3 text-sm focus:outline-none focus:border-blue-500"
+          class="w-full border border-gray-200 pl-10 py-3 text-sm focus:outline-none focus:border-red-500"
         />
       </div>
 
@@ -43,7 +43,7 @@
             type="text"
             formControlName="verificationCode"
             placeholder="Verification code"
-            class="w-full pl-10 py-3 text-sm focus:outline-none focus:border-blue-500"
+            class="w-full pl-10 py-3 text-sm focus:outline-none focus:border-red-500"
           />
         </div>
 
@@ -59,7 +59,7 @@
           type="Password"
           formControlName="password"
           placeholder="Password"
-          class="w-full border border-gray-200 pl-10 py-3 text-sm focus:outline-none focus:border-blue-500"
+          class="w-full border border-gray-200 pl-10 py-3 text-sm focus:outline-none focus:border-red-500"
         />
       </div>
 
@@ -72,7 +72,7 @@
           type="Password"
           formControlName="confirmPassword"
           placeholder="Confirm Password"
-          class="w-full border border-gray-200 pl-10 py-3 text-sm focus:outline-none focus:border-blue-500"
+          class="w-full border border-gray-200 pl-10 py-3 text-sm focus:outline-none focus:border-red-500"
         />
       </div>
 
@@ -85,13 +85,13 @@
 
       <div class="flex gap-x-4 mt-10">
         <button
-          class="flex-1 bg-[#0d6ab0] text-white py-4 text-sm font-medium hover:bg-[#185a8a] transition"
+          class="flex-1 bg-red-500 text-white py-4 text-sm font-medium hover:bg-red-600 transition"
         >
           Register
         </button>
 
         <button
-          class="flex-1 border border-[#1f6aa5] text-[#1f6aa5] py-3 text-sm font-medium hover:bg-blue-50 transition"
+          class="flex-1 border border-red-500 text-gray-700 py-3 text-sm font-medium hover:bg-red-50 transition"
           (click)="redirectToLogin()"
         >
           Log in
