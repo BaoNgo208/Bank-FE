@@ -27,6 +27,8 @@ export const routes: Routes = [
           },
           {
             path: 'wallet',
+            loadComponent: () =>
+              import('./features/wallet/wallet.component').then((m) => m.WalletComponent),
             children: [
               {
                 path: 'top_up',
@@ -68,6 +70,20 @@ export const routes: Routes = [
                   ),
               },
             ],
+          },
+          {
+            path: 'apply_card',
+            loadComponent: () =>
+              import('./features/apply-card/apply-card.component').then(
+                (m) => m.ApplyCardComponent,
+              ),
+          },
+          {
+            path: 'transaction_records',
+            loadComponent: () =>
+              import('./features/transaction-records/transaction-records.compnent').then(
+                (m) => m.TransactionRecordsComponent,
+              ),
           },
         ],
       },

@@ -1,0 +1,374 @@
+<div class="h-full w-full px-2 pt-1 space-y-10">
+  <!-- Balance detail -->
+  <div class="flex gap-4 mt-4">
+    <!-- LEFT WALLET CARD -->
+    <div class="flex-[1.1] rounded-xl p-6 text-white relative overflow-hidden bg-red-600">
+      <!-- ACTION BUTTONS -->
+      <div class="flex gap-3 items-center mb-6">
+        <div
+          class="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center"
+        >
+          <i class="fa-solid fa-wallet"></i>
+        </div>
+
+        <button class="px-4 py-1 rounded-full bg-white/20 hover:bg-white/30 text-sm">top up</button>
+
+        <button class="px-4 py-1 rounded-full bg-white/20 hover:bg-white/30 text-sm">
+          Withdrawal
+        </button>
+
+        <button class="px-4 py-1 rounded-full bg-white/20 hover:bg-white/30 text-sm">
+          transfer
+        </button>
+      </div>
+
+      <!-- EXCHANGE -->
+      <div class="mb-4">
+        <div class="text-sm opacity-80">Current exchange rate</div>
+        <div class="text-3xl font-bold">$<span [countUp]="9.05"></span></div>
+      </div>
+
+      <!-- BALANCE -->
+      <div class="flex items-center gap-8 mt-4">
+        <div>
+          <div class="text-sm opacity-80">Balance (USD)</div>
+          <div class="text-3xl font-bold">$<span [countUp]="2.05"></span></div>
+        </div>
+
+        <div class="w-px h-12 bg-white/50"></div>
+
+        <div>
+          <div class="text-sm opacity-80">Frozen (USD)</div>
+          <div class="text-3xl font-bold">$<span [countUp]="0.05"></span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT BALANCE DETAILS -->
+    <div class="flex-1 bg-white rounded-xl border p-5">
+      <!-- HEADER -->
+      <div class="flex justify-between items-center mb-4">
+        <div class="flex items-center gap-2 font-medium text-gray-700">
+          <i class="fa-solid fa-coins text-red-500"></i>
+          Balance details
+        </div>
+
+        <button class="px-4 py-1 text-sm bg-red-500 text-white rounded-full hover:bg-red-600">
+          View all
+        </button>
+      </div>
+
+      <!-- EMPTY STATE -->
+      <div class="text-gray-400 text-sm">No balance records yet</div>
+    </div>
+  </div>
+
+  <!-- Recharge history table -->
+  <div class="rounded-base border border-default bg-neutral-primary overflow-hidden">
+    <!--  TOP TOOLBAR -->
+    <div
+      class="flex items-center justify-between px-4 py-2 bg-neutral-secondary-soft border-b border-default"
+    >
+      <div class="text-sm text-heading space-x-1 font-bold text-black">
+        <label>Recharge history</label>
+      </div>
+    </div>
+
+    <div class="overflow-x-auto">
+      <form [formGroup]="form">
+        <table class="w-full text-sm text-left border-collapse border border-default">
+          <!-- HEADER -->
+          <thead class="bg-gray-100 border-b border-default text-xs">
+            <tr class="text-center">
+              <th class="p-3 border-r border-default">Order number</th>
+              <th class="p-3 border-r border-default">Recharge currency</th>
+              <th class="p-3 border-r border-default">Recharge amount</th>
+              <th class="p-3 border-r border-default">State</th>
+              <th class="p-3 border-r border-default">Reason</th>
+              <th class="p-3 border-r border-default">Remark</th>
+              <th class="p-3 border-r border-default">Creation time</th>
+            </tr>
+          </thead>
+
+          <!-- BODY -->
+          <tbody formArrayName="rechargeRows">
+            <tr
+              *ngFor="let row of rechargeRows.controls; let i = index"
+              [formGroupName]="i"
+              class="border-b border-default hover:bg-gray-50 text-center text-xs"
+            >
+              <!-- Order number -->
+              <td class="px-4 py-3 border-r border-default">
+                {{ row.get('orderNumber')?.value }}
+              </td>
+
+              <!-- Currency -->
+              <td class="px-4 py-3 border-r border-default">
+                <span class="px-2 py-1 text-xs bg-blue-100 text-blue-600 rounded">
+                  {{ row.get('currency')?.value }}
+                </span>
+              </td>
+
+              <!-- Channel -->
+              <td class="px-4 py-3 border-r border-default">
+                <span class="px-2 py-1 text-xs bg-green-100 text-green-600 rounded">
+                  {{ row.get('channel')?.value }}
+                </span>
+              </td>
+
+              <!-- Amount -->
+              <td class="px-4 py-3 border-r border-default">
+                {{ row.get('amount')?.value }}
+              </td>
+
+              <!-- State -->
+              <td
+                class="px-4 py-3 border-r border-default"
+                [ngClass]="{
+                  'text-orange-500': row.get('state')?.value === 'Pending payment',
+                  'text-yellow-600': row.get('state')?.value === 'Partial payment',
+                  'text-green-600': row.get('state')?.value === 'Success',
+                }"
+              >
+                <span class="px-2 py-1 bg-blue-100 rounded text-xs">
+                  {{ row.get('state')?.value }}
+                </span>
+              </td>
+
+              <!-- Reason -->
+              <td class="px-4 py-3 border-r border-default">
+                {{ row.get('reason')?.value }}
+              </td>
+
+              <!-- Remark -->
+              <td class="px-4 py-3 border-r border-default">
+                {{ row.get('remark')?.value }}
+              </td>
+
+              <!-- Creation time -->
+              <td class="px-4 py-3">
+                {{ row.get('creationTime')?.value }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+      <!-- PAGINATION -->
+      <div
+        class="flex flex-wrap items-center justify-between gap-3 px-4 py-3 text-[0.8rem] bg-neutral-secondary-soft border-t border-default"
+      >
+        <!-- LEFT: PAGE NUMBERS -->
+        <div class="flex items-center gap-1">
+          <!-- Prev -->
+          <button
+            class="w-7 h-7 flex items-center justify-center rounded border border-default hover:bg-neutral-primary transition"
+          >
+            ‹
+          </button>
+
+          <!-- Page numbers -->
+          <button class="w-7 h-7 flex items-center justify-center rounded bg-red-600 text-white">
+            1
+          </button>
+
+          <button
+            class="w-7 h-7 flex items-center justify-center rounded border border-default hover:bg-neutral-primary transition"
+          >
+            2
+          </button>
+
+          <button
+            class="w-7 h-7 flex items-center justify-center rounded border border-default hover:bg-neutral-primary transition"
+          >
+            3
+          </button>
+
+          <span class="px-1">...</span>
+
+          <button
+            class="w-7 h-7 flex items-center justify-center rounded border border-default hover:bg-neutral-primary transition"
+          >
+            97
+          </button>
+
+          <!-- Next -->
+          <button
+            class="w-7 h-7 flex items-center justify-center rounded border border-default hover:bg-neutral-primary transition"
+          >
+            ›
+          </button>
+        </div>
+
+        <!-- RIGHT: PAGE CONTROL -->
+        <div class="flex flex-wrap items-center gap-2">
+          <span>To the</span>
+
+          <input
+            type="number"
+            class="w-12 h-7 text-center border border-default rounded focus:outline-none focus:ring-1 focus:ring-red-500"
+          />
+
+          <span>Page</span>
+
+          <button
+            class="h-7 px-3 rounded bg-neutral-primary border border-default hover:bg-neutral-secondary-soft transition"
+          >
+            Sure
+          </button>
+
+          <span class="ml-3">A total of 986 items</span>
+
+          <select
+            class="h-7 px-2 border border-default rounded focus:outline-none focus:ring-1 focus:ring-red-500"
+          >
+            <option>10 items/page</option>
+            <option>20 items/page</option>
+            <option>50 items/page</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Transfer records -->
+
+  <div class="rounded-base border border-default bg-neutral-primary overflow-hidden">
+    <!--  TOP TOOLBAR -->
+    <div
+      class="flex items-center justify-between px-4 py-2 bg-neutral-secondary-soft border-b border-default"
+    >
+      <div class="text-sm text-heading space-x-1 font-bold text-black">
+        <label>Transfer records</label>
+      </div>
+    </div>
+
+    <div class="overflow-x-auto">
+      <form [formGroup]="form">
+        <table class="w-full text-sm text-left border-collapse border border-default">
+          <!-- HEADER -->
+          <thead class="bg-gray-100 border-b border-default text-xs">
+            <tr class="text-center">
+              <th class="p-3 border-r border-default">Transfer out account</th>
+              <th class="p-3 border-r border-default">Transfer to account</th>
+              <th class="p-3 border-r border-default">Transfer amount</th>
+              <th class="p-3 border-r border-default">Remark</th>
+              <th class="p-3 border-r border-default">Creation time</th>
+            </tr>
+          </thead>
+
+          <!-- BODY -->
+          <tbody formArrayName="transferRows">
+            <tr
+              *ngFor="let row of transferRows.controls; let i = index"
+              [formGroupName]="i"
+              class="border-b border-default hover:bg-gray-50 text-center text-xs"
+            >
+              <!-- Transfer out accountr -->
+              <td class="px-4 py-3 border-r border-default">
+                {{ row.get('transferOutAccount')?.value }}
+              </td>
+
+              <!-- Transfer to account -->
+              <td class="px-4 py-3 border-r border-default">
+                <span class="px-2 py-1 text-xs bg-blue-100 text-blue-600 rounded">
+                  {{ row.get('transferToAccount')?.value }}
+                </span>
+              </td>
+
+              <!-- Transfer amount -->
+              <td class="px-4 py-3 border-r border-default">
+                <span class="px-2 py-1 text-xs bg-green-100 text-green-600 rounded">
+                  {{ row.get('transferAmount')?.value }}
+                </span>
+              </td>
+
+              <!-- Remark -->
+              <td class="px-4 py-3 border-r border-default">
+                {{ row.get('remark')?.value }}
+              </td>
+
+              <!-- Creation time -->
+              <td class="px-4 py-3 border-r border-default">
+                {{ row.get('creationTime')?.value }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+      <!-- PAGINATION -->
+      <div
+        class="flex flex-wrap items-center justify-between gap-3 px-4 py-3 text-[0.8rem] bg-neutral-secondary-soft border-t border-default"
+      >
+        <!-- LEFT: PAGE NUMBERS -->
+        <div class="flex items-center gap-1">
+          <!-- Prev -->
+          <button
+            class="w-7 h-7 flex items-center justify-center rounded border border-default hover:bg-neutral-primary transition"
+          >
+            ‹
+          </button>
+
+          <!-- Page numbers -->
+          <button class="w-7 h-7 flex items-center justify-center rounded bg-red-600 text-white">
+            1
+          </button>
+
+          <button
+            class="w-7 h-7 flex items-center justify-center rounded border border-default hover:bg-neutral-primary transition"
+          >
+            2
+          </button>
+
+          <button
+            class="w-7 h-7 flex items-center justify-center rounded border border-default hover:bg-neutral-primary transition"
+          >
+            3
+          </button>
+
+          <span class="px-1">...</span>
+
+          <button
+            class="w-7 h-7 flex items-center justify-center rounded border border-default hover:bg-neutral-primary transition"
+          >
+            97
+          </button>
+
+          <!-- Next -->
+          <button
+            class="w-7 h-7 flex items-center justify-center rounded border border-default hover:bg-neutral-primary transition"
+          >
+            ›
+          </button>
+        </div>
+
+        <!-- RIGHT: PAGE CONTROL -->
+        <div class="flex flex-wrap items-center gap-2">
+          <span>To the</span>
+
+          <input
+            type="number"
+            class="w-12 h-7 text-center border border-default rounded focus:outline-none focus:ring-1 focus:ring-red-500"
+          />
+
+          <span>Page</span>
+
+          <button
+            class="h-7 px-3 rounded bg-neutral-primary border border-default hover:bg-neutral-secondary-soft transition"
+          >
+            Sure
+          </button>
+
+          <span class="ml-3">A total of 986 items</span>
+
+          <select
+            class="h-7 px-2 border border-default rounded focus:outline-none focus:ring-1 focus:ring-red-500"
+          >
+            <option>10 items/page</option>
+            <option>20 items/page</option>
+            <option>50 items/page</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
