@@ -28,6 +28,14 @@ export interface BalanceHistory {
   time: string;
 }
 
+export interface TransferRecord {
+  transferOutAccount: string;
+  transferToAccount: string;
+  transferAmount: number;
+  remark: string;
+  creationTime: string;
+}
+
 export const CARD_TRANSACTION_SAMPLE: CardTransaction[] = [
   {
     serial: 'ed6e...4c',
@@ -110,5 +118,92 @@ export const BALANCE_HISTORY_SAMPLE: BalanceHistory[] = [
     state: 'fail',
     description: 'Withdraw failed',
     time: '2026-02-20 11:00:34',
+  },
+];
+
+export const buildSampleRechargeRecords = [
+  {
+    orderNumber: '20260127214...',
+    currency: 'Dollar',
+    channel: 'USDT',
+    amount: 100,
+    state: 'Pending payment',
+    reason: '',
+    remark: '',
+    creationTime: '2026-01-27 20:44:43',
+  },
+  {
+    orderNumber: '20260127213...',
+    currency: 'Dollar',
+    channel: 'USDT',
+    amount: 100,
+    state: 'Pending payment',
+    reason: '',
+    remark: '',
+    creationTime: '2026-01-27 20:30:46',
+  },
+  {
+    orderNumber: '20251105185...',
+    currency: 'Dollar',
+    channel: 'USDT',
+    amount: 100,
+    state: 'Pending payment',
+    reason: '',
+    remark: '',
+    creationTime: '2025-11-05 17:55:34',
+  },
+  {
+    orderNumber: '20251105184...',
+    currency: 'Dollar',
+    channel: 'USDT',
+    amount: 100,
+    state: 'Pending payment',
+    reason: '',
+    remark: '',
+    creationTime: '2025-11-05 17:41:46',
+  },
+  {
+    orderNumber: '20251023171...',
+    currency: 'Dollar',
+    channel: 'USDT',
+    amount: 100,
+    state: 'Partial payment',
+    reason: '',
+    remark: '',
+    creationTime: '2025-10-23 16:11:26',
+  },
+  {
+    orderNumber: '20251023170...',
+    currency: 'Dollar',
+    channel: 'USDT',
+    amount: 1000,
+    state: 'Pending payment',
+    reason: '',
+    remark: '',
+    creationTime: '2025-10-23 16:09:17',
+  },
+];
+
+export const buildSampleTransferRecords: TransferRecord[] = [
+  {
+    transferOutAccount: 'Main Wallet',
+    transferToAccount: 'Trading Wallet',
+    transferAmount: 200,
+    remark: '',
+    creationTime: '2026-01-27 20:44:43',
+  },
+  {
+    transferOutAccount: 'Funding Wallet',
+    transferToAccount: 'Main Wallet',
+    transferAmount: 100,
+    remark: 'Internal transfer',
+    creationTime: '2026-01-26 18:12:11',
+  },
+  {
+    transferOutAccount: 'Trading Wallet',
+    transferToAccount: 'Funding Wallet',
+    transferAmount: 500,
+    remark: '',
+    creationTime: '2026-01-25 10:21:55',
   },
 ];

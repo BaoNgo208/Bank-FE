@@ -17,14 +17,14 @@ export const SIDEBAR_ROUTE_MAP: Record<string, string> = {
   front: '/home/front-page',
 
   // Wallet
+  wallet: '/home/wallet',
   top_up: '/home/wallet/top_up',
   financial_records: '/home/wallet/financial_records',
 
+  apply_card: '/home/apply_card',
+  transaction_records: '/home/transaction_records',
   // Card
-  appy_a_card: '/home/card_management/appy_a_card',
-  card_management: '/home/card_management/card_management',
   card_grouping: '/home/card_management/card_grouping',
-  transaction_records: '/home/card_management/transaction_records',
 
   // User
   user_list: '/home/user/user_list',
@@ -41,24 +41,28 @@ export const SIDEBAR_TABS: SidebarTab[] = [
     key: 'wallet',
     label: 'Wallet',
     icon: 'fa-solid fa-lock',
-    children: [
-      { key: 'top_up', label: 'Top up' },
-      { key: 'financial_records', label: 'Financial records' },
-    ],
+    // children: [
+    //   { key: 'top_up', label: 'Top up' },
+    //   { key: 'financial_records', label: 'Financial records' },
+    // ],
   },
 
   {
     key: 'card',
     label: 'Card Management',
     icon: 'fa-solid fa-id-card',
-    children: [
-      { key: 'appy_a_card', label: 'Apply for a card' },
-      { key: 'card_management', label: 'Card management' },
-      { key: 'card_grouping', label: 'Card grouping' },
-      { key: 'transaction_records', label: 'Transaction records' },
-    ],
+    children: [{ key: 'card_grouping', label: 'Card grouping' }],
   },
-
+  {
+    key: 'apply_card',
+    label: 'Apply for a card',
+    icon: 'fa-solid fa-id-card',
+  },
+  {
+    key: 'transaction_records',
+    label: 'Transaction records',
+    icon: 'fa-solid fa-arrow-right-arrow-left',
+  },
   {
     key: 'user',
     label: 'User Management',
