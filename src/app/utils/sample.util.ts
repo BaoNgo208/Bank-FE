@@ -207,3 +207,119 @@ export const buildSampleTransferRecords: TransferRecord[] = [
     creationTime: '2026-01-25 10:21:55',
   },
 ];
+
+export const CARD_INQUIRY_SAMPLE = [
+  {
+    cardNumber: '43612080',
+    model: 'Visa',
+    type: 'Virtual',
+    currency: 'USD',
+    openTime: '2025-03-06',
+    state: 'Active',
+    balance: 10,
+    remark: 'Test',
+  },
+  {
+    cardNumber: '43612079',
+    model: 'Visa',
+    type: 'Virtual',
+    currency: 'USD',
+    openTime: '2025-03-05',
+    state: 'Frozen',
+    balance: 5,
+    remark: 'Demo',
+  },
+];
+
+export const TRANSACTION_RECORDS_SAMPLE = [
+  {
+    cardNumber: '43612080',
+    transactionType: 'Payment',
+    merchantName: 'Amazon',
+    currency: 'USD',
+    amount: 120,
+    received: 'Yes',
+    status: 'Success',
+    recordTime: '2025-03-06 10:20',
+    remark: 'Online purchase',
+  },
+  {
+    cardNumber: '43612079',
+    transactionType: 'Refund',
+    merchantName: 'Apple Store',
+    currency: 'USD',
+    amount: 80,
+    received: 'No',
+    status: 'Pending',
+    recordTime: '2025-03-05 18:30',
+    remark: 'Refund processing',
+  },
+  {
+    cardNumber: '43612077',
+    transactionType: 'Payment',
+    merchantName: 'Netflix',
+    currency: 'USD',
+    amount: 15,
+    received: 'Yes',
+    status: 'Success',
+    recordTime: '2025-03-04 21:00',
+    remark: 'Subscription',
+  },
+];
+
+export const WITHDRAWAL_SAMPLE = [
+  {
+    orderNumber: 'WD20250304001',
+    channel: 'Bank transfer',
+    amount: 500,
+    exchangeRate: 1,
+    state: 'Completed',
+    reason: '-',
+    remainingBalance: 1500,
+    wallet: 'USDT Wallet',
+    remark: 'Withdrawal to bank',
+    submissionDate: '2025-03-04 10:20',
+  },
+  {
+    orderNumber: 'WD20250304002',
+    channel: 'Crypto',
+    amount: 200,
+    exchangeRate: 1,
+    state: 'Pending',
+    reason: '-',
+    remainingBalance: 1300,
+    wallet: 'BTC Wallet',
+    remark: 'Processing',
+    submissionDate: '2025-03-04 12:45',
+  },
+  {
+    orderNumber: 'WD20250304003',
+    channel: 'Bank transfer',
+    amount: 100,
+    exchangeRate: 1,
+    state: 'Rejected',
+    reason: 'Insufficient verification',
+    remainingBalance: 1200,
+    wallet: 'USD Wallet',
+    remark: 'KYC required',
+    submissionDate: '2025-03-04 14:30',
+  },
+];
+
+export const INVITATION_COMMISSION_SAMPLE = [
+  {
+    inviteId: 'INV001',
+    username: 'john_doe',
+    totalCommission: 120,
+  },
+  {
+    inviteId: 'INV002',
+    username: 'alice_smith',
+    totalCommission: 80,
+  },
+  {
+    inviteId: 'INV003',
+    username: 'michael_lee',
+    totalCommission: 45,
+  },
+];

@@ -85,6 +85,27 @@ export const routes: Routes = [
                 (m) => m.TransactionRecordsComponent,
               ),
           },
+          {
+            path: 'inquiry_card',
+            loadComponent: () =>
+              import('./features/inquiry-card/inquiry-card.component').then(
+                (m) => m.InquiryCardComponent,
+              ),
+          },
+          {
+            path: 'withdrawal_list',
+            loadComponent: () =>
+              import('./features/withdrawal-list/withdrawal-list.component').then(
+                (m) => m.WidthdrawalListComponent,
+              ),
+          },
+          {
+            path: 'invitation_commission',
+            loadComponent: () =>
+              import('./features/invitation-commission/invitation-commission.component').then(
+                (m) => m.InvitationCommissionComponent,
+              ),
+          },
         ],
       },
     ],

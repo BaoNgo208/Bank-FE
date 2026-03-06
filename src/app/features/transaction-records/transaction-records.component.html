@@ -1,212 +1,192 @@
-<div class="h-full w-full px-2 pt-10 space-y-10">
-  <!-- PRECAUTIONS -->
-  <div class="bg-red-50 border border-red-200 rounded p-4 mb-6">
-    <div class="flex items-center gap-2 text-red-600 font-medium mb-2">
-      <span>⚠</span>
-      <span>Precautions</span>
-    </div>
-    <p class="text-red-600 text-sm">1. Query the card group list .</p>
-  </div>
-
-  <div class="flex items-center gap-3">
-    <!-- Keywords -->
-    <div class="flex items-center gap-2">
-      <label class="text-[0.8rem] text-gray-600">Keywords:</label>
-      <input
-        type="text"
-        placeholder="Keywords"
-        class="text-[0.8rem] py-1 px-2 border border-gray-300 rounded focus:outline-none focus:ring-1"
-      />
-    </div>
-
-    <!-- User -->
-    <div class="flex items-center gap-2">
-      <label class="text-[0.8rem] text-gray-600">User:</label>
-      <input
-        type="text"
-        placeholder="user"
-        class="text-[0.8rem] py-1 px-2 border border-gray-300 rounded focus:outline-none focus:ring-1"
-      />
-    </div>
-
-    <!-- State -->
-    <div class="flex items-center gap-2">
-      <label class="text-[0.8rem] text-gray-600">state:</label>
-      <select
-        class="text-[0.8rem] py-1 px-2 border border-gray-300 rounded focus:outline-none focus:ring-1"
-      >
-        <option>No limit</option>
-      </select>
-    </div>
-
-    <!-- Buttons -->
-    <div class="flex items-center gap-2">
-      <button class="h-9 px-4 bg-red-600 text-white text-sm rounded hover:bg-red-700 transition">
-        Query
-      </button>
-      <button class="h-9 px-4 bg-red-600 text-white text-sm rounded hover:bg-red-700 transition">
-        Export
-      </button>
-    </div>
-  </div>
-  <div class="rounded-base border border-default bg-neutral-primary overflow-hidden">
-    <!--  TOP TOOLBAR -->
-    <div
-      class="flex items-center justify-between px-4 py-2 bg-neutral-secondary-soft border-b border-default"
-    >
-      <div class="text-sm text-heading space-x-1 text-white"></div>
+<div class="h-full px-3 py-2 flex flex-col gap-y-5 overflow-auto">
+  <!-- Filter -->
+  <div class="w-full bg-white p-4 rounded-xl border border-gray-200 flex flex-col">
+    <!-- FILTER ROW -->
+    <div class="flex flex-wrap items-center gap-6 text-[0.85rem]">
+      <!-- Card number -->
       <div class="flex items-center gap-2">
-        <button class="p-2 rounded hover:bg-neutral-primary transition">
-          <i class="fa-solid fa-filter text-xs"></i>
+        <span class="text-gray-600 whitespace-nowrap">Card number</span>
+        <input
+          type="text"
+          placeholder="Please enter your card number"
+          class="h-9 w-[200px] px-3 border border-gray-300 rounded outline-none focus:border-gray-400"
+        />
+      </div>
+
+      <!-- Remark -->
+      <div class="flex items-center gap-2">
+        <span class="text-gray-600 whitespace-nowrap">Remark</span>
+        <input
+          type="text"
+          placeholder="Please enter"
+          class="h-9 w-[160px] px-3 border border-gray-300 rounded outline-none focus:border-gray-400"
+        />
+      </div>
+
+      <!-- Transaction status -->
+      <div class="flex items-center gap-2">
+        <span class="text-gray-600 whitespace-nowrap">Transaction status</span>
+        <select
+          class="h-9 w-[150px] px-3 border border-gray-300 text-gray-500 rounded outline-none focus:border-gray-400 bg-white"
+        >
+          <option>Please ...</option>
+          <option>Active</option>
+          <option>Inactive</option>
+        </select>
+      </div>
+
+      <!-- Recording time -->
+      <div class="flex items-center gap-2">
+        <span class="text-gray-600 whitespace-nowrap">Recording time</span>
+
+        <div class="flex items-center border border-gray-300 rounded overflow-hidden text-gray-500">
+          <input type="date" class="h-9 px-2 outline-none w-[130px]" />
+          <span class="px-2 text-gray-400">-</span>
+          <input type="date" class="h-9 px-2 outline-none w-[130px]" />
+        </div>
+      </div>
+      <!-- BUTTON ROW -->
+      <div class="flex gap-4 text-[0.8rem]">
+        <button
+          class="h-9 px-4 bg-red-600 text-white rounded hover:bg-red-700 transition flex items-center gap-2"
+        >
+          <i class="fa-solid fa-magnifying-glass"></i>
+          Search
         </button>
-        <button class="p-2 rounded hover:bg-neutral-primary transition">
-          <i class="fa-solid fa-download text-xs"></i>
-        </button>
-        <button class="p-2 rounded hover:bg-neutral-primary transition">
-          <i class="fa-solid fa-ellipsis text-xs"></i>
+
+        <button
+          class="h-9 px-4 bg-red-600 text-white rounded hover:bg-red-700 transition flex items-center gap-2"
+        >
+          <i class="fa-solid fa-rotate"></i>
+          Reset
         </button>
       </div>
     </div>
+  </div>
 
-    <div class="overflow-x-auto">
-      <form [formGroup]="form">
-        <table class="w-full text-sm text-left border-collapse border border-default">
-          <!-- HEADER -->
-          <thead class="bg-gray-100 border-b border-default text-xs">
-            <tr class="text-center">
-              <th class="p-3 border-r border-default">Serial number</th>
-              <th class="p-3 border-r border-default">User</th>
-              <th class="p-3 border-r border-default">Card grouping</th>
-              <th class="p-3 border-r border-default">Card nickname</th>
-              <th class="p-3 border-r border-default">Card number</th>
-              <th class="p-3 border-r border-default">Transaction amount</th>
-              <th class="p-3 border-r border-default">Transaction status</th>
-              <th class="p-3">Trading hours</th>
-            </tr>
-          </thead>
+  <!-- Transaction Infos -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <!-- Success Rate -->
+    <div
+      class="flex items-center justify-between bg-white border border-gray-200 rounded-xl px-6 py-5"
+    >
+      <div>
+        <p class="text-gray-700 text-sm">Transaction success rate</p>
+        <p class="text-2xl mt-2">2.3</p>
+      </div>
 
-          <!-- BODY -->
-          <tbody formArrayName="rows">
-            <tr
-              *ngFor="let row of rows.controls; let i = index"
-              [formGroupName]="i"
-              class="border-b border-default hover:bg-gray-50 text-center text-xs"
-            >
-              <td class="px-4 py-3 border-r border-default">
-                {{ row.get('serial')?.value }}
-              </td>
-
-              <td class="px-4 py-3 border-r border-default">
-                {{ row.get('user')?.value }}
-              </td>
-
-              <td class="px-4 py-3 border-r border-default">
-                {{ row.get('grouping')?.value }}
-              </td>
-
-              <td class="px-4 py-3 border-r border-default">
-                {{ row.get('nickname')?.value }}
-              </td>
-
-              <td class="px-4 py-3 border-r border-default">
-                {{ row.get('cardNumber')?.value }}
-              </td>
-
-              <td class="px-4 py-3 border-r border-default">
-                {{ row.get('amount')?.value }}
-              </td>
-
-              <td
-                class="px-4 py-3 border-r border-default"
-                [ngClass]="{
-                  'text-green-600': row.get('status')?.value === 'Pending',
-                  'text-red-500': row.get('status')?.value === 'fail',
-                }"
-              >
-                {{ row.get('status')?.value }}
-              </td>
-
-              <td class="px-4 py-3">
-                {{ row.get('time')?.value }}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </form>
-      <!-- PAGINATION -->
       <div
-        class="flex flex-wrap items-center justify-between gap-3 px-4 py-3 text-[0.8rem] bg-neutral-secondary-soft border-t border-default"
+        class="w-16 h-16 flex items-center justify-center border-4 border-red-500 rounded-full text-red-500 text-3xl"
       >
-        <!-- LEFT: PAGE NUMBERS -->
-        <div class="flex items-center gap-1">
-          <!-- Prev -->
-          <button
-            class="w-7 h-7 flex items-center justify-center rounded border border-default hover:bg-neutral-primary transition"
-          >
-            ‹
-          </button>
-
-          <!-- Page numbers -->
-          <button class="w-7 h-7 flex items-center justify-center rounded bg-red-600 text-white">
-            1
-          </button>
-
-          <button
-            class="w-7 h-7 flex items-center justify-center rounded border border-default hover:bg-neutral-primary transition"
-          >
-            2
-          </button>
-
-          <button
-            class="w-7 h-7 flex items-center justify-center rounded border border-default hover:bg-neutral-primary transition"
-          >
-            3
-          </button>
-
-          <span class="px-1">...</span>
-
-          <button
-            class="w-7 h-7 flex items-center justify-center rounded border border-default hover:bg-neutral-primary transition"
-          >
-            97
-          </button>
-
-          <!-- Next -->
-          <button
-            class="w-7 h-7 flex items-center justify-center rounded border border-default hover:bg-neutral-primary transition"
-          >
-            ›
-          </button>
-        </div>
-
-        <!-- RIGHT: PAGE CONTROL -->
-        <div class="flex flex-wrap items-center gap-2">
-          <span>To the</span>
-
-          <input
-            type="number"
-            class="w-12 h-7 text-center border border-default rounded focus:outline-none focus:ring-1 focus:ring-red-500"
-          />
-
-          <span>Page</span>
-
-          <button
-            class="h-7 px-3 rounded bg-neutral-primary border border-default hover:bg-neutral-secondary-soft transition"
-          >
-            Sure
-          </button>
-
-          <span class="ml-3">A total of 986 items</span>
-
-          <select
-            class="h-7 px-2 border border-default rounded focus:outline-none focus:ring-1 focus:ring-red-500"
-          >
-            <option>10 items/page</option>
-            <option>20 items/page</option>
-            <option>50 items/page</option>
-          </select>
-        </div>
+        <i class="fa-solid fa-wallet"></i>
       </div>
     </div>
+
+    <!-- Total Volumne -->
+    <div
+      class="flex items-center justify-between bg-white border border-gray-200 rounded-xl px-6 py-5"
+    >
+      <div>
+        <p class="text-gray-700 text-sm">Total transaction volume</p>
+        <p class="text-2xl mt-2">1</p>
+      </div>
+
+      <div
+        class="w-16 h-16 flex items-center justify-center border-4 border-red-500 rounded-xl text-red-500 text-3xl"
+      >
+        <i class="fa-solid fa-circle-check"></i>
+      </div>
+    </div>
+
+    <!-- Refund amount -->
+    <div
+      class="flex items-center justify-between bg-white border border-gray-200 rounded-xl px-6 py-5"
+    >
+      <div>
+        <p class="text-gray-700 text-sm">Refund amount</p>
+        <p class="text-2xl mt-2">12</p>
+      </div>
+
+      <div
+        class="w-16 h-16 flex items-center justify-center border-4 border-red-500 rounded-xl text-red-500 text-3xl"
+      >
+        <i class="fa-solid fa-lock"></i>
+      </div>
+    </div>
+
+    <!-- Refund rate -->
+    <div
+      class="flex items-center justify-between bg-white border border-gray-200 rounded-xl px-6 py-5"
+    >
+      <div>
+        <p class="text-gray-700 text-sm">Refund rate</p>
+        <p class="text-2xl mt-2">12</p>
+      </div>
+
+      <div
+        class="w-16 h-16 flex items-center justify-center border-4 border-red-500 rounded-xl text-red-500 text-3xl"
+      >
+        <i class="fa-solid fa-lock"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- Transaction record list table -->
+
+  <div class="w-max min-w-full">
+    <div
+      class="flex items-center justify-between px-4 py-2 bg-neutral-secondary-soft border-b border-default bg-white"
+    >
+      <div class="text-sm font-medium text-heading">
+        <label>Transaction record list</label>
+      </div>
+      <div class="flex items-center">
+        <button
+          class="h-9 px-3 bg-green-200 text-green-600 rounded hover:bg-green-300 transition flex items-center gap-2"
+        >
+          <i class="fa-solid fa-file-export"></i>
+          Export
+        </button>
+      </div>
+    </div>
+    <form [formGroup]="form">
+      <table class="w-full text-sm text-left border-collapse border border-default">
+        <!-- HEADER -->
+        <thead class="border-b bg-gray-50">
+          <tr class="text-gray-600">
+            <!-- CHECK ALL -->
+
+            <th class="px-3 py-3 border-r border-default">card number</th>
+            <th class="px-3 py-3 border-r border-default">transaction type</th>
+            <th class="px-3 py-3 border-r border-default">merchant name</th>
+            <th class="px-3 py-3 border-r border-default">currency</th>
+            <th class="px-3 py-3 border-r border-default">amount</th>
+            <th class="px-3 py-3 border-r border-default">is payment received?</th>
+            <th class="px-3 py-3 border-r border-default">transaction status</th>
+            <th class="px-3 py-3 border-r border-default">recording time</th>
+            <th class="px-3 py-3 border-r border-default">remark</th>
+          </tr>
+        </thead>
+
+        <!-- BODY -->
+        <tbody formArrayName="rows">
+          <tr
+            *ngFor="let row of rows.controls; let i = index"
+            [formGroupName]="i"
+            class="border-b hover:bg-gray-50"
+          >
+            <td class="px-3 py-3 border-r border-default">{{ row.value.cardNumber }}</td>
+            <td class="px-3 py-3 border-r border-default">{{ row.value.transactionType }}</td>
+            <td class="px-3 py-3 border-r border-default">{{ row.value.merchantName }}</td>
+            <td class="px-3 py-3 border-r border-default">{{ row.value.currency }}</td>
+            <td class="px-3 py-3 border-r border-default">{{ row.value.amount }}</td>
+            <td class="px-3 py-3 border-r border-default">{{ row.value.received }}</td>
+            <td class="px-3 py-3 border-r border-default">{{ row.value.status }}</td>
+            <td class="px-3 py-3 border-r border-default">{{ row.value.recordTime }}</td>
+            <td class="px-3 py-3 border-r border-default">{{ row.value.remark }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
   </div>
 </div>

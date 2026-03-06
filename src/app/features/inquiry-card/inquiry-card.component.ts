@@ -1,15 +1,15 @@
-import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { TRANSACTION_RECORDS_SAMPLE } from '../../utils/sample.util';
+import { CARD_INQUIRY_SAMPLE } from '../../utils/sample.util';
 
 @Component({
-  selector: 'app-transaction-records-component',
+  selector: 'app-inquiry-card-component',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './transaction-records.component.html',
+  templateUrl: './inquiry-card.component.html',
 })
-export class TransactionRecordsComponent {
+export class InquiryCardComponent {
   private fb = inject(FormBuilder);
 
   form = this.fb.group({
@@ -25,19 +25,26 @@ export class TransactionRecordsComponent {
     this.initData();
   }
 
+  toggleAll() {
+    const checked = this.form.value.checkAll;
+
+    this.rows.controls.forEach((row) => {
+      row.get('selected')?.setValue(checked);
+    });
+  }
+
   private initData() {
-    TRANSACTION_RECORDS_SAMPLE.forEach((item) => {
+    CARD_INQUIRY_SAMPLE.forEach((item) => {
       this.rows.push(
         this.fb.group({
           selected: false,
           cardNumber: item.cardNumber,
-          transactionType: item.transactionType,
-          merchantName: item.merchantName,
+          model: item.model,
+          type: item.type,
           currency: item.currency,
-          amount: item.amount,
-          received: item.received,
-          status: item.status,
-          recordTime: item.recordTime,
+          openTime: item.openTime,
+          state: item.state,
+          balance: item.balance,
           remark: item.remark,
         }),
       );
