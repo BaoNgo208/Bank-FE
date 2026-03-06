@@ -1,117 +1,117 @@
-<div class="h-full p-6 text-[0.85rem] overflow-auto">
-  <!-- PRECAUTIONS -->
-  <div class="bg-red-50 border border-red-200 rounded p-4 mb-6">
-    <div class="flex items-center gap-2 text-red-600 font-medium mb-2">
-      <span>⚠</span>
-      <span>Precautions</span>
-    </div>
-    <p class="text-red-600 text-sm">
-      1. It is forbidden to create content that violates national laws and regulations.
-    </p>
-  </div>
-
-  <!-- FORM CONTAINER -->
-  <div class="max-w-3xl space-y-6">
-    <!-- Number segment -->
-    <div class="grid grid-cols-3 gap-6 items-center">
-      <label class="text-gray-700">Number segment:</label>
-      <div class="col-span-2 flex gap-3">
-        <button class="px-4 py-1 border border-red-600 text-red-600 bg-red-50 rounded">
-          436797
-        </button>
-        <button class="px-4 py-1 border border-gray-300 rounded hover:border-red-500">
-          493875
-        </button>
-      </div>
+<div class="h-full p-6 text-[0.85rem] flex flex-col gap-y-2 overflow-auto">
+  <div class="w-full rounded-xl bg-white border border-gray-200 flex flex-col">
+    <!-- HEADER -->
+    <div class="px-5 py-4 border-b border-gray-200 font-bold text-gray-700">
+      Choose your purpose and deck
     </div>
 
-    <!-- Card grouping -->
-    <div class="grid grid-cols-3 gap-6 items-center">
-      <label class="text-gray-700">
-        Card grouping:
-        <span class="text-red-500">*</span>
-      </label>
-      <select
-        class="col-span-2 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-red-500"
-      >
-        <option>Ads agency</option>
-        <option>Personal</option>
-      </select>
-    </div>
+    <!-- FILTER BUTTONS -->
+    <div class="px-5 py-4 flex flex-wrap gap-3">
+      <button class="px-4 py-1.5 rounded-full border border-gray-300 bg-gray-100 text-gray-700">
+        all
+      </button>
 
-    <!-- Number of cards opened -->
-    <div class="grid grid-cols-3 gap-6 items-center">
-      <label class="text-gray-700">
-        Number of cards opened:
-        <span class="text-red-500">*</span>
-      </label>
-      <input
-        type="number"
-        placeholder="Enter quantity"
-        class="col-span-2 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-red-500"
-      />
-    </div>
+      <button class="px-4 py-1.5 rounded-full border border-gray-300 hover:bg-gray-50">
+        Exclusive scene configuration
+      </button>
 
-    <!-- Recharge amount -->
-    <div class="grid grid-cols-3 gap-6 items-center">
-      <label class="text-gray-700">
-        Recharge amount:
-        <span class="text-red-500">*</span>
-      </label>
-      <input
-        type="text"
-        value="100.00"
-        class="col-span-2 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-red-500"
-      />
-    </div>
+      <button class="px-4 py-1.5 rounded-full border border-gray-300 hover:bg-gray-50">
+        Recommended Ad Card Segments
+      </button>
 
-    <!-- Total amount -->
-    <div class="grid grid-cols-3 gap-6 items-center">
-      <label class="text-gray-700">
-        Total amount:
-        <span class="text-red-500">*</span>
-      </label>
-      <input
-        type="text"
-        value="100.00"
-        readonly
-        class="col-span-2 border border-gray-300 rounded px-3 py-2 bg-gray-100"
-      />
-    </div>
-
-    <!-- Total service fee -->
-    <div class="grid grid-cols-3 gap-6 items-center">
-      <label class="text-gray-700">
-        Total service fee:
-        <span class="text-red-500">*</span>
-      </label>
-      <input
-        type="text"
-        value="0.00"
-        readonly
-        class="col-span-2 border border-gray-300 rounded px-3 py-2 bg-gray-100"
-      />
-    </div>
-
-    <!-- Amount to be paid -->
-    <div class="grid grid-cols-3 gap-6 items-center">
-      <label class="text-gray-700">
-        Amount to be paid:
-        <span class="text-red-500">*</span>
-      </label>
-      <input
-        type="text"
-        value="100.00"
-        readonly
-        class="col-span-2 border border-gray-300 rounded px-3 py-2 bg-gray-100"
-      />
-    </div>
-
-    <!-- SUBMIT -->
-    <div class="pl-[33%]">
-      <button class="px-6 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition">
-        Save and Submit
+      <button class="px-4 py-1.5 rounded-full border border-gray-300 hover:bg-gray-50">
+        Overseas consumption
       </button>
     </div>
+
+    <!-- DIVIDER -->
+    <div class="border-t border-gray-200"></div>
+
+    <!-- CARD BRANDS -->
+    <div class="px-5 py-6 flex flex-col gap-6">
+      <!-- MASTERCARD -->
+      <div class="flex items-center gap-3">
+        <img src="master_card.png" class="h-10 w-fit" />
+      </div>
+
+      <!-- VISA -->
+      <div class="flex flex-col gap-3">
+        <img src="visa.png" class="ml-2 h-14 w-[50px]" />
+
+        <div class="flex flex-wrap gap-3">
+          <span class="px-4 py-1.5 rounded-full border border-gray-300 bg-gray-50">40024200</span>
+          <span class="px-4 py-1.5 rounded-full border border-gray-300 bg-gray-50">43612081</span>
+          <span class="px-4 py-1.5 rounded-full border border-gray-300 bg-gray-50">43612077</span>
+          <span class="px-4 py-1.5 rounded-full border border-gray-300 bg-gray-50">43612078</span>
+          <span class="px-4 py-1.5 rounded-full border border-gray-300 bg-gray-50">43612079</span>
+          <span class="px-4 py-1.5 rounded-full border border-gray-300 bg-gray-50">43612080</span>
+          <span class="px-4 py-1.5 rounded-full border border-gray-300 bg-gray-50">49387513</span>
+          <span class="px-4 py-1.5 rounded-full border border-gray-300 bg-gray-50">44135830</span>
+          <span class="px-4 py-1.5 rounded-full border border-gray-300 bg-gray-50">44135829</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="w-full rounded-xl bg-white border border-gray-200 flex flex-col">
+    <!-- HEADER -->
+    <div class="px-5 py-4 border-b border-gray-200 font-semibold text-gray-700">
+      Costs and Quantities
+    </div>
+
+    <!-- BODY -->
+    <div class="px-5 py-6 flex flex-col gap-5 text-[0.85rem]">
+      <!-- ROW 1 -->
+      <div class="flex items-center gap-10 flex-wrap">
+        <!-- NUMBER OF CARDS -->
+        <div class="flex items-center gap-4">
+          <span class="text-gray-600">Number of cards opened</span>
+
+          <div class="flex border border-gray-300 rounded-md overflow-hidden">
+            <button
+              class="w-8 h-8 flex items-center justify-center text-gray-500 hover:bg-gray-100"
+            >
+              −
+            </button>
+
+            <div class="w-12 flex items-center justify-center border-x border-gray-300">1</div>
+
+            <button
+              class="w-8 h-8 flex items-center justify-center text-gray-500 hover:bg-gray-100"
+            >
+              +
+            </button>
+          </div>
+        </div>
+
+        <!-- RECHARGE AMOUNT -->
+        <div class="flex items-center gap-4">
+          <span class="text-gray-600">Recharge amount</span>
+
+          <div class="flex border border-gray-300 rounded-md overflow-hidden">
+            <input type="number" value="5" class="w-24 px-3 py-1 outline-none" />
+
+            <div class="px-3 flex items-center border-l border-gray-300 text-gray-500">USD</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- REMARK -->
+      <div class="flex items-start gap-6">
+        <span class="text-gray-600 w-[80px]">Remark</span>
+
+        <textarea
+          placeholder="Please enter a note."
+          class="flex-1 border border-gray-300 rounded-md px-3 py-2 outline-none resize-none focus:border-gray-400"
+          rows="2"
+        ></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="w-full flex justify-center">
+    <button class="h-9 px-4 bg-red-600 text-white text-sm rounded hover:bg-red-700 transition">
+      Confirm
+    </button>
   </div>
 </div>

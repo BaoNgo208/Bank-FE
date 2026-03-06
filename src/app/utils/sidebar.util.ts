@@ -26,9 +26,10 @@ export const SIDEBAR_ROUTE_MAP: Record<string, string> = {
   // Card
   card_grouping: '/home/card_management/card_grouping',
 
-  // User
-  user_list: '/home/user/user_list',
-  roles: '/home/user/roles',
+  inquiry_card: '/home/inquiry_card',
+
+  withdrawal_list: '/home/withdrawal_list',
+  invitation_commission: '/home/invitation_commission',
 };
 
 /**
@@ -48,28 +49,29 @@ export const SIDEBAR_TABS: SidebarTab[] = [
   },
 
   {
-    key: 'card',
-    label: 'Card Management',
-    icon: 'fa-solid fa-id-card',
-    children: [{ key: 'card_grouping', label: 'Card grouping' }],
-  },
-  {
     key: 'apply_card',
     label: 'Apply for a card',
     icon: 'fa-solid fa-id-card',
   },
+  {
+    key: 'inquiry_card',
+    label: 'Inquiry card',
+    icon: 'fa-solid fa-magnifying-glass',
+  },
+
   {
     key: 'transaction_records',
     label: 'Transaction records',
     icon: 'fa-solid fa-arrow-right-arrow-left',
   },
   {
-    key: 'user',
-    label: 'User Management',
-    icon: 'fa-solid fa-user',
-    children: [
-      { key: 'user_list', label: 'All users' },
-      { key: 'roles', label: 'Roles' },
-    ],
+    key: 'withdrawal_list',
+    label: 'Withdrawal list',
+    icon: 'fa-solid fa-money-bill-transfer',
+  },
+  {
+    key: 'invitation_commission',
+    label: 'Invitation commission',
+    icon: 'fa-solid fa-user-plus',
   },
 ];

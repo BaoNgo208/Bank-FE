@@ -1,0 +1,121 @@
+<div class="h-full px-3 py-2 flex flex-col gap-y-5 overflow-auto">
+  <!-- Filter -->
+  <div class="w-full bg-white p-4 rounded-xl border border-gray-200 flex flex-col">
+    <!-- FILTER ROW -->
+    <div class="flex flex-wrap items-center gap-6 text-[0.85rem]">
+      <!-- Invitee ID -->
+      <div class="flex items-center gap-2">
+        <span class="text-gray-600 whitespace-nowrap">Invitee ID</span>
+        <input
+          type="text"
+          placeholder="Invitee ID"
+          class="h-9 w-[200px] px-3 border border-gray-300 rounded outline-none focus:border-gray-400"
+        />
+      </div>
+
+      <!-- Creation time -->
+      <div class="flex items-center gap-2">
+        <span class="text-gray-600 whitespace-nowrap">Creation time</span>
+
+        <div class="flex items-center border border-gray-300 rounded overflow-hidden text-gray-500">
+          <input type="date" class="h-9 px-2 outline-none w-[130px]" />
+          <span class="px-2 text-gray-400">-</span>
+          <input type="date" class="h-9 px-2 outline-none w-[130px]" />
+        </div>
+      </div>
+      <!-- BUTTON ROW -->
+      <div class="flex gap-4 text-[0.8rem]">
+        <button
+          class="h-9 px-4 bg-red-600 text-white rounded hover:bg-red-700 transition flex items-center gap-2"
+        >
+          <i class="fa-solid fa-magnifying-glass"></i>
+          Search
+        </button>
+
+        <button
+          class="h-9 px-4 bg-red-600 text-white rounded hover:bg-red-700 transition flex items-center gap-2"
+        >
+          <i class="fa-solid fa-rotate"></i>
+          Reset
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Invitees Infos -->
+  <div class="w-full grid grid-cols-1 lg:grid-cols-2 gap-4">
+    <!-- Number of invitees -->
+    <div
+      class="flex items-center justify-between p-5 bg-white rounded-xl border border-gray-200 shadow-sm"
+    >
+      <div class="flex flex-col">
+        <span class="text-sm text-gray-500"> Number of invitees </span>
+
+        <span class="text-2xl font-semibold text-gray-800 mt-2"> 0 </span>
+      </div>
+
+      <div
+        class="flex items-center justify-center w-16 h-16 border-4 border-red-400 rounded-full text-red-500 text-3xl"
+      >
+        <i class="fa-solid fa-user-group"></i>
+      </div>
+    </div>
+
+    <!-- Commission amount -->
+    <div
+      class="flex items-center justify-between p-5 bg-white rounded-xl border border-gray-200 shadow-sm"
+    >
+      <div class="flex flex-col">
+        <span class="text-sm text-gray-500"> Commission amount </span>
+
+        <span class="text-2xl font-semibold text-gray-800 mt-2"> 0.00 </span>
+      </div>
+
+      <div
+        class="flex items-center justify-center w-16 h-16 border-4 border-red-400 rounded-xl text-red-500 text-3xl"
+      >
+        <i class="fa-solid fa-wallet"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- Transaction record list table -->
+
+  <div class="w-max min-w-full">
+    <div
+      class="flex items-center justify-between px-4 py-2 bg-neutral-secondary-soft border-b border-default bg-white"
+    >
+      <div class="text-sm font-medium text-heading">
+        <label>Transaction record list</label>
+      </div>
+      <div class="flex items-center"></div>
+    </div>
+    <form [formGroup]="form">
+      <table class="w-full text-sm text-left border-collapse border border-default">
+        <!-- HEADER -->
+        <thead class="border-b bg-gray-50">
+          <tr class="text-gray-600">
+            <th class="px-3 py-3 border-r border-default">invite id</th>
+            <th class="px-3 py-3 border-r border-default">invited username</th>
+            <th class="px-3 py-3 border-r border-default">total commission</th>
+          </tr>
+        </thead>
+
+        <!-- BODY -->
+        <tbody formArrayName="rows">
+          <tr
+            *ngFor="let row of rows.controls; let i = index"
+            [formGroupName]="i"
+            class="border-b hover:bg-gray-50"
+          >
+            <td class="px-3 py-3 border-r border-default">{{ row.value.inviteId }}</td>
+            <td class="px-3 py-3 border-r border-default">{{ row.value.username }}</td>
+            <td class="px-3 py-3 border-r border-default text-green-600 font-medium">
+              ${{ row.value.totalCommission }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </div>
+</div>

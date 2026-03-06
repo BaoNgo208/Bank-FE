@@ -1,0 +1,116 @@
+<div class="h-full px-3 py-2 flex flex-col gap-y-5 overflow-auto">
+  <!-- Filter -->
+  <div class="w-full bg-white p-4 rounded-xl border border-gray-200 flex flex-col">
+    <!-- FILTER ROW -->
+    <div class="flex flex-wrap items-center gap-6 text-[0.85rem]">
+      <!-- State -->
+      <div class="flex items-center gap-2 w-[20%]">
+        <span class="text-gray-600">state</span>
+        <select
+          class="h-9 px-3 w-full border border-gray-300 text-gray-500 rounded outline-none focus:border-gray-400 bg-white"
+        >
+          <option>Please select state</option>
+          <option>Active</option>
+          <option>Inactive</option>
+        </select>
+      </div>
+      <!-- creation time -->
+      <div class="flex items-center gap-2">
+        <span class="text-gray-600 whitespace-nowrap">Creation time</span>
+
+        <div class="flex items-center border border-gray-300 rounded overflow-hidden text-gray-500">
+          <input type="date" class="h-9 px-2 outline-none w-[130px]" />
+          <span class="px-2 text-gray-400">-</span>
+          <input type="date" class="h-9 px-2 outline-none w-[130px]" />
+        </div>
+      </div>
+      <!-- BUTTON ROW -->
+      <div class="flex gap-4 text-[0.8rem]">
+        <button
+          class="h-9 px-4 bg-red-600 text-white rounded hover:bg-red-700 transition flex items-center gap-2"
+        >
+          <i class="fa-solid fa-magnifying-glass"></i>
+          Search
+        </button>
+
+        <button
+          class="h-9 px-4 bg-red-600 text-white rounded hover:bg-red-700 transition flex items-center gap-2"
+        >
+          <i class="fa-solid fa-rotate"></i>
+          Reset
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Withdrawal Management List -->
+  <div class="w-max min-w-full">
+    <div
+      class="flex items-center justify-between px-4 py-2 bg-neutral-secondary-soft border-b border-default bg-white"
+    >
+      <div class="text-sm font-medium text-heading">
+        <label>Withdrawal Management List</label>
+      </div>
+      <div class="flex items-center">
+        <button
+          class="h-9 px-3 bg-green-200 text-green-600 rounded hover:bg-green-300 transition flex items-center gap-2"
+        >
+          <i class="fa-solid fa-file-export"></i>
+          Export
+        </button>
+      </div>
+    </div>
+    <form [formGroup]="form">
+      <table class="w-full text-sm text-left border-collapse border border-default">
+        <!-- HEADER -->
+        <thead class="border-b bg-gray-50">
+          <tr class="text-gray-600">
+            <!-- CHECK ALL -->
+
+            <th class="px-3 py-3 border-r border-default">order number</th>
+            <th class="px-3 py-3 border-r border-default">channels</th>
+            <th class="px-3 py-3 border-r border-default">amount</th>
+            <th class="px-3 py-3 border-r border-default">exchange rate</th>
+            <th class="px-3 py-3 border-r border-default">state</th>
+            <th class="px-3 py-3 border-r border-default">reason</th>
+            <th class="px-3 py-3 border-r border-default">remaining balance</th>
+            <th class="px-3 py-3 border-r border-default">wallet</th>
+            <th class="px-3 py-3 border-r border-default">remark</th>
+            <th class="px-3 py-3 border-r border-default">submission date</th>
+            <th class="px-3 py-3 border-r border-default">operate</th>
+          </tr>
+        </thead>
+
+        <!-- BODY -->
+        <tbody formArrayName="rows">
+          <tr
+            *ngFor="let row of rows.controls; let i = index"
+            [formGroupName]="i"
+            class="border-b hover:bg-gray-50"
+          >
+            <td class="px-3 py-3 border-r border-default">{{ row.value.orderNumber }}</td>
+            <td class="px-3 py-3 border-r border-default">{{ row.value.channel }}</td>
+            <td class="px-3 py-3 border-r border-default">{{ row.value.amount }}</td>
+            <td class="px-3 py-3 border-r border-default">{{ row.value.exchangeRate }}</td>
+            <td class="px-3 py-3 border-r border-default">
+              <span
+                [ngClass]="{
+                  'text-green-600': row.value.state === 'Completed',
+                  'text-yellow-600': row.value.state === 'Pending',
+                  'text-red-600': row.value.state === 'Rejected',
+                }"
+              >
+                {{ row.value.state }}
+              </span>
+            </td>
+            <td class="px-3 py-3 border-r border-default">{{ row.value.reason }}</td>
+            <td class="px-3 py-3 border-r border-default">{{ row.value.remainingBalance }}</td>
+            <td class="px-3 py-3 border-r border-default">{{ row.value.wallet }}</td>
+            <td class="px-3 py-3 border-r border-default">{{ row.value.remark }}</td>
+            <td class="px-3 py-3 border-r border-default">{{ row.value.submissionDate }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </div>
+</div>
