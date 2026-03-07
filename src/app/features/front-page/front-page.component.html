@@ -1,114 +1,137 @@
-<div class="p-4 space-y-4">
-  <!-- TOP GRID -->
-  <div class="flex justify-between">
-    <!-- TOTAL ASSETS -->
-    <div class="col-span-2 rounded-xl p-6 text-white relative overflow-hidden bg-red-600">
-      <div class="text-sm opacity-80">Total Assets (USD)</div>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body class="bg-gray-100 font-sans">
+    <div class="p-4 flex flex-col gap-4">
+      <!-- TOP GRID: 1 col → md:2 cols → lg:5 cols (assets=2, stats=2, profile=1) -->
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-2">
+        <!-- TOTAL ASSETS -->
+        <div class="lg:col-span-2 bg-red-600 text-white rounded-xl p-6 relative overflow-hidden">
+          <div class="text-sm opacity-80">Total Assets (USD)</div>
+          <div class="text-5xl font-bold mt-2 tabular-nums">$<span [countUp]="3.05"></span></div>
 
-      <!-- TOTAL -->
-      <div class="text-5xl font-bold mt-2 tabular-nums">$<span [countUp]="3.05"></span></div>
-
-      <!-- SUB INFO -->
-      <div class="w-full flex gap-2 mt-8">
-        <div class="bg-white/20 px-2 py-4 rounded-lg text-center flex flex-col items-center">
-          <div class="text-xs mb-1">Balance</div>
-          <div class="text-xl font-semibold tabular-nums min-w-[80px]">
-            $<span [countUp]="0.75"></span>
+          <div class="flex gap-2 mt-8 flex-wrap">
+            <div
+              class="bg-white/20 px-2 py-4 rounded-lg text-center flex flex-col items-center flex-1 min-w-[80px]"
+            >
+              <div class="text-xs mb-1">Balance</div>
+              <div class="text-xl font-semibold tabular-nums min-w-[80px]">
+                $<span [countUp]="0.75"></span>
+              </div>
+            </div>
+            <div
+              class="bg-white/20 px-2 py-4 rounded-lg text-center flex flex-col items-center flex-1 min-w-[80px]"
+            >
+              <div class="text-xs mb-1">Freeze</div>
+              <div class="text-xl font-semibold tabular-nums min-w-[80px]">
+                $<span [countUp]="0.0"></span>
+              </div>
+            </div>
+            <div
+              class="bg-white/20 px-2 py-4 rounded-lg text-center flex flex-col items-center flex-1 min-w-[80px]"
+            >
+              <div class="text-xs mb-1">Total card balance</div>
+              <div class="text-xl font-semibold tabular-nums min-w-[80px]">
+                $<span [countUp]="2.3"></span>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="bg-white/20 px-2 py-4 rounded-lg text-center flex flex-col items-center">
-          <div class="text-xs mb-1">Freeze</div>
-          <div class="text-xl font-semibold tabular-nums min-w-[80px]">
-            $<span [countUp]="0.0"></span>
+        <!-- STATS 4 mini cards -->
+        <div class="md:col-span-2 lg:col-span-2 grid grid-cols-2 gap-1">
+          <div
+            class="bg-white rounded-xl p-4 border border-gray-200 flex justify-between items-center"
+          >
+            <div>
+              <div class="text-xs text-gray-500">Card opening limit</div>
+              <div class="text-2xl mt-2">0</div>
+            </div>
+            <div class="w-12 h-12 rounded-lg bg-teal-100 flex items-center justify-center shrink-0">
+              <i class="fa-solid fa-credit-card text-teal-500"></i>
+            </div>
+          </div>
+          <div
+            class="bg-white rounded-xl p-4 border border-gray-200 flex justify-between items-center"
+          >
+            <div>
+              <div class="text-xs text-gray-500">Number of cards activated</div>
+              <div class="text-2xl mt-2">0</div>
+            </div>
+            <div
+              class="w-12 h-12 rounded-lg bg-orange-100 flex items-center justify-center shrink-0"
+            >
+              <i class="fa-solid fa-id-card text-orange-500"></i>
+            </div>
+          </div>
+          <div
+            class="bg-white rounded-xl p-4 border border-gray-200 flex justify-between items-center"
+          >
+            <div>
+              <div class="text-xs text-gray-500 w-[70%]">Number of invited registrants</div>
+              <div class="text-2xl mt-2">0</div>
+            </div>
+            <div
+              class="w-12 h-12 rounded-lg bg-purple-100 flex items-center justify-center shrink-0"
+            >
+              <i class="fa-solid fa-user-plus text-purple-500"></i>
+            </div>
+          </div>
+          <div
+            class="bg-white rounded-xl p-4 border border-gray-200 flex justify-between items-center"
+          >
+            <div>
+              <div class="text-xs text-gray-500">User ID / Invitation Code</div>
+              <div class="text-2xl mt-2 flex items-center gap-2">
+                1
+                <i class="fa-regular fa-copy text-orange-500 cursor-pointer text-base"></i>
+              </div>
+            </div>
+            <div class="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center shrink-0">
+              <i class="fa-solid fa-qrcode text-blue-500"></i>
+            </div>
           </div>
         </div>
 
-        <div class="bg-white/20 px-2 py-4 rounded-lg text-center flex flex-col items-center">
-          <div class="text-xs mb-1">Total card balance</div>
-          <div class="text-xl font-semibold tabular-nums min-w-[80px]">
-            $<span [countUp]="2.3"></span>
+        <!-- USER PROFILE -->
+        <div
+          class="md:col-span-2 lg:col-span-1 bg-white rounded-xl border border-gray-200 overflow-hidden"
+        >
+          <div class="h-20 bg-red-600"></div>
+          <div class="flex flex-col items-center -mt-10 pb-6 px-5">
+            <img
+              src="https://i.pravatar.cc/100"
+              class="w-20 h-20 rounded-full border-4 border-white"
+              alt="avatar"
+            />
+            <div class="mt-4 text-xs text-gray-600 text-center">
+              Customer Service: @dajinniao123
+            </div>
+            <div class="text-xs text-gray-600 mt-1 text-center">
+              Business cooperation: @hzguanxi
+            </div>
           </div>
         </div>
+      </div>
+
+      <!-- SYSTEM NOTICE -->
+      <div
+        class="bg-orange-50 text-orange-600 border border-orange-300 rounded-lg p-3 flex items-center gap-2 text-sm"
+      >
+        <i class="fa-solid fa-circle-info"></i>
+        A new number segment will be launched on January 4, 2026. Those interested can contact our
+        sales or customer service for configuration and testing.
       </div>
     </div>
-    <div class="grid grid-cols-2 gap-x-1 gap-y-1">
-      <!-- CARD OPENING LIMIT -->
-      <div class="bg-white rounded-xl p-4 border flex justify-between items-center">
-        <div>
-          <div class="text-sm text-gray-500">Card opening limit</div>
-          <div class="text-2xl mt-2">0</div>
-        </div>
-
-        <div class="w-12 h-12 rounded-lg bg-teal-100 flex items-center justify-center">
-          <i class="fa-solid fa-credit-card text-teal-500"></i>
-        </div>
-      </div>
-
-      <!-- CARDS ACTIVATED -->
-      <div class="bg-white rounded-xl p-4 border flex justify-between items-center">
-        <div>
-          <div class="text-sm text-gray-500">Number of cards activated</div>
-          <div class="text-2xl mt-2">0</div>
-        </div>
-
-        <div class="w-12 h-12 rounded-lg bg-orange-100 flex items-center justify-center">
-          <i class="fa-solid fa-id-card text-orange-500"></i>
-        </div>
-      </div>
-
-      <!-- INVITED USERS -->
-      <div class="bg-white rounded-xl p-4 border flex justify-between items-center">
-        <div>
-          <div class="w-[70%] text-sm text-gray-500 whitespace-normal">
-            Number of invited registrants
-          </div>
-          <div class="text-2xl mt-2">0</div>
-        </div>
-
-        <div class="w-12 h-12 rounded-lg bg-purple-100 flex items-center justify-center">
-          <i class="fa-solid fa-user-plus text-purple-500"></i>
-        </div>
-      </div>
-
-      <!-- INVITE CODE -->
-      <div class="bg-white rounded-xl p-4 border flex justify-between items-center">
-        <div>
-          <div class="text-sm text-gray-500">User ID / Invitation Code</div>
-          <div class="text-2xl mt-2 flex items-center gap-2">
-            1
-            <i class="fa-regular fa-copy text-orange-500 cursor-pointer"></i>
-          </div>
-        </div>
-
-        <div class="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center">
-          <i class="fa-solid fa-qrcode text-blue-500"></i>
-        </div>
-      </div>
-    </div>
-
-    <!-- USER PROFILE -->
-    <div class="bg-white rounded-xl border overflow-hidden">
-      <!-- HEADER -->
-      <div class="h-20 bg-red-600"></div>
-
-      <!-- AVATAR -->
-      <div class="flex flex-col items-center -mt-10 pb-6 px-5">
-        <img src="https://i.pravatar.cc/100" class="w-20 h-20 rounded-full border-4 border-white" />
-
-        <div class="mt-4 text-[0.8rem] text-gray-600">Customer Service: @dajinniao123</div>
-
-        <div class="text-[0.8rem] text-gray-600 mt-1">Business cooperation: @hzguanxi</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SYSTEM NOTICE -->
-  <div
-    class="bg-orange-100 text-orange-600 border border-orange-300 rounded-lg p-3 flex items-center gap-2 text-sm"
-  >
-    <i class="fa-solid fa-circle-info"></i>
-    A new number segment will be launched on January 4, 2026. Those interested can contact our sales
-    or customer service for configuration and testing.
-  </div>
-</div>
+  </body>
+</html>

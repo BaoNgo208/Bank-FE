@@ -44,7 +44,7 @@
   </div>
 
   <!-- Withdrawal Management List -->
-  <div class="w-max min-w-full">
+  <div class="w-full small_laptop:w-max min-w-0">
     <div
       class="flex items-center justify-between px-4 py-2 bg-neutral-secondary-soft border-b border-default bg-white"
     >
@@ -60,7 +60,7 @@
         </button>
       </div>
     </div>
-    <form [formGroup]="form">
+    <form [formGroup]="form" class="overflow-x-auto">
       <table class="w-full text-sm text-left border-collapse border border-default">
         <!-- HEADER -->
         <thead class="border-b bg-gray-50">
