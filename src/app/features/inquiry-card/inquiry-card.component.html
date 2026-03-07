@@ -124,16 +124,16 @@
   </div>
 
   <!-- Card lists table -->
-  <div class="w-max min-w-full">
+  <div class="min-w-0">
     <div
       class="flex items-center justify-between px-4 py-2 bg-neutral-secondary-soft border-b border-default bg-white"
     >
       <div class="text-sm font-medium text-heading">
         <label>Card List</label>
       </div>
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-1 small_laptop:gap-2">
         <button
-          class="flex items-center gap-2 px-4 h-9 text-sm rounded-lg bg-amber-100 text-amber-700 hover:bg-amber-200 transition"
+          class="flex items-center gap-2 px-1 tablet:px-4 h-9 text-[0.8rem] tablet:text-sm rounded-lg bg-amber-100 text-amber-700 hover:bg-amber-200 transition"
         >
           <i class="fa-solid fa-snowflake text-xs"></i>
           Freeze (0)
@@ -141,7 +141,7 @@
 
         <!-- Thawing -->
         <button
-          class="flex items-center gap-2 px-4 h-9 text-sm rounded-lg bg-emerald-100 text-emerald-700 hover:bg-emerald-200 transition"
+          class="flex items-center gap-2 px-1 tablet:px-4 h-9 text-[0.8rem] tablet:text-sm rounded-lg bg-emerald-100 text-emerald-700 hover:bg-emerald-200 transition"
         >
           <i class="fa-solid fa-unlock text-xs"></i>
           Thawing (0)
@@ -149,14 +149,14 @@
 
         <!-- Cancellation -->
         <button
-          class="flex items-center gap-2 px-4 h-9 text-sm rounded-lg bg-rose-100 text-rose-700 hover:bg-rose-200 transition"
+          class="flex items-center gap-2 px-1 tablet:px-4 h-9 text-[0.8rem] tablet:text-sm rounded-lg bg-rose-100 text-rose-700 hover:bg-rose-200 transition"
         >
           <i class="fa-solid fa-ban text-xs"></i>
           Cancellation (0)
         </button>
       </div>
     </div>
-    <form [formGroup]="form">
+    <form [formGroup]="form" class="overflow-x-auto">
       <table class="w-full text-sm text-left border-collapse border border-default">
         <!-- HEADER -->
         <thead class="border-b bg-gray-50">
