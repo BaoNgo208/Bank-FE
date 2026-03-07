@@ -1,14 +1,32 @@
 <div class="h-screen flex overflow-hidden">
-  <!-- SIDEBAR -->
+  <!-- MOBILE OVERLAY -->
+  <div
+    *ngIf="sidebarOpen()"
+    class="fixed inset-0 bg-black/40 z-40 small_laptop:hidden"
+    (click)="closeSidebar()"
+  ></div>
+
+  <!-- MOBILE SIDEBAR -->
+  <div
+    class="fixed top-0 left-0 h-full w-[260px] bg-white z-50 transform transition-transform duration-300 small_laptop:hidden"
+    [ngClass]="{
+      '-translate-x-full': !sidebarOpen(),
+      'translate-x-0': sidebarOpen(),
+    }"
+  >
+    <app-sidebar-component (closeSidebar)="closeSidebar()"></app-sidebar-component>
+  </div>
+
+  <!-- DESKTOP SIDEBAR -->
   <div class="hidden small_laptop:block w-[15%] border-r bg-white shrink-0">
-    <app-sidebar-component></app-sidebar-component>
+    <app-sidebar-component (closeSidebar)="closeSidebar()"></app-sidebar-component>
   </div>
 
   <!-- RIGHT SIDE -->
   <div class="flex-1 flex flex-col overflow-hidden">
     <!-- TOPBAR -->
     <div class="h-[60px] border-b bg-white shrink-0">
-      <app-navigation-component></app-navigation-component>
+      <app-navigation-component (toggleSidebar)="toggleSidebar()"></app-navigation-component>
     </div>
 
     <!-- CONTENT -->
