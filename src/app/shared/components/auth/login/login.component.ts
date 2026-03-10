@@ -2,6 +2,8 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../../core/auth/auth.service';
+import { SigninRequest } from '../../../../core/auth/auth.request';
 
 @Component({
   selector: 'app-login-component',
@@ -11,6 +13,7 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   private fb = inject(FormBuilder);
   private router = inject(Router);
+  private authService = inject(AuthService);
 
   loginForm = this.fb.group({
     username: ['', [Validators.required]],
@@ -19,12 +22,23 @@ export class LoginComponent {
   });
 
   onSubmit() {
-    // if (this.loginForm.invalid) {return;}
+    if (this.loginForm.invalid) {
+      console.log('invalid');
+      return;
+    }
 
-    const formValue = this.loginForm.value;
+    const data: SigninRequest = {
+      username: this.loginForm.value.username ?? '',
+      password: this.loginForm.value.password ?? '',
+    };
 
-    console.log(formValue);
-    this.router.navigate(['/home']);
+    this.authService.signIn(data).subscribe({
+      next: (res) => {
+        localStorage.setItem('accessToken', res.tokens.access_token);
+        localStorage.setItem('refreshToken', res.tokens.refresh_token);
+        this.router.navigate(['/home']);
+      },
+    });
   }
 
   redirectToRegister() {

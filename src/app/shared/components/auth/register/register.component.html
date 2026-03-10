@@ -33,23 +33,6 @@
         />
       </div>
 
-      <!-- Verification code -->
-      <div class="relative mb-5 flex gap-3 border border-gray-200">
-        <div class="relative flex-1">
-          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-            <img src="/verified.png" alt="logo" class="w-4" />
-          </span>
-          <input
-            type="text"
-            formControlName="verificationCode"
-            placeholder="Verification code"
-            class="w-full pl-10 py-3 text-sm focus:outline-none focus:border-red-500"
-          />
-        </div>
-
-        <button class="px-3 text-sm hover:bg-gray-100">Get verification code</button>
-      </div>
-
       <!-- Password -->
       <div class="relative mb-5">
         <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
@@ -74,6 +57,25 @@
           placeholder="Confirm Password"
           class="w-full border border-gray-200 pl-10 py-3 text-sm focus:outline-none focus:border-red-500"
         />
+      </div>
+
+      <!-- Verification code -->
+      <div class="relative mb-5 flex gap-3 border border-gray-200">
+        <div class="relative flex-1">
+          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+            <img src="/verified.png" alt="logo" class="w-4" />
+          </span>
+          <input
+            type="text"
+            formControlName="otp"
+            placeholder="Verification code"
+            class="w-full pl-10 py-3 text-sm focus:outline-none"
+          />
+        </div>
+
+        <button class="px-3 text-sm hover:bg-gray-100" (click)="sendOtp()">
+          Get verification code
+        </button>
       </div>
 
       <!-- Already have an account -->
