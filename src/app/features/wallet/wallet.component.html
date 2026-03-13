@@ -11,7 +11,12 @@
           <i class="fa-solid fa-wallet"></i>
         </div>
 
-        <button class="px-4 py-1 rounded-full bg-white/20 hover:bg-white/30 text-sm">top up</button>
+        <button
+          class="px-4 py-1 rounded-full bg-white/20 hover:bg-white/30 text-sm"
+          (click)="openModal()"
+        >
+          top up
+        </button>
 
         <button class="px-4 py-1 rounded-full bg-white/20 hover:bg-white/30 text-sm">
           Withdrawal
@@ -125,7 +130,7 @@
               <td
                 class="px-4 py-3 border-r border-default"
                 [ngClass]="{
-                  'text-orange-500': row.get('state')?.value === 'Pending payment',
+                  'text-red-500': row.get('state')?.value === 'Pending payment',
                   'text-yellow-600': row.get('state')?.value === 'Partial payment',
                   'text-green-600': row.get('state')?.value === 'Success',
                 }"
@@ -370,5 +375,218 @@
         </div>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- BACKDROP -->
+<div *ngIf="showTopupModal" class="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+  <!-- MODAL -->
+  <div class="bg-white rounded-xl w-[520px] shadow-xl p-6 relative">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-lg font-semibold flex items-center gap-2">
+        <span class="w-4 h-4 bg-red-400 rounded-sm"></span>
+        top up
+      </h2>
+
+      <button (click)="closeModal()" class="text-gray-400 hover:text-black">✕</button>
+    </div>
+
+    <!-- Tabs -->
+    <div class="flex border-b mb-4 text-sm">
+      <button class="pb-2 border-b-2 border-red-500 text-red-500 mr-6">USDT online top-up</button>
+
+      <button class="pb-2 text-gray-500">Offline ton-up (USD)</button>
+    </div>
+
+    <!-- Form -->
+    <div class="space-y-3 text-sm">
+      <div class="flex justify-between items-center">
+        <span>Current balance</span>
+        <input
+          class="border rounded px-3 py-1 w-40 text-right"
+          value="{{ this.walletStore.depositConfig()?.balance }}"
+          disabled
+        />
+      </div>
+
+      <div class="flex justify-between items-center">
+        <span>Recharge fee</span>
+        <input
+          class="border rounded px-3 py-1 w-40 text-right"
+          value="{{ this.walletStore.depositConfig()?.fee_percent }} %"
+          disabled
+        />
+      </div>
+
+      <div class="flex justify-between items-center">
+        <span>Minimum recharge</span>
+        <input
+          class="border rounded px-3 py-1 w-40 text-right"
+          value="{{ this.walletStore.depositConfig()?.min_amount }} USD"
+          disabled
+        />
+      </div>
+      <div class="flex justify-between items-center">
+        <span>Maximum recharge</span>
+        <input
+          class="border rounded px-3 py-1 w-40 text-right"
+          value="{{ this.walletStore.depositConfig()?.max_amount }} USD"
+          disabled
+        />
+      </div>
+
+      <div class="flex justify-between items-center">
+        <span class="text-red-500">* Recharge amount</span>
+        <input
+          [(ngModel)]="amount"
+          type="number"
+          class="border rounded px-3 py-1 w-40 text-right"
+        />
+      </div>
+
+      <div class="flex justify-between items-center">
+        <span>Expected amount received</span>
+        <input
+          class="border rounded px-3 py-1 w-40 text-right"
+          [value]="amount - amount * 0.003"
+          disabled
+        />
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex justify-center gap-3 mt-6">
+      <button
+        class="bg-red-500 text-white px-5 py-2 rounded hover:bg-red-600"
+        (click)="openPaymentModal()"
+      >
+        Sure
+      </button>
+
+      <button (click)="closeModal()" class="border px-5 py-2 rounded hover:bg-gray-100">
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- PAYMENT MODAL -->
+<div
+  *ngIf="showPaymentModal && depositPreview() as preview"
+  class="fixed inset-0 bg-black/40 flex items-center justify-center z-50 self-center h-[100%]"
+>
+  <div class="bg-white w-[520px] rounded-xl shadow-xl p-6 relative overflow-y-auto">
+    <!-- Close -->
+    <button
+      (click)="closePaymentModal()"
+      class="absolute top-3 right-3 text-gray-400 hover:text-black"
+    >
+      ✕
+    </button>
+
+    <!-- Countdown -->
+    <div class="mb-5">
+      <span class="text-gray-600">Payment Time Remaining:</span>
+      <span class="ml-2 bg-orange-100 text-orange-600 px-3 py-1 rounded font-semibold">
+        {{ countdown() }}
+      </span>
+    </div>
+
+    <!-- Payee -->
+    <div class="mb-3">
+      <label class="text-sm text-gray-600">Payee</label>
+      <input
+        class="w-full border rounded p-2 mt-1 bg-gray-100"
+        [value]="preview.payee_name"
+        readonly
+      />
+    </div>
+
+    <!-- Network -->
+    <div class="mb-3">
+      <label class="text-sm text-gray-600">Transfer Network</label>
+      <input
+        class="w-full border rounded p-2 mt-1 bg-gray-100"
+        [value]="preview.network"
+        readonly
+      />
+    </div>
+
+    <!-- Address -->
+    <div class="mb-3">
+      <label class="text-sm text-gray-600">Deposit Address</label>
+
+      <div class="flex">
+        <input
+          class="flex-1 border rounded-l p-2 mt-1 bg-gray-100"
+          [value]="preview.address"
+          readonly
+        />
+
+        <button
+          (click)="copyAddress()"
+          class="mt-1 px-4 border border-l-0 rounded-r bg-gray-50 hover:bg-gray-100 text-sm"
+        >
+          Copy
+        </button>
+      </div>
+    </div>
+
+    <!-- Amount -->
+    <div class="mb-3">
+      <label class="text-sm text-gray-600">Amount</label>
+
+      <div class="relative">
+        <input
+          class="w-full border rounded p-2 mt-1 bg-gray-100 pr-16"
+          [value]="preview.amount | number: '1.2-6'"
+          readonly
+        />
+        <span class="absolute right-3 top-3 text-gray-500 text-sm">
+          {{ preview.currency }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Fee -->
+    <div class="mb-3">
+      <label class="text-sm text-gray-600">Fee</label>
+
+      <div class="relative">
+        <input
+          class="w-full border rounded p-2 mt-1 bg-gray-100 pr-16"
+          [value]="preview.fee | number: '1.2-6'"
+          readonly
+        />
+        <span class="absolute right-3 top-3 text-gray-500 text-sm">
+          {{ preview.currency }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Expected Amount -->
+    <div class="mb-4">
+      <label class="text-sm text-gray-600">Expected Payment</label>
+
+      <div class="relative">
+        <input
+          class="w-full border rounded p-2 mt-1 bg-gray-100 pr-16"
+          [value]="preview.expected_amount | number: '1.2-6'"
+          readonly
+        />
+        <span class="absolute right-3 top-3 text-gray-500 text-sm">
+          {{ preview.currency }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Scan Button -->
+    <button
+      class="w-full border-2 border-blue-500 text-blue-600 py-3 rounded-lg hover:bg-blue-50 flex items-center justify-center gap-2"
+    >
+      <span class="text-xl">▢</span>
+      Scan To Pay
+    </button>
   </div>
 </div>

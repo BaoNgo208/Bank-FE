@@ -21,16 +21,39 @@
         />
       </div>
 
-      <div class="relative mb-5">
+      <div class="relative mb-1">
         <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
           <img src="/user.png" alt="logo" class="w-4" />
         </span>
+
         <input
           type="email"
           formControlName="email"
           placeholder="Email"
-          class="w-full border border-gray-200 pl-10 py-3 text-sm focus:outline-none focus:border-red-500"
+          class="w-full border pl-10 py-3 text-sm focus:outline-none focus:border-red-500"
+          [ngClass]="{
+            'border-gray-200': !(
+              registerForm.controls.email.invalid &&
+              (registerForm.controls.email.dirty || registerForm.controls.email.touched)
+            ),
+            'border-red-500':
+              registerForm.controls.email.invalid &&
+              (registerForm.controls.email.dirty || registerForm.controls.email.touched),
+          }"
         />
+      </div>
+
+      <!-- ERROR MESSAGE -->
+      <div
+        *ngIf="
+          registerForm.controls.email.invalid &&
+          (registerForm.controls.email.dirty || registerForm.controls.email.touched)
+        "
+        class="text-red-500 text-xs mb-4"
+      >
+        <span *ngIf="registerForm.controls.email.hasError('required')"> Email is required </span>
+
+        <span *ngIf="registerForm.controls.email.hasError('email')"> Invalid email format </span>
       </div>
 
       <!-- Password -->
@@ -73,7 +96,7 @@
           />
         </div>
 
-        <button class="px-3 text-sm hover:bg-gray-100" (click)="sendOtp()">
+        <button type="button" class="px-3 text-sm hover:bg-gray-100" (click)="sendOtp()">
           Get verification code
         </button>
       </div>

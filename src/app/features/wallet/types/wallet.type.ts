@@ -1,0 +1,44 @@
+export interface DepositConfigResponse {
+  balance: number;
+  fee_percent: number;
+  min_amount: number;
+  max_amount: number;
+}
+
+export enum Stablecoin {
+  USDT = 'USDT',
+  USDC = 'USDC',
+}
+
+export interface DepositPreviewRequest {
+  currency: Stablecoin;
+  amount: number;
+  network: string;
+}
+
+export interface DepositPreviewResponse {
+  payee_name: string;
+  network: string;
+  address: string;
+  amount: number;
+  fee: number;
+  expected_amount: number;
+  currency: Stablecoin;
+}
+
+export interface CreateDepositOrderRequest {
+  currency: Stablecoin;
+  amount: number;
+  network: string;
+}
+
+export interface CreateDepositOrderResponse {
+  order_no: string;
+  currency: Stablecoin;
+  network: string;
+  address: string;
+  amount: number;
+  fee: number;
+  expected_amount: number;
+  status: string;
+}
