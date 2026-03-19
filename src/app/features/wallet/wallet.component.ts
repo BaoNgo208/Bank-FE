@@ -152,7 +152,16 @@ export class WalletComponent {
       .subscribe({
         next: (res) => {
           const order = res.data;
+          this.rechargeRows.insert(
+            0,
+            this.fb.group({
+              ...order,
+              admin_note: null,
+              created_at: new Date().toISOString(),
+            }),
+          );
 
+          this.rechargeTotalItems++;
           this.walletStore.depositOrder.set(order);
 
           this.walletFacade.uploadDepositImages(order.order_no, [file]);
@@ -196,6 +205,16 @@ export class WalletComponent {
     this.seconds = 3600;
     this.showPaymentModal = true;
     this.startCountdown();
+  }
+
+  onNetworkChange(network: string) {
+    this.selectedNetwork = network;
+
+    this.walletFacade.previewDeposit({
+      currency: Stablecoin.USDT,
+      amount: this.amount,
+      network: this.selectedNetwork,
+    });
   }
 
   closePaymentModal(): void {

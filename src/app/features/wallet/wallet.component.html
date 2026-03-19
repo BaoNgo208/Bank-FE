@@ -21,10 +21,6 @@
         <button class="px-4 py-1 rounded-full bg-white/20 hover:bg-white/30 text-sm">
           Withdrawal
         </button>
-
-        <button class="px-4 py-1 rounded-full bg-white/20 hover:bg-white/30 text-sm">
-          transfer
-        </button>
       </div>
 
       <!-- EXCHANGE -->
@@ -116,9 +112,15 @@
                 </span>
               </td>
 
-              <!-- Channel -->
-              <td class="px-4 py-3 border-r border-default">
-                <span class="px-2 py-1 text-xs bg-green-100 text-green-600 rounded">
+              <!-- Network -->
+              <td
+                class="px-4 py-3 border-r border-default"
+                [ngClass]="{
+                  'text-yellow-600 bg-yellow-100': row.get('network')?.value === 'Tron (TRC20)',
+                  'text-green-600 bg-green-100': row.get('network')?.value === 'ETH (ERC20)',
+                }"
+              >
+                <span class="px-2 py-1 text-xs rounded">
                   {{ row.get('network')?.value }}
                 </span>
               </td>
@@ -157,7 +159,7 @@
               </td>
               <!-- Creation time -->
               <td class="px-4 py-3">
-                {{ row.get('created_at')?.value }}
+                {{ row.get('created_at')?.value | date: 'dd/MM/yyyy HH:mm' }}
               </td>
             </tr>
           </tbody>
@@ -378,7 +380,11 @@
     <div class="mb-3">
       <label class="text-sm text-gray-600">Transfer Network</label>
 
-      <select class="w-full border rounded p-2 mt-1 bg-white" [(ngModel)]="selectedNetwork">
+      <select
+        class="w-full border rounded p-2 mt-1 bg-white"
+        [(ngModel)]="selectedNetwork"
+        (ngModelChange)="onNetworkChange($event)"
+      >
         <option value="Tron (TRC20)">Tron (TRC20)</option>
         <option value="ETH (ERC20)">ETH (ERC20)</option>
       </select>
