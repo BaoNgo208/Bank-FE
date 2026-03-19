@@ -1,0 +1,66 @@
+<div
+  class="flex flex-wrap items-center justify-between gap-3 px-4 py-3 text-[0.8rem] bg-neutral-secondary-soft border-t border-default"
+>
+  <!-- LEFT: PAGE NUMBERS -->
+  <div class="flex items-center gap-1">
+    <button
+      class="w-7 h-7 flex items-center justify-center rounded border border-default hover:bg-neutral-primary transition"
+      [disabled]="page() === 1"
+      (click)="go(page() - 1)"
+    >
+      ‹
+    </button>
+
+    <ng-container *ngFor="let p of pageNumbers()">
+      <span *ngIf="!isNumber(p)" class="px-1">...</span>
+      <button
+        *ngIf="isNumber(p)"
+        class="w-7 h-7 flex items-center justify-center rounded border border-default hover:bg-neutral-primary transition"
+        [ngClass]="{ 'bg-red-600 text-white border-red-600': p === page() }"
+        (click)="go(p)"
+      >
+        {{ p }}
+      </button>
+    </ng-container>
+
+    <button
+      class="w-7 h-7 flex items-center justify-center rounded border border-default hover:bg-neutral-primary transition"
+      [disabled]="page() === totalPages()"
+      (click)="go(page() + 1)"
+    >
+      ›
+    </button>
+  </div>
+
+  <!-- RIGHT: PAGE CONTROL -->
+  <div class="flex flex-wrap items-center gap-2">
+    <span>To the</span>
+
+    <input
+      type="number"
+      [(ngModel)]="goToInput"
+      [min]="1"
+      [max]="totalPages()"
+      class="w-12 h-7 text-center border border-default rounded focus:outline-none focus:ring-1 focus:ring-red-500"
+    />
+
+    <span>Page</span>
+
+    <button
+      class="h-7 px-3 rounded bg-neutral-primary border border-default hover:bg-neutral-secondary-soft transition"
+      (click)="confirmGoTo()"
+    >
+      Sure
+    </button>
+
+    <span class="ml-3">A total of {{ totalItems() }} items</span>
+
+    <select
+      class="h-7 px-2 border border-default rounded focus:outline-none focus:ring-1 focus:ring-red-500"
+      [ngModel]="pageSize()"
+      (ngModelChange)="onPageSizeChange($event)"
+    >
+      <option *ngFor="let opt of pageSizeOptions()" [value]="opt">{{ opt }} items/page</option>
+    </select>
+  </div>
+</div>

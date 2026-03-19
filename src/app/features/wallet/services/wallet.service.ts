@@ -4,6 +4,7 @@ import {
   CreateDepositOrderRequest,
   CreateDepositOrderResponse,
   DepositConfigResponse,
+  DepositOrderPageResponse,
   DepositPreviewRequest,
   DepositPreviewResponse,
   Stablecoin,
@@ -32,5 +33,21 @@ export class WalletService extends BaseApiService {
     request: CreateDepositOrderRequest,
   ): Observable<ApiResponse<CreateDepositOrderResponse>> {
     return this.post<ApiResponse<CreateDepositOrderResponse>>('/orders', request);
+  }
+
+  getDepositOrders(page: number): Observable<ApiResponse<DepositOrderPageResponse>> {
+    const params = this.buildPageParams(page, undefined, undefined);
+
+    return this.get<ApiResponse<DepositOrderPageResponse>>('/orders-list', params);
+  }
+
+  uploadDepositImages(orderNo: string, images: File[]): Observable<ApiResponse<null>> {
+    const formData = new FormData();
+
+    images.forEach((file) => {
+      formData.append('images', file);
+    });
+
+    return this.post<ApiResponse<null>>(`/orders/${orderNo}/images`, formData);
   }
 }
