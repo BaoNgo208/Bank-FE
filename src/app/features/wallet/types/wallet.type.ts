@@ -42,3 +42,23 @@ export interface CreateDepositOrderResponse {
   expected_amount: number;
   status: string;
 }
+
+export interface DepositOrderListResponse {
+  order_no: string;
+  currency: Stablecoin;
+  network: string;
+  address: string;
+  amount: number;
+  expected_amount: number;
+  status: string;
+  admin_note: string | null;
+  created_at: string;
+}
+
+export interface DepositOrderPageResponse {
+  items: DepositOrderListResponse[];
+  page: number;
+  size: number;
+  total_size: number;
+  has_next: boolean;
+}
