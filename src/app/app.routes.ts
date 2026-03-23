@@ -111,6 +111,27 @@ export const routes: Routes = [
     ],
   },
   {
+    path: 'admin',
+    canActivate: [],
+    loadComponent: () =>
+      import('./layouts/admin-layout/admin-layout.component').then((m) => m.AdminLayout),
+    children: [
+      {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full',
+      },
+      {
+        path: 'dashboard',
+        loadComponent: () =>
+          import('./features/admin/dashboard/admin-dashboard.component').then(
+            (m) => m.AdminDashboardComponent,
+          ),
+      },
+    ],
+  },
+
+  {
     path: 'auth',
     loadComponent: () => import('./shared/pages/auth/auth.page').then((m) => m.AuthPage),
     children: [
