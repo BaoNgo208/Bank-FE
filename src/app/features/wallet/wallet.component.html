@@ -18,7 +18,10 @@
           top up
         </button>
 
-        <button class="px-4 py-1 rounded-full bg-white/20 hover:bg-white/30 text-sm">
+        <button
+          class="px-4 py-1 rounded-full bg-white/20 hover:bg-white/30 text-sm"
+          (click)="openWidthdrawlModal()"
+        >
           Withdrawal
         </button>
       </div>
@@ -495,3 +498,5 @@
     </button>
   </div>
 </div>
+
+<app-widthdraw-component *ngIf="this.walletUiStore.showWithdrawModal()"></app-widthdraw-component>

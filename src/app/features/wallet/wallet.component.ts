@@ -11,6 +11,8 @@ import Swal from 'sweetalert2';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ChangeDetectorRef } from '@angular/core';
+import { WalletUiStore } from './stores/wallet-ui.store';
+import { WidthdrawlComponent } from './components/widthdrawl.component';
 
 @Component({
   selector: 'app-wallet-component',
@@ -23,6 +25,7 @@ import { ChangeDetectorRef } from '@angular/core';
     PaginationComponent,
     MatTableModule,
     MatPaginatorModule,
+    WidthdrawlComponent,
   ],
   templateUrl: './wallet.component.html',
 })
@@ -31,6 +34,9 @@ export class WalletComponent {
   private walletFacade = inject(WalletFacade);
   protected walletStore = inject(WalletStore);
   private cd = inject(ChangeDetectorRef);
+
+  protected walletUiStore = inject(WalletUiStore);
+
   showTopupModal = false;
   amount = 100;
   showPaymentModal = false;
@@ -71,6 +77,10 @@ export class WalletComponent {
   }
   get transferRows(): FormArray {
     return this.form.get('transferRows') as FormArray;
+  }
+
+  openWidthdrawlModal() {
+    this.walletUiStore.showWithdrawModal.set(true);
   }
 
   // ── Recharge ─────────────────────────────────────────────────────────

@@ -1,0 +1,123 @@
+<!-- BACKDROP -->
+<div class="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+  <!-- MODAL -->
+  <div
+    class="bg-white rounded-xl w-[520px] shadow-xl p-6 relative text-sm max-h-[90vh] flex flex-col"
+  >
+    <!-- HEADER (fixed) -->
+    <div class="flex justify-between items-center mb-4 flex-shrink-0">
+      <h2 class="text-lg font-semibold flex items-center gap-2">
+        <span class="w-4 h-4 bg-red-400 rounded-sm"></span>
+        Withdrawal request
+      </h2>
+      <button (click)="closeWithdrawModal()" class="text-gray-400 hover:text-black">✕</button>
+    </div>
+
+    <!-- SCROLLABLE CONTENT -->
+    <div class="overflow-y-auto flex-1 pr-1">
+      <!-- INFO TABLE -->
+      <div class="border rounded-md overflow-hidden mb-4 text-xs">
+        <div class="grid grid-cols-2 border-b">
+          <div class="p-2 border-r">Wallet ID</div>
+          <div class="p-2">3529</div>
+        </div>
+        <div class="grid grid-cols-2 border-b">
+          <div class="p-2 border-r">Balance</div>
+          <div class="p-2">0.75</div>
+        </div>
+        <div class="grid grid-cols-2 border-b">
+          <div class="p-2 border-r">Frozen Amount (USD)</div>
+          <div class="p-2">0</div>
+        </div>
+        <div class="grid grid-cols-2 border-b">
+          <div class="p-2 border-r">Withdrawal exchange rate</div>
+          <div class="p-2">-</div>
+        </div>
+        <div class="grid grid-cols-2">
+          <div class="p-2 border-r">Minimum withdrawal amount</div>
+          <div class="p-2">50 USD</div>
+        </div>
+      </div>
+
+      <div class="space-y-3">
+        <!-- CURRENCY -->
+        <div>
+          <label class="block mb-1 text-xs text-gray-500">* Currency</label>
+          <select class="w-full border rounded px-3 py-2 text-sm" [(ngModel)]="currency">
+            <option [ngValue]="Stablecoin.USDT">USDT</option>
+            <option [ngValue]="Stablecoin.USDC">USDC</option>
+          </select>
+        </div>
+
+        <!-- NETWORK -->
+        <div>
+          <label class="block mb-1 text-xs text-gray-500">* Network</label>
+          <select class="w-full border rounded px-3 py-2 text-sm" [(ngModel)]="network">
+            <option value="Tron (TRC20)">Tron (TRC20)</option>
+            <option value="ETH (ERC20)">ETH (ERC20)</option>
+          </select>
+        </div>
+
+        <!-- AMOUNT -->
+        <div>
+          <label class="block mb-1 text-xs text-gray-500">* Withdrawal amount</label>
+          <div class="flex">
+            <input
+              type="number"
+              class="flex-1 border rounded-l px-3 py-2 text-sm outline-none"
+              [(ngModel)]="withdrawAmount"
+            />
+            <span class="px-3 py-2 bg-gray-100 border border-l-0 rounded-r">USDT</span>
+          </div>
+        </div>
+
+        <!-- toAddress -->
+        <div>
+          <label class="block mb-1 text-xs text-gray-500">* to address</label>
+          <input
+            type="text"
+            placeholder="Please enter your USDT address"
+            class="w-full border rounded px-3 py-2 text-sm outline-none"
+            [(ngModel)]="toAddress"
+          />
+        </div>
+
+        <!-- OTP  -->
+        <div>
+          <label class="block mb-1 text-xs text-gray-500">* OTP</label>
+
+          <div class="flex border rounded overflow-hidden">
+            <!-- INPUT -->
+            <input
+              type="text"
+              placeholder="Verification code"
+              class="flex-1 px-3 py-2 text-sm outline-none"
+              [(ngModel)]="otp"
+            />
+
+            <!-- BUTTON -->
+            <button
+              class="px-3 text-sm bg-gray-50 hover:bg-gray-100 border-l"
+              (click)="submitWithdraw()"
+            >
+              Get verification code
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACTION (fixed) -->
+    <div class="flex justify-end gap-2 mt-5 flex-shrink-0">
+      <button class="px-4 py-2 border rounded text-gray-500" (click)="closeWithdrawModal()">
+        Cancel
+      </button>
+      <button
+        class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+        (click)="ConfirmOtp()"
+      >
+        Sure
+      </button>
+    </div>
+  </div>
+</div>

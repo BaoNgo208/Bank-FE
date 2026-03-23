@@ -62,3 +62,31 @@ export interface DepositOrderPageResponse {
   total_size: number;
   has_next: boolean;
 }
+
+export enum WithdrawOrderStatus {
+  PENDING_OTP = 'PENDING_OTP',
+  PENDING_ADMIN = 'PENDING_ADMIN',
+  PROCESSING = 'PROCESSING',
+  SUCCESS = 'SUCCESS',
+  FAILED = 'FAILED',
+  CANCELLED = 'CANCELLED',
+  EXPIRED = 'EXPIRED',
+}
+
+export interface CreateWithdrawOrderResponse {
+  order_no: string;
+  amount: string;
+  status: WithdrawOrderStatus;
+}
+
+export interface CreateWithdrawOrderRequest {
+  currency: Stablecoin;
+  network: string;
+  to_address: string;
+  amount: number;
+}
+
+export interface ConfirmWithdrawOtpRequest {
+  orderNo: string;
+  otp: string;
+}

@@ -1,7 +1,14 @@
 import { inject, Injectable } from '@angular/core';
 import { WalletService } from '../services/wallet.service';
-import { CreateDepositOrderRequest, DepositPreviewRequest, Stablecoin } from '../types/wallet.type';
+import {
+  ConfirmWithdrawOtpRequest,
+  CreateDepositOrderRequest,
+  CreateWithdrawOrderRequest,
+  DepositPreviewRequest,
+  Stablecoin,
+} from '../types/wallet.type';
 import { WalletStore } from '../stores/wallet.store';
+import { WidthdrawlService } from '../services/widthdrawl.service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +16,7 @@ import { WalletStore } from '../stores/wallet.store';
 export class WalletFacade {
   private walletService = inject(WalletService);
   private walletStore = inject(WalletStore);
+  private widthdrawlService = inject(WidthdrawlService);
 
   getDepositConfig(currency: Stablecoin) {
     this.walletService.getDepositConfig(currency).subscribe({
@@ -43,5 +51,17 @@ export class WalletFacade {
       },
       error: (_) => {},
     });
+  }
+
+  createWithdrawOrder(request: CreateWithdrawOrderRequest) {
+    return this.widthdrawlService.createWithdrawOrder(request);
+  }
+
+  confirmWithdrawOtp(request: ConfirmWithdrawOtpRequest) {
+    return this.widthdrawlService.confirmWithdrawOtp(request);
+  }
+
+  resendWithdrawOtp(orderNo: string) {
+    return this.widthdrawlService.resendWithdrawOtp(orderNo);
   }
 }
