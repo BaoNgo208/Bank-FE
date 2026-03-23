@@ -1,0 +1,34 @@
+import { Injectable } from '@angular/core';
+import { BaseApiService } from '../../../core/http/base-api.service';
+import {
+  ConfirmWithdrawOtpRequest,
+  CreateWithdrawOrderRequest,
+  CreateWithdrawOrderResponse,
+} from '../types/wallet.type';
+import { ApiResponse } from '../../../core/auth/auth.request';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class WidthdrawlService extends BaseApiService {
+  protected override resource = 'withdraw';
+
+  createWithdrawOrder(
+    request: CreateWithdrawOrderRequest,
+  ): Observable<ApiResponse<CreateWithdrawOrderResponse>> {
+    return this.post<ApiResponse<CreateWithdrawOrderResponse>>('/orders', request);
+  }
+
+  confirmWithdrawOtp(request: ConfirmWithdrawOtpRequest): Observable<ApiResponse<null>> {
+    return this.post<ApiResponse<null>>('/confirm-otp', request);
+  }
+
+  resendWithdrawOtp(orderNo: string): Observable<ApiResponse<null>> {
+    const params = this.buildPageParams(undefined, undefined, {
+      orderNo,
+    });
+
+    return this.post<ApiResponse<null>>('/resend-otp', params);
+  }
+}
