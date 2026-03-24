@@ -1,31 +1,101 @@
-import { HttpInterceptorFn } from '@angular/common/http';
-import { catchError, throwError } from 'rxjs';
+import { HttpEvent, HttpInterceptorFn } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { catchError, finalize, Observable, switchMap, throwError } from 'rxjs';
+import { AuthStore } from '../auth/auth.store';
+import { AuthService } from '../auth/auth.service';
 
-export const SKIP_AUTH_URLS = ['/auth/signin', '/auth/signup', '/otp/request'];
+export const SKIP_AUTH_URLS = [
+  '/auth/signin',
+  '/auth/signup',
+  '/otp/request',
+  '/auth/refresh-token',
+];
+
+let isRefreshing = false;
+let refreshQueue: ((token: string) => void)[] = [];
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const token = localStorage.getItem('accessToken');
+  const authStore = inject(AuthStore);
+  const authService = inject(AuthService);
+  const token = authStore.accessToken();
 
-  // skip auth endpoints
   if (SKIP_AUTH_URLS.some((path) => req.url.includes(path))) {
     return next(req);
   }
 
-  // attach token if exists
-  const authReq = token
-    ? req.clone({
-        setHeaders: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-    : req;
+  // if has token, clone request and attach header Authorization
 
-  return next(authReq).pipe(
-    catchError((err) => {
-      if (err.status === 401) {
-        console.warn('[AuthInterceptor] Token expired or invalid');
-      }
-      return throwError(() => err);
-    }),
-  );
+  if (token) {
+    const clonedReq = token
+      ? req.clone({
+          setHeaders: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+      : req;
+
+    return next(clonedReq).pipe(
+      catchError((err) => {
+        if (err.status !== 401) {
+          console.log('note 401');
+
+          return throwError(() => err);
+        }
+
+        // 401 => handle refresh
+        if (!isRefreshing) {
+          isRefreshing = true;
+
+          return authService.refreshToken(authStore.refreshToken()).pipe(
+            switchMap((res) => {
+              isRefreshing = false;
+              authStore.setTokens(res.tokens.access_token, res.tokens.refresh_token);
+
+              const retryReq = req.clone({
+                setHeaders: {
+                  Authorization: `Bearer ${res.tokens.access_token}`,
+                },
+              });
+
+              refreshQueue.forEach((cb) => cb(res.tokens.access_token));
+              refreshQueue = [];
+              return next(retryReq);
+            }),
+            catchError((refreshErr) => {
+              isRefreshing = false;
+              refreshQueue = [];
+
+              authStore.clearAuth();
+              return throwError(() => refreshErr);
+            }),
+          );
+        }
+
+        // if refreshing => push others requests to queues
+        return new Observable<HttpEvent<unknown>>((observer) => {
+          refreshQueue.push((newToken: string) => {
+            const retryReq = req.clone({
+              setHeaders: {
+                Authorization: `Bearer ${newToken}`,
+              },
+            });
+
+            next(retryReq).subscribe({
+              next: (event) => observer.next(event),
+              error: (err) => observer.error(err),
+              complete: () => observer.complete(),
+            });
+          });
+        });
+      }),
+      finalize(() => {
+        isRefreshing = false;
+      }),
+    );
+  } else {
+    console.warn('[AuthInterceptor] No token found in localStorage!');
+  }
+
+  // if doesnt have token, send request normally
+  return next(req);
 };
