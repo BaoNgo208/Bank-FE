@@ -1,61 +1,123 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import Chart from 'chart.js/auto';
+import { FormsModule } from '@angular/forms';
+import {
+  getSampleChartData,
+  generateSampleRangeData,
+  ChartRange,
+  DashboardStat,
+  RecentWithdrawal,
+  getSampleStats,
+  getSampleRecentWithdrawals,
+} from '../../../utils/sample.util';
 
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './admin-dashboard.component.html',
 })
-export class AdminDashboardComponent {
-  stats = [
-    { label: 'Total Users', value: '11,259', icon: 'fa-users', color: 'bg-blue-100 text-blue-600' },
-    {
-      label: 'New Withdrawals',
-      value: '547',
-      sub: '$1,252,000',
-      icon: 'fa-money',
-      color: 'bg-green-100 text-green-600',
-    },
-    {
-      label: 'Completed Withdrawals',
-      value: '501',
-      sub: '$1,126,500',
-      icon: 'fa-check',
-      color: 'bg-yellow-100 text-yellow-600',
-    },
-    {
-      label: 'Total Balance',
-      value: '$21,589,230',
-      icon: 'fa-wallet',
-      color: 'bg-purple-100 text-purple-600',
-    },
-  ];
+export class AdminDashboardComponent implements AfterViewInit {
+  @ViewChild('chartCanvas') chartRef!: ElementRef<HTMLCanvasElement>;
+  chart!: Chart;
+  selectedRange: ChartRange = 'week';
+  startDate: string = '';
+  endDate: string = '';
+  stats: DashboardStat[] = [];
+  recentWithdrawals: RecentWithdrawal[] = [];
 
-  recentWithdrawals = [
-    {
-      id: 'WD123',
-      user: 'user1@gmail.com',
-      amount: '$600',
-      network: 'TRC20',
-      status: 'Pending',
-      date: 'Apr 21',
-    },
-    {
-      id: 'WD124',
-      user: 'user2@gmail.com',
-      amount: '$700',
-      network: 'ERC20',
-      status: 'Completed',
-      date: 'Apr 21',
-    },
-    {
-      id: 'WD125',
-      user: 'user3@gmail.com',
-      amount: '$500',
-      network: 'BSC',
-      status: 'Rejected',
-      date: 'Apr 20',
-    },
-  ];
+  ngOnInit() {
+    this.stats = getSampleStats();
+    this.recentWithdrawals = getSampleRecentWithdrawals();
+  }
+  ngAfterViewInit() {
+    this.initChart();
+  }
+
+  applyCustomRange() {
+    if (!this.startDate || !this.endDate) return;
+
+    if (!this.isRangeValid(this.startDate, this.endDate)) {
+      alert('Range tối đa 30 ngày');
+      return;
+    }
+
+    const days = this.generateDateRange(this.startDate, this.endDate);
+
+    const { deposit, withdraw } = generateSampleRangeData(days);
+
+    this.chart.data.labels = days;
+    this.chart.data.datasets[0].data = deposit;
+    this.chart.data.datasets[1].data = withdraw;
+
+    this.chart.update();
+  }
+
+  generateDateRange(start: string, end: string): string[] {
+    const result = [];
+    let current = new Date(start);
+    const endDate = new Date(end);
+
+    while (current <= endDate) {
+      result.push(`${current.getDate()}/${current.getMonth() + 1}`);
+      current.setDate(current.getDate() + 1);
+    }
+
+    return result;
+  }
+
+  initChart() {
+    const data = getSampleChartData(this.selectedRange);
+
+    this.chart = new Chart(this.chartRef.nativeElement, {
+      type: 'line',
+      data: {
+        labels: data.labels,
+        datasets: [
+          {
+            label: 'Deposit',
+            data: data.deposit,
+            borderColor: '#22c55e',
+            backgroundColor: 'rgba(34,197,94,0.1)',
+            tension: 0.4,
+            fill: true,
+          },
+          {
+            label: 'Withdraw',
+            data: data.withdraw,
+            borderColor: '#ef4444',
+            backgroundColor: 'rgba(239,68,68,0.1)',
+            tension: 0.4,
+            fill: true,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+      },
+    });
+  }
+
+  isRangeValid(start: string, end: string): boolean {
+    const startDate = new Date(start);
+    const endDate = new Date(end);
+
+    const diff = (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24);
+
+    return diff <= 30;
+  }
+
+  changeRange(range: ChartRange) {
+    this.selectedRange = range;
+
+    const data = getSampleChartData(range);
+
+    this.chart.data.labels = data.labels;
+    this.chart.data.datasets[0].data = data.deposit;
+    this.chart.data.datasets[1].data = data.withdraw;
+
+    this.chart.update();
+  }
 }

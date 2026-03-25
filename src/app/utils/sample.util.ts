@@ -587,3 +587,124 @@ export const INVITATION_COMMISSION_SAMPLE = [
     totalCommission: 45,
   },
 ];
+
+export type ChartRange = 'week' | 'month' | 'year';
+
+export interface ChartData {
+  labels: string[];
+  deposit: number[];
+  withdraw: number[];
+}
+
+export function getSampleChartData(range: ChartRange): ChartData {
+  if (range === 'week') {
+    return {
+      labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      deposit: [12000, 19000, 15000, 22000, 18000, 25000, 30000],
+      withdraw: [8000, 14000, 12000, 17000, 15000, 20000, 24000],
+    };
+  }
+
+  if (range === 'month') {
+    return {
+      labels: ['W1', 'W2', 'W3', 'W4'],
+      deposit: [80000, 95000, 110000, 130000],
+      withdraw: [60000, 70000, 85000, 100000],
+    };
+  }
+
+  return {
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+    deposit: [300000, 420000, 380000, 500000, 620000, 700000],
+    withdraw: [250000, 300000, 280000, 400000, 500000, 580000],
+  };
+}
+
+export function generateSampleRangeData(days: string[]): {
+  deposit: number[];
+  withdraw: number[];
+} {
+  return {
+    deposit: days.map(() => Math.floor(Math.random() * 20000) + 10000),
+    withdraw: days.map(() => Math.floor(Math.random() * 15000) + 8000),
+  };
+}
+
+// ===== DASHBOARD STATS =====
+export interface DashboardStat {
+  label: string;
+  value: string;
+  sub?: string;
+  icon: string;
+  color: string;
+}
+
+export function getSampleStats(): DashboardStat[] {
+  return [
+    {
+      label: 'Total Users',
+      value: '11,259',
+      icon: 'fa-users',
+      color: 'bg-blue-100 text-blue-600',
+    },
+    {
+      label: 'New Withdrawals',
+      value: '547',
+      sub: '$1,252,000',
+      icon: 'fa-money',
+      color: 'bg-green-100 text-green-600',
+    },
+    {
+      label: 'Completed Withdrawals',
+      value: '501',
+      sub: '$1,126,500',
+      icon: 'fa-check',
+      color: 'bg-yellow-100 text-yellow-600',
+    },
+    {
+      label: 'Total Balance',
+      value: '$21,589,230',
+      icon: 'fa-wallet',
+      color: 'bg-purple-100 text-purple-600',
+    },
+  ];
+}
+
+// ===== RECENT WITHDRAWALS =====
+export interface RecentWithdrawal {
+  id: string;
+  user: string;
+  amount: string;
+  network: string;
+  status: 'Pending' | 'Completed' | 'Rejected';
+  date: string;
+}
+
+export function getSampleRecentWithdrawals(): RecentWithdrawal[] {
+  return [
+    {
+      id: 'WD123',
+      user: 'user1@gmail.com',
+      amount: '$600',
+      network: 'TRC20',
+      status: 'Pending',
+      date: 'Apr 21',
+    },
+    {
+      id: 'WD124',
+      user: 'user2@gmail.com',
+      amount: '$700',
+      network: 'ERC20',
+      status: 'Completed',
+      date: 'Apr 21',
+    },
+    {
+      id: 'WD125',
+      user: 'user3@gmail.com',
+      amount: '$500',
+      network: 'BSC',
+      status: 'Rejected',
+      date: 'Apr 20',
+    },
+  ];
+}

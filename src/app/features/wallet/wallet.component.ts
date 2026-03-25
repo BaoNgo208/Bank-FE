@@ -47,6 +47,9 @@ export class WalletComponent {
   depositPreview = this.walletStore.depositPreview;
   proofFile: File | null = null;
   proofPreview: string | null = null;
+  showCurrencyModal = false;
+  currency: Stablecoin = Stablecoin.USDT;
+  Stablecoin = Stablecoin;
 
   rechargePage = 1;
   rechargePageSize = 10;
@@ -70,6 +73,17 @@ export class WalletComponent {
   ngOnInit() {
     this.loadRechargePage();
     this.loadTransferPage();
+  }
+
+  openCurrencyModal() {
+    this.showCurrencyModal = true;
+  }
+
+  selectCurrency(c: Stablecoin) {
+    this.currency = c;
+    this.showCurrencyModal = false;
+
+    this.openModal();
   }
 
   get rechargeRows(): FormArray {
@@ -155,7 +169,7 @@ export class WalletComponent {
 
     this.walletFacade
       .createDepositOrder({
-        currency: Stablecoin.USDT,
+        currency: this.currency,
         amount: this.amount,
         network: this.selectedNetwork,
       })
@@ -200,7 +214,7 @@ export class WalletComponent {
 
   openModal(): void {
     this.showTopupModal = true;
-    this.walletFacade.getDepositConfig(Stablecoin.USDT);
+    this.walletFacade.getDepositConfig(this.currency);
   }
   closeModal(): void {
     this.showTopupModal = false;
@@ -208,7 +222,7 @@ export class WalletComponent {
 
   openPaymentModal(): void {
     this.walletFacade.previewDeposit({
-      currency: Stablecoin.USDT,
+      currency: this.currency,
       amount: this.amount,
       network: this.selectedNetwork,
     });
@@ -221,7 +235,7 @@ export class WalletComponent {
     this.selectedNetwork = network;
 
     this.walletFacade.previewDeposit({
-      currency: Stablecoin.USDT,
+      currency: this.currency,
       amount: this.amount,
       network: this.selectedNetwork,
     });
