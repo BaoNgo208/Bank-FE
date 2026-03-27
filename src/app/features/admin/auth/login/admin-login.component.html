@@ -1,0 +1,60 @@
+<div class="flex flex-col gap-y-20">
+  <!-- label -->
+  <div class="flex flex-col items-center">
+    <label class="font-bold">Admin Login</label>
+    <div class="w-5 h-[4px] bg-red-400"></div>
+  </div>
+
+  <!-- form -->
+  <div>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <!-- Username -->
+      <div class="relative mb-5">
+        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+          <img src="/user.png" alt="logo" class="w-4" />
+        </span>
+        <input
+          type="text"
+          formControlName="username"
+          placeholder="Username"
+          class="w-full border border-gray-200 pl-10 py-3 text-sm focus:outline-none focus:border-red-500"
+        />
+      </div>
+
+      <!-- Password -->
+      <div class="relative mb-5">
+        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+          <img src="/password.png" alt="logo" class="w-4" />
+        </span>
+        <input
+          type="Password"
+          formControlName="password"
+          placeholder="Password"
+          class="w-full border border-gray-200 pl-10 py-3 text-sm focus:outline-none focus:border-red-500"
+        />
+      </div>
+
+      <!-- forget password -->
+      <div>
+        <span class="font-light text-[0.75rem] text-[#013e7f]">forget the password?</span>
+      </div>
+
+      <div class="flex gap-x-4 mt-10">
+        <button
+          type="submit"
+          class="flex-1 bg-red-500 text-white py-4 text-sm font-medium hover:bg-red-600 transition"
+        >
+          Log in
+        </button>
+
+        <button
+          type="button"
+          class="flex-1 border border-red-500 text-gray-700 py-3 text-sm font-medium hover:bg-red-50 transition"
+          (click)="redirectToRegister()"
+        >
+          register
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
