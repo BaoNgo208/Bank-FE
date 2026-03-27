@@ -1,0 +1,127 @@
+<div class="flex flex-col gap-y-10">
+  <!-- label -->
+  <div class="flex flex-col items-center">
+    <label class="font-bold">Admin Registration</label>
+    <div class="w-5 h-[4px] bg-red-400"></div>
+  </div>
+
+  <!-- form -->
+  <div>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <!-- Username -->
+      <div class="relative mb-5">
+        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+          <img src="/user.png" alt="logo" class="w-4" />
+        </span>
+        <input
+          type="text"
+          formControlName="username"
+          placeholder="Username"
+          class="w-full border border-gray-200 pl-10 py-3 text-sm focus:outline-none focus:border-red-500"
+        />
+      </div>
+
+      <div class="relative mb-1">
+        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+          <img src="/user.png" alt="logo" class="w-4" />
+        </span>
+
+        <input
+          type="email"
+          formControlName="email"
+          placeholder="Email"
+          class="w-full border pl-10 py-3 text-sm focus:outline-none focus:border-red-500"
+          [ngClass]="{
+            'border-gray-200': !(
+              registerForm.controls.email.invalid &&
+              (registerForm.controls.email.dirty || registerForm.controls.email.touched)
+            ),
+            'border-red-500':
+              registerForm.controls.email.invalid &&
+              (registerForm.controls.email.dirty || registerForm.controls.email.touched),
+          }"
+        />
+      </div>
+
+      <!-- ERROR MESSAGE -->
+      <div
+        *ngIf="
+          registerForm.controls.email.invalid &&
+          (registerForm.controls.email.dirty || registerForm.controls.email.touched)
+        "
+        class="text-red-500 text-xs mb-4"
+      >
+        <span *ngIf="registerForm.controls.email.hasError('required')"> Email is required </span>
+
+        <span *ngIf="registerForm.controls.email.hasError('email')"> Invalid email format </span>
+      </div>
+
+      <!-- Password -->
+      <div class="relative mb-5">
+        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+          <img src="/password.png" alt="logo" class="w-4" />
+        </span>
+        <input
+          type="Password"
+          formControlName="password"
+          placeholder="Password"
+          class="w-full border border-gray-200 pl-10 py-3 text-sm focus:outline-none focus:border-red-500"
+        />
+      </div>
+
+      <!-- Confirm Password -->
+      <div class="relative mb-5">
+        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+          <img src="/password.png" alt="logo" class="w-4" />
+        </span>
+        <input
+          type="Password"
+          formControlName="confirmPassword"
+          placeholder="Confirm Password"
+          class="w-full border border-gray-200 pl-10 py-3 text-sm focus:outline-none focus:border-red-500"
+        />
+      </div>
+
+      <!-- Verification code -->
+      <div class="relative mb-5 flex gap-3 border border-gray-200">
+        <div class="relative flex-1">
+          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+            <img src="/verified.png" alt="logo" class="w-4" />
+          </span>
+          <input
+            type="text"
+            formControlName="otp"
+            placeholder="Verification code"
+            class="w-full pl-10 py-3 text-sm focus:outline-none"
+          />
+        </div>
+
+        <button type="button" class="px-3 text-sm hover:bg-gray-100" (click)="sendOtp()">
+          Get verification code
+        </button>
+      </div>
+
+      <!-- Already have an account -->
+      <div>
+        <span class="font-light text-[0.75rem] text-[#013e7f]"
+          >Already have an account? Log in?</span
+        >
+      </div>
+
+      <div class="flex gap-x-4 mt-10">
+        <button
+          class="flex-1 bg-red-500 text-white py-4 text-sm font-medium hover:bg-red-600 transition"
+        >
+          Register
+        </button>
+
+        <button
+          class="flex-1 border border-red-500 text-gray-700 py-3 text-sm font-medium hover:bg-red-50 transition"
+          (click)="redirectToLogin()"
+        >
+          Log in
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

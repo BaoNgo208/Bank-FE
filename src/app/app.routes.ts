@@ -111,6 +111,31 @@ export const routes: Routes = [
     ],
   },
   {
+    path: 'admin/auth',
+    loadComponent: () => import('./shared/pages/auth/admin-auth.page').then((m) => m.AdminAuthPage),
+    children: [
+      {
+        path: 'login',
+        loadComponent: () =>
+          import('./features/admin/auth/login/admin-login.component').then(
+            (m) => m.AdminLoginComponent,
+          ),
+      },
+      {
+        path: 'register',
+        loadComponent: () =>
+          import('./features/admin/auth/register/admin-register.component').then(
+            (m) => m.AdminRegisterComponent,
+          ),
+      },
+      {
+        path: '',
+        redirectTo: 'login',
+        pathMatch: 'full',
+      },
+    ],
+  },
+  {
     path: 'admin',
     canActivate: [],
     loadComponent: () =>
@@ -126,6 +151,13 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/admin/dashboard/admin-dashboard.component').then(
             (m) => m.AdminDashboardComponent,
+          ),
+      },
+      {
+        path: 'withdrawals',
+        loadComponent: () =>
+          import('./features/admin/withdrawals-management/withdrawals-management.component').then(
+            (m) => m.WithdrawalsManagementComponent,
           ),
       },
     ],

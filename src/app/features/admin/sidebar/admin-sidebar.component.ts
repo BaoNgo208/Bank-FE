@@ -9,12 +9,11 @@ import { CommonModule } from '@angular/common';
   templateUrl: './admin-sidebar.component.html',
 })
 export class AdminSidebarComponent {
-  constructor(private router: Router) {}
-
   menu = [
     { label: 'Dashboard', icon: 'fa-home', path: '/admin/dashboard' },
-    { label: 'Users', icon: 'fa-users', path: '/admin/users' },
-    { label: 'Withdrawals', icon: 'fa-money', path: '/admin/withdrawals' },
-    { label: 'Transactions', icon: 'fa-exchange', path: '/admin/transactions' },
+    { label: 'Users Management', icon: 'fa-users', path: '/admin/users' },
+    { label: 'Withdrawals Management', icon: 'fa-arrow-up', path: '/admin/withdrawals' },
+    { label: 'Deposits Management', icon: 'fa-arrow-down', path: '/admin/deposits' },
+    { label: 'Transactions Management', icon: 'fa-exchange', path: '/admin/transactions' },
   ];
 }
