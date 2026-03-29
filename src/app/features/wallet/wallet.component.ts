@@ -75,17 +75,6 @@ export class WalletComponent {
     this.loadTransferPage();
   }
 
-  openCurrencyModal() {
-    this.showCurrencyModal = true;
-  }
-
-  selectCurrency(c: Stablecoin) {
-    this.currency = c;
-    this.showCurrencyModal = false;
-
-    this.openModal();
-  }
-
   get rechargeRows(): FormArray {
     return this.form.get('rechargeRows') as FormArray;
   }
@@ -169,7 +158,7 @@ export class WalletComponent {
 
     this.walletFacade
       .createDepositOrder({
-        currency: this.currency,
+        currency: Stablecoin.USDT,
         amount: this.amount,
         network: this.selectedNetwork,
       })
@@ -214,7 +203,7 @@ export class WalletComponent {
 
   openModal(): void {
     this.showTopupModal = true;
-    this.walletFacade.getDepositConfig(this.currency);
+    this.walletFacade.getDepositConfig(Stablecoin.USDT);
   }
   closeModal(): void {
     this.showTopupModal = false;
@@ -222,7 +211,7 @@ export class WalletComponent {
 
   openPaymentModal(): void {
     this.walletFacade.previewDeposit({
-      currency: this.currency,
+      currency: Stablecoin.USDT,
       amount: this.amount,
       network: this.selectedNetwork,
     });
@@ -235,7 +224,7 @@ export class WalletComponent {
     this.selectedNetwork = network;
 
     this.walletFacade.previewDeposit({
-      currency: this.currency,
+      currency: Stablecoin.USDT,
       amount: this.amount,
       network: this.selectedNetwork,
     });
