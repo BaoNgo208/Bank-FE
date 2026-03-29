@@ -59,6 +59,15 @@ export abstract class BaseApiService {
       headers,
     });
   }
+  protected patch<T>(
+    url: string,
+    body?: unknown,
+    options?: {
+      headers?: HttpHeaders | { [header: string]: string };
+    },
+  ): Observable<T> {
+    return this.http.patch<T>(`${this.baseUrl}/${this.resource}${url}`, body ?? null, options);
+  }
 
   protected delete<T>(url: string, params?: HttpParams, headers?: HttpHeaders): Observable<T> {
     return this.http.delete<T>(`${this.baseUrl}/${this.resource}${url}`, {

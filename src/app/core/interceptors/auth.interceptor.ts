@@ -37,9 +37,11 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     return next(clonedReq).pipe(
       catchError((err) => {
         if (err.status !== 401) {
-          console.log('note 401');
+          const is401 = err.status === 401 || err.error?.status === 401;
 
-          return throwError(() => err);
+          if (!is401) {
+            return throwError(() => err);
+          }
         }
 
         // 401 => handle refresh

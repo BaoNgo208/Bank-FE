@@ -2,7 +2,6 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { OtpPurpose, OtpRequest, SignupRequest } from '../../../../core/auth/auth.request';
-import { AuthService } from '../../../../core/auth/auth.service';
 import { OtpService } from '../../../../core/auth/otp.service';
 import { passwordMatchValidator } from '../../../../shared/validators/password-match.validator';
 import { ToastrService } from 'ngx-toastr';
