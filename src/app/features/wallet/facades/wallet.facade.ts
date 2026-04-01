@@ -1,7 +1,8 @@
 import { inject, Injectable } from '@angular/core';
-import { WalletService } from '../services/wallet.service';
+import { DepositService } from '../services/deposit.service';
 import {
   ConfirmWithdrawOtpRequest,
+  CreateCardRequest,
   CreateDepositOrderRequest,
   CreateWithdrawOrderRequest,
   DepositPreviewRequest,
@@ -9,17 +10,19 @@ import {
 } from '../types/wallet.type';
 import { WalletStore } from '../stores/wallet.store';
 import { WidthdrawlService } from '../services/widthdrawl.service';
+import { WalletService } from '../services/wallet.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WalletFacade {
-  private walletService = inject(WalletService);
+  private depositService = inject(DepositService);
   private walletStore = inject(WalletStore);
   private widthdrawlService = inject(WidthdrawlService);
+  private walletService = inject(WalletService);
 
   getDepositConfig(currency: Stablecoin) {
-    this.walletService.getDepositConfig(currency).subscribe({
+    this.depositService.getDepositConfig(currency).subscribe({
       next: (res) => {
         this.walletStore.depositConfig.set(res.data);
       },
@@ -28,7 +31,7 @@ export class WalletFacade {
   }
 
   previewDeposit(request: DepositPreviewRequest) {
-    this.walletService.previewDeposit(request).subscribe({
+    this.depositService.previewDeposit(request).subscribe({
       next: (res) => {
         this.walletStore.depositPreview.set(res.data);
       },
@@ -37,15 +40,15 @@ export class WalletFacade {
   }
 
   createDepositOrder(request: CreateDepositOrderRequest) {
-    return this.walletService.createDepositOrder(request);
+    return this.depositService.createDepositOrder(request);
   }
 
   getDepositOrders(page: number) {
-    return this.walletService.getDepositOrders(page);
+    return this.depositService.getDepositOrders(page);
   }
 
   uploadDepositImages(orderNo: string, images: File[]) {
-    this.walletService.uploadDepositImages(orderNo, images).subscribe({
+    this.depositService.uploadDepositImages(orderNo, images).subscribe({
       next: () => {
         this.walletStore.uploadSuccess.set(true);
       },
@@ -63,5 +66,9 @@ export class WalletFacade {
 
   resendWithdrawOtp(orderNo: string) {
     return this.widthdrawlService.resendWithdrawOtp(orderNo);
+  }
+
+  createCard(request: CreateCardRequest) {
+    return this.walletService.createCard(request);
   }
 }
