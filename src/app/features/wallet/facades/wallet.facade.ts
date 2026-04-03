@@ -7,6 +7,8 @@ import {
   CreateWithdrawOrderRequest,
   DepositPreviewRequest,
   Stablecoin,
+  TopupCardRequest,
+  WithDrawCardRequest,
 } from '../types/wallet.type';
 import { WalletStore } from '../stores/wallet.store';
 import { WidthdrawlService } from '../services/widthdrawl.service';
@@ -70,5 +72,17 @@ export class WalletFacade {
 
   createCard(request: CreateCardRequest) {
     return this.walletService.createCard(request);
+  }
+
+  topupCard(cardId: number, request: TopupCardRequest) {
+    return this.walletService.topupCard(cardId, request);
+  }
+
+  getCards(page: number) {
+    return this.walletService.getCards(page);
+  }
+
+  withDrawCard(cardId: number, request: WithDrawCardRequest) {
+    return this.walletService.withDrawCard(cardId, request);
   }
 }
