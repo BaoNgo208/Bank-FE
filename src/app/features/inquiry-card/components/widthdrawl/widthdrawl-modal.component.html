@@ -1,0 +1,98 @@
+<div class="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+  <div class="bg-white rounded-xl w-[50%] shadow-xl p-6 relative">
+    <!-- Header  -->
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-lg font-semibold flex items-center gap-2">
+        <span class="w-4 h-4 bg-red-400 rounded-sm"></span>
+        transfer
+      </h2>
+
+      <button
+        (click)="this.inquiryUiStore.isWidthdrawlOpen.set(false)"
+        class="text-gray-400 hover:text-black"
+      >
+        ✕
+      </button>
+    </div>
+
+    <div class="space-y-3 text-sm">
+      <div class="flex justify-between items-center">
+        <span>Available Balance</span>
+        <input
+          class="border rounded px-3 py-1 w-40 text-right"
+          [value]="availableBalance() | number: '1.2-2'"
+          disabled
+        />
+      </div>
+
+      <div class="flex justify-between items-center">
+        <span>Currency</span>
+        <input class="border rounded px-3 py-1 w-40 text-right" [value]="currency()" disabled />
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <div class="flex justify-between items-center">
+          <span class="text-red-500">* Transferred amount</span>
+
+          <input
+            type="number"
+            class="border rounded px-3 py-1 w-40 text-right"
+            [class.border-red-500]="error()"
+            [value]="transferAmount()"
+            min="0.1"
+            step="0.01"
+            (input)="transferAmount.set($any($event.target).valueAsNumber || 0)"
+          />
+        </div>
+
+        <!-- Error message -->
+        <span *ngIf="error()" class="text-xs text-red-500 text-right">
+          {{ error() }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex justify-center gap-3 mt-6">
+      <button
+        [disabled]="isInvalid()"
+        (click)="handleWidthdrawl()"
+        class="bg-red-500 text-white px-5 py-2 rounded hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        Sure
+      </button>
+
+      <button
+        (click)="this.inquiryUiStore.isWidthdrawlOpen.set(false)"
+        class="border px-5 py-2 rounded hover:bg-gray-100"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+  <div
+    *ngIf="isLoading()"
+    class="absolute inset-0 flex items-center justify-center bg-white/60 backdrop-blur-sm z-10"
+  >
+    <div class="flex flex-col items-center gap-2">
+      <svg class="animate-spin h-8 w-8 text-red-500" viewBox="0 0 24 24">
+        <circle
+          class="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          stroke-width="4"
+          fill="none"
+        ></circle>
+        <path
+          class="opacity-75"
+          fill="currentColor"
+          d="M4 12a8 8 0 018-8v4l3-3-3-3v4a12 12 0 00-12 12h4z"
+        ></path>
+      </svg>
+
+      <span class="text-sm text-gray-600">Processing...</span>
+    </div>
+  </div>
+</div>

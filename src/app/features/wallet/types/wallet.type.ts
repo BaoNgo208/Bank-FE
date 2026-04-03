@@ -112,3 +112,43 @@ export interface TopupCardRequest {
   amount: number;
   referenceId?: string;
 }
+
+export interface WithDrawCardRequest {
+  amount: number;
+  referenceId?: string;
+}
+
+export enum CardBrand {
+  VISA = 'VISA',
+  MASTERCARD = 'MASTERCARD',
+  AMEX = 'AMEX',
+  DISCOVER = 'DISCOVER',
+  JCB = 'JCB',
+  UNKNOWN = 'UNKNOWN',
+}
+
+export enum CardStatus {
+  ACTIVE = 'ACTIVE',
+  BLOCKED = 'BLOCKED',
+  CANCELED = 'CANCELED',
+}
+
+export interface CardListResponse {
+  id: number;
+  masked_card: string;
+  brand: CardBrand;
+  name: string;
+  currency: string;
+  status: CardStatus;
+  remaining_amount: number;
+  created_at: string;
+  note: string;
+}
+
+export interface CardPageResponse {
+  items: CardListResponse[];
+  page: number;
+  size: number;
+  total_size: number;
+  has_next: boolean;
+}
