@@ -708,3 +708,77 @@ export function getSampleRecentWithdrawals(): RecentWithdrawal[] {
     },
   ];
 }
+
+export interface AnnouncementItem {
+  id: number;
+  title: string;
+  content: string;
+  contacts: {
+    label: string;
+    value: string;
+  }[];
+  link?: string;
+}
+
+export const ANNOUNCEMENTS_MOCK: AnnouncementItem[] = [
+  {
+    id: 1,
+    title: 'System Announcement',
+    content: 'Business cooperation communication:',
+    contacts: [
+      { label: 'Tg', value: '@Mujin9' },
+      { label: 'tg', value: '@qt_king' },
+    ],
+    link: 'https://www.dajinniao.com/archives/da_jin_niao',
+  },
+  {
+    id: 2,
+    title: 'System Announcement',
+    content: 'Business cooperation communication:',
+    contacts: [
+      { label: 'Tg', value: '@Mujin9' },
+      { label: 'tg', value: '@qt_king' },
+    ],
+    link: 'https://www.dajinniao.com/archives/da_jin_niao',
+  },
+  {
+    id: 1,
+    title: 'System Announcement',
+    content: 'Business cooperation communication:',
+    contacts: [
+      { label: 'Tg', value: '@Mujin9' },
+      { label: 'tg', value: '@qt_king' },
+    ],
+    link: 'https://www.dajinniao.com/archives/da_jin_niao',
+  },
+  {
+    id: 1,
+    title: 'System Announcement',
+    content: 'Business cooperation communication:',
+    contacts: [
+      { label: 'Tg', value: '@Mujin9' },
+      { label: 'tg', value: '@qt_king' },
+    ],
+    link: 'https://www.dajinniao.com/archives/da_jin_niao',
+  },
+  {
+    id: 1,
+    title: 'System Announcement',
+    content: 'Business cooperation communication:',
+    contacts: [
+      { label: 'Tg', value: '@Mujin9' },
+      { label: 'tg', value: '@qt_king' },
+    ],
+    link: 'https://www.dajinniao.com/archives/da_jin_niao',
+  },
+  {
+    id: 1,
+    title: 'System Announcement',
+    content: 'Business cooperation communication:',
+    contacts: [
+      { label: 'Tg', value: '@Mujin9' },
+      { label: 'tg', value: '@qt_king' },
+    ],
+    link: 'https://www.dajinniao.com/archives/da_jin_niao',
+  },
+];
