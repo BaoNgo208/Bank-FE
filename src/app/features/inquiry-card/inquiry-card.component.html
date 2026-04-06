@@ -152,9 +152,22 @@
               <input type="checkbox" formControlName="selected" />
             </td>
             <td class="px-3 py-3 border-r border-default">{{ row.get('masked_card')?.value }}</td>
-            <td class="px-3 py-3 border-r border-default">{{ row.get('brand')?.value }}</td>
+            <td class="px-3 py-3 border-r border-default">
+              <img
+                *ngIf="row.get('brand')?.value === 'VISA'"
+                src="/visa.png"
+                alt="VISA"
+                class="h-8 w-8 object-contain"
+              />
+
+              <span *ngIf="row.get('brand')?.value !== 'VISA'">
+                {{ row.get('brand')?.value }}
+              </span>
+            </td>
             <td class="px-3 py-3 border-r border-default">{{ row.get('name')?.value }}</td>
-            <td class="px-3 py-3 border-r border-default">{{ row.get('currency')?.value }}</td>
+            <td class="px-3 py-3 border-r border-default">
+              {{ row.get('currency')?.value ?? 'USD' }}
+            </td>
             <td class="px-3 py-3 border-r border-default">{{ row.get('status')?.value }}</td>
             <td class="px-3 py-3 border-r border-default">
               {{ row.get('remaining_amount')?.value }}

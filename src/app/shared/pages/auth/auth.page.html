@@ -1,35 +1,67 @@
 <div
-  class="h-screen w-full flex items-center justify-center bg-red-50 gray-100 px-8 small_laptop:px-36 font-['Helvetica_Neue']"
+  class="h-screen w-full flex items-center justify-center bg-gradient-to-br from-red-200 via-red-100 to-white px-4 small_laptop:px-10 font-['Helvetica_Neue'] relative overflow-hidden"
 >
+  <!-- BACKGROUND -->
   <div
-    class="w-full h-[90%] flex flex-col small_laptop:flex-row max-w-6xl bg-white mx-auto shadow-xl rounded-2xl overflow-auto"
+    class="absolute w-[400px] h-[400px] bg-red-300/30 rounded-full blur-3xl top-[-100px] left-[-100px]"
+  ></div>
+  <div
+    class="absolute w-[300px] h-[300px] bg-red-400/20 rounded-full blur-3xl bottom-[-100px] right-[-100px]"
+  ></div>
+
+  <div
+    class="w-full max-w-6xl flex flex-col small_laptop:flex-row bg-white/80 backdrop-blur-xl shadow-2xl rounded-3xl overflow-hidden border border-white/40"
   >
-    <div
-      class="flex-1 small_laptop:w-1/2 p-8 tablet:p-12 laptop:p-10 flex items-center justify-center"
-    >
+    <!-- LEFT -->
+    <div class="flex-1 flex items-center justify-center p-6 small_laptop:p-10 bg-white/60">
       <div class="w-full max-w-md">
         <router-outlet></router-outlet>
+
+        <!--  TERMS (MOBILE ONLY) -->
+        <div class="mt-8 text-xs text-gray-600 small_laptop:hidden">
+          <p class="font-semibold text-gray-800 mb-2">Information:</p>
+
+          <div class="flex flex-col gap-1">
+            <a class="text-red-500 underline">User Agreement</a>
+            <a class="text-red-500 underline">Privacy Policy</a>
+            <a class="text-red-500 underline">Confidentiality Agreement</a>
+            <a class="text-red-500 underline">Disclaimer Agreement</a>
+          </div>
+
+          <p class="mt-2">
+            Website:
+            <span class="text-red-500 underline">https://www.jqcard.com</span>
+          </p>
+        </div>
       </div>
     </div>
-
-    <div class="h-full border border-gray-100"></div>
     <div
-      class="flex-1 flex px-10 flex-col justify-start pt-32 gap-y-3 text-[0.8rem] font-extralight"
+      class="flex-1 hidden small_laptop:flex flex-col justify-center px-12 text-white bg-gradient-to-br from-red-400 via-red-500 to-red-500 relative"
     >
-      <label> Please read the following information carefully: </label>
+      <!-- overlay làm dịu màu -->
+      <div class="absolute inset-0 bg-black/10"></div>
 
-      <a class="text-[#0000EE] underline">User Agreement</a>
-      <a class="text-[#0000EE] underline">Privacy Policy</a>
-      <a class="text-[#0000EE] underline">Confidentiality Agreement</a>
-      <a class="text-[#0000EE] underline">Disclaimer Agreement</a>
-      <label> Website: <a class="text-[#0000EE] underline"> https://www.jqcard.com</a> </label>
+      <div class="relative z-10 flex flex-col gap-6">
+        <h2 class="text-2xl font-semibold">Welcome</h2>
 
-      <label>
-        If you encounter any problems during use, please contact the platform's customer service
-        center.
-      </label>
+        <p class="text-white/80 text-sm leading-relaxed">
+          Access your account securely and manage your financial activities with ease.
+        </p>
 
-      <label> Working hours: 9:00 AM - 12:00 AM (weekdays) </label>
+        <div class="flex flex-col gap-3 text-sm">
+          <a class="hover:underline text-white/90">User Agreement</a>
+          <a class="hover:underline text-white/90">Privacy Policy</a>
+          <a class="hover:underline text-white/90">Confidentiality Agreement</a>
+          <a class="hover:underline text-white/90">Disclaimer Agreement</a>
+        </div>
+
+        <div class="text-white/70 text-sm">
+          Website:
+          <span class="underline">https://www.test.com</span>
+        </div>
+
+        <div class="text-white/70 text-sm">Working hours: 9:00 AM - 12:00 AM</div>
+      </div>
     </div>
   </div>
 </div>
