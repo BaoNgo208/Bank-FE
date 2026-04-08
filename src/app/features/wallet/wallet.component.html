@@ -36,7 +36,7 @@
       <div class="flex items-center gap-8 mt-4">
         <div>
           <div class="text-sm opacity-80">Balance (USD)</div>
-          <div class="text-3xl font-bold">$<span [countUp]="2.05"></span></div>
+          <div class="text-3xl font-bold">$<span [countUp]="walletBalance()"></span></div>
         </div>
 
         <div class="w-px h-12 bg-white/50"></div>
@@ -186,7 +186,7 @@
       class="flex items-center justify-between px-4 py-2 bg-neutral-secondary-soft border-b border-default"
     >
       <div class="text-sm text-heading space-x-1 font-bold text-black">
-        <label>Transfer records</label>
+        <label>Transfer history</label>
       </div>
     </div>
 
@@ -196,11 +196,13 @@
           <!-- HEADER -->
           <thead class="bg-gray-100 border-b border-default text-xs">
             <tr class="text-center">
-              <th class="p-3 border-r border-default">Transfer out account</th>
-              <th class="p-3 border-r border-default">Transfer to account</th>
-              <th class="p-3 border-r border-default">Transfer amount</th>
-              <th class="p-3 border-r border-default">Remark</th>
-              <th class="p-3 border-r border-default">Creation time</th>
+              <th class="p-3 border-r border-default">Order No</th>
+              <th class="p-3 border-r border-default">Currency</th>
+              <th class="p-3 border-r border-default">Network</th>
+              <th class="p-3 border-r border-default">To Address</th>
+              <th class="p-3 border-r border-default">Amount</th>
+              <th class="p-3 border-r border-default">Status</th>
+              <th class="p-3 border-r border-default">Created At</th>
             </tr>
           </thead>
 
@@ -211,33 +213,59 @@
               [formGroupName]="i"
               class="border-b border-default hover:bg-gray-50 text-center text-xs"
             >
-              <!-- Transfer out accountr -->
-              <td class="px-4 py-3 border-r border-default">
-                {{ row.get('transferOutAccount')?.value }}
+              <!-- Order No -->
+              <td class="px-4 py-3 border-r border-default font-medium">
+                {{ row.get('order_no')?.value }}
               </td>
 
-              <!-- Transfer to account -->
+              <!-- Currency -->
               <td class="px-4 py-3 border-r border-default">
                 <span class="px-2 py-1 text-xs bg-blue-100 text-blue-600 rounded">
-                  {{ row.get('transferToAccount')?.value }}
+                  {{ row.get('currency')?.value }}
                 </span>
               </td>
 
-              <!-- Transfer amount -->
+              <!-- Network -->
+              <td
+                class="px-4 py-3 border-r border-default"
+                [ngClass]="{
+                  'text-yellow-600 bg-yellow-100': row.get('network')?.value === 'Tron (TRC20)',
+                  'text-green-600 bg-green-100': row.get('network')?.value === 'ETH (ERC20)',
+                }"
+              >
+                <span class="px-2 py-1 text-xs rounded">
+                  {{ row.get('network')?.value }}
+                </span>
+              </td>
+              <!-- To Address -->
+              <td class="px-4 py-3 border-r border-default max-w-[150px] truncate">
+                {{ row.get('to_address')?.value }}
+              </td>
+
+              <!-- Amount -->
               <td class="px-4 py-3 border-r border-default">
                 <span class="px-2 py-1 text-xs bg-green-100 text-green-600 rounded">
-                  {{ row.get('transferAmount')?.value }}
+                  {{ row.get('amount')?.value }}
                 </span>
               </td>
 
-              <!-- Remark -->
+              <!-- Status -->
               <td class="px-4 py-3 border-r border-default">
-                {{ row.get('remark')?.value }}
+                <span
+                  class="px-2 py-1 text-xs rounded"
+                  [ngClass]="{
+                    'bg-yellow-100 text-yellow-600': row.get('status')?.value === 'PENDING_ADMIN',
+                    'bg-green-100 text-green-600': row.get('status')?.value === 'SUCCESS',
+                    'bg-red-100 text-red-600': row.get('status')?.value === 'FAILED',
+                  }"
+                >
+                  {{ row.get('status')?.value }}
+                </span>
               </td>
 
-              <!-- Creation time -->
+              <!-- Created At -->
               <td class="px-4 py-3 border-r border-default">
-                {{ row.get('creationTime')?.value }}
+                {{ row.get('created_at')?.value | date: 'dd/MM/yyyy HH:mm' }}
               </td>
             </tr>
           </tbody>

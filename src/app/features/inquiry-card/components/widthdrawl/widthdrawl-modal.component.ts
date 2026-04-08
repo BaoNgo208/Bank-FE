@@ -34,6 +34,15 @@ export class WidthdrawlCardModalComponent {
     return this.isInvalid() ? 'Minimum amount is 0.1' : '';
   });
 
+  ngOnInit() {
+    this.walletFacade.getBalance().subscribe({
+      next: (res) => {
+        this.availableBalance.set(res.data.card_balance);
+      },
+      error: (_) => {},
+    });
+  }
+
   handleWidthdrawl() {
     const selectedCard = this.inquiryStore.selectedCard();
     if (!selectedCard) return;

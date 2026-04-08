@@ -19,7 +19,7 @@
       <div class="flex justify-between items-center">
         <span>Available Balance</span>
         <input
-          class="border rounded px-3 py-1 w-40 text-right"
+          class="border rounded px-3 py-1 w-40 text-gray-700 text-right"
           [value]="availableBalance() | number: '1.2-2'"
           disabled
         />
@@ -27,7 +27,11 @@
 
       <div class="flex justify-between items-center">
         <span>Currency</span>
-        <input class="border rounded px-3 py-1 w-40 text-right" [value]="currency()" disabled />
+        <input
+          class="border rounded px-3 py-1 w-40 text-gray-700 text-right"
+          [value]="currency()"
+          disabled
+        />
       </div>
 
       <div class="flex flex-col gap-1">

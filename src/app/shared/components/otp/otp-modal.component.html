@@ -1,0 +1,97 @@
+<!-- Overlay -->
+<div
+  *ngIf="visible"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
+  (click)="onOverlayClick($event)"
+>
+  <!-- Modal -->
+  <div
+    class="relative w-full max-w-sm mx-4 bg-white rounded-2xl shadow-2xl p-8"
+    (click)="$event.stopPropagation()"
+  >
+    <!-- Icon -->
+    <div class="flex justify-center mb-5">
+      <div class="w-14 h-14 rounded-full bg-indigo-50 flex items-center justify-center">
+        <svg
+          class="w-7 h-7 text-indigo-600"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="1.8"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+          />
+        </svg>
+      </div>
+    </div>
+
+    <!-- Title -->
+    <h2 class="text-center text-xl font-semibold text-gray-900 mb-1">Xác minh OTP</h2>
+    <p class="text-center text-sm text-gray-500 mb-7">
+      Nhập mã <span class="font-medium text-gray-700">{{ length }} chữ số</span> được gửi đến số của
+      bạn
+    </p>
+
+    <!-- OTP Inputs -->
+    <div class="flex justify-center gap-2 mb-6">
+      <input
+        *ngFor="let val of otpValues; let i = index"
+        #otpInput
+        type="text"
+        inputmode="numeric"
+        maxlength="1"
+        [value]="val"
+        (keydown)="onKeyDown($event, i)"
+        (paste)="onPaste($event, i)"
+        (focus)="onFocus($event)"
+        class="w-11 text-center text-xl font-semibold border rounded-xl bg-gray-50 text-gray-900 outline-none transition-all duration-150 border-gray-200 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-100 caret-transparent"
+        [class.border-indigo-400]="val !== ''"
+        [class.bg-white]="val !== ''"
+        style="height: 52px"
+      />
+    </div>
+
+    <!-- Error message -->
+    <p *ngIf="errorMsg" class="text-center text-xs text-red-500 mb-4 -mt-2">
+      {{ errorMsg }}
+    </p>
+
+    <!-- Actions -->
+    <div class="flex gap-3">
+      <button
+        (click)="onCancel()"
+        class="flex-1 py-2.5 rounded-xl border border-gray-200 text-sm text-gray-600 hover:bg-gray-50 transition-colors duration-150"
+      >
+        Huỷ
+      </button>
+      <button
+        (click)="onConfirmClick()"
+        [disabled]="!isComplete"
+        class="flex-[2] py-2.5 rounded-xl text-sm font-medium transition-all duration-150 bg-indigo-600 text-white hover:bg-indigo-700 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed disabled:active:scale-100"
+      >
+        Xác nhận
+      </button>
+    </div>
+
+    <!-- Resend -->
+    <p class="text-center text-xs text-gray-400 mt-4">
+      Không nhận được mã?
+      <button (click)="onResend()" class="text-indigo-600 font-medium hover:underline ml-1">
+        Gửi lại
+      </button>
+    </p>
+
+    <!-- Close button -->
+    <button
+      (click)="onCancel()"
+      class="absolute top-4 right-4 text-gray-300 hover:text-gray-500 transition-colors"
+    >
+      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+</div>

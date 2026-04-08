@@ -18,7 +18,9 @@
         <!-- TOTAL ASSETS -->
         <div class="lg:col-span-2 bg-red-600 text-white rounded-xl p-6 relative overflow-hidden">
           <div class="text-sm opacity-80">Total Assets (USD)</div>
-          <div class="text-5xl font-bold mt-2 tabular-nums">$<span [countUp]="3.05"></span></div>
+          <div class="text-5xl font-bold mt-2 tabular-nums">
+            $<span [countUp]="totalAsset()"></span>
+          </div>
 
           <div class="flex gap-2 mt-8 flex-wrap">
             <div

@@ -116,11 +116,6 @@
         >
           <i class="fa-solid fa-unlock text-xs"></i> Thawing (0)
         </button>
-        <button
-          class="flex items-center gap-2 px-1 tablet:px-4 h-9 text-[0.8rem] tablet:text-sm rounded-lg bg-rose-100 text-rose-700 hover:bg-rose-200 transition"
-        >
-          <i class="fa-solid fa-ban text-xs"></i> Cancellation (0)
-        </button>
       </div>
     </div>
 
@@ -136,9 +131,9 @@
             <th class="px-3 py-3 border-r border-default">name</th>
             <th class="px-3 py-3 border-r border-default">currency</th>
             <th class="px-3 py-3 border-r border-default">status</th>
-            <th class="px-3 py-3 border-r border-default">remaining amount</th>
+            <th class="px-2 py-3 border-r border-default w-[120px] truncate">remaining amount</th>
             <th class="px-3 py-3 border-r border-default">created at</th>
-            <th class="px-3 py-3 border-r border-default">note</th>
+            <th class="px-3 py-3 border-r border-default w-[180px] truncate">note</th>
             <th class="px-3 py-3 border-r border-default">Action</th>
           </tr>
         </thead>
@@ -169,13 +164,15 @@
               {{ row.get('currency')?.value ?? 'USD' }}
             </td>
             <td class="px-3 py-3 border-r border-default">{{ row.get('status')?.value }}</td>
-            <td class="px-3 py-3 border-r border-default">
+            <td class="px-3 py-3 border-r border-default w-[120px]">
               {{ row.get('remaining_amount')?.value }}
             </td>
             <td class="px-3 py-3 border-r border-default">
               {{ row.get('created_at')?.value | date: 'dd/MM/yyyy HH:mm' }}
             </td>
-            <td class="px-3 py-3 border-r border-default">{{ row.get('note')?.value }}</td>
+            <td class="px-3 py-3 border-r border-default w-[180px]">
+              {{ row.get('note')?.value }}
+            </td>
 
             <!-- Action cell -->
             <td class="px-3 py-3 border-l border-default">
@@ -231,18 +228,50 @@
   <button
     type="button"
     class="flex items-center gap-2 w-full px-3 py-2 hover:bg-gray-100"
-    (click)="handleAction('FREEZE')"
+    (click)="
+      handleAction(
+        rows.at(openDropdownIndex!).get('status')?.value === 'ACTIVE' ? 'FREEZE' : 'UNFREEZE'
+      )
+    "
   >
-    🧊 <span>Freeze</span>
-  </button>
-  <button
-    type="button"
-    class="flex items-center gap-2 w-full px-3 py-2 text-red-600 hover:bg-gray-100"
-    (click)="handleAction('CANCEL')"
-  >
-    🗑 <span>Cancel card</span>
+    🧊
+    <span>{{
+      rows.at(openDropdownIndex!).get('status')?.value === 'ACTIVE' ? 'Freeze' : 'Unfreeze'
+    }}</span>
   </button>
 </div>
 
 <app-top-up-modal *ngIf="inquiryUiStore.isTopUpModalOpen()"></app-top-up-modal>
 <app-widthdrawl-card-modal *ngIf="inquiryUiStore.isWidthdrawlOpen()"></app-widthdrawl-card-modal>
+<app-confirm-modal
+  [visible]="this.inquiryUiStore.isConfirmFreezeOpen()"
+  content="Are you sure you want to perform this action?"
+  [onConfirm]="handleFreezeCard.bind(this)"
+  (cancel)="this.inquiryUiStore.isConfirmFreezeOpen.set(false)"
+></app-confirm-modal>
+
+<div
+  *ngIf="isLoading()"
+  class="absolute inset-0 flex items-center justify-center bg-white/60 backdrop-blur-sm z-10"
+>
+  <div class="flex flex-col items-center gap-2">
+    <svg class="animate-spin h-8 w-8 text-red-500" viewBox="0 0 24 24">
+      <circle
+        class="opacity-25"
+        cx="12"
+        cy="12"
+        r="10"
+        stroke="currentColor"
+        stroke-width="4"
+        fill="none"
+      ></circle>
+      <path
+        class="opacity-75"
+        fill="currentColor"
+        d="M4 12a8 8 0 018-8v4l3-3-3-3v4a12 12 0 00-12 12h4z"
+      ></path>
+    </svg>
+
+    <span class="text-sm text-gray-600">Processing...</span>
+  </div>
+</div>

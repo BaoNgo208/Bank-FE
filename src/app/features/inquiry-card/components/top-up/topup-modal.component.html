@@ -18,7 +18,7 @@
     <div class="space-y-3 text-sm">
       <div class="flex justify-between items-center">
         <span>Wallet balance</span>
-        <span class="text-gray-700">
+        <span class="border rounded px-3 py-1 w-40 text-right text-gray-700">
           {{ walletBalance() | number: '1.2-2' }} {{ currency() }}
         </span>
       </div>
@@ -26,7 +26,7 @@
       <div class="flex justify-between items-center">
         <span>Available Balance</span>
         <input
-          class="border rounded px-3 py-1 w-40 text-right"
+          class="border rounded px-3 py-1 w-40 text-right text-gray-700"
           [value]="availableBalance() | number: '1.2-2'"
           disabled
         />
@@ -34,12 +34,20 @@
 
       <div class="flex justify-between items-center">
         <span>Currency</span>
-        <input class="border rounded px-3 py-1 w-40 text-right" [value]="currency()" disabled />
+        <input
+          class="border text-gray-700 rounded px-3 py-1 w-40 text-right"
+          [value]="currency()"
+          disabled
+        />
       </div>
 
       <div class="flex justify-between items-center">
         <span>Recharge fee</span>
-        <input class="border rounded px-3 py-1 w-40 text-right" [value]="rechargeFee()" disabled />
+        <input
+          class="border rounded px-3 py-1 text-gray-700 w-40 text-right"
+          [value]="rechargeFee()"
+          disabled
+        />
       </div>
       <div class="flex flex-col gap-1">
         <div class="flex justify-between items-center">
@@ -62,7 +70,7 @@
         </span>
       </div>
 
-      <div class="flex justify-between items-center">
+      <div class="flex justify-between text-gray-700 items-center">
         <span> Estimated cost</span>
         <input
           class="border rounded px-3 py-1 w-40 text-right"

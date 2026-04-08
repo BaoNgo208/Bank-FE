@@ -13,19 +13,27 @@
     class="w-full max-w-6xl flex flex-col small_laptop:flex-row bg-white/80 backdrop-blur-xl shadow-2xl rounded-3xl overflow-hidden border border-white/40"
   >
     <!-- LEFT -->
-    <div class="flex-1 flex items-center justify-center p-6 small_laptop:p-10 bg-white/60">
+    <div
+      class="flex-1 flex items-center justify-center p-6 small_laptop:p-10 bg-white/60 transition-all duration-500 ease-out"
+      (mouseenter)="hoverSide = 'left'"
+      (mouseleave)="hoverSide = null"
+      [ngClass]="{
+        'scale-[1.05] z-10 shadow-[0_20px_60px_rgba(0,0,0,0.25)]': hoverSide === 'left',
+        'opacity-60 blur-[1px]': hoverSide === 'right',
+      }"
+    >
       <div class="w-full max-w-md">
         <router-outlet></router-outlet>
 
-        <!--  TERMS (MOBILE ONLY) -->
+        <!-- TERMS (MOBILE ONLY) -->
         <div class="mt-8 text-xs text-gray-600 small_laptop:hidden">
           <p class="font-semibold text-gray-800 mb-2">Information:</p>
 
           <div class="flex flex-col gap-1">
-            <a class="text-red-500 underline">User Agreement</a>
-            <a class="text-red-500 underline">Privacy Policy</a>
-            <a class="text-red-500 underline">Confidentiality Agreement</a>
-            <a class="text-red-500 underline">Disclaimer Agreement</a>
+            <a class="text-red-500 underline cursor-pointer">User Agreement</a>
+            <a class="text-red-500 underline cursor-pointer">Privacy Policy</a>
+            <a class="text-red-500 underline cursor-pointer">Confidentiality Agreement</a>
+            <a class="text-red-500 underline cursor-pointer">Disclaimer Agreement</a>
           </div>
 
           <p class="mt-2">
@@ -35,10 +43,18 @@
         </div>
       </div>
     </div>
+
+    <!-- RIGHT -->
     <div
-      class="flex-1 hidden small_laptop:flex flex-col justify-center px-12 text-white bg-gradient-to-br from-red-400 via-red-500 to-red-500 relative"
+      class="flex-1 hidden small_laptop:flex flex-col justify-center px-12 text-white bg-gradient-to-br from-red-400 via-red-500 to-red-500 relative transition-all duration-500 ease-out"
+      (mouseenter)="hoverSide = 'right'"
+      (mouseleave)="hoverSide = null"
+      [ngClass]="{
+        'scale-[1.05] z-10 shadow-[0_20px_60px_rgba(0,0,0,0.25)]': hoverSide === 'right',
+        'opacity-60 blur-[1px]': hoverSide === 'left',
+      }"
     >
-      <!-- overlay làm dịu màu -->
+      <!-- overlay -->
       <div class="absolute inset-0 bg-black/10"></div>
 
       <div class="relative z-10 flex flex-col gap-6">
@@ -49,10 +65,10 @@
         </p>
 
         <div class="flex flex-col gap-3 text-sm">
-          <a class="hover:underline text-white/90">User Agreement</a>
-          <a class="hover:underline text-white/90">Privacy Policy</a>
-          <a class="hover:underline text-white/90">Confidentiality Agreement</a>
-          <a class="hover:underline text-white/90">Disclaimer Agreement</a>
+          <a class="hover:underline text-white/90 cursor-pointer">User Agreement</a>
+          <a class="hover:underline text-white/90 cursor-pointer">Privacy Policy</a>
+          <a class="hover:underline text-white/90 cursor-pointer">Confidentiality Agreement</a>
+          <a class="hover:underline text-white/90 cursor-pointer">Disclaimer Agreement</a>
         </div>
 
         <div class="text-white/70 text-sm">
