@@ -13,6 +13,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { ChangeDetectorRef } from '@angular/core';
 import { WalletUiStore } from './stores/wallet-ui.store';
 import { WidthdrawlComponent } from './components/widthdrawl.component';
+import { OtpModalComponent } from '../../shared/components/otp/otp-modal.component';
+import { Toast } from 'ngx-toastr';
 
 @Component({
   selector: 'app-wallet-component',
@@ -26,6 +28,7 @@ import { WidthdrawlComponent } from './components/widthdrawl.component';
     MatTableModule,
     MatPaginatorModule,
     WidthdrawlComponent,
+    OtpModalComponent,
   ],
   templateUrl: './wallet.component.html',
 })
@@ -36,6 +39,8 @@ export class WalletComponent {
   private cd = inject(ChangeDetectorRef);
 
   protected walletUiStore = inject(WalletUiStore);
+
+  walletBalance = signal<number>(0.0);
 
   showTopupModal = false;
   amount = 100;
@@ -73,6 +78,12 @@ export class WalletComponent {
   ngOnInit() {
     this.loadRechargePage();
     this.loadTransferPage();
+    this.walletFacade.getBalance().subscribe({
+      next: (res) => {
+        this.walletBalance.set(res.data.wallet_balance);
+      },
+      error: (_) => {},
+    });
   }
 
   get rechargeRows(): FormArray {
@@ -122,15 +133,17 @@ export class WalletComponent {
   }
 
   private loadTransferPage(): void {
-    // this.transferTotalItems = this.loadPage(
-    //   buildSampleTransferRecords,
-    //   this.transferPage,
-    //   this.transferPageSize,
-    //   (slice) => {
-    //     this.transferRows.clear();
-    //     slice.forEach((item) => this.transferRows.push(this.fb.group(item)));
-    //   },
-    // );
+    this.walletFacade.getWithdrawOrders(this.transferPage - 1).subscribe((res) => {
+      const content = res.data.items;
+      const total = res.data.total_size;
+
+      this.transferTotalItems = total;
+
+      this.transferRows.clear();
+      content.forEach((item: any) => this.transferRows.push(this.fb.group(item)));
+
+      this.cd.detectChanges();
+    });
   }
 
   // ── Proof upload ──────────────────────────────────────────────────────

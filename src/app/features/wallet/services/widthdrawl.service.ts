@@ -7,6 +7,7 @@ import {
 } from '../types/wallet.type';
 import { ApiResponse } from '../../../core/auth/auth.request';
 import { Observable } from 'rxjs';
+import { WithdrawOrderPageResponse } from '../../admin/withdrawals-management/model/widthdrawl.model';
 
 @Injectable({
   providedIn: 'root',
@@ -30,5 +31,11 @@ export class WidthdrawlService extends BaseApiService {
     });
 
     return this.post<ApiResponse<null>>('/resend-otp', params);
+  }
+
+  getWithdrawOrders(page: number = 0): Observable<ApiResponse<WithdrawOrderPageResponse>> {
+    const params = this.buildPageParams(page);
+
+    return this.get('/orders-list', params);
   }
 }

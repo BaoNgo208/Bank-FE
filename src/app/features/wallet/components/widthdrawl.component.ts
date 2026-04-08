@@ -1,19 +1,22 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { WalletUiStore } from '../stores/wallet-ui.store';
 import Swal from 'sweetalert2';
 import { WalletFacade } from '../facades/wallet.facade';
 import { CreateWithdrawOrderRequest, Stablecoin } from '../types/wallet.type';
+import { OtpModalComponent } from '../../../shared/components/otp/otp-modal.component';
 
 @Component({
   selector: 'app-widthdraw-component',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, OtpModalComponent],
   templateUrl: './widthdrawl.component.html',
 })
 export class WidthdrawlComponent {
   private walletFacade = inject(WalletFacade);
   protected walletUiStore = inject(WalletUiStore);
+
+  pendingOrderNo = signal<string | null>(null);
 
   withdrawAmount: number = 500;
   toAddress: string = '';
@@ -28,11 +31,33 @@ export class WidthdrawlComponent {
   currentOrderNo: string | null = null;
   orderNo: string = '';
 
-  ConfirmOtp() {
+  showOtpModal = signal(false);
+
+  constructor() {
+    effect(() => {
+      console.log(this.pendingOrderNo());
+    });
+  }
+
+  handleOpenOtp() {
+    this.showOtpModal.set(true);
+  }
+
+  handleConfirmOtp = (otp: string) => {
+    console.log('OTP:', otp);
+
+    // call API ở đây
+    // this.withdrawFacade.confirmOtp(otp)
+
+    this.showOtpModal.set(false);
+  };
+
+  ConfirmOtp(otp: string) {
     this.validateOtp();
+    console.log(otp);
     const confirmPayload = {
       orderNo: this.orderNo,
-      otp: this.otp,
+      otp: otp,
     };
     this.walletFacade.confirmWithdrawOtp(confirmPayload).subscribe({
       next: (_) => {
@@ -145,13 +170,18 @@ export class WidthdrawlComponent {
       next: (res) => {
         Swal.close();
         this.orderNo = res.data.order_no;
+        this.showOtpModal.set(true);
       },
       error: (err) => {
+        this.orderNo = err?.error?.data;
         Swal.close();
         Swal.fire({
           icon: 'error',
           title: 'Create failed',
           text: err?.error?.message,
+          confirmButtonText: 'OK',
+        }).then((result) => {
+          this.showOtpModal.set(true);
         });
       },
     });

@@ -1,0 +1,31 @@
+<div *ngIf="visible" class="fixed inset-0 z-50 flex items-center justify-center">
+  <!-- overlay -->
+  <div class="absolute inset-0 bg-black/40" (click)="handleClose()"></div>
+
+  <!-- modal -->
+  <div
+    class="relative bg-white w-[90%] max-w-md rounded-xl shadow-lg p-6 z-10 flex flex-col gap-5 animate-fade-in"
+  >
+    <!-- content -->
+    <div class="text-gray-700 text-sm">
+      {{ content }}
+    </div>
+
+    <!-- actions -->
+    <div class="flex justify-end gap-3">
+      <button
+        class="px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-sm"
+        (click)="handleClose()"
+      >
+        Cancel
+      </button>
+
+      <button
+        class="px-4 py-2 rounded-lg bg-red-500 hover:bg-red-600 text-white text-sm"
+        (click)="handleConfirm()"
+      >
+        Confirm
+      </button>
+    </div>
+  </div>
+</div>

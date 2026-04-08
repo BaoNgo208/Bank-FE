@@ -40,6 +40,16 @@ export class TopUpModalComponent {
     return this.rechargeAmount() + this.rechargeFee();
   });
 
+  ngOnInit() {
+    this.walletFacade.getBalance().subscribe({
+      next: (res) => {
+        this.walletBalance.set(res.data.wallet_balance);
+        this.availableBalance.set(res.data.card_balance);
+      },
+      error: (_) => {},
+    });
+  }
+
   handleTopup() {
     const selectedCard = this.inquiryStore.selectedCard();
     if (!selectedCard) return;

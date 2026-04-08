@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BaseApiService } from '../../../core/http/base-api.service';
 import {
+  BalanceResponse,
   CardPageResponse,
-  CardStatus,
   CreateCardRequest,
   TopupCardRequest,
   WithDrawCardRequest,
@@ -31,5 +31,9 @@ export class WalletService extends BaseApiService {
 
   withDrawCard(cardId: number, request: WithDrawCardRequest): Observable<ApiResponse<void>> {
     return this.post(`/cards/${cardId}/withdraw`, request);
+  }
+
+  getBalance(): Observable<ApiResponse<BalanceResponse>> {
+    return this.get('/balance');
   }
 }

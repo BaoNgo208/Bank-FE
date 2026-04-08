@@ -9,6 +9,10 @@ import { InquiryStore } from './stores/inquiry.store';
 import Swal from 'sweetalert2';
 import { TopUpModalComponent } from './components/top-up/topup-modal.component';
 import { WidthdrawlCardModalComponent } from './components/widthdrawl/widthdrawl-modal.component';
+import { ConfirmModalComponent } from '../../shared/components/confirm-modal/confirm-modal.component';
+import { CardFacade } from '../wallet/facades/card.facade';
+import { ToastrService } from 'ngx-toastr';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-inquiry-card-component',
@@ -19,6 +23,7 @@ import { WidthdrawlCardModalComponent } from './components/widthdrawl/widthdrawl
     PaginationComponent,
     TopUpModalComponent,
     WidthdrawlCardModalComponent,
+    ConfirmModalComponent,
   ],
   templateUrl: './inquiry-card.component.html',
 })
@@ -27,12 +32,15 @@ export class InquiryCardComponent {
   private walletFacade = inject(WalletFacade);
   private cd = inject(ChangeDetectorRef);
   private inquiryStore = inject(InquiryStore);
+  private cardFacade = inject(CardFacade);
+  private toast = inject(ToastrService);
 
   protected inquiryUiStore = inject(InquiryUiStore);
 
   cardPage = 1;
   cardPageSize = 10;
   CardTotalItems = 0;
+  isLoading = signal(false);
 
   openDropdownIndex: number | null = null;
   dropdownPosition = { top: 0, left: 0 };
@@ -118,7 +126,7 @@ export class InquiryCardComponent {
     this.openDropdownIndex = i;
   }
 
-  handleAction(action: 'TOP_UP' | 'TRANSFER_OUT' | 'FREEZE' | 'CANCEL') {
+  handleAction(action: 'TOP_UP' | 'TRANSFER_OUT' | 'FREEZE' | 'CANCEL' | 'UNFREEZE') {
     const i = this.openDropdownIndex!;
     const row = this.rows.at(i).value;
 
@@ -134,7 +142,12 @@ export class InquiryCardComponent {
         this.inquiryStore.selectedCard.set(row);
         break;
       case 'FREEZE':
-        this.updateCardStatus(row.id, 'BLOCKED');
+        this.inquiryUiStore.isConfirmFreezeOpen.set(true);
+        this.inquiryStore.selectedCard.set(row);
+        break;
+      case 'UNFREEZE':
+        this.inquiryUiStore.isConfirmFreezeOpen.set(true);
+        this.inquiryStore.selectedCard.set(row);
         break;
       case 'CANCEL':
         this.updateCardStatus(row.id, 'CANCELED');
@@ -142,9 +155,39 @@ export class InquiryCardComponent {
     }
   }
 
-  updateCardStatus(cardId: number, status: 'BLOCKED' | 'CANCELED') {
-    const index = this.rows.controls.findIndex((r) => r.value.id === cardId);
-    if (index !== -1) this.rows.at(index).patchValue({ status });
+  handleFreezeCard() {
+    const selectedCard = this.inquiryStore.selectedCard();
+    this.isLoading.set(true);
+    if (!selectedCard) return;
+
+    const { id, status } = selectedCard;
+
+    const isFreeze = status === 'ACTIVE';
+
+    const action$ = isFreeze ? this.cardFacade.lockCard(id) : this.cardFacade.unlockCard(id);
+
+    action$.pipe(finalize(() => this.isLoading.set(false))).subscribe({
+      next: () => {
+        this.updateCardStatus(selectedCard.id, isFreeze ? 'BLOCKED' : 'ACTIVE');
+        this.cd.detectChanges();
+        this.toast.success(isFreeze ? 'Successfully froze card' : 'Successfully unfroze card');
+      },
+      error: (err) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: err?.error?.message,
+          confirmButtonText: 'OK',
+        });
+      },
+    });
+  }
+
+  updateCardStatus(cardId: number, status: 'BLOCKED' | 'CANCELED' | 'ACTIVE') {
+    const index = this.rows.controls.findIndex((r) => r.get('id')?.value === cardId);
+    if (index !== -1) {
+      this.rows.at(index).patchValue({ status });
+    }
   }
 
   get rows(): FormArray {

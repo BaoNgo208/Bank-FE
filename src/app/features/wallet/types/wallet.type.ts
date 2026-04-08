@@ -152,3 +152,8 @@ export interface CardPageResponse {
   total_size: number;
   has_next: boolean;
 }
+
+export interface BalanceResponse {
+  wallet_balance: number;
+  card_balance: number;
+}

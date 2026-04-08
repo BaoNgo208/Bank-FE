@@ -85,4 +85,12 @@ export class WalletFacade {
   withDrawCard(cardId: number, request: WithDrawCardRequest) {
     return this.walletService.withDrawCard(cardId, request);
   }
+
+  getBalance() {
+    return this.walletService.getBalance();
+  }
+
+  getWithdrawOrders(page: number = 0) {
+    return this.widthdrawlService.getWithdrawOrders(page);
+  }
 }
