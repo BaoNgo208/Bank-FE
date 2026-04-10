@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, effect, HostListener, inject, signal } fr
 import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { WalletFacade } from '../wallet/facades/wallet.facade';
-import { CardListResponse } from '../wallet/types/wallet.type';
+import { CardListResponse, CardStatus } from '../wallet/types/wallet.type';
 import { PaginationComponent } from '../../shared/components/pagination/pagination.component';
 import { InquiryUiStore } from './stores/inquiry-ui.store';
 import { InquiryStore } from './stores/inquiry.store';
@@ -13,6 +13,8 @@ import { ConfirmModalComponent } from '../../shared/components/confirm-modal/con
 import { CardFacade } from '../wallet/facades/card.facade';
 import { ToastrService } from 'ngx-toastr';
 import { finalize } from 'rxjs';
+import { CardDashboardResponse } from '../wallet/types/card.type';
+import { toUtcEndOfDay, toUtcStartOfDay } from '../../utils/utc.util';
 
 @Component({
   selector: 'app-inquiry-card-component',
@@ -36,11 +38,13 @@ export class InquiryCardComponent {
   private toast = inject(ToastrService);
 
   protected inquiryUiStore = inject(InquiryUiStore);
+  protected dashboard = signal<CardDashboardResponse | null>(null);
 
   cardPage = 1;
   cardPageSize = 10;
   CardTotalItems = 0;
   isLoading = signal(false);
+  CardStatus = CardStatus;
 
   openDropdownIndex: number | null = null;
   dropdownPosition = { top: 0, left: 0 };
@@ -48,6 +52,14 @@ export class InquiryCardComponent {
   form = this.fb.group({
     checkAll: [false],
     rows: this.fb.array([]),
+  });
+
+  searchForm = this.fb.group({
+    cardNumber: [''],
+    cardName: [''],
+    status: [null],
+    fromTime: [null],
+    toTime: [null],
   });
 
   constructor() {
@@ -81,9 +93,79 @@ export class InquiryCardComponent {
     });
   }
 
+  ngOnInit() {
+    this.loadCardPage();
+    this.cardFacade.getCardDashboard().subscribe({
+      next: (res) => {
+        this.dashboard.set(res.data);
+      },
+      error: (err) => {
+        this.toast.error(err?.error?.message);
+      },
+    });
+  }
+
   @HostListener('document:click')
   onClickOutside() {
     this.openDropdownIndex = null;
+  }
+
+  updateTable(cards: any[]) {
+    this.rows.clear();
+
+    cards.forEach((card) => {
+      this.rows.push(
+        this.fb.group({
+          id: [card.id],
+          masked_card: [card.masked_card],
+          brand: [card.brand],
+          name: [card.name],
+          currency: [card.currency],
+          status: [card.status],
+          remaining_amount: [card.remaining_amount],
+          created_at: [card.created_at],
+          note: [card.note],
+          selected: [false],
+        }),
+      );
+    });
+    this.cd.detectChanges();
+  }
+
+  onSearch() {
+    const f = this.searchForm.value;
+
+    this.cardFacade
+      .searchCards(0, {
+        cardNumber: f.cardNumber ?? undefined,
+        cardName: f.cardName ?? undefined,
+        status: f.status ?? undefined,
+        fromTime: toUtcStartOfDay(f.fromTime),
+        toTime: toUtcEndOfDay(f.toTime),
+      })
+      .subscribe({
+        next: (res) => {
+          this.updateTable(res.data.items);
+          this.CardTotalItems = res.data.total_size;
+        },
+      });
+  }
+
+  onReset() {
+    // 1. Reset form
+    this.searchForm.reset({
+      cardNumber: '',
+      cardName: '',
+      status: null,
+      fromTime: null,
+      toTime: null,
+    });
+
+    // 2. Reset page về 1
+    this.cardPage = 1;
+
+    // 3. Reload data
+    this.onSearch();
   }
 
   private findRowIndex(cardId: number): number {
@@ -192,10 +274,6 @@ export class InquiryCardComponent {
 
   get rows(): FormArray {
     return this.form.get('rows') as FormArray;
-  }
-
-  ngOnInit() {
-    this.loadCardPage();
   }
 
   toggleAll() {
