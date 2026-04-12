@@ -93,4 +93,8 @@ export class WalletFacade {
   getWithdrawOrders(page: number = 0) {
     return this.widthdrawlService.getWithdrawOrders(page);
   }
+
+  getDashboard() {
+    return this.walletService.getDashboard();
+  }
 }

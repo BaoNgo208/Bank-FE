@@ -157,3 +157,13 @@ export interface BalanceResponse {
   wallet_balance: number;
   card_balance: number;
 }
+
+export interface DashboardResponse {
+  user_id: number;
+  total_balance: number;
+  available_balance: number;
+  frozen_balance: number;
+  allocated_balance: number;
+  card_opening_limit: number;
+  activated_card_count: number;
+}
