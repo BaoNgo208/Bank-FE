@@ -14,7 +14,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import { WalletUiStore } from './stores/wallet-ui.store';
 import { WidthdrawlComponent } from './components/widthdrawl.component';
 import { OtpModalComponent } from '../../shared/components/otp/otp-modal.component';
-import { Toast } from 'ngx-toastr';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-wallet-component',
@@ -37,6 +37,7 @@ export class WalletComponent {
   private walletFacade = inject(WalletFacade);
   protected walletStore = inject(WalletStore);
   private cd = inject(ChangeDetectorRef);
+  private toast = inject(ToastrService);
 
   protected walletUiStore = inject(WalletUiStore);
 
@@ -91,6 +92,14 @@ export class WalletComponent {
   }
   get transferRows(): FormArray {
     return this.form.get('transferRows') as FormArray;
+  }
+
+  copyAddressRecord(value: string | null | undefined) {
+    if (!value) return;
+
+    navigator.clipboard.writeText(value);
+
+    this.toast.success('Copied to clipboard');
   }
 
   openWidthdrawlModal() {

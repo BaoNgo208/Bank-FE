@@ -4,6 +4,7 @@ import {
   BalanceResponse,
   CardPageResponse,
   CreateCardRequest,
+  DashboardResponse,
   TopupCardRequest,
   WithDrawCardRequest,
 } from '../types/wallet.type';
@@ -35,5 +36,9 @@ export class WalletService extends BaseApiService {
 
   getBalance(): Observable<ApiResponse<BalanceResponse>> {
     return this.get('/balance');
+  }
+
+  getDashboard(): Observable<ApiResponse<DashboardResponse>> {
+    return this.get('/dashboard');
   }
 }

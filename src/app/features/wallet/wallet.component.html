@@ -130,7 +130,27 @@
 
               <!-- Amount -->
               <td class="px-4 py-3 border-r border-default">
-                {{ row.get('address')?.value }}
+                <div
+                  class="group relative flex items-center gap-2"
+                  (click)="copyAddressRecord(row.get('address')?.value)"
+                >
+                  <!-- TEXT -->
+                  <span class="truncate">
+                    {{ row.get('address')?.value }}
+                  </span>
+
+                  <!-- COPY ICON -->
+                  <i
+                    class="fa fa-copy text-gray-400 cursor-pointer opacity-0 group-hover:opacity-100 transition"
+                  ></i>
+
+                  <!-- OPTIONAL: tooltip -->
+                  <span
+                    class="absolute -top-6 right-0 text-xs bg-black text-white px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition"
+                  >
+                    Copy
+                  </span>
+                </div>
               </td>
 
               <!-- Reason -->
@@ -237,9 +257,30 @@
                   {{ row.get('network')?.value }}
                 </span>
               </td>
+
               <!-- To Address -->
-              <td class="px-4 py-3 border-r border-default max-w-[150px] truncate">
-                {{ row.get('to_address')?.value }}
+              <td class="px-4 py-3 border-r border-default max-w-[150px]">
+                <div class="group relative flex items-center gap-2">
+                  <!-- TEXT -->
+                  <span class="truncate max-w-[120px]">
+                    {{ row.get('to_address')?.value }}
+                  </span>
+
+                  <!-- COPY ICON -->
+                  <i
+                    class="fa fa-copy text-gray-400 cursor-pointer opacity-0 group-hover:opacity-100 transition"
+                    (click)="
+                      copyAddressRecord(row.get('to_address')?.value); $event.stopPropagation()
+                    "
+                  ></i>
+
+                  <!-- TOOLTIP -->
+                  <span
+                    class="absolute -top-6 right-0 text-xs bg-black text-white px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition"
+                  >
+                    Copy
+                  </span>
+                </div>
               </td>
 
               <!-- Amount -->

@@ -19,7 +19,7 @@
         <div class="lg:col-span-2 bg-red-600 text-white rounded-xl p-6 relative overflow-hidden">
           <div class="text-sm opacity-80">Total Assets (USD)</div>
           <div class="text-5xl font-bold mt-2 tabular-nums">
-            $<span [countUp]="totalAsset()"></span>
+            $<span [countUp]="dashboard()?.total_balance ?? 0"></span>
           </div>
 
           <div class="flex gap-2 mt-8 flex-wrap">
@@ -28,7 +28,7 @@
             >
               <div class="text-xs mb-1">Balance</div>
               <div class="text-xl font-semibold tabular-nums min-w-[80px]">
-                $<span [countUp]="0.75"></span>
+                $<span [countUp]="dashboard()?.available_balance ?? 0"></span>
               </div>
             </div>
             <div
@@ -36,7 +36,7 @@
             >
               <div class="text-xs mb-1">Freeze</div>
               <div class="text-xl font-semibold tabular-nums min-w-[80px]">
-                $<span [countUp]="0.0"></span>
+                $<span [countUp]="dashboard()?.frozen_balance ?? 0"></span>
               </div>
             </div>
             <div
@@ -44,7 +44,7 @@
             >
               <div class="text-xs mb-1">Total card balance</div>
               <div class="text-xl font-semibold tabular-nums min-w-[80px]">
-                $<span [countUp]="2.3"></span>
+                $<span [countUp]="dashboard()?.allocated_balance ?? 0"></span>
               </div>
             </div>
           </div>
@@ -57,7 +57,7 @@
           >
             <div>
               <div class="text-xs text-gray-500">Card opening limit</div>
-              <div class="text-2xl mt-2">0</div>
+              <div class="text-2xl mt-2">{{ this.dashboard()?.card_opening_limit ?? 0 }}</div>
             </div>
             <div class="w-12 h-12 rounded-lg bg-teal-100 flex items-center justify-center shrink-0">
               <i class="fa-solid fa-credit-card text-teal-500"></i>
@@ -68,7 +68,7 @@
           >
             <div>
               <div class="text-xs text-gray-500">Number of cards activated</div>
-              <div class="text-2xl mt-2">0</div>
+              <div class="text-2xl mt-2">{{ this.dashboard()?.activated_card_count ?? 0 }}</div>
             </div>
             <div
               class="w-12 h-12 rounded-lg bg-orange-100 flex items-center justify-center shrink-0"
@@ -95,7 +95,7 @@
             <div>
               <div class="text-xs text-gray-500">User ID / Invitation Code</div>
               <div class="text-2xl mt-2 flex items-center gap-2">
-                1
+                {{ this.dashboard()?.user_id ?? 0 }}
                 <i class="fa-regular fa-copy text-orange-500 cursor-pointer text-base"></i>
               </div>
             </div>
