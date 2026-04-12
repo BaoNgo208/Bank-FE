@@ -161,6 +161,30 @@ export const routes: Routes = [
             (m) => m.WithdrawalsManagementComponent,
           ),
       },
+      {
+        path: 'deposits',
+        children: [
+          {
+            path: '',
+            redirectTo: 'address',
+            pathMatch: 'full',
+          },
+          {
+            path: 'address',
+            loadComponent: () =>
+              import('./features/admin/deposit-management/deposit-address/deposit-address.component').then(
+                (m) => m.DepositAddressComponent,
+              ),
+          },
+          {
+            path: 'settings',
+            loadComponent: () =>
+              import('./features/admin/deposit-management/deposit-setting/deposit-setting.component').then(
+                (m) => m.DepositSettingComponent,
+              ),
+          },
+        ],
+      },
     ],
   },
 

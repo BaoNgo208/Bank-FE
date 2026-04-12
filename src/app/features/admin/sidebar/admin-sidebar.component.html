@@ -6,15 +6,31 @@
 
   <!-- Menu -->
   <nav class="flex-1 px-3 py-4 space-y-2 text-sm">
-    <a
-      *ngFor="let item of menu"
-      [routerLink]="item.path"
-      routerLinkActive="bg-white/20"
-      class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-white/10 transition"
-    >
-      <i class="fa" [ngClass]="item.icon"></i>
-      {{ item.label }}
-    </a>
+    <ng-container *ngFor="let item of menu">
+      <!-- GIỮ NGUYÊN 100% -->
+      <a
+        [routerLink]="item.path"
+        routerLinkActive="bg-white/20"
+        (click)="item.children && toggle(item.label)"
+        class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-white/10 transition"
+      >
+        <i class="fa" [ngClass]="item.icon"></i>
+        {{ item.label }}
+      </a>
+
+      <!-- CHỈ THÊM ĐOẠN NÀY -->
+      <ng-container *ngIf="item.children && openMenu === item.label">
+        <a
+          *ngFor="let child of item.children"
+          [routerLink]="child.path"
+          routerLinkActive="bg-white/20"
+          class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-white/10 transition"
+          style="padding-left: 40px"
+        >
+          {{ child.label }}
+        </a>
+      </ng-container>
+    </ng-container>
   </nav>
 
   <!-- User -->

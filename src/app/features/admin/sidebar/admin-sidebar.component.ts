@@ -13,7 +13,22 @@ export class AdminSidebarComponent {
     { label: 'Dashboard', icon: 'fa-home', path: '/admin/dashboard' },
     { label: 'Users Management', icon: 'fa-users', path: '/admin/users' },
     { label: 'Withdrawals Management', icon: 'fa-arrow-up', path: '/admin/withdrawals' },
-    { label: 'Deposits Management', icon: 'fa-arrow-down', path: '/admin/deposits' },
+
+    {
+      label: 'Deposits Management',
+      icon: 'fa-arrow-down',
+      children: [
+        { label: 'Deposit Address', path: '/admin/deposits/address' },
+        { label: 'Deposit Setting', path: '/admin/deposits/settings' },
+      ],
+    },
+
     { label: 'Transactions Management', icon: 'fa-exchange', path: '/admin/transactions' },
   ];
+
+  openMenu: string | null = null;
+
+  toggle(label: string) {
+    this.openMenu = this.openMenu === label ? null : label;
+  }
 }

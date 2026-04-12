@@ -1,0 +1,78 @@
+<div class="p-0 w-full text-[#0f172a]">
+  <!-- HEADER -->
+  <div class="mb-6 flex items-center justify-between">
+    <div>
+      <h2 class="text-xl font-semibold">Deposit Address</h2>
+      <p class="text-sm text-gray-400">Manage deposit addresses for each network</p>
+    </div>
+  </div>
+
+  <!-- CARD -->
+  <div class="bg-[#1e293b] w-full rounded-2xl border border-white/10 shadow-xl p-6">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-5">
+      <!-- ROW 1 -->
+      <div class="grid grid-cols-2 gap-4">
+        <!-- Currency -->
+        <div>
+          <label class="text-xs text-gray-400 mb-1 block">Currency</label>
+          <select
+            formControlName="currency"
+            class="w-full text-gray-400 bg-[#0f172a] border border-white/10 rounded-lg px-3 py-2 focus:border-purple-400 focus:ring-1 focus:ring-purple-400 outline-none transition"
+          >
+            <option value="USDT">USDT</option>
+            <option value="USDC">USDC</option>
+          </select>
+        </div>
+
+        <!-- Display Order -->
+        <div>
+          <label class="text-xs text-gray-400 mb-1 block">Display Order</label>
+          <input
+            type="number"
+            formControlName="display_order"
+            placeholder="1"
+            class="w-full bg-[#0f172a] text-gray-400 border border-white/10 rounded-lg px-3 py-2 focus:border-purple-400 focus:ring-1 focus:ring-purple-400 outline-none transition"
+          />
+        </div>
+      </div>
+
+      <!-- NETWORK -->
+      <div>
+        <label class="text-xs text-gray-400 mb-1 block">Network</label>
+
+        <select
+          formControlName="network"
+          class="w-full bg-[#0f172a] text-gray-400 border border-white/10 rounded-lg px-3 py-2 focus:border-purple-400 focus:ring-1 focus:ring-purple-400 outline-none transition"
+        >
+          <option value="" disabled>Select network</option>
+          <option value="Tron (TRC20)">Tron (TRC20)</option>
+          <option value="Tron (TRC20)">Ethereum (ERC20)</option>
+        </select>
+      </div>
+
+      <!-- ADDRESS -->
+      <div>
+        <label class="text-xs text-gray-400 mb-1 block">Deposit Address</label>
+        <textarea
+          rows="3"
+          formControlName="address"
+          placeholder="Wallet address..."
+          class="w-full bg-[#0f172a] text-gray-400 border border-white/10 rounded-lg px-3 py-2 focus:border-purple-400 focus:ring-1 focus:ring-purple-400 outline-none transition resize-none"
+        ></textarea>
+      </div>
+
+      <!-- ACTION -->
+      <div class="flex justify-between items-center pt-4 border-t border-white/10">
+        <span class="text-xs text-gray-500"> Make sure the network matches the address </span>
+
+        <button
+          type="submit"
+          [disabled]="form.invalid"
+          class="px-5 py-2 rounded-lg bg-purple-500 hover:bg-purple-600 transition font-medium shadow-md text-white shadow-purple-500/20"
+        >
+          Create Address
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
