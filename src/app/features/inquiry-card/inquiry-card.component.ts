@@ -15,6 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 import { finalize } from 'rxjs';
 import { CardDashboardResponse } from '../wallet/types/card.type';
 import { toUtcEndOfDay, toUtcStartOfDay } from '../../utils/utc.util';
+import { dateRangeValidator } from '../../utils/form-validator.util';
 
 @Component({
   selector: 'app-inquiry-card-component',
@@ -54,13 +55,16 @@ export class InquiryCardComponent {
     rows: this.fb.array([]),
   });
 
-  searchForm = this.fb.group({
-    cardNumber: [''],
-    cardName: [''],
-    status: [null],
-    fromTime: [null],
-    toTime: [null],
-  });
+  searchForm = this.fb.group(
+    {
+      cardNumber: [''],
+      cardName: [''],
+      status: [null],
+      fromTime: [null],
+      toTime: [null],
+    },
+    { validators: dateRangeValidator },
+  );
 
   constructor() {
     effect(() => {
@@ -136,7 +140,7 @@ export class InquiryCardComponent {
     const f = this.searchForm.value;
 
     this.cardFacade
-      .searchCards(0, {
+      .searchCards(this.cardPage - 1, {
         cardNumber: f.cardNumber ?? undefined,
         cardName: f.cardName ?? undefined,
         status: f.status ?? undefined,
@@ -147,6 +151,7 @@ export class InquiryCardComponent {
         next: (res) => {
           this.updateTable(res.data.items);
           this.CardTotalItems = res.data.total_size;
+          this.cd.markForCheck();
         },
       });
   }
@@ -165,7 +170,7 @@ export class InquiryCardComponent {
     this.cardPage = 1;
 
     // 3. Reload data
-    this.onSearch();
+    this.loadCardPage();
   }
 
   private findRowIndex(cardId: number): number {

@@ -9,6 +9,7 @@ import {
   Stablecoin,
   TopupCardRequest,
   WithDrawCardRequest,
+  WithdrawOrderStatus,
 } from '../types/wallet.type';
 import { WalletStore } from '../stores/wallet.store';
 import { WidthdrawlService } from '../services/widthdrawl.service';
@@ -96,5 +97,18 @@ export class WalletFacade {
 
   getDashboard() {
     return this.walletService.getDashboard();
+  }
+
+  searchWidthdrawlOrders(
+    page?: number,
+    params?: {
+      orderNo?: string;
+      address?: string;
+      status?: WithdrawOrderStatus;
+      fromTime?: string;
+      toTime?: string;
+    },
+  ) {
+    return this.widthdrawlService.searchWidthdrawlOrders(page, params);
   }
 }

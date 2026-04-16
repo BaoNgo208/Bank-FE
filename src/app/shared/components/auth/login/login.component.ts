@@ -4,6 +4,7 @@ import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../core/auth/auth.service';
 import { SigninRequest } from '../../../../core/auth/auth.request';
+import { AuthStore } from '../../../../core/auth/auth.store';
 
 @Component({
   selector: 'app-login-component',
@@ -14,6 +15,7 @@ export class LoginComponent {
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private authService = inject(AuthService);
+  private authStore = inject(AuthStore);
 
   loginForm = this.fb.group({
     username: ['', [Validators.required]],
@@ -34,8 +36,7 @@ export class LoginComponent {
 
     this.authService.signIn(data).subscribe({
       next: (res) => {
-        localStorage.setItem('accessToken', res.tokens.access_token);
-        localStorage.setItem('refreshToken', res.tokens.refresh_token);
+        this.authStore.setTokens(res.tokens.access_token, res.tokens.refresh_token);
         this.router.navigate(['/home']);
       },
     });

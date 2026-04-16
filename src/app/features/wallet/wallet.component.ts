@@ -1,10 +1,15 @@
 import { Component, effect, inject, signal } from '@angular/core';
 import { CountUpDirective } from '../../utils/count-up.directive';
-import { FormArray, FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  AbstractControl,
+  FormArray,
+  FormBuilder,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { buildSampleRechargeRecords, buildSampleTransferRecords } from '../../utils/sample.util';
 import { WalletFacade } from './facades/wallet.facade';
-import { Stablecoin } from './types/wallet.type';
+import { Stablecoin, WithdrawOrderStatus } from './types/wallet.type';
 import { WalletStore } from './stores/wallet.store';
 import { PaginationComponent } from '../../shared/components/pagination/pagination.component';
 import Swal from 'sweetalert2';
@@ -13,8 +18,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { ChangeDetectorRef } from '@angular/core';
 import { WalletUiStore } from './stores/wallet-ui.store';
 import { WidthdrawlComponent } from './components/widthdrawl.component';
-import { OtpModalComponent } from '../../shared/components/otp/otp-modal.component';
 import { ToastrService } from 'ngx-toastr';
+import { toUtcEndOfDay, toUtcStartOfDay } from '../../utils/utc.util';
+import { dateRangeValidator } from '../../utils/form-validator.util';
 
 @Component({
   selector: 'app-wallet-component',
@@ -28,7 +34,6 @@ import { ToastrService } from 'ngx-toastr';
     MatTableModule,
     MatPaginatorModule,
     WidthdrawlComponent,
-    OtpModalComponent,
   ],
   templateUrl: './wallet.component.html',
 })
@@ -64,11 +69,24 @@ export class WalletComponent {
   transferPage = 1;
   transferPageSize = 10;
   transferTotalItems = 0;
+  WithdrawOrderStatus = WithdrawOrderStatus;
+  isSearching = false;
 
   form = this.fb.group({
     rechargeRows: this.fb.array([]),
     transferRows: this.fb.array([]),
   });
+
+  searchForm = this.fb.group(
+    {
+      orderNo: [''],
+      address: [''],
+      status: [null],
+      fromTime: [null],
+      toTime: [null],
+    },
+    { validators: dateRangeValidator },
+  );
 
   constructor() {
     effect(() => {
@@ -92,6 +110,65 @@ export class WalletComponent {
   }
   get transferRows(): FormArray {
     return this.form.get('transferRows') as FormArray;
+  }
+
+  updateTable(orders: any[]) {
+    this.transferRows.clear();
+
+    orders.forEach((order) => {
+      this.transferRows.push(
+        this.fb.group({
+          order_no: [order.order_no],
+          currency: [order.currency],
+          network: [order.network],
+          to_address: [order.to_address],
+          amount: [order.amount],
+          status: [order.status],
+          created_at: [order.created_at],
+        }),
+      );
+    });
+
+    this.cd.detectChanges();
+  }
+
+  onSearch() {
+    this.isSearching = true;
+    const f = this.searchForm.value;
+
+    this.walletFacade
+      .searchWidthdrawlOrders(this.transferPage - 1, {
+        orderNo: f.orderNo ?? undefined,
+        address: f.address ?? undefined,
+        status: f.status ?? undefined,
+        fromTime: toUtcStartOfDay(f.fromTime),
+        toTime: toUtcEndOfDay(f.toTime),
+      })
+      .subscribe({
+        next: (res) => {
+          this.updateTable(res.data.items);
+          this.transferTotalItems = res.data.total_size;
+          this.cd.markForCheck();
+        },
+      });
+  }
+
+  onReset() {
+    this.isSearching = false;
+    // 1. Reset form
+    this.searchForm.reset({
+      orderNo: '',
+      address: '',
+      status: null,
+      fromTime: null,
+      toTime: null,
+    });
+
+    // 2. Reset page về 1
+    this.transferPage = 1;
+
+    // this.cd.detectChanges();
+    this.loadTransferPage();
   }
 
   copyAddressRecord(value: string | null | undefined) {
@@ -133,7 +210,13 @@ export class WalletComponent {
   // ── Transfer ─────────────────────────────────────────────────────────
   onTransferPageChange(page: number): void {
     this.transferPage = page;
-    this.loadTransferPage();
+    if (this.isSearching) {
+      this.onSearch();
+    } else {
+      this.loadTransferPage();
+    }
+
+    this.cd.markForCheck();
   }
   onTransferPageSizeChange(size: number): void {
     this.transferPageSize = size;

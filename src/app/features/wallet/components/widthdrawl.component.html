@@ -29,10 +29,7 @@
           <div class="p-2 border-r">Frozen Amount (USD)</div>
           <div class="p-2">0</div>
         </div>
-        <div class="grid grid-cols-2 border-b">
-          <div class="p-2 border-r">Withdrawal exchange rate</div>
-          <div class="p-2">-</div>
-        </div>
+
         <div class="grid grid-cols-2">
           <div class="p-2 border-r">Minimum withdrawal amount</div>
           <div class="p-2">50 USD</div>
@@ -104,6 +101,7 @@
 <app-otp-modal
   [visible]="showOtpModal()"
   [length]="6"
+  [orderNo]="orderNo"
   (confirm)="ConfirmOtp($event)"
   (close)="showOtpModal.set(false)"
 ></app-otp-modal>

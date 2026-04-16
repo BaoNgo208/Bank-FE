@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../../../core/auth/auth.service';
 import { SigninRequest } from '../../../../core/auth/auth.request';
 import { AdminAuthService } from '../../../../core/auth/admin-auth.service';
+import { AuthStore } from '../../../../core/auth/auth.store';
 
 @Component({
   selector: 'app-login-component',
@@ -15,6 +16,7 @@ export class AdminLoginComponent {
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private adminAuthService = inject(AdminAuthService);
+  private authStore = inject(AuthStore);
 
   loginForm = this.fb.group({
     username: ['', [Validators.required]],
@@ -35,8 +37,8 @@ export class AdminLoginComponent {
 
     this.adminAuthService.signIn(data).subscribe({
       next: (res) => {
-        localStorage.setItem('accessToken', res.tokens.access_token);
-        localStorage.setItem('refreshToken', res.tokens.refresh_token);
+        this.authStore.setTokens(res.tokens.access_token, res.tokens.refresh_token);
+
         this.router.navigate(['/admin']);
       },
     });

@@ -1,31 +1,69 @@
-<div class="flex items-start justify-center h-full bg-gray-100">
-  <ul class="space-y-8 pt-5">
+<div class="flex flex-col h-full bg-white border-r border-gray-100">
+  <!-- Logo Header -->
+  <div class="px-5 py-5 border-b border-gray-100">
+    <span class="text-[0.9rem] font-medium text-gray-800 flex items-center gap-2">
+      <span class="w-2 h-2 rounded-full bg-red-500 inline-block"></span>
+      MyApp
+    </span>
+  </div>
+
+  <!-- Nav -->
+  <ul class="flex-1 py-4 space-y-0.5 overflow-y-auto">
     <li *ngFor="let tab of tabs">
       <!-- PARENT -->
       <div
-        class="flex items-center justify-between cursor-pointer gap-x-3"
+        class="relative flex items-center justify-between px-5 py-2.5 cursor-pointer group transition-colors"
+        [class.bg-gray-50]="!isActive(tab)"
+        [class.text-red-500]="isActive(tab)"
+        [class.text-gray-500]="!isActive(tab)"
         (click)="toggleMenu(tab)"
-        [ngClass]="{
-          'text-red-500 font-medium': isActive(tab),
-          'text-gray-600 ': !isActive(tab),
-        }"
       >
-        <div class="flex items-center gap-3">
-          <i [class]="tab.icon" class="text-[0.9rem]"></i>
-          <span class="text-[0.8rem]">{{ tab.label }}</span>
+        <!-- Active bar -->
+        <span
+          *ngIf="isActive(tab)"
+          class="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-red-500 rounded-r-full"
+        ></span>
+
+        <div class="flex items-center gap-2.5">
+          <i [class]="tab.icon" class="text-[0.85rem] w-4 text-center"></i>
+          <span class="text-[0.8rem]" [class.font-medium]="isActive(tab)">{{ tab.label }}</span>
         </div>
+
+        <!-- Chevron -->
+        <svg
+          *ngIf="tab.children"
+          class="w-3 h-3 transition-transform duration-200"
+          [class.rotate-90]="isOpen(tab.key)"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <polyline points="9 18 15 12 9 6" />
+        </svg>
       </div>
 
       <!-- CHILDREN -->
-      <ul *ngIf="tab.children && isOpen(tab.key)" class="mt-2 ml-7 space-y-2 text-gray-500">
+      <ul *ngIf="tab.children && isOpen(tab.key)" class="overflow-hidden">
         <li
           *ngFor="let child of tab.children"
+          class="relative flex items-center gap-2 px-5 py-2 pl-[46px] cursor-pointer transition-colors hover:bg-gray-50"
+          [class.text-red-500]="activeTab === child.key"
+          [class.text-gray-400]="activeTab !== child.key"
           (click)="selectChild(child.key, $event)"
-          [ngClass]="{
-            'text-red-500 font-medium': activeTab === child.key,
-          }"
         >
-          <span class="text-[0.75rem]">{{ child.label }}</span>
+          <!-- Dot -->
+          <span
+            class="absolute left-7 top-1/2 -translate-y-1/2 w-1 h-1 rounded-full"
+            [class.bg-red-400]="activeTab === child.key"
+            [class.bg-gray-300]="activeTab !== child.key"
+          ></span>
+
+          <span class="text-[0.75rem]" [class.font-medium]="activeTab === child.key">{{
+            child.label
+          }}</span>
         </li>
       </ul>
     </li>
