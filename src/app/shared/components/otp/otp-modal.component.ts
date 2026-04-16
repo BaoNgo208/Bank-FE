@@ -8,9 +8,11 @@ import {
   ViewChildren,
   QueryList,
   ElementRef,
+  inject,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { WalletFacade } from '../../../features/wallet/facades/wallet.facade';
 
 @Component({
   selector: 'app-otp-modal',
@@ -19,19 +21,19 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './otp-modal.component.html',
 })
 export class OtpModalComponent implements OnChanges {
-  /** Số lượng ô OTP */
   @Input() length: number = 6;
 
-  /** Hiển thị / ẩn modal */
+  @Input() orderNo!: string;
+
   @Input() visible: boolean = false;
 
-  /** Callback khi người dùng bấm Xác nhận — nhận vào chuỗi OTP */
   @Output() confirm = new EventEmitter<string>();
 
-  /** Callback khi đóng modal */
   @Output() cancel = new EventEmitter<void>();
 
   @ViewChildren('otpInput') inputRefs!: QueryList<ElementRef<HTMLInputElement>>;
+
+  private walletFacade = inject(WalletFacade);
 
   otpValues: string[] = [];
   errorMsg = '';
@@ -127,6 +129,10 @@ export class OtpModalComponent implements OnChanges {
   }
 
   onResend(): void {
+    this.walletFacade.resendWithdrawOtp(this.orderNo).subscribe({
+      next: (res) => {},
+      error: (err) => {},
+    });
     this.reset();
   }
 }

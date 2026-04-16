@@ -16,6 +16,7 @@ export interface WithdrawOrderListResponse {
   amount: number;
   status: WithdrawOrderStatus;
   created_at: string;
+  admin_note: string;
 }
 
 export interface UpdateWithdrawStatusRequest {

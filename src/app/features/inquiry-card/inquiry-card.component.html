@@ -40,19 +40,25 @@
             <input type="date" formControlName="fromTime" class="h-9 px-2 outline-none" />
             <span class="px-2 text-gray-400">-</span>
             <input type="date" formControlName="toTime" class="h-9 px-2 outline-none" />
+            <!-- ERROR -->
+            <div *ngIf="searchForm.errors?.['invalidDateRange']" class="text-red-500 text-xs mt-1">
+              From date must be before To date
+            </div>
           </div>
         </div>
       </div>
 
       <div class="w-full flex gap-x-5 text-[0.8rem]">
         <button
+          [disabled]="searchForm.invalid"
           (click)="onSearch()"
-          class="h-9 px-3 bg-red-600 text-white rounded hover:bg-red-700 transition flex items-center gap-2"
+          class="h-9 px-3 bg-red-600 text-white rounded hover:bg-red-700 transition flex items-center gap-2 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed"
         >
           <i class="fa-solid fa-magnifying-glass"></i> Search
         </button>
         <button
-          class="h-9 px-3 bg-red-600 text-white rounded hover:bg-red-700 transition flex items-center gap-2"
+          [disabled]="searchForm.invalid"
+          class="h-9 px-3 bg-red-600 text-white rounded hover:bg-red-700 transition flex items-center gap-2 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed"
           type="button"
           (click)="onReset()"
         >

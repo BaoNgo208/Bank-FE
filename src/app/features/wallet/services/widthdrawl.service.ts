@@ -4,6 +4,7 @@ import {
   ConfirmWithdrawOtpRequest,
   CreateWithdrawOrderRequest,
   CreateWithdrawOrderResponse,
+  WithdrawOrderStatus,
 } from '../types/wallet.type';
 import { ApiResponse } from '../../../core/auth/auth.request';
 import { Observable } from 'rxjs';
@@ -37,5 +38,27 @@ export class WidthdrawlService extends BaseApiService {
     const params = this.buildPageParams(page);
 
     return this.get('/orders-list', params);
+  }
+
+  searchWidthdrawlOrders(
+    page?: number,
+    params?: {
+      orderNo?: string;
+      address?: string;
+      status?: WithdrawOrderStatus;
+      fromTime?: string;
+      toTime?: string;
+    },
+  ): Observable<ApiResponse<WithdrawOrderPageResponse>> {
+    return this.get<ApiResponse<WithdrawOrderPageResponse>>(
+      '/orders',
+      this.buildPageParams(page, undefined, {
+        orderNo: params?.orderNo,
+        address: params?.address,
+        status: params?.status,
+        fromTime: params?.fromTime,
+        toTime: params?.toTime,
+      }),
+    );
   }
 }
