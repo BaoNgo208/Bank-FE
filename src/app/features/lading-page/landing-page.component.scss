@@ -1,0 +1,45 @@
+.reveal-left {
+  transform: translateX(-40px);
+  opacity: 0;
+  transition:
+    transform 0.7s ease,
+    opacity 0.7s ease;
+}
+
+.reveal-left.active {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.reveal-fade {
+  opacity: 0;
+  transition: opacity 0.7s ease;
+}
+
+.reveal-fade.active {
+  opacity: 1;
+}
+
+.reveal-up {
+  transform: translateY(24px);
+  opacity: 0;
+  transition:
+    transform 0.7s ease,
+    opacity 0.7s ease;
+}
+
+.reveal-up.active {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.secure-img {
+  transition:
+    transform 0.4s ease,
+    box-shadow 0.4s ease; /* bỏ "all" */
+}
+
+.secure-img:hover {
+  transform: scale(1.03);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+}

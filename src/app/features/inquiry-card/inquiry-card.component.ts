@@ -16,6 +16,7 @@ import { finalize } from 'rxjs';
 import { CardDashboardResponse } from '../wallet/types/card.type';
 import { toUtcEndOfDay, toUtcStartOfDay } from '../../utils/utc.util';
 import { dateRangeValidator } from '../../utils/form-validator.util';
+import { CashbackComponent } from './components/cashback/cashback.component';
 
 @Component({
   selector: 'app-inquiry-card-component',
@@ -27,6 +28,7 @@ import { dateRangeValidator } from '../../utils/form-validator.util';
     TopUpModalComponent,
     WidthdrawlCardModalComponent,
     ConfirmModalComponent,
+    CashbackComponent,
   ],
   templateUrl: './inquiry-card.component.html',
 })

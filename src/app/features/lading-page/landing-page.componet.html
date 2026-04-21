@@ -1,0 +1,110 @@
+<div class="w-full">
+  <!-- NAVBAR -->
+  <app-navbar></app-navbar>
+
+  <!-- HERO -->
+  <app-hero></app-hero>
+
+  <!-- SECTION 1 -->
+  <!-- <section class="min-h-screen flex items-center justify-center bg-gray-100">
+    <div class="text-center space-y-4">
+      <h2 class="reveal reveal-up delay-1 text-3xl font-semibold">Secure Wallet</h2>
+      <p class="reveal reveal-left delay-2 text-gray-600">Your assets, fully protected.</p>
+    </div>
+  </section> -->
+
+  <!-- SECTION 1 -->
+  <section class="section relative min-h-screen flex items-center justify-center bg-gray-50">
+    <div class="grid md:grid-cols-2 gap-10 items-center max-w-6xl mx-auto px-6">
+      <!-- IMAGE -->
+      <div class="reveal reveal-left delay-1 flex justify-center" appReveal>
+        <div class="w-[320px] md:w-[420px] aspect-[4/3]">
+          <!-- fix layout shift -->
+          <img
+            src="https://images.unsplash.com/photo-1563986768609-322da13575f3?w=840&q=80"
+            class="w-full h-full object-cover rounded-2xl shadow-xl secure-img"
+            alt="secure wallet"
+            loading="eager"
+          />
+        </div>
+      </div>
+
+      <!-- TEXT -->
+      <div class="space-y-4 text-gray-800">
+        <h2 class="reveal reveal-fade delay-1 text-4xl font-semibold" appReveal>Secure Wallet</h2>
+        <p class="reveal reveal-up delay-2 text-gray-600 text-lg" appReveal>
+          Your assets are protected with enterprise-grade security and encryption.
+        </p>
+        <div class="reveal reveal-up delay-3" appReveal>
+          <button class="btn-primary">Learn Security</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- SECTION 2 -->
+  <section class="min-h-screen flex items-center justify-center bg-white">
+    <div class="text-center space-y-4">
+      <h2 class="reveal reveal-right delay-1 text-3xl font-semibold">Fast Transactions</h2>
+      <p class="reveal reveal-zoom delay-2 text-gray-600">Send crypto instantly.</p>
+    </div>
+  </section>
+
+  <!-- SECTION 3 -->
+  <section class="min-h-screen flex items-center justify-center bg-gray-100">
+    <div class="text-center space-y-4">
+      <h2 class="reveal reveal-rotate delay-1 text-3xl font-semibold">Low Fees</h2>
+      <p class="reveal reveal-up delay-2 text-gray-600">Save more on every transaction.</p>
+    </div>
+  </section>
+
+  <!-- SECTION 4 (GRID CARD TEST) -->
+  <section class="min-h-screen flex items-center justify-center bg-white">
+    <div class="grid grid-cols-3 gap-6">
+      <div class="reveal reveal-left delay-1 p-6 bg-gray-100 rounded-xl">Card 1</div>
+      <div class="reveal reveal-up delay-2 p-6 bg-gray-100 rounded-xl">Card 2</div>
+      <div class="reveal reveal-right delay-3 p-6 bg-gray-100 rounded-xl">Card 3</div>
+    </div>
+  </section>
+
+  <!-- SECTION 5 (LEFT RIGHT SPLIT) -->
+  <section class="min-h-screen flex items-center justify-center bg-gray-100">
+    <div class="grid grid-cols-2 gap-10 items-center">
+      <div class="reveal reveal-left delay-1">
+        <h2 class="text-3xl font-semibold mb-4">Manage Assets</h2>
+        <p class="text-gray-600">Track everything in one place.</p>
+      </div>
+      <div class="reveal reveal-right delay-2 bg-white p-10 rounded-xl shadow">Image / Mock UI</div>
+    </div>
+  </section>
+
+  <!-- SECTION 6 (LIST TEST) -->
+  <section class="min-h-screen flex items-center justify-center bg-white">
+    <div class="space-y-4 text-center">
+      <div class="reveal reveal-up delay-1">Feature 1</div>
+      <div class="reveal reveal-up delay-2">Feature 2</div>
+      <div class="reveal reveal-up delay-3">Feature 3</div>
+      <div class="reveal reveal-up delay-3">Feature 4</div>
+    </div>
+  </section>
+
+  <!-- SECTION 7 (ZOOM CARDS) -->
+  <section class="min-h-screen flex items-center justify-center bg-gray-100">
+    <div class="grid grid-cols-2 gap-6">
+      <div class="reveal reveal-zoom delay-1 p-10 bg-white rounded-xl">Wallet UI</div>
+      <div class="reveal reveal-zoom delay-2 p-10 bg-white rounded-xl">Card UI</div>
+    </div>
+  </section>
+
+  <!-- SECTION 8 (CTA) -->
+  <section class="min-h-screen flex items-center justify-center bg-white">
+    <div class="text-center space-y-6">
+      <h2 class="reveal reveal-up delay-1 text-3xl font-semibold">Start Your Crypto Journey</h2>
+      <button
+        (click)="goToAuth()"
+        class="reveal reveal-zoom delay-2 px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+      >
+        Get Started
+      </button>
+    </div>
+  </section>
+</div>

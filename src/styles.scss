@@ -9,6 +9,7 @@ body {
   width: 100%;
   margin: 0;
   scrollbar-gutter: stable;
+  overflow-x: hidden;
 }
 
 html {
@@ -21,4 +22,63 @@ app-root {
   flex-direction: column;
   height: 100%;
   width: 100%;
+}
+
+.reveal-hero {
+  opacity: 0;
+  transform: scale(0.9) translateY(20px);
+  filter: blur(10px);
+  transition: all 1s ease;
+}
+
+.reveal-hero.active {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  filter: blur(0);
+}
+
+.reveal {
+  opacity: 0;
+  transition: all 1s ease;
+}
+
+.reveal-up {
+  transform: translateY(40px);
+  filter: blur(10px);
+}
+
+.reveal-left {
+  transform: translateX(-60px);
+  filter: blur(8px);
+}
+
+.reveal-right {
+  transform: translateX(60px);
+  filter: blur(8px);
+}
+
+.reveal-zoom {
+  transform: scale(0.8);
+  filter: blur(10px);
+}
+
+.reveal-rotate {
+  transform: rotate(-5deg) scale(0.9);
+  filter: blur(6px);
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translate(0, 0) scale(1) rotate(0);
+  filter: blur(0);
+}
+
+.delay-1 {
+  transition-delay: 0.2s;
+}
+.delay-2 {
+  transition-delay: 0.4s;
+}
+.delay-3 {
+  transition-delay: 0.6s;
 }
