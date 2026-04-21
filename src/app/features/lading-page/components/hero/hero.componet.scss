@@ -1,0 +1,67 @@
+/* HERO BACKGROUND */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: url('https://images.unsplash.com/photo-1639762681485-074b7f938ba0') center/cover
+    no-repeat;
+  transform: scale(1.1);
+  animation: zoomBg 5s ease-in-out infinite alternate;
+}
+
+@keyframes zoomBg {
+  from {
+    transform: scale(1.1);
+  }
+  to {
+    transform: scale(1.2);
+  }
+}
+
+/* OVERLAY (gradient fintech style) */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(255, 0, 0, 0.3));
+}
+
+/* BUTTON */
+.btn-primary {
+  @apply px-6 py-3 bg-red-600 rounded-lg text-white font-semibold hover:bg-red-700 transition;
+}
+
+.btn-outline {
+  @apply px-6 py-3 border border-white text-white rounded-lg hover:bg-white hover:text-black transition;
+}
+
+/* REVEAL BASE */
+.reveal {
+  opacity: 0;
+  transition: all 0.8s ease;
+}
+
+.reveal.active {
+  opacity: 1;
+}
+
+/* HERO TEXT ANIMATION */
+.reveal-hero {
+  transform: scale(0.9) translateY(30px);
+  filter: blur(10px);
+  transition: all 1s ease;
+}
+
+.reveal-hero.active {
+  transform: scale(1) translateY(0);
+  filter: blur(0);
+}
+
+/* FADE UP */
+.reveal-up {
+  transform: translateY(40px);
+  filter: blur(6px);
+}
+
+.reveal-up.active {
+  transform: translateY(0);
+  filter: blur(0);
+}

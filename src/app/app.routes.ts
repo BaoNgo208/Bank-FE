@@ -4,7 +4,11 @@ import { authGuard } from './guards/auth.guard';
 import { adminAuthGuard } from './guards/admin-auth.guardd';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  {
+    path: '',
+    loadComponent: () =>
+      import('./features/lading-page/lading-page.component').then((m) => m.LandingPageComponent),
+  },
   {
     path: '',
     canActivate: [authGuard],
