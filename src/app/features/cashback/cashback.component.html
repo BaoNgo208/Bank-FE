@@ -1,0 +1,79 @@
+<div class="h-full px-3 py-2 flex flex-col gap-y-5 overflow-auto">
+  <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 w-full">
+    <!-- HEADER -->
+    <div class="flex justify-between items-center mb-4">
+      <button
+        (click)="cashbackStore.showCashbackModal.set(true)"
+        class="text-sm text-red-600 hover:underline transition"
+      >
+        View details
+      </button>
+      <h2 class="text-lg font-semibold text-gray-800">Cashback</h2>
+      <span class="text-sm text-red-600 font-medium">
+        {{ cashbackDashboard()?.current_percent ?? 0 }}%
+      </span>
+    </div>
+
+    <!-- MAIN INFO -->
+    <div class="grid grid-cols-2 gap-4 mb-5">
+      <!-- Cashback -->
+      <div>
+        <p class="text-xs text-gray-400">Available Cashback</p>
+        <p class="text-xl font-semibold text-red-600">
+          {{ cashbackDashboard()?.cashback_amount ?? 0 }}
+        </p>
+      </div>
+
+      <!-- Total spent -->
+      <div class="text-right">
+        <p class="text-xs text-gray-400">Total Spent</p>
+        <p class="text-xl font-semibold text-gray-800">
+          {{ cashbackDashboard()?.total_spent ?? 0 }}
+        </p>
+      </div>
+    </div>
+
+    <!--  PROGRESS BAR (overall) -->
+    <div class="mb-4">
+      <div class="w-full bg-gray-200 rounded-full h-2">
+        <div
+          class="bg-red-500 h-2 rounded-full transition-all duration-500"
+          [style.width.%]="overallProgress()"
+        ></div>
+      </div>
+    </div>
+
+    <!--  TIERS -->
+    <div class="flex justify-between items-center relative">
+      <ng-container *ngFor="let tier of cashbackDashboard()?.tiers; let i = index">
+        <!-- DOT -->
+        <div class="flex flex-col items-center w-full relative">
+          <div
+            class="w-4 h-4 rounded-full border-2 z-10"
+            [class.bg-red-500]="tier.is_current"
+            [class.border-red-500]="tier.is_current"
+            [class.bg-white]="!tier.is_current"
+            [class.border-gray-300]="!tier.is_current"
+          ></div>
+
+          <!-- LABEL -->
+          <p class="text-xs mt-2 text-gray-500">{{ tier.percent }}%</p>
+
+          <p class="text-[10px] text-gray-400">{{ tier.min_spent }} - {{ tier.max_spent }}</p>
+        </div>
+      </ng-container>
+    </div>
+
+    <!--  NEXT TIER -->
+    <div *ngIf="nextTier() as next" class="mt-4 text-xs text-gray-500">
+      Spend
+      <span class="font-medium text-red-600">
+        {{ next.min_spent - (cashbackDashboard()?.total_spent ?? 0) }}
+      </span>
+      more to reach
+      <span class="font-medium">{{ next.percent }}%</span>
+    </div>
+  </div>
+</div>
+
+<app-cashback-modal *ngIf="this.cashbackStore.showCashbackModal()"></app-cashback-modal>

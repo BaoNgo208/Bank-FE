@@ -98,6 +98,11 @@ export const routes: Routes = [
               ),
           },
           {
+            path: 'cashback',
+            loadComponent: () =>
+              import('./features/cashback/cashback.component').then((m) => m.CashbackComponent),
+          },
+          {
             path: 'withdrawal_list',
             loadComponent: () =>
               import('./features/withdrawal-list/withdrawal-list.component').then(
@@ -188,6 +193,11 @@ export const routes: Routes = [
               ),
           },
         ],
+      },
+      {
+        path: 'cashback',
+        loadComponent: () =>
+          import('./features/admin/cashback/cashback.component').then((m) => m.CashbackComponent),
       },
     ],
   },
