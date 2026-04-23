@@ -69,7 +69,7 @@
   </form>
 
   <!-- Card Infos -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
     <!-- Total Balance -->
     <div
       class="flex items-center justify-between bg-white border border-gray-200 rounded-xl px-6 py-5 hover:shadow-md transition"
@@ -120,31 +120,10 @@
         <i class="fa-solid fa-lock"></i>
       </div>
     </div>
-
-    <!--  Cashback -->
-    <div
-      (click)="this.inquiryUiStore.showCashbackModal.set(true)"
-      class="flex items-center justify-between bg-white border border-gray-200 rounded-xl px-6 py-5 cursor-pointer hover:shadow-md transition"
-    >
-      <div>
-        <p class="text-gray-700 text-sm">Cashback Available</p>
-        <p class="text-2xl mt-2 text-green-600 font-semibold">
-          {{ 0 }}
-        </p>
-
-        <p class="text-xs text-gray-400 mt-1">Click to redeem</p>
-      </div>
-
-      <div
-        class="w-16 h-16 flex items-center justify-center border-4 border-green-500 rounded-full text-green-500 text-3xl"
-      >
-        <i class="fa-solid fa-coins"></i>
-      </div>
-    </div>
   </div>
 
   <!-- Card lists table -->
-  <div class="min-w-0">
+  <div class="min-w-0 rounded-base border border-default bg-neutral-primary">
     <div class="flex items-center justify-between px-4 py-2 bg-white border-b border-default">
       <div class="text-sm font-medium text-heading"><label>Card List</label></div>
       <div class="flex items-center gap-1 small_laptop:gap-2">
@@ -317,5 +296,3 @@
     <span class="text-sm text-gray-600">Processing...</span>
   </div>
 </div>
-
-<app-cashback-component *ngIf="this.inquiryUiStore.showCashbackModal()"></app-cashback-component>

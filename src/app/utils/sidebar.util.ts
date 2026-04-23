@@ -26,6 +26,8 @@ export const SIDEBAR_ROUTE_MAP: Record<string, string> = {
   // Card
   card_grouping: '/home/card_management/card_grouping',
 
+  cashback: '/home/cashback',
+
   inquiry_card: '/home/inquiry_card',
 
   withdrawal_list: '/home/withdrawal_list',
@@ -57,6 +59,12 @@ export const SIDEBAR_TABS: SidebarTab[] = [
     key: 'inquiry_card',
     label: 'Inquiry card',
     icon: 'fa-solid fa-magnifying-glass',
+  },
+
+  {
+    key: 'cashback',
+    label: 'Cashback',
+    icon: 'fa-solid fa-money-bill-transfer',
   },
 
   {

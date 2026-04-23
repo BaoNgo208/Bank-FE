@@ -1,0 +1,93 @@
+<div class="h-full px-3 py-2 flex flex-col gap-y-5 overflow-auto">
+  <div class="min-w-0 rounded-base border border-default bg-neutral-primary">
+    <div class="flex items-center justify-between px-4 py-2 bg-white border-b border-default">
+      <div class="text-sm font-medium text-heading"><label>Cashback rules</label></div>
+      <div class="flex items-center gap-1 small_laptop:gap-2">
+        <button
+          (click)="onCreate()"
+          class="flex items-center gap-2 px-1 tablet:px-4 h-9 text-[0.8rem] tablet:text-sm rounded-lg bg-red-600 text-white hover:bg-red-700 transition"
+        >
+          Create
+        </button>
+      </div>
+    </div>
+    <form [formGroup]="form" class="overflow-x-auto">
+      <table class="w-full text-sm text-left border-collapse border border-default">
+        <thead class="border-b bg-gray-50">
+          <tr class="text-gray-600">
+            <th class="px-3 py-3 border-r border-default">id</th>
+            <th class="px-3 py-3 border-r border-default">Min spent</th>
+            <th class="px-3 py-3 border-r border-default">Max spent</th>
+            <th class="px-3 py-3 border-r w-[150px] border-default">Cashback percent</th>
+            <th class="px-3 py-3 border-r border-default">Is active</th>
+            <th class="px-3 py-3 border-r border-default">Updated at</th>
+            <th class="px-3 py-3 border-r border-default">Action</th>
+          </tr>
+        </thead>
+        <tbody formArrayName="rows">
+          <tr
+            *ngFor="let row of rows.controls; let i = index"
+            [formGroupName]="i"
+            class="border-b hover:bg-gray-50"
+          >
+            <td class="px-3 py-3 border-r border-default">{{ row.get('id')?.value }}</td>
+
+            <td class="px-3 py-3 border-r border-default">{{ row.get('min_spent')?.value }}</td>
+            <td class="px-3 py-3 border-r border-default">
+              {{ row.get('max_spent')?.value }}
+            </td>
+            <td class="px-3 py-3 border-r border-default">
+              {{ row.get('cashback_percent')?.value }}%
+            </td>
+            <td class="px-3 py-3 border-r border-default w-[120px]">
+              {{ row.get('is_active')?.value }}
+            </td>
+            <td class="px-3 py-3 border-r border-default">
+              {{ row.get('updated_at')?.value | date: 'dd/MM/yyyy HH:mm' }}
+            </td>
+
+            <td class="px-3 py-3 border-l border-default">
+              <button
+                (click)="toggleDropdown(i); $event.stopPropagation()"
+                type="button"
+                class="px-3 py-1 text-xs bg-gray-200 rounded hover:bg-gray-300"
+              >
+                Action
+              </button>
+
+              <!-- Dropdown -->
+              <div
+                *ngIf="openDropdownIndex === i"
+                class="absolute right-0 mt-2 w-32 bg-white border border-gray-200 rounded-lg shadow-lg z-10"
+              >
+                <button
+                  type="button"
+                  (click)="onUpdate(i)"
+                  class="w-full text-left px-3 py-2 text-sm hover:bg-gray-100"
+                >
+                  Update
+                </button>
+                <button
+                  type="button"
+                  (click)="onDelete(i)"
+                  class="w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-red-50"
+                >
+                  Delete
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </div>
+</div>
+
+<!-- CREATE/UPDATE MODAL -->
+<app-cashback-modal
+  [visible]="this.cashbackStore.isShowModal()"
+  [mode]="isUpdate() ? 'update' : 'create'"
+  [data]="selectedRule()"
+  (submitForm)="handleSubmit($event)"
+  (close)="this.cashbackStore.isShowModal.set(false)"
+/>

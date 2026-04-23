@@ -13,7 +13,6 @@ export class AdminSidebarComponent {
     { label: 'Dashboard', icon: 'fa-home', path: '/admin/dashboard' },
     { label: 'Users Management', icon: 'fa-users', path: '/admin/users' },
     { label: 'Withdrawals Management', icon: 'fa-arrow-up', path: '/admin/withdrawals' },
-
     {
       label: 'Deposits Management',
       icon: 'fa-arrow-down',
@@ -22,7 +21,7 @@ export class AdminSidebarComponent {
         { label: 'Deposit Setting', path: '/admin/deposits/settings' },
       ],
     },
-
+    { label: 'Cashback', icon: 'fa-exchange', path: '/admin/cashback' },
     { label: 'Transactions Management', icon: 'fa-exchange', path: '/admin/transactions' },
   ];
 
