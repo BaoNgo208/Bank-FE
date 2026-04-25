@@ -2,10 +2,11 @@ import { Component, ElementRef, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HeroComponent } from './components/hero/hero.component';
+import { AdsCardComponent } from './components/ads-card/ads-card.component';
 
 @Component({
   selector: 'app-landing-page',
-  imports: [NavbarComponent, HeroComponent],
+  imports: [NavbarComponent, HeroComponent, AdsCardComponent],
   templateUrl: './landing-page.componet.html',
   styleUrl: './landing-page.component.scss',
 })

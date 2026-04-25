@@ -1,0 +1,264 @@
+.card {
+  position: absolute;
+  width: 260px;
+  height: 150px;
+  border-radius: 16px;
+  padding: 16px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  transition: all 0.4s ease;
+  cursor: pointer;
+
+  /* thêm */
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* lớp hoa văn chung */
+.card::before,
+.card::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* vệt sáng lớn */
+.card::before {
+  width: 180px;
+  height: 180px;
+  border-radius: 999px;
+  right: -60px;
+  top: -70px;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+/* vòng tròn / pattern phụ */
+.card::after {
+  width: 120px;
+  height: 120px;
+  border-radius: 999px;
+  left: -45px;
+  bottom: -55px;
+  border: 18px solid rgba(255, 255, 255, 0.12);
+}
+/* ===== STRUCT ===== */
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  width: clamp(180px, 60%, 260px);
+  height: clamp(110px, 35%, 150px);
+}
+
+.card-number {
+  letter-spacing: 2px;
+  font-weight: 600;
+}
+
+.card-bottom {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.logo {
+  font-weight: bold;
+}
+
+/* ===== COLORS ===== */
+.fb-card {
+  background: linear-gradient(135deg, #1877f2, #0d5bd3);
+  top: 0;
+  left: 80px;
+  z-index: 3;
+}
+
+.gg-card {
+  background: linear-gradient(135deg, #ea4335, #fbbc05);
+  top: 50px;
+  left: 20px;
+  z-index: 2;
+}
+
+.tk-card {
+  background: linear-gradient(135deg, #000, #25f4ee);
+  top: 100px;
+  left: 120px;
+  z-index: 1;
+}
+
+/* ===== FLOAT ANIMATION ===== */
+.float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.delay-1 {
+  animation-delay: 0.5s;
+}
+.delay-2 {
+  animation-delay: 1s;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+/* ===== HOVER ===== */
+.group:hover .card {
+  transform: scale(0.95);
+  opacity: 0.6;
+}
+
+.card:hover {
+  transform: scale(1.1) translateY(-20px);
+  z-index: 10 !important;
+  opacity: 1 !important;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+}
+
+/* base */
+.logo-float {
+  position: absolute;
+  width: clamp(28px, 6vw, 42px);
+  height: clamp(28px, 6vw, 42px);
+  padding: 6px;
+  border-radius: 12px;
+
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+
+  /* 👇 thêm lại */
+  animation: floatLogo 6s ease-in-out infinite;
+}
+/* vị trí responsive */
+.fb-logo {
+  top: 80%;
+  left: -8%;
+}
+
+.gg-logo {
+  left: 20%;
+}
+
+.tk-logo {
+  top: 20%;
+  right: -10%;
+}
+/* animation riêng (khác card) */
+@keyframes floatLogo {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-15px) scale(1.05);
+  }
+}
+
+.fb-card {
+  background:
+    radial-gradient(circle at 85% 20%, rgba(255, 255, 255, 0.25), transparent 28%),
+    linear-gradient(135deg, #1877f2, #0d5bd3);
+  top: 0;
+  left: 80px;
+  z-index: 3;
+}
+
+.fb-card .logo {
+  font-size: 24px;
+  opacity: 0.9;
+}
+
+/* sọc mờ */
+.fb-card::after {
+  width: 180px;
+  height: 180px;
+  left: -70px;
+  bottom: -90px;
+  border: none;
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.16) 0 2px,
+    transparent 2px 10px
+  );
+  border-radius: 999px;
+}
+
+/* ===== GOOGLE PATTERN ===== */
+.gg-card {
+  background:
+    radial-gradient(circle at 75% 25%, rgba(255, 255, 255, 0.28), transparent 26%),
+    linear-gradient(135deg, #ea4335, #fbbc05);
+  top: 50px;
+  left: 20px;
+  z-index: 2;
+}
+
+.gg-card::before {
+  width: 150px;
+  height: 150px;
+  right: -45px;
+  top: -55px;
+  background: conic-gradient(
+    from 90deg,
+    rgba(66, 133, 244, 0.45),
+    rgba(52, 168, 83, 0.45),
+    rgba(251, 188, 5, 0.45),
+    rgba(234, 67, 53, 0.45),
+    rgba(66, 133, 244, 0.45)
+  );
+  border-radius: 999px;
+  opacity: 0.65;
+}
+
+.gg-card::after {
+  width: 140px;
+  height: 140px;
+  left: -45px;
+  bottom: -65px;
+  border: 16px solid rgba(255, 255, 255, 0.14);
+}
+
+/* ===== TIKTOK PATTERN ===== */
+.tk-card {
+  background:
+    radial-gradient(circle at 78% 22%, rgba(37, 244, 238, 0.35), transparent 28%),
+    linear-gradient(135deg, #050505, #111827 45%, #25f4ee);
+  top: 100px;
+  left: 120px;
+  z-index: 1;
+}
+
+.tk-card::before {
+  width: 170px;
+  height: 170px;
+  right: -65px;
+  top: -65px;
+  background: rgba(254, 44, 85, 0.35);
+  border-radius: 999px;
+  filter: blur(2px);
+}
+
+.tk-card::after {
+  width: 160px;
+  height: 160px;
+  left: -55px;
+  bottom: -75px;
+  border: none;
+  background:
+    linear-gradient(135deg, rgba(37, 244, 238, 0.22), transparent 55%),
+    repeating-linear-gradient(-35deg, rgba(255, 255, 255, 0.14) 0 2px, transparent 2px 9px);
+  border-radius: 999px;
+}

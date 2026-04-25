@@ -99,12 +99,8 @@ export class CashbackComponent {
       )
       .subscribe({
         next: (res) => {
-          if (rule) {
-            this.updateRow(rule.id, form);
-          } else {
-            this.addRow(res.data);
-            this.cd.detectChanges();
-          }
+          rule ? this.updateRow(rule.id, form) : this.addRow(res.data);
+          this.cd.detectChanges();
         },
       });
   }
