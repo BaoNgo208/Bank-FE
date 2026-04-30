@@ -89,7 +89,6 @@ export class RegisterComponent {
 
     this.otpService.requestOtp(request).subscribe({
       next: (res) => {
-        console.log(res.message);
         Swal.fire({
           icon: 'success',
           title: 'OTP Sent',

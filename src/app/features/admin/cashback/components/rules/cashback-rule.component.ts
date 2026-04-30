@@ -6,25 +6,21 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { CashbackService } from './services/cashback.service';
+import { CashbackService } from '../../services/cashback.service';
 import { FormArray, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
-import {
-  CashbackRuleResponse,
-  CreateCashbackRuleRequest,
-  UpdateCashbackRuleRequest,
-} from './types/type';
+import { CashbackRuleResponse } from '../../types/type';
 import { CommonModule } from '@angular/common';
-import { CashbackModalComponent } from './components/modals/cashback-modal.component';
-import { CashbackStore } from './stores/cashback.store';
+import { CashbackModalComponent } from '../modals/cashback-modal.component';
+import { CashbackStore } from '../../stores/cashback.store';
 import { finalize } from 'rxjs';
 
 @Component({
-  selector: 'app-cashback-component',
+  selector: 'app-cashback-rules-component',
   imports: [ReactiveFormsModule, CommonModule, CashbackModalComponent],
-  templateUrl: './cashback.component.html',
+  templateUrl: './cashback-rule.component.html',
 })
-export class CashbackComponent {
+export class CashbackRuleComponent {
   private cashbackService = inject(CashbackService);
   private fb = inject(FormBuilder);
   private cd = inject(ChangeDetectorRef);
@@ -139,7 +135,6 @@ export class CashbackComponent {
     this.cashbackService.getCashbackRules().subscribe({
       next: (res) => {
         const content = res.data;
-        console.log(content);
         this.rows.clear();
         content.forEach((item: CashbackRuleResponse) =>
           this.rows.push(this.fb.group({ ...item, selected: [false] })),

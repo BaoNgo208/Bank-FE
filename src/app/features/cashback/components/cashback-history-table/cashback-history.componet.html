@@ -1,0 +1,64 @@
+<div class="h-full px-3 py-2 flex flex-col gap-y-5 overflow-auto">
+  <div class="min-w-0 rounded-base border border-default bg-neutral-primary">
+    <div class="flex items-center justify-between px-4 py-2 bg-white border-b border-default">
+      <div class="text-lg text-red-500 font-bold text-heading">
+        <label>Cashback history</label>
+      </div>
+    </div>
+
+    <form [formGroup]="form" class="overflow-x-auto">
+      <table class="w-full text-sm text-left border-collapse border border-default">
+        <thead class="border-b bg-gray-50">
+          <tr class="text-gray-600">
+            <th class="px-3 py-3 border-r border-default">Month</th>
+            <th class="px-3 py-3 border-r border-default">Percent</th>
+            <th class="px-3 py-3 border-r border-default">Total spent</th>
+            <th class="px-3 py-3 border-r border-default">Cashback amount</th>
+            <th class="px-3 w-[15%] py-3 border-r border-default">Approved at</th>
+          </tr>
+        </thead>
+        <tbody formArrayName="rows">
+          <tr
+            *ngFor="let row of rows.controls; let i = index"
+            [formGroupName]="i"
+            class="border-b hover:bg-gray-50"
+          >
+            <td class="px-3 py-3 border-r border-default">{{ row.get('month')?.value }}</td>
+            <td class="px-3 py-3 border-r border-default">
+              <span class="px-2 py-1 text-xs rounded-full bg-blue-50 text-blue-600 font-medium">
+                {{ row.get('percent')?.value }}%
+              </span>
+            </td>
+            <td class="px-3 py-3 border-r border-default">
+              <span class="font-medium text-gray-800">
+                {{ row.get('total_spent')?.value }}
+              </span>
+              <span class="text-xs text-gray-400 ml-1">USD</span>
+            </td>
+            <td class="px-3 py-3 border-r border-default">
+              <span class="font-semibold text-red-600">
+                {{ row.get('cashback_amount')?.value }}
+              </span>
+              <span class="text-xs text-gray-400 ml-1">USD</span>
+            </td>
+            <td class="px-3 py-3 border-r border-default w-[140px]">
+              <span class="text-gray-500 text-sm">
+                {{ row.get('approved_at')?.value | date: 'dd/MM/yyyy' }}
+              </span>
+              <span class="text-xs text-gray-400">
+                {{ row.get('approved_at')?.value | date: 'HH:mm' }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+    <app-pagination
+      [page]="cashbackHistoryPage()"
+      [pageSize]="cashbackHistoryPageSize()"
+      [totalItems]="cashbackHistoryTotalItems()"
+      (pageChange)="onHistoryPageChange($event)"
+      (pageSizeChange)="onHistorySizeChange($event)"
+    ></app-pagination>
+  </div>
+</div>

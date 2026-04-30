@@ -1,0 +1,187 @@
+<div class="h-full px-3 py-2 flex flex-col gap-y-5 overflow-auto">
+  <div class="min-w-0 rounded-base border border-default bg-neutral-primary">
+    <!-- HEADER -->
+    <div class="flex items-center justify-between px-4 py-2 bg-white border-b border-default">
+      <div class="text-sm font-medium text-heading">
+        <label>Pending Cashbacks</label>
+      </div>
+
+      <div class="flex items-center gap-2.5">
+        <!-- MONTH -->
+        <input
+          type="month"
+          [formControl]="month"
+          (change)="onMonthChange()"
+          class="border border-gray-400 px-2 py-1 rounded-lg text-sm focus:outline-none"
+        />
+
+        <div>
+          <button
+            [disabled]="selectedUserIds().length === 0"
+            (click)="this.showApproveConfirmModal.set(true)"
+            class="py-1.5 px-4 bg-red-600 text-[0.8rem] text-white rounded hover:bg-red-700 transition flex items-center gap-2 disabled:bg-red-300 disabled:cursor-not-allowed"
+          >
+            Approve
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABLE -->
+    <form [formGroup]="form" class="overflow-x-auto">
+      <table class="w-full text-sm text-left border-collapse border border-default">
+        <!-- HEADER -->
+        <thead class="border-b bg-gray-50">
+          <tr class="text-gray-600">
+            <th class="px-3 py-3 border-r border-default text-center w-12">
+              <input
+                type="checkbox"
+                class="w-4 h-4 accent-red-600 cursor-pointer"
+                [checked]="isAllSelected"
+                [indeterminate]="isSomeSelected && !isAllSelected"
+                (change)="toggleAll($event)"
+              />
+            </th>
+            <th class="px-3 py-3 border-r border-default">User</th>
+            <th class="px-3 py-3 border-r border-default">Email</th>
+            <th class="px-3 py-3 border-r border-default">Spent</th>
+            <th class="px-3 py-3 border-r border-default">Cashback</th>
+            <th class="px-3 py-3 border-r border-default">Percentage</th>
+            <th class="px-3 py-3 border-r border-default">Status</th>
+            <th class="px-3 py-3 border-r border-default">Updated</th>
+          </tr>
+        </thead>
+
+        <!-- BODY -->
+        <tbody formArrayName="rows">
+          <tr
+            *ngFor="let row of formGroups; let i = index"
+            [formGroupName]="i"
+            class="border-b hover:bg-gray-50"
+          >
+            <!-- CHECKBOX -->
+            <td class="px-3 py-3 border-r border-default text-center">
+              <input
+                type="checkbox"
+                formControlName="selected"
+                class="w-4 h-4 accent-red-600 cursor-pointer"
+                (change)="toggleOne(row)"
+              />
+            </td>
+            <!-- USER -->
+            <td class="px-3 py-3 border-r border-default">
+              {{ row.get('display_name')?.value }}
+            </td>
+
+            <!-- EMAIL -->
+            <td class="px-3 py-3 border-r border-default">
+              {{ row.get('email')?.value }}
+            </td>
+
+            <!-- SPENT -->
+            <td class="px-3 py-3 border-r border-default">
+              {{ +row.get('total_spent')?.value | number }}
+            </td>
+
+            <!-- CASHBACK -->
+            <td class="px-3 py-3 border-r border-default text-green-600 font-medium">
+              {{ +row.get('cashback_amount')?.value | number }}
+            </td>
+
+            <!-- PERCENT -->
+            <td class="px-3 py-3 border-r border-default">{{ row.get('percent')?.value }}%</td>
+
+            <!-- STATUS -->
+            <td class="px-3 py-3 border-r border-default">
+              <span class="px-2 py-1 text-xs rounded bg-yellow-100 text-yellow-700">
+                {{ row.get('status')?.value }}
+              </span>
+            </td>
+
+            <!-- UPDATED -->
+            <td class="px-3 py-3 border-r border-default">
+              {{ row.get('updated_at')?.value | date: 'dd/MM/yyyy HH:mm' }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+
+    <app-pagination
+      [page]="pendingPage"
+      [pageSize]="pendingPageSize"
+      [totalItems]="pendingTotalItems"
+      (pageChange)="onPendingPageChange($event)"
+      (pageSizeChange)="onPendingPageSizeChange($event)"
+    ></app-pagination>
+  </div>
+</div>
+
+<!-- CONFRIM MODAL -->
+@if (showApproveConfirmModal()) {
+  <div class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/40 px-4">
+    <div
+      class="w-full max-w-md rounded-2xl bg-white shadow-xl border border-gray-200 overflow-hidden"
+      (click)="$event.stopPropagation()"
+    >
+      <!-- Header -->
+      <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100">
+        <h3 class="text-base font-semibold text-gray-800">Confirm approval</h3>
+
+        <button
+          type="button"
+          class="text-gray-400 hover:text-gray-600 transition"
+          (click)="this.showApproveConfirmModal.set(false)"
+        >
+          ✕
+        </button>
+      </div>
+
+      <!-- Body -->
+      <div class="px-5 py-5">
+        <div class="flex gap-4">
+          <div
+            class="w-11 h-11 rounded-full bg-red-50 text-red-600 flex items-center justify-center shrink-0"
+          >
+            <i class="fa-solid fa-circle-question text-lg"></i>
+          </div>
+
+          <div>
+            <p class="text-sm text-gray-700 leading-6">
+              Are you sure you want to approve cashback for
+              <span class="font-semibold text-red-600">
+                {{ selectedUserIds().length }}
+              </span>
+              selected user(s)?
+            </p>
+
+            <p class="text-xs text-gray-400 mt-2">
+              This action will approve cashback for the selected users in the current month.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div
+        class="flex items-center justify-end gap-3 px-5 py-4 bg-gray-50 border-t border-gray-100"
+      >
+        <button
+          type="button"
+          class="px-4 py-2 rounded-lg border border-gray-300 text-sm text-gray-700 hover:bg-gray-100 transition"
+          (click)="this.showApproveConfirmModal.set(false)"
+        >
+          Cancel
+        </button>
+
+        <button
+          type="button"
+          class="px-4 py-2 rounded-lg bg-red-600 text-sm text-white hover:bg-red-700 transition"
+          (click)="approveSelected()"
+        >
+          Yes, approve
+        </button>
+      </div>
+    </div>
+  </div>
+}

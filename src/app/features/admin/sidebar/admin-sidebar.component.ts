@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { last } from 'rxjs';
 
 @Component({
   selector: 'app-admin-sidebar',
@@ -21,7 +22,20 @@ export class AdminSidebarComponent {
         { label: 'Deposit Setting', path: '/admin/deposits/settings' },
       ],
     },
-    { label: 'Cashback', icon: 'fa-exchange', path: '/admin/cashback' },
+    {
+      label: 'Cashback',
+      icon: 'fa-exchange',
+      children: [
+        {
+          label: 'Cashback rules',
+          path: '/admin/cashback/cashback-rules',
+        },
+        {
+          label: 'Pending cashbacks',
+          path: '/admin/cashback/pending-cashbacks',
+        },
+      ],
+    },
     { label: 'Transactions Management', icon: 'fa-exchange', path: '/admin/transactions' },
   ];
 
