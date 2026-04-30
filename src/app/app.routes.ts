@@ -196,8 +196,27 @@ export const routes: Routes = [
       },
       {
         path: 'cashback',
-        loadComponent: () =>
-          import('./features/admin/cashback/cashback.component').then((m) => m.CashbackComponent),
+        children: [
+          {
+            path: '',
+            redirectTo: 'cashback-rules',
+            pathMatch: 'full',
+          },
+          {
+            path: 'cashback-rules',
+            loadComponent: () =>
+              import('./features/admin/cashback/components/rules/cashback-rule.component').then(
+                (m) => m.CashbackRuleComponent,
+              ),
+          },
+          {
+            path: 'pending-cashbacks',
+            loadComponent: () =>
+              import('./features/admin/cashback/components/pendings/pending-cashbacks.component').then(
+                (m) => m.PendingCashbacksComponent,
+              ),
+          },
+        ],
       },
     ],
   },

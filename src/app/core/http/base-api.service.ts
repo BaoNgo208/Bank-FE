@@ -49,6 +49,9 @@ export abstract class BaseApiService {
     body?: unknown,
     options?: {
       headers?: HttpHeaders | { [header: string]: string };
+      params?:
+        | HttpParams
+        | { [param: string]: string | number | boolean | readonly (string | number | boolean)[] };
     },
   ): Observable<T> {
     return this.http.post<T>(`${this.baseUrl}/${this.resource}${url}`, body ?? null, options);

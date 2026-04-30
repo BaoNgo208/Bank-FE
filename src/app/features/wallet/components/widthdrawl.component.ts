@@ -34,9 +34,7 @@ export class WidthdrawlComponent {
   showOtpModal = signal(false);
 
   constructor() {
-    effect(() => {
-      console.log(this.pendingOrderNo());
-    });
+    effect(() => {});
   }
 
   handleOpenOtp() {
@@ -44,8 +42,6 @@ export class WidthdrawlComponent {
   }
 
   handleConfirmOtp = (otp: string) => {
-    console.log('OTP:', otp);
-
     // call API ở đây
     // this.withdrawFacade.confirmOtp(otp)
 
@@ -54,7 +50,6 @@ export class WidthdrawlComponent {
 
   ConfirmOtp(otp: string) {
     this.validateOtp();
-    console.log(otp);
     const confirmPayload = {
       orderNo: this.orderNo,
       otp: otp,

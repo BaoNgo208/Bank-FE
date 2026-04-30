@@ -1,61 +1,96 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
-import { InquiryUiStore } from '../inquiry-card/stores/inquiry-ui.store';
 import { CashbackService } from './services/cashback.service';
-import { CashbackDashboardResponse } from '../inquiry-card/types/type';
 import { CashbackStore } from './stores/cashback.store';
 import { CashbackModalComponent } from './components/modal/cashback-modal.component';
+import { CashbackHistoryComponent } from './components/cashback-history-table/cashback-history.componet';
+import { CashbackDashboardResponse } from './types/type';
 
 @Component({
   selector: 'app-cashback-component',
-  imports: [CommonModule, CashbackModalComponent],
+  standalone: true,
+  imports: [CommonModule, CashbackModalComponent, CashbackHistoryComponent],
   templateUrl: './cashback.component.html',
 })
 export class CashbackComponent {
-  private cashBackService = inject(CashbackService);
+  private cashbackService = inject(CashbackService);
 
-  protected inquiryUiStore = inject(InquiryUiStore);
-  protected cashbackDashboard = signal<CashbackDashboardResponse | null>(null);
   protected cashbackStore = inject(CashbackStore);
+  protected cashbackDashboard = signal<CashbackDashboardResponse | null>(null);
 
-  progressPercent = computed(() => {
-    const current = this.cashbackDashboard()?.tiers?.find((t) => t.is_current);
-    const spent = this.cashbackDashboard()?.total_spent ?? 0;
+  protected totalSpent = computed(() => this.cashbackDashboard()?.total_spent ?? 0);
+  protected tiers = computed(() => this.cashbackDashboard()?.tiers ?? []);
 
-    if (!current) return 0;
+  protected currentTier = computed(() => {
+    const tiers = this.tiers();
+    const spent = this.totalSpent();
 
-    const range = current.max_spent - current.min_spent;
-    if (range <= 0) return 0;
+    if (!tiers.length) return null;
 
-    return ((spent - current.min_spent) / range) * 100;
+    return (
+      tiers.find((t) => spent >= t.min_spent && spent <= t.max_spent) ?? tiers[tiers.length - 1]
+    );
   });
 
+  protected currentPercent = computed(() => this.currentTier()?.percent ?? 0);
+
   overallProgress = computed(() => {
-    const tiers = this.cashbackDashboard()?.tiers ?? [];
-    const spent = this.cashbackDashboard()?.total_spent ?? 0;
+    const tiers = this.tiers();
+    const spent = this.totalSpent();
 
     if (!tiers.length) return 0;
 
-    const min = tiers[0].min_spent;
-    const max = tiers[tiers.length - 1].max_spent;
+    const totalSegments = tiers.length;
+    const segmentWidth = 100 / totalSegments;
 
-    if (max === min) return 0;
+    const currentIndex = tiers.findIndex((t) => spent >= t.min_spent && spent <= t.max_spent);
 
-    return ((spent - min) / (max - min)) * 100;
+    if (currentIndex === -1) return 0;
+
+    const current = tiers[currentIndex];
+
+    // 👉 base position
+    const base = currentIndex * segmentWidth;
+
+    // 👉 lấy mốc bắt đầu đúng: max của tier trước
+    const prevMax = currentIndex === 0 ? current.min_spent : tiers[currentIndex - 1].max_spent;
+
+    const range = current.max_spent - prevMax;
+
+    const progressInTier = range > 0 ? (spent - prevMax) / range : 0;
+
+    const percent = base + progressInTier * segmentWidth;
+
+    return Math.max(0, Math.min(100, percent));
+  });
+  protected nextTier = computed(() => {
+    const tiers = this.tiers();
+    const spent = this.totalSpent();
+
+    return tiers.find((t) => spent < t.min_spent) ?? null;
   });
 
-  nextTier = computed(() => {
-    const tiers = this.cashbackDashboard()?.tiers ?? [];
-    const i = tiers.findIndex((t) => t.is_current);
-    return i >= 0 ? tiers[i + 1] : null;
-  });
+  protected tierPosition(index: number): number {
+    const tiers = this.tiers();
+    if (!tiers.length) return 0;
+
+    return (index / tiers.length) * 100;
+  }
+
+  isTierReached(tier: any) {
+    const spent = this.totalSpent();
+    return spent >= tier.max_spent;
+  }
+  isCurrentTier(tier: any) {
+    const spent = this.totalSpent();
+    return spent >= tier.min_spent && spent <= tier.max_spent;
+  }
 
   ngOnInit() {
-    this.cashBackService.getDashboard().subscribe({
+    this.cashbackService.getDashboard().subscribe({
       next: (res) => {
         this.cashbackDashboard.set(res.data);
       },
-      error: (err) => {},
     });
   }
 }

@@ -157,7 +157,6 @@ export class InquiryCardComponent {
   }
 
   onReset() {
-    // 1. Reset form
     this.searchForm.reset({
       cardNumber: '',
       cardName: '',
@@ -166,10 +165,8 @@ export class InquiryCardComponent {
       toTime: null,
     });
 
-    // 2. Reset page về 1
     this.cardPage = 1;
 
-    // 3. Reload data
     this.loadCardPage();
   }
 
@@ -301,7 +298,6 @@ export class InquiryCardComponent {
     this.walletFacade.getCards(this.cardPage - 1).subscribe({
       next: (res) => {
         const content = res.data.items;
-        console.log(content);
         const total = res.data.total_size;
         this.CardTotalItems = total;
         this.rows.clear();

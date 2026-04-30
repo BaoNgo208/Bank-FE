@@ -115,7 +115,6 @@ export class OtpModalComponent implements OnChanges {
 
   onConfirmClick(): void {
     if (!this.isComplete) return;
-    console.log(this.otpValues.join(''));
     this.confirm.emit(this.otpValues.join(''));
   }
 

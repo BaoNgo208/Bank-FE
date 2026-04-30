@@ -25,7 +25,6 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.loginForm.invalid) {
-      console.log('invalid');
       return;
     }
 
