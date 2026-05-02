@@ -1,12 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  computed,
-  effect,
-  HostListener,
-  inject,
-  signal,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, inject, signal } from '@angular/core';
 import { CashbackService } from '../../services/cashback.service';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CashbackStore } from '../../stores/cashback.store';
@@ -36,11 +28,6 @@ export class PendingCashbacksComponent {
 
   selectedUserIds = signal<number[]>([]);
   showApproveConfirmModal = signal(false);
-
-  dropdownPosition = {
-    top: 0,
-    left: 0,
-  };
 
   month = this.fb.nonNullable.control(this.getCurrentMonth());
 
@@ -109,6 +96,7 @@ export class PendingCashbacksComponent {
   toggleOne(row: FormGroup) {
     this.updateSelectedUserIds(row);
   }
+
   private updateSelectedUserIds(row: FormGroup) {
     const userId = row.get('user_id')?.value;
     const checked = row.get('selected')?.value === true;
@@ -167,20 +155,6 @@ export class PendingCashbacksComponent {
       });
   }
 
-  toggleDropdown(index: number, event: MouseEvent) {
-    event.stopPropagation();
-
-    const rect = (event.target as HTMLElement).getBoundingClientRect();
-
-    this.openDropdownIndex = this.openDropdownIndex === index ? null : index;
-
-    if (this.openDropdownIndex !== null) {
-      this.dropdownPosition = {
-        top: rect.bottom + 5,
-        left: rect.right - 160,
-      };
-    }
-  }
   onPendingPageChange(page: number): void {
     this.pendingPage = page;
     this.loadPendingPage();
