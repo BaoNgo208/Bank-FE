@@ -1,67 +1,292 @@
-/* HERO BACKGROUND */
-.hero-bg {
+.animated-card {
   position: absolute;
-  inset: 0;
-  background: url('https://images.unsplash.com/photo-1639762681485-074b7f938ba0') center/cover
-    no-repeat;
-  transform: scale(1.1);
-  animation: zoomBg 5s ease-in-out infinite alternate;
+  transform-style: preserve-3d;
+  will-change: transform, left, top, width, height, opacity, filter;
+  transition: box-shadow 0.3s ease;
 }
 
-@keyframes zoomBg {
-  from {
-    transform: scale(1.1);
+.card-one {
+  animation: cycleCardOne 7s ease-in-out infinite;
+}
+
+.card-two {
+  animation: cycleCardTwo 7s ease-in-out infinite;
+}
+
+.card-three {
+  animation: cycleCardThree 7s ease-in-out infinite;
+}
+
+@keyframes cycleCardOne {
+  0%,
+  28% {
+    left: 4rem;
+    top: -2.5rem;
+    width: 260px;
+    height: 135px;
+    opacity: 0.22;
+    filter: blur(1px);
+    z-index: 1;
+    transform: rotateY(-20deg) rotateX(4deg) rotateZ(-5deg) scale(0.96);
   }
-  to {
-    transform: scale(1.2);
+
+  33%,
+  61% {
+    left: 0;
+    top: 1.25rem;
+    width: 280px;
+    height: 155px;
+    opacity: 1;
+    filter: blur(0);
+    z-index: 2;
+    transform: rotateY(-18deg) rotateX(4deg) rotateZ(-7deg) scale(1);
+  }
+
+  66%,
+  94% {
+    left: -5rem;
+    top: 6rem;
+    width: 310px;
+    height: 175px;
+    opacity: 1;
+    filter: blur(0);
+    z-index: 3;
+    transform: rotateY(-18deg) rotateX(4deg) rotateZ(-7deg) scale(1.02);
+  }
+
+  100% {
+    left: 4rem;
+    top: -2.5rem;
+    width: 260px;
+    height: 135px;
+    opacity: 0.22;
+    filter: blur(1px);
+    z-index: 1;
+    transform: rotateY(-20deg) rotateX(4deg) rotateZ(-5deg) scale(0.96);
   }
 }
 
-/* OVERLAY (gradient fintech style) */
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(255, 0, 0, 0.3));
+@keyframes cycleCardTwo {
+  0%,
+  28% {
+    left: 0;
+    top: 1.25rem;
+    width: 280px;
+    height: 155px;
+    opacity: 1;
+    filter: blur(0);
+    z-index: 2;
+    transform: rotateY(-18deg) rotateX(4deg) rotateZ(-7deg) scale(1);
+  }
+
+  33%,
+  61% {
+    left: -5rem;
+    top: 6rem;
+    width: 310px;
+    height: 175px;
+    opacity: 1;
+    filter: blur(0);
+    z-index: 3;
+    transform: rotateY(-18deg) rotateX(4deg) rotateZ(-7deg) scale(1.02);
+  }
+
+  66%,
+  94% {
+    left: 4rem;
+    top: -2.5rem;
+    width: 260px;
+    height: 135px;
+    opacity: 0.22;
+    filter: blur(1px);
+    z-index: 1;
+    transform: rotateY(-20deg) rotateX(4deg) rotateZ(-5deg) scale(0.96);
+  }
+
+  100% {
+    left: 0;
+    top: 1.25rem;
+    width: 280px;
+    height: 155px;
+    opacity: 1;
+    filter: blur(0);
+    z-index: 2;
+    transform: rotateY(-18deg) rotateX(4deg) rotateZ(-7deg) scale(1);
+  }
 }
 
-/* BUTTON */
-.btn-primary {
-  @apply px-6 py-3 bg-red-600 rounded-lg text-white font-semibold hover:bg-red-700 transition;
+@keyframes cycleCardThree {
+  0%,
+  28% {
+    left: -5rem;
+    top: 6rem;
+    width: 310px;
+    height: 175px;
+    opacity: 1;
+    filter: blur(0);
+    z-index: 3;
+    transform: rotateY(-18deg) rotateX(4deg) rotateZ(-7deg) scale(1.02);
+  }
+
+  33%,
+  61% {
+    left: 4rem;
+    top: -2.5rem;
+    width: 260px;
+    height: 135px;
+    opacity: 0.22;
+    filter: blur(1px);
+    z-index: 1;
+    transform: rotateY(-20deg) rotateX(4deg) rotateZ(-5deg) scale(0.96);
+  }
+
+  66%,
+  94% {
+    left: 0;
+    top: 1.25rem;
+    width: 280px;
+    height: 155px;
+    opacity: 1;
+    filter: blur(0);
+    z-index: 2;
+    transform: rotateY(-18deg) rotateX(4deg) rotateZ(-7deg) scale(1);
+  }
+
+  100% {
+    left: -5rem;
+    top: 6rem;
+    width: 310px;
+    height: 175px;
+    opacity: 1;
+    filter: blur(0);
+    z-index: 3;
+    transform: rotateY(-18deg) rotateX(4deg) rotateZ(-7deg) scale(1.02);
+  }
 }
 
-.btn-outline {
-  @apply px-6 py-3 border border-white text-white rounded-lg hover:bg-white hover:text-black transition;
-}
-
-/* REVEAL BASE */
-.reveal {
+.hero-item {
   opacity: 0;
-  transition: all 0.8s ease;
+  transform: translateY(45px);
+  animation: heroFadeUp 0.8s ease forwards;
 }
 
-.reveal.active {
-  opacity: 1;
+.hero-image-enter {
+  opacity: 0;
+  transform: translateY(60px) scale(0.96);
+  animation: heroImageUp 1s ease forwards;
+  animation-delay: 0.35s;
 }
 
-/* HERO TEXT ANIMATION */
-.reveal-hero {
-  transform: scale(0.9) translateY(30px);
-  filter: blur(10px);
-  transition: all 1s ease;
+.delay-1 {
+  animation-delay: 0.1s;
 }
 
-.reveal-hero.active {
-  transform: scale(1) translateY(0);
-  filter: blur(0);
+.delay-2 {
+  animation-delay: 0.25s;
 }
 
-/* FADE UP */
-.reveal-up {
-  transform: translateY(40px);
-  filter: blur(6px);
+.delay-3 {
+  animation-delay: 0.4s;
 }
 
-.reveal-up.active {
-  transform: translateY(0);
-  filter: blur(0);
+.delay-4 {
+  animation-delay: 0.55s;
+}
+
+@keyframes heroFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(45px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroImageUp {
+  from {
+    opacity: 0;
+    transform: translateY(60px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.fb-card {
+  background: linear-gradient(135deg, #1877f2, #0d5bd3);
+  top: 0;
+  left: 80px;
+  z-index: 3;
+}
+
+.gg-card {
+  background: linear-gradient(135deg, #ea4335, #fbbc05);
+  top: 50px;
+  left: 20px;
+  z-index: 2;
+}
+
+.tk-card {
+  background: linear-gradient(135deg, #000, #25f4ee);
+  top: 100px;
+  left: 120px;
+  z-index: 1;
+}
+
+.float {
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+.card::before,
+.card::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.card {
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  transition: all 0.4s ease;
+  cursor: pointer;
+
+  /* thêm */
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.card::before {
+  width: 180px;
+  height: 180px;
+  border-radius: 999px;
+  right: -60px;
+  top: -70px;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+/* vòng tròn / pattern phụ */
+.card::after {
+  width: 120px;
+  height: 120px;
+  border-radius: 999px;
+  left: -45px;
+  bottom: -55px;
+  border: 18px solid rgba(255, 255, 255, 0.12);
 }
