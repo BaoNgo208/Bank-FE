@@ -30,7 +30,9 @@ export const SIDEBAR_ROUTE_MAP: Record<string, string> = {
 
   inquiry_card: '/home/inquiry_card',
 
-  withdrawal_list: '/home/withdrawal_list',
+  wallet_transactions: '/home/wallet_transactions',
+  deposit: '/home/wallet_transactions/deposit',
+  withdrawal: '/home/wallet_transactions/withdrawal',
   invitation_commission: '/home/invitation_commission',
 };
 
@@ -66,17 +68,21 @@ export const SIDEBAR_TABS: SidebarTab[] = [
     label: 'Cashback',
     icon: 'fa-solid fa-money-bill-transfer',
   },
-
+  {
+    key: 'wallet_transactions',
+    label: 'Wallet Transactions',
+    icon: 'fa-solid fa-money-bill-transfer',
+    children: [
+      { key: 'deposit', label: 'Deposit' },
+      { key: 'withdrawal', label: 'Withdrawal' },
+    ],
+  },
   {
     key: 'transaction_records',
     label: 'Transaction records',
     icon: 'fa-solid fa-arrow-right-arrow-left',
   },
-  {
-    key: 'withdrawal_list',
-    label: 'Withdrawal list',
-    icon: 'fa-solid fa-money-bill-transfer',
-  },
+
   {
     key: 'invitation_commission',
     label: 'Invitation commission',
