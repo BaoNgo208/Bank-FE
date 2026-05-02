@@ -1,12 +1,6 @@
-import { Component, effect, inject, signal } from '@angular/core';
+import { Component, inject, signal, ViewChild } from '@angular/core';
 import { CountUpDirective } from '../../utils/count-up.directive';
-import {
-  AbstractControl,
-  FormArray,
-  FormBuilder,
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { WalletFacade } from './facades/wallet.facade';
 import { Stablecoin, WithdrawOrderStatus } from './types/wallet.type';
@@ -19,8 +13,8 @@ import { ChangeDetectorRef } from '@angular/core';
 import { WalletUiStore } from './stores/wallet-ui.store';
 import { WidthdrawlComponent } from './components/widthdrawl.component';
 import { ToastrService } from 'ngx-toastr';
-import { toUtcEndOfDay, toUtcStartOfDay } from '../../utils/utc.util';
-import { dateRangeValidator } from '../../utils/form-validator.util';
+import { DepositTransactionsComponent } from '../wallet-transactions/deposits/deposit-transactions.component';
+import { WithdrawalTransactionComponent } from '../wallet-transactions/withdrawals/withdrawal-transactions.component';
 
 @Component({
   selector: 'app-wallet-component',
@@ -34,17 +28,19 @@ import { dateRangeValidator } from '../../utils/form-validator.util';
     MatTableModule,
     MatPaginatorModule,
     WidthdrawlComponent,
+    DepositTransactionsComponent,
+    WithdrawalTransactionComponent,
   ],
   templateUrl: './wallet.component.html',
 })
 export class WalletComponent {
-  private fb = inject(FormBuilder);
   private walletFacade = inject(WalletFacade);
-  protected walletStore = inject(WalletStore);
-  private cd = inject(ChangeDetectorRef);
-  private toast = inject(ToastrService);
 
+  protected walletStore = inject(WalletStore);
   protected walletUiStore = inject(WalletUiStore);
+
+  @ViewChild(DepositTransactionsComponent)
+  depositTransactionsComponent!: DepositTransactionsComponent;
 
   walletBalance = signal<number>(0.0);
 
@@ -62,41 +58,9 @@ export class WalletComponent {
   currency: Stablecoin = Stablecoin.USDT;
   Stablecoin = Stablecoin;
 
-  rechargePage = 1;
-  rechargePageSize = 10;
-  rechargeTotalItems = 0;
-
-  transferPage = 1;
-  transferPageSize = 10;
-  transferTotalItems = 0;
   WithdrawOrderStatus = WithdrawOrderStatus;
-  isSearching = false;
-
-  form = this.fb.group({
-    rechargeRows: this.fb.array([]),
-    transferRows: this.fb.array([]),
-  });
-
-  searchForm = this.fb.group(
-    {
-      orderNo: [''],
-      address: [''],
-      status: [null],
-      fromTime: [null],
-      toTime: [null],
-    },
-    { validators: dateRangeValidator },
-  );
-
-  constructor() {
-    effect(() => {
-      console.log(this.rechargeTotalItems);
-    });
-  }
 
   ngOnInit() {
-    this.loadRechargePage();
-    this.loadTransferPage();
     this.walletFacade.getBalance().subscribe({
       next: (res) => {
         this.walletBalance.set(res.data.wallet_balance);
@@ -105,137 +69,8 @@ export class WalletComponent {
     });
   }
 
-  get rechargeRows(): FormArray {
-    return this.form.get('rechargeRows') as FormArray;
-  }
-  get transferRows(): FormArray {
-    return this.form.get('transferRows') as FormArray;
-  }
-
-  updateTable(orders: any[]) {
-    this.transferRows.clear();
-
-    orders.forEach((order) => {
-      this.transferRows.push(
-        this.fb.group({
-          order_no: [order.order_no],
-          currency: [order.currency],
-          network: [order.network],
-          to_address: [order.to_address],
-          amount: [order.amount],
-          status: [order.status],
-          created_at: [order.created_at],
-        }),
-      );
-    });
-
-    this.cd.detectChanges();
-  }
-
-  onSearch() {
-    this.isSearching = true;
-    const f = this.searchForm.value;
-
-    this.walletFacade
-      .searchWidthdrawlOrders(this.transferPage - 1, {
-        orderNo: f.orderNo ?? undefined,
-        address: f.address ?? undefined,
-        status: f.status ?? undefined,
-        fromTime: toUtcStartOfDay(f.fromTime),
-        toTime: toUtcEndOfDay(f.toTime),
-      })
-      .subscribe({
-        next: (res) => {
-          this.updateTable(res.data.items);
-          this.transferTotalItems = res.data.total_size;
-          this.cd.markForCheck();
-        },
-      });
-  }
-
-  onReset() {
-    this.isSearching = false;
-    // 1. Reset form
-    this.searchForm.reset({
-      orderNo: '',
-      address: '',
-      status: null,
-      fromTime: null,
-      toTime: null,
-    });
-
-    // 2. Reset page về 1
-    this.transferPage = 1;
-
-    // this.cd.detectChanges();
-    this.loadTransferPage();
-  }
-
-  copyAddressRecord(value: string | null | undefined) {
-    if (!value) return;
-
-    navigator.clipboard.writeText(value);
-
-    this.toast.success('Copied to clipboard');
-  }
-
   openWidthdrawlModal() {
     this.walletUiStore.showWithdrawModal.set(true);
-  }
-
-  // ── Recharge ─────────────────────────────────────────────────────────
-  onRechargePageChange(page: number): void {
-    this.rechargePage = page;
-    this.loadRechargePage();
-  }
-  onRechargePageSizeChange(size: number): void {
-    this.rechargePageSize = size;
-    this.rechargePage = 1;
-    this.loadRechargePage();
-  }
-
-  private loadRechargePage(): void {
-    this.walletFacade.getDepositOrders(this.rechargePage - 1).subscribe((res) => {
-      const content = res.data.items;
-      const total = res.data.total_size;
-
-      this.rechargeTotalItems = total;
-
-      this.rechargeRows.clear();
-      content.forEach((item: any) => this.rechargeRows.push(this.fb.group(item)));
-
-      this.cd.detectChanges();
-    });
-  }
-  // ── Transfer ─────────────────────────────────────────────────────────
-  onTransferPageChange(page: number): void {
-    this.transferPage = page;
-    if (this.isSearching) {
-      this.onSearch();
-    } else {
-      this.loadTransferPage();
-    }
-
-    this.cd.markForCheck();
-  }
-  onTransferPageSizeChange(size: number): void {
-    this.transferPageSize = size;
-    this.transferPage = 1;
-    this.loadTransferPage();
-  }
-
-  private loadTransferPage(): void {
-    this.walletFacade.getWithdrawOrders(this.transferPage - 1).subscribe((res) => {
-      const content = res.data.items;
-      const total = res.data.total_size;
-
-      this.transferTotalItems = total;
-
-      this.transferRows.clear();
-      content.forEach((item: any) => this.transferRows.push(this.fb.group(item)));
-
-      this.cd.detectChanges();
-    });
   }
 
   // ── Proof upload ──────────────────────────────────────────────────────
@@ -270,16 +105,7 @@ export class WalletComponent {
       .subscribe({
         next: (res) => {
           const order = res.data;
-          this.rechargeRows.insert(
-            0,
-            this.fb.group({
-              ...order,
-              admin_note: null,
-              created_at: new Date().toISOString(),
-            }),
-          );
-
-          this.rechargeTotalItems++;
+          this.depositTransactionsComponent.addOptimisticOrder(order);
           this.walletStore.depositOrder.set(order);
 
           this.walletFacade.uploadDepositImages(order.order_no, [file]);

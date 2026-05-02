@@ -103,11 +103,28 @@ export const routes: Routes = [
               import('./features/cashback/cashback.component').then((m) => m.CashbackComponent),
           },
           {
-            path: 'withdrawal_list',
-            loadComponent: () =>
-              import('./features/withdrawal-list/withdrawal-list.component').then(
-                (m) => m.WidthdrawalListComponent,
-              ),
+            path: 'wallet_transactions',
+            children: [
+              {
+                path: '',
+                pathMatch: 'full',
+                redirectTo: 'deposit',
+              },
+              {
+                path: 'deposit',
+                loadComponent: () =>
+                  import('./features/wallet-transactions/deposits/deposit-transactions.component').then(
+                    (m) => m.DepositTransactionsComponent,
+                  ),
+              },
+              {
+                path: 'withdrawal',
+                loadComponent: () =>
+                  import('./features/wallet-transactions/withdrawals/withdrawal-transactions.component').then(
+                    (m) => m.WithdrawalTransactionComponent,
+                  ),
+              },
+            ],
           },
           {
             path: 'invitation_commission',
