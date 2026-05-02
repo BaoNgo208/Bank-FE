@@ -1,0 +1,206 @@
+<div class="h-full px-3 py-2 flex flex-col gap-y-5 overflow-auto">
+  <div class="min-w-0 rounded-base border border-default bg-neutral-primary">
+    <!-- HEADER -->
+    <div class="flex items-center justify-between px-4 py-2 bg-white border-b border-default">
+      <div class="text-sm font-medium text-heading">
+        <label>Users</label>
+      </div>
+    </div>
+
+    <!-- TABLE -->
+    <form [formGroup]="form" class="overflow-x-auto">
+      <table class="w-full text-sm text-left border-collapse border border-default">
+        <!-- HEADER -->
+        <thead class="border-b bg-gray-50">
+          <tr class="text-gray-600">
+            <th class="px-3 py-3 border-r border-default">Id</th>
+            <th class="px-3 py-3 border-r border-default">Username</th>
+            <th class="px-3 py-3 border-r border-default">Email</th>
+            <th class="px-3 py-3 border-r border-default">Status</th>
+            <th class="px-3 py-3 border-r border-default">Card open limit</th>
+            <th class="px-3 py-3 border-r border-default">Updated at</th>
+            <th class="px-3 py-3 border-r border-default">Action</th>
+          </tr>
+        </thead>
+
+        <!-- BODY -->
+        <tbody formArrayName="rows">
+          <tr
+            *ngFor="let row of rows.controls; let i = index"
+            [formGroupName]="i"
+            class="border-b hover:bg-gray-50"
+          >
+            <!-- USER -->
+            <td class="px-3 py-3 border-r border-default">
+              {{ row.get('id')?.value }}
+            </td>
+
+            <!-- EMAIL -->
+            <td class="px-3 py-3 border-r border-default">
+              {{ row.get('username')?.value }}
+            </td>
+
+            <!-- SPENT -->
+            <td class="px-3 py-3 border-r border-default">
+              {{ row.get('email')?.value }}
+            </td>
+
+            <!-- CASHBACK -->
+            <td class="px-3 py-3 border-r border-default text-green-600 font-medium">
+              {{ row.get('status')?.value }}
+            </td>
+
+            <!-- PERCENT -->
+            <td class="px-3 py-3 border-r border-default">
+              {{ row.get('card_open_limit')?.value }}
+            </td>
+
+            <!-- UPDATED -->
+            <td class="px-3 py-3 border-r border-default">
+              {{ row.get('updated_at')?.value | date: 'dd/MM/yyyy HH:mm' }}
+            </td>
+
+            <td class="px-3 py-3 border-l border-default">
+              <button
+                type="button"
+                (click)="toggleDropdown(i, $event)"
+                class="px-3 py-1 text-xs bg-gray-200 rounded hover:bg-gray-300"
+              >
+                Action
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+
+    <app-pagination
+      [page]="userPage"
+      [pageSize]="userPageSize"
+      [totalItems]="userTotalItems"
+      (pageChange)="onUserPageChange($event)"
+      (pageSizeChange)="onUserPageSizeChange($event)"
+    ></app-pagination>
+  </div>
+</div>
+
+<!-- DROPDOWN -->
+<div
+  *ngIf="openDropdownIndex !== null"
+  [ngStyle]="{
+    position: 'fixed',
+    top: dropdownPosition.top + 'px',
+    left: dropdownPosition.left + 'px',
+    'z-index': 9999,
+  }"
+  class="w-60 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-xl shadow-gray-200/60 text-sm"
+  (click)="$event.stopPropagation()"
+>
+  <button
+    type="button"
+    (click)="openUpdateCardLimitModal()"
+    class="group flex w-full items-center gap-3 px-4 py-3 text-left text-gray-700 transition hover:bg-red-50 hover:text-red-600"
+  >
+    <span
+      class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-500 transition group-hover:bg-red-100 group-hover:text-red-600"
+    >
+      <i class="fa-solid fa-credit-card text-sm"></i>
+    </span>
+
+    <div class="flex">
+      <span class="font-medium">Update card open limit</span>
+    </div>
+  </button>
+</div>
+
+<!-- UPDATE CARD OPEN LIMIT MODAL -->
+<div
+  *ngIf="showUpdateLimitModal"
+  class="fixed inset-0 z-[10000] flex items-center justify-center bg-black/40 px-4"
+>
+  <div
+    class="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl"
+    (click)="$event.stopPropagation()"
+  >
+    <!-- HEADER -->
+    <div class="mb-5 flex items-start justify-between gap-4">
+      <div>
+        <h2 class="text-lg font-semibold text-gray-800">Update card open limit</h2>
+
+        <p class="mt-1 text-sm text-gray-500">
+          Update card creation limit for
+          <span class="font-medium text-gray-700">
+            {{ selectedUser?.username }}
+          </span>
+        </p>
+      </div>
+
+      <button
+        type="button"
+        (click)="closeUpdateCardLimitModal()"
+        class="rounded-lg p-1 text-gray-400 transition hover:bg-gray-100 hover:text-gray-700"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <!-- FORM -->
+    <form [formGroup]="updateLimitForm" (ngSubmit)="submitUpdateCardLimit()">
+      <div class="mb-5">
+        <label class="mb-2 block text-sm font-medium text-gray-700"> Card open limit </label>
+
+        <input
+          type="number"
+          formControlName="card_open_limit"
+          min="0"
+          max="10000"
+          placeholder="Enter card open limit"
+          class="w-full rounded-xl border px-4 py-2.5 text-sm outline-none transition"
+          [ngClass]="{
+            'border-red-400 bg-red-50 focus:border-red-500':
+              cardOpenLimitCtrl.invalid && cardOpenLimitCtrl.touched,
+            'border-gray-300 focus:border-red-500': !(
+              cardOpenLimitCtrl.invalid && cardOpenLimitCtrl.touched
+            ),
+          }"
+        />
+
+        <p
+          *ngIf="cardOpenLimitCtrl.hasError('required') && cardOpenLimitCtrl.touched"
+          class="mt-1 text-xs text-red-500"
+        >
+          Card open limit is required.
+        </p>
+
+        <p
+          *ngIf="
+            (cardOpenLimitCtrl.hasError('min') || cardOpenLimitCtrl.hasError('max')) &&
+            cardOpenLimitCtrl.touched
+          "
+          class="mt-1 text-xs text-red-500"
+        >
+          Card open limit must be between 0 and 10000.
+        </p>
+      </div>
+
+      <!-- ACTIONS -->
+      <div class="flex justify-end gap-3">
+        <button
+          type="button"
+          class="rounded-xl border border-gray-300 px-4 py-2 text-sm font-medium text-gray-600 transition hover:bg-gray-100"
+          (click)="closeUpdateCardLimitModal()"
+        >
+          Cancel
+        </button>
+
+        <button
+          type="submit"
+          class="rounded-xl bg-red-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:bg-red-300"
+          [disabled]="updateLimitForm.invalid || isUpdatingLimit"
+        >
+          {{ isUpdatingLimit ? 'Updating...' : 'Update' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

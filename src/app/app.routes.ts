@@ -164,6 +164,13 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'users',
+        loadComponent: () =>
+          import('./features/admin/user-management/user-management.component').then(
+            (m) => m.UserManagementComponent,
+          ),
+      },
+      {
         path: 'withdrawals',
         loadComponent: () =>
           import('./features/admin/withdrawals-management/withdrawals-management.component').then(

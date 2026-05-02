@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { last } from 'rxjs';
 
 @Component({
   selector: 'app-admin-sidebar',
