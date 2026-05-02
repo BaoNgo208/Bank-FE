@@ -1,24 +1,124 @@
-<section class="hero relative h-screen flex items-center justify-center overflow-hidden">
-  <!-- Background image -->
-  <div class="hero-bg"></div>
+<section
+  class="min-h-screen flex flex-col tablet:flex-row items-center justify-between px-20 text-white bg-[linear-gradient(135deg,rgba(320,0,0,0.7),rgba(120,60,100,0.4))]"
+>
+  <div class="relative min-h-screen overflow-hidden flex items-center">
+    <div class="max-w-6xl mx-auto w-full px-6 md:px-10">
+      <div class="max-w-[620px]">
+        <!-- TITLE -->
+        <h1
+          class="relative text-white font-extrabold leading-[1.08] text-[44px] md:text-[64px] hero-item"
+        >
+          The best cards
+          <br />
+          for arbitrage!
+        </h1>
 
-  <!-- Overlay -->
-  <div class="hero-overlay"></div>
+        <!-- BADGE - moved xuống dưới title -->
+        <div class="mt-5 hero-item ml-2">
+          <span
+            class="inline-block bg-rose-300 text-red-900 text-xs md:text-sm font-extrabold px-4 py-2 rounded-2xl shadow shadow-red-900/10"
+          >
+            AND MORE
+          </span>
+        </div>
 
-  <!-- Content -->
-  <div class="relative z-10 text-center text-white px-6">
-    <h1 class="reveal reveal-hero text-5xl md:text-6xl font-bold leading-tight" appReveal>
-      Smart Crypto Wallet <br />
-      For The Future
-    </h1>
+        <!-- DESCRIPTION -->
+        <p
+          class="mt-10 text-white text-lg md:text-xl hero-item font-medium leading-relaxed max-w-[520px]"
+        >
+          Pay for ads on Facebook, Google, TikTok,
+          <br class="hidden md:block" />
+          and other platforms without restrictions
+          <br class="hidden md:block" />
+          using
+          <span class="relative inline-block">
+            our
+            <span class="absolute left-0 -bottom-1 w-full h-[3px] bg-red-200 rounded-full"></span>
+          </span>
+          virtual cards.
+        </p>
 
-    <p class="reveal reveal-up mt-6 text-lg md:text-xl text-gray-200 max-w-xl mx-auto" appReveal>
-      Secure, fast and modern way to manage your digital assets.
-    </p>
+        <!-- BUTTON -->
+        <button
+          class="mt-20 group hero-item flex items-center gap-8 rounded-full bg-red-600 hover:bg-red-700 text-white font-bold px-7 py-2.5 shadow-lg shadow-red-900/20 transition-all duration-300"
+        >
+          <span>Issue Card</span>
 
-    <div class="reveal reveal-up mt-8 flex justify-center gap-4" appReveal>
-      <button class="btn-primary">Get Started</button>
-      <button class="btn-outline">Learn More</button>
+          <span
+            class="w-11 h-11 rounded-full bg-red-500 group-hover:bg-red-400 flex items-center justify-center transition-all duration-300"
+          >
+            <i class="fa-solid fa-arrow-right text-lg"></i>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="relative w-full max-w-[520px] h-[520px] rounded-xl hero-image-enter">
+    <!-- PHONE -->
+    <img
+      src="/phone-container.png"
+      alt="phone"
+      class="absolute right-0 top-[-20px] h-[135%] max-w-none z-10 pointer-events-none select-none"
+    />
+
+    <!-- CARD WRAPPER -->
+    <div
+      class="absolute right-0 top-[150px] w-[390px] h-[250px] z-20 [perspective:900px] [transform-style:preserve-3d]"
+    >
+      <!-- TIKTOK CARD -->
+      <div
+        class="animated-card card card-one rounded-2xl tk-card backdrop-blur-md border border-white/20 shadow-2xl"
+      >
+        <div class="flex justify-between items-start p-4 text-white">
+          <span class="text-2xl font-bold">
+            <i class="fa-brands fa-tiktok"></i>
+          </span>
+        </div>
+
+        <div class="px-4 mt-4 text-white text-sm tracking-widest">**** **** **** 9999</div>
+
+        <div class="absolute bottom-4 left-4 right-4 flex justify-between text-white text-sm">
+          <span>TikTok Ads</span>
+          <span>USD</span>
+        </div>
+      </div>
+
+      <!-- GOOGLE CARD  -->
+      <div
+        class="animated-card card card-two rounded-2xl gg-card border border-white/20 shadow-2xl"
+      >
+        <div class="flex justify-between items-start p-4 text-white">
+          <span class="text-2xl font-bold">
+            <i class="fa-brands fa-google"></i>
+          </span>
+        </div>
+
+        <div class="px-4 mt-4 text-white text-sm tracking-widest">**** **** **** 9999</div>
+
+        <div class="absolute bottom-4 left-4 right-4 flex justify-between text-white text-sm">
+          <span>Google Ads</span>
+          <span>USD</span>
+        </div>
+      </div>
+
+      <!-- FACEBOOK CARD -->
+      <div
+        class="animated-card card card-three rounded-2xl fb-card border border-white/20 shadow-2xl"
+      >
+        <div class="flex justify-between items-start p-4 text-white">
+          <span class="text-2xl font-bold">
+            <i class="fa-brands fa-facebook-f"></i>
+          </span>
+        </div>
+
+        <div class="px-4 mt-4 text-white text-sm tracking-widest">**** **** **** 9999</div>
+
+        <div class="absolute bottom-4 left-4 right-4 flex justify-between text-white text-sm">
+          <span>Facebook Ads</span>
+          <span>USD</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
