@@ -25,7 +25,7 @@ export class WidthdrawlComponent {
   currency: Stablecoin = Stablecoin.USDT;
   minAmount = 500;
   balance = 10000;
-  network: string = 'Tron (TRC20)';
+  network: string = 'TRC20';
   Stablecoin = Stablecoin;
 
   currentOrderNo: string | null = null;
@@ -175,8 +175,6 @@ export class WidthdrawlComponent {
           title: 'Create failed',
           text: err?.error?.message,
           confirmButtonText: 'OK',
-        }).then((result) => {
-          this.showOtpModal.set(true);
         });
       },
     });

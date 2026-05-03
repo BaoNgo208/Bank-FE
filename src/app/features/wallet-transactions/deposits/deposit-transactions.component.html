@@ -51,8 +51,12 @@
               <td
                 class="px-4 py-3 border-r border-default"
                 [ngClass]="{
-                  'text-yellow-600 bg-yellow-100': row.get('network')?.value === 'Tron (TRC20)',
-                  'text-green-600 bg-green-100': row.get('network')?.value === 'ETH (ERC20)',
+                  'text-yellow-600 bg-yellow-100':
+                    row.get('network')?.value === 'Tron (TRC20)' ||
+                    row.get('network')?.value === 'TRC20',
+                  'text-green-600 bg-green-100':
+                    row.get('network')?.value === 'ETH (ERC20)' ||
+                    row.get('network')?.value === 'ERC20',
                 }"
               >
                 <span class="px-2 py-1 text-xs rounded">
