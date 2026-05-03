@@ -50,7 +50,7 @@ export class WalletComponent {
   countdown = signal('60:00');
   private timer: any;
   private seconds = 3600;
-  selectedNetwork = 'Tron (TRC20)';
+  selectedNetwork = 'TRC20';
   depositPreview = this.walletStore.depositPreview;
   proofFile: File | null = null;
   proofPreview: string | null = null;
@@ -122,7 +122,7 @@ export class WalletComponent {
 
   private resetDepositForm() {
     this.amount = 100;
-    this.selectedNetwork = 'Tron (TRC20)';
+    this.selectedNetwork = 'TRC20';
     this.proofFile = null;
     this.proofPreview = null;
   }
