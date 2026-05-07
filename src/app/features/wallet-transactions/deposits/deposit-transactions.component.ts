@@ -7,13 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-widthdrawal-list-component',
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    ReactiveFormsModule,
-    CommonModule,
-    PaginationComponent,
-  ],
+  imports: [ReactiveFormsModule, CommonModule, PaginationComponent],
   templateUrl: './deposit-transactions.component.html',
 })
 export class DepositTransactionsComponent {

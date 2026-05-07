@@ -15,7 +15,7 @@
           class="px-4 py-1 rounded-full bg-white/20 hover:bg-white/30 text-sm"
           (click)="openModal()"
         >
-          top up
+          Top up
         </button>
 
         <button
@@ -29,7 +29,7 @@
       <!-- EXCHANGE -->
       <div class="mb-4">
         <div class="text-sm opacity-80">Current exchange rate</div>
-        <div class="text-3xl font-bold">$<span [countUp]="9.05"></span></div>
+        <div class="text-3xl font-bold">$<span [countUp]="1.0"></span></div>
       </div>
 
       <!-- BALANCE -->
@@ -37,13 +37,6 @@
         <div>
           <div class="text-sm opacity-80">Balance (USD)</div>
           <div class="text-3xl font-bold">$<span [countUp]="walletBalance()"></span></div>
-        </div>
-
-        <div class="w-px h-12 bg-white/50"></div>
-
-        <div>
-          <div class="text-sm opacity-80">Frozen (USD)</div>
-          <div class="text-3xl font-bold">$<span [countUp]="0.05"></span></div>
         </div>
       </div>
     </div>

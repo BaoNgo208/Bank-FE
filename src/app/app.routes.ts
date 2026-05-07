@@ -70,8 +70,8 @@ export const routes: Routes = [
               {
                 path: 'transaction_records',
                 loadComponent: () =>
-                  import('./features/transaction-records/transaction-records.compnent').then(
-                    (m) => m.TransactionRecordsComponent,
+                  import('./features/card_transactions/card_transactions.compnent').then(
+                    (m) => m.CardTransactionsComponent,
                   ),
               },
             ],
@@ -84,10 +84,10 @@ export const routes: Routes = [
               ),
           },
           {
-            path: 'transaction_records',
+            path: 'card_transactions',
             loadComponent: () =>
-              import('./features/transaction-records/transaction-records.compnent').then(
-                (m) => m.TransactionRecordsComponent,
+              import('./features/card_transactions/card_transactions.compnent').then(
+                (m) => m.CardTransactionsComponent,
               ),
           },
           {
@@ -196,6 +196,13 @@ export const routes: Routes = [
       },
       {
         path: 'deposits',
+        loadComponent: () =>
+          import('./features/admin/deposit-orders-management/deposit-orders.component').then(
+            (m) => m.DepositOrdersComponent,
+          ),
+      },
+      {
+        path: 'deposits',
         children: [
           {
             path: '',
@@ -241,6 +248,13 @@ export const routes: Routes = [
               ),
           },
         ],
+      },
+      {
+        path: 'card',
+        loadComponent: () =>
+          import('./features/admin/card-management/card-management.component').then(
+            (m) => m.CardManagementComponent,
+          ),
       },
     ],
   },

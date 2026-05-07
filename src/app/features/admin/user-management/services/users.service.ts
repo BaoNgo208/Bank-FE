@@ -25,4 +25,12 @@ export class UsersService extends BaseApiService {
   ): Observable<ApiResponse<AdminUserResponse>> {
     return this.patch(`/${userId}/card-open-limit`, request);
   }
+
+  lockUser(userId: number): Observable<ApiResponse<void>> {
+    return this.patch(`/${userId}/lock`);
+  }
+
+  unLockUser(userId: number): Observable<ApiResponse<void>> {
+    return this.patch(`/${userId}/unlock`);
+  }
 }

@@ -11,14 +11,15 @@ import { CommonModule } from '@angular/common';
 export class AdminSidebarComponent {
   menu = [
     { label: 'Dashboard', icon: 'fa-home', path: '/admin/dashboard' },
-    { label: 'Users Management', icon: 'fa-users', path: '/admin/users' },
-    { label: 'Withdrawals Management', icon: 'fa-arrow-up', path: '/admin/withdrawals' },
+    { label: 'Users management', icon: 'fa-users', path: '/admin/users' },
+    { label: 'Withdrawals orders', icon: 'fas fa-money-bill-transfer', path: '/admin/withdrawals' },
+    { label: 'Deposits orders', icon: 'fas fa-money-bill-transfer', path: '/admin/deposits' },
     {
-      label: 'Deposits Management',
-      icon: 'fa-arrow-down',
+      label: 'Deposit configurations',
+      icon: 'fa fa-cog',
       children: [
-        { label: 'Deposit Address', path: '/admin/deposits/address' },
-        { label: 'Deposit Setting', path: '/admin/deposits/settings' },
+        { label: 'Deposit address', path: '/admin/deposits/address' },
+        { label: 'Deposit setting', path: '/admin/deposits/settings' },
       ],
     },
     {
@@ -35,7 +36,7 @@ export class AdminSidebarComponent {
         },
       ],
     },
-    { label: 'Transactions Management', icon: 'fa-exchange', path: '/admin/transactions' },
+    { label: 'Card Management', icon: 'fa-credit-card', path: '/admin/card' },
   ];
 
   openMenu: string | null = null;
