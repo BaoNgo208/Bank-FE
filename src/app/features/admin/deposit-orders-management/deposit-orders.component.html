@@ -1,5 +1,5 @@
-<div>
-  <div class="rounded-base border border-default bg-neutral-primary overflow-hidden">
+<div class="h-full w-full flex flex-col gap-y-5 overflow-auto">
+  <div class="rounded-base border border-default bg-neutral-primary">
     <!--  TOP TOOLBAR -->
     <form [formGroup]="searchForm">
       <div class="w-full flex flex-col gap-y-5 bg-white p-4 justify-center">
@@ -28,25 +28,11 @@
             <span class="text-gray-600">status</span>
             <select formControlName="status" class="h-9 px-3 border border-gray-300 rounded">
               <option [ngValue]="null">Please ...</option>
-              <option class="text-green-600" [ngValue]="WithdrawOrderStatus.SUCCESS">
-                SUCCESS
-              </option>
-              <option class="text-red-600" [ngValue]="WithdrawOrderStatus.FAILED">FAILED</option>
-              <option class="text-gray-400" [ngValue]="WithdrawOrderStatus.EXPIRED">EXPIRED</option>
+              <option class="text-green-600" [ngValue]="DepositOrderStatus.SUCCESS">SUCCESS</option>
+              <option class="text-red-600" [ngValue]="DepositOrderStatus.FAILED">FAILED</option>
 
-              <option class="text-slate-600 font-medium" [ngValue]="WithdrawOrderStatus.CANCELLED">
-                CANCELLED
-              </option>
-
-              <option class="text-yellow-600" [ngValue]="WithdrawOrderStatus.PENDING_ADMIN">
-                PENDING_ADMIN
-              </option>
-              <option class="text-purple-600" [ngValue]="WithdrawOrderStatus.PENDING_OTP">
-                PENDING_OTP
-              </option>
-
-              <option class="text-blue-600" [ngValue]="WithdrawOrderStatus.PROCESSING">
-                PROCESSING
+              <option class="text-yellow-600" [ngValue]="DepositOrderStatus.PENDING">
+                PENDING
               </option>
             </select>
           </div>
@@ -89,56 +75,83 @@
       </div>
     </form>
 
+    <!-- TABLE -->
     <div class="overflow-x-auto">
       <form [formGroup]="form">
         <table class="w-full text-sm text-left border-collapse border border-default">
           <!-- HEADER -->
-          <thead class="bg-gray-100 border-b border-default text-xs">
-            <tr class="text-center">
-              <th class="p-3 border-r border-default">Order number</th>
-              <th class="p-3 border-r border-default">username</th>
-              <th class="p-3 border-r border-default">amount</th>
-              <th class="p-3 border-r border-default">currency</th>
-              <th class="p-3 border-r border-default">network</th>
-              <th class="p-3 border-r border-default">address</th>
-              <th class="p-3 border-r border-default">status</th>
-              <th class="p-3 border-r border-default">created at</th>
-              <th class="p-3 border-r border-default">Approval</th>
+          <thead class="border-b bg-gray-50">
+            <tr class="text-gray-600">
+              <th class="px-3 py-3 border-r border-default">Order no</th>
+              <th class="px-3 py-3 border-r border-default">User id</th>
+              <th class="px-3 py-3 border-r border-default">Username</th>
+              <th class="px-3 py-3 border-r border-default">Image urls</th>
+              <th class="px-3 py-3 border-r border-default">Currency</th>
+              <th class="px-3 py-3 border-r border-default">Network</th>
+              <th class="px-3 py-3 border-r border-default">Amount</th>
+              <th class="px-3 py-3 border-r border-default">Fee</th>
+              <th class="px-3 py-3 border-r border-default">Expected amount</th>
+              <th class="px-3 py-3 border-r border-default">Deposit address</th>
+              <th class="px-3 py-3 border-r border-default">Status</th>
+              <th class="px-3 py-3 border-r border-default">Updated at</th>
+              <th class="px-3 py-3 border-r border-default">Action</th>
             </tr>
           </thead>
 
           <!-- BODY -->
-          <tbody formArrayName="withdrawalsRows">
+          <tbody formArrayName="rows">
             <tr
-              *ngFor="let row of withdrawalsRows.controls; let i = index"
+              *ngFor="let row of rows.controls; let i = index"
               [formGroupName]="i"
-              class="border-b border-default hover:bg-gray-50 text-center text-xs"
+              class="border-b hover:bg-gray-50"
             >
-              <!-- Order number -->
-              <td class="px-4 py-3 border-r border-default">
+              <!-- ORDER NO -->
+              <td class="px-3 py-3 border-r border-default font-medium">
                 {{ row.get('order_no')?.value }}
               </td>
 
-              <!-- Currency -->
+              <!-- USER ID -->
+              <td class="px-3 py-3 border-r border-default">
+                {{ row.get('user_id')?.value }}
+              </td>
+
+              <!-- USER name -->
               <td class="px-4 py-3 border-r border-default">
-                <span class="px-2 py-1 text-xs bg-blue-100 text-blue-600 rounded">
+                <span class="px-2 py-1 text-xs text-blue-600 rounded">
                   {{ row.get('username')?.value }}
                 </span>
               </td>
 
-              <!-- Reason -->
-              <td class="px-4 py-3 border-r border-default">
-                {{ row.get('amount')?.value }}
+              <!-- IMAGE URLS -->
+              <td class="px-4 py-3 max-w-[220px] border-r border-default">
+                <div class="flex items-center gap-2 min-w-0 group">
+                  <span
+                    class="min-w-0 flex-1 truncate px-2 py-1 text-xs text-blue-600 rounded cursor-pointer hover:underline"
+                    (click)="
+                      openImageUrlsModal(row.get('image_urls')?.value); $event.stopPropagation()
+                    "
+                    title="Click to view images"
+                  >
+                    {{ row.get('image_urls')?.value }}
+                  </span>
+
+                  <i
+                    class="fa fa-copy shrink-0 text-gray-400 cursor-pointer opacity-0 group-hover:opacity-100 transition hover:text-gray-700"
+                    (click)="
+                      copyImageUrlsRecord(row.get('image_urls')?.value); $event.stopPropagation()
+                    "
+                  ></i>
+                </div>
               </td>
 
-              <!-- Currency -->
+              <!-- CURRENCY -->
               <td class="px-4 py-3 border-r border-default">
                 <span class="px-2 py-1 text-xs bg-blue-100 text-blue-600 rounded">
                   {{ row.get('currency')?.value }}
                 </span>
               </td>
 
-              <!-- Network -->
+              <!-- NETWORK -->
               <td
                 class="px-4 py-3 border-r border-default"
                 [ngClass]="{
@@ -155,28 +168,43 @@
                 </span>
               </td>
 
-              <!-- Amount -->
-              <td class="px-4 py-3 border-r border-default">
-                {{ row.get('to_address')?.value }}
+              <!-- AMOUNT -->
+              <td class="px-3 py-3 border-r border-default">
+                {{ row.get('amount')?.value | number: '1.2-4' }}
               </td>
 
-              <!-- Status -->
-              <td
-                class="px-4 py-3 border-r border-default"
-                [ngClass]="{
-                  'text-yellow-600': row.get('status')?.value === 'PENDING_ADMIN',
-                  'text-green-600': row.get('status')?.value === 'SUCCESS',
-                  'text-red-600': row.get('status')?.value === 'FAILED',
-                }"
-              >
-                <span class="px-2 py-1 bg-blue-100 rounded text-xs">
+              <!-- FEE -->
+              <td class="px-3 py-3 border-r border-default">
+                {{ row.get('fee')?.value | number: '1.2-4' }}
+              </td>
+
+              <!-- EXPECTED AMOUNT -->
+              <td class="px-3 py-3 border-r border-default font-medium">
+                {{ row.get('expected_amount')?.value | number: '1.2-4' }}
+              </td>
+
+              <!-- DEPOSIT ADDRESS -->
+              <td class="px-3 py-3 border-r border-default max-w-[220px] truncate">
+                {{ row.get('deposit_address')?.value }}
+              </td>
+
+              <!-- STATUS -->
+              <td class="px-3 py-3 border-r border-default font-medium">
+                <span
+                  class="px-2 py-1 rounded-full text-xs font-semibold"
+                  [ngClass]="{
+                    'text-yellow-600 bg-yellow-100': row.get('status')?.value === 'PENDING',
+                    'text-green-600 bg-green-100': row.get('status')?.value === 'SUCCESS',
+                    'text-red-600 bg-red-100': row.get('status')?.value === 'FAILED',
+                  }"
+                >
                   {{ row.get('status')?.value }}
                 </span>
               </td>
 
-              <!-- Creation time -->
-              <td class="px-4 py-3">
-                {{ row.get('created_at')?.value | date: 'dd/MM/yyyy HH:mm' }}
+              <!-- UPDATED -->
+              <td class="px-3 py-3 border-r border-default">
+                {{ row.get('updated_at')?.value | date: 'dd/MM/yyyy HH:mm' }}
               </td>
 
               <!-- ACTION -->
@@ -193,12 +221,13 @@
           </tbody>
         </table>
       </form>
+
       <app-pagination
-        [page]="withdrawalsPage"
-        [pageSize]="withdrawalsPageSize"
-        [totalItems]="withdrawalsTotalItems"
-        (pageChange)="onWithdrawalsPageChange($event)"
-        (pageSizeChange)="onWithdrawalsPageChange($event)"
+        [page]="depositPage"
+        [pageSize]="depositPageSize"
+        [totalItems]="depositTotalItems"
+        (pageChange)="onDepositPageChange($event)"
+        (pageSizeChange)="onDepositPageSizeChange($event)"
       ></app-pagination>
     </div>
   </div>
@@ -219,7 +248,7 @@
   <button
     type="button"
     class="block w-full text-left px-3 py-2 text-green-600 hover:bg-gray-100"
-    (click)="openNoteInput(openDropdownIndex, WithdrawOrderStatus.SUCCESS, $event)"
+    (click)="openNoteInput(openDropdownIndex, DepositOrderStatus.SUCCESS, $event)"
   >
     Success
   </button>
@@ -227,7 +256,7 @@
   <button
     type="button"
     class="block w-full text-left px-3 py-2 text-red-600 hover:bg-gray-100"
-    (click)="openNoteInput(openDropdownIndex, WithdrawOrderStatus.FAILED, $event)"
+    (click)="openNoteInput(openDropdownIndex, DepositOrderStatus.FAILED, $event)"
   >
     Failed
   </button>
@@ -256,7 +285,7 @@
     <button
       type="button"
       class="px-2 py-1 bg-blue-500 text-white text-xs rounded"
-      (click)="this.showConfirmModal.set(true)"
+      (click)="displayConfirmModal()"
     >
       Confirm
     </button>
@@ -264,6 +293,47 @@
     <button type="button" class="px-2 py-1 bg-gray-300 text-xs rounded" (click)="cancelNote()">
       Cancel
     </button>
+  </div>
+</div>
+
+<div
+  *ngIf="showImageModal"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4"
+  (click)="closeImageUrlsModal()"
+>
+  <div
+    class="w-full max-w-3xl max-h-[85vh] overflow-y-auto rounded-xl bg-white p-5 shadow-lg"
+    (click)="$event.stopPropagation()"
+  >
+    <div class="mb-4 flex items-center justify-between">
+      <h3 class="text-lg font-semibold text-gray-800">Image URLs</h3>
+
+      <button
+        type="button"
+        class="text-gray-500 hover:text-gray-800"
+        (click)="closeImageUrlsModal()"
+      >
+        <i class="fa fa-times"></i>
+      </button>
+    </div>
+
+    <div *ngIf="selectedImageUrls.length > 0; else noImages" class="flex flex-col gap-4">
+      <div *ngFor="let url of selectedImageUrls" class="rounded-lg border border-gray-200 p-3">
+        <img
+          [src]="url"
+          alt="Image"
+          class="max-h-[420px] w-full rounded object-contain bg-gray-100"
+        />
+
+        <p class="mt-2 break-all text-xs text-gray-500">
+          {{ url }}
+        </p>
+      </div>
+    </div>
+
+    <ng-template #noImages>
+      <p class="text-sm text-gray-500">Không có ảnh để hiển thị.</p>
+    </ng-template>
   </div>
 </div>
 

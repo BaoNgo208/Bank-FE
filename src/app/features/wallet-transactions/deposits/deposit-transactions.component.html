@@ -99,15 +99,15 @@
               </td>
 
               <!-- State -->
-              <td
-                class="px-4 py-3 border-r border-default"
-                [ngClass]="{
-                  'text-red-500': row.get('status')?.value === 'Pending payment',
-                  'text-yellow-600': row.get('status')?.value === 'Partial payment',
-                  'text-green-600': row.get('status')?.value === 'Success',
-                }"
-              >
-                <span class="px-2 py-1 bg-blue-100 rounded text-xs">
+              <td class="px-4 py-3 border-r border-default">
+                <span
+                  class="px-2 py-1 text-xs rounded"
+                  [ngClass]="{
+                    'bg-yellow-100 text-yellow-600': row.get('status')?.value === 'PENDING',
+                    'bg-green-100 text-green-600': row.get('status')?.value === 'SUCCESS',
+                    'bg-red-100 text-red-600': row.get('status')?.value === 'FAILED',
+                  }"
+                >
                   {{ row.get('status')?.value }}
                 </span>
               </td>

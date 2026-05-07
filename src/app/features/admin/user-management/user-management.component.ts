@@ -2,13 +2,19 @@ import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { UsersService } from './services/users.service';
 import { FormArray, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
-import { AdminUserResponse } from './types/type';
+import { AccountStatus, AdminUserResponse } from './types/type';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
 import { CommonModule } from '@angular/common';
+import { UserCardTransactionsModalComponent } from './components/card-transactions-history-modal/user-card-transactions-modal.component';
 
 @Component({
   selector: 'app-user-management-component',
-  imports: [ReactiveFormsModule, CommonModule, PaginationComponent],
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    PaginationComponent,
+    UserCardTransactionsModalComponent,
+  ],
   templateUrl: './user-management.component.html',
 })
 export class UserManagementComponent {
@@ -35,14 +41,67 @@ export class UserManagementComponent {
     return this.updateLimitForm.controls.card_open_limit;
   }
 
+  AccountStatus = AccountStatus;
+
   openDropdownIndex: number | null = null;
   dropdownPosition = { top: 0, left: 0 };
 
   showUpdateLimitModal = false;
   isUpdatingLimit = false;
 
+  showUserCardTransactionsModal = false;
+
   ngOnInit() {
     this.loadUsersPage();
+  }
+
+  toggleUserLockStatus() {
+    if (this.openDropdownIndex === null) return;
+
+    const row = this.rows.at(this.openDropdownIndex);
+    const user = row.value as AdminUserResponse;
+
+    const isActive = user.status === AccountStatus.ACTIVE;
+
+    const request$ = isActive
+      ? this.usersService.lockUser(user.id)
+      : this.usersService.unLockUser(user.id);
+
+    request$.subscribe({
+      next: () => {
+        row.patchValue({
+          status: isActive ? AccountStatus.LOCKED : AccountStatus.ACTIVE,
+        });
+
+        this.openDropdownIndex = null;
+        this.cd.markForCheck();
+      },
+    });
+  }
+
+  isDropdownUserActive(): boolean {
+    if (this.openDropdownIndex === null) return false;
+
+    const user = this.rows.at(this.openDropdownIndex).value as AdminUserResponse;
+    return user.status === AccountStatus.ACTIVE;
+  }
+
+  openUserCardTransactionsModal(): void {
+    if (this.openDropdownIndex === null) return;
+
+    const user = this.rows.at(this.openDropdownIndex).value as AdminUserResponse;
+
+    if (!user) return;
+
+    this.selectedUser = user;
+    this.showUserCardTransactionsModal = true;
+
+    this.openDropdownIndex = null;
+  }
+
+  closeUserCardTransactionsModal(): void {
+    this.showUserCardTransactionsModal = false;
+    this.selectedUser = null;
   }
 
   openUpdateCardLimitModal() {

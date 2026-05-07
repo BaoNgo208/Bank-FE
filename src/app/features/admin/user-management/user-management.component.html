@@ -45,11 +45,24 @@
               {{ row.get('email')?.value }}
             </td>
 
-            <!-- CASHBACK -->
-            <td class="px-3 py-3 border-r border-default text-green-600 font-medium">
-              {{ row.get('status')?.value }}
-            </td>
+            <!-- STATUS -->
+            <td class="px-3 py-3 border-r border-default font-medium">
+              <span
+                class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold"
+                [ngClass]="{
+                  'bg-green-50 text-green-700 ring-1 ring-green-200':
+                    row.get('status')?.value === AccountStatus.ACTIVE,
 
+                  'bg-red-50 text-red-700 ring-1 ring-red-200':
+                    row.get('status')?.value === AccountStatus.LOCKED,
+
+                  'bg-gray-50 text-gray-600 ring-1 ring-gray-200':
+                    row.get('status')?.value === AccountStatus.DELETED,
+                }"
+              >
+                {{ row.get('status')?.value }}
+              </span>
+            </td>
             <!-- PERCENT -->
             <td class="px-3 py-3 border-r border-default">
               {{ row.get('card_open_limit')?.value }}
@@ -96,6 +109,7 @@
   class="w-60 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-xl shadow-gray-200/60 text-sm"
   (click)="$event.stopPropagation()"
 >
+  <!-- UPDATE CARD LIMIT -->
   <button
     type="button"
     (click)="openUpdateCardLimitModal()"
@@ -111,8 +125,68 @@
       <span class="font-medium">Update card open limit</span>
     </div>
   </button>
-</div>
 
+  <!-- VIEW CARD TRANSACTIONS -->
+  <button
+    type="button"
+    (click)="openUserCardTransactionsModal()"
+    class="group flex w-full items-center gap-3 px-4 py-3 text-left text-gray-700 transition hover:bg-blue-50 hover:text-blue-600"
+  >
+    <span
+      class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-500 transition group-hover:bg-blue-100 group-hover:text-blue-600"
+    >
+      <i class="fa-solid fa-receipt text-sm"></i>
+    </span>
+
+    <div class="flex flex-col">
+      <span class="font-medium">View card transactions</span>
+      <span class="text-xs text-gray-400 group-hover:text-blue-500">
+        User transaction history
+      </span>
+    </div>
+  </button>
+
+  <!-- LOCK / UNLOCK USER -->
+  <button
+    type="button"
+    (click)="toggleUserLockStatus()"
+    [ngClass]="
+      isDropdownUserActive()
+        ? 'hover:bg-orange-50 hover:text-orange-600'
+        : 'hover:bg-green-50 hover:text-green-600'
+    "
+    class="group flex w-full items-center gap-3 px-4 py-3 text-left text-gray-700 transition"
+  >
+    <span
+      [ngClass]="
+        isDropdownUserActive()
+          ? 'group-hover:bg-orange-100 group-hover:text-orange-600'
+          : 'group-hover:bg-green-100 group-hover:text-green-600'
+      "
+      class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-500 transition"
+    >
+      <i
+        [ngClass]="isDropdownUserActive() ? 'fa-solid fa-lock' : 'fa-solid fa-lock-open'"
+        class="text-sm"
+      ></i>
+    </span>
+
+    <div class="flex flex-col">
+      <span class="font-medium">
+        {{ isDropdownUserActive() ? 'Lock user' : 'Unlock user' }}
+      </span>
+
+      <span
+        [ngClass]="
+          isDropdownUserActive() ? 'group-hover:text-orange-500' : 'group-hover:text-green-500'
+        "
+        class="text-xs text-gray-400"
+      >
+        {{ isDropdownUserActive() ? 'Disable this user account' : 'Enable this user account' }}
+      </span>
+    </div>
+  </button>
+</div>
 <!-- UPDATE CARD OPEN LIMIT MODAL -->
 <div
   *ngIf="showUpdateLimitModal"
@@ -204,3 +278,10 @@
     </form>
   </div>
 </div>
+
+<app-user-card-transactions-modal
+  *ngIf="showUserCardTransactionsModal && selectedUser !== null"
+  [userId]="selectedUser.id"
+  [displayName]="selectedUser.username"
+  (closed)="showUserCardTransactionsModal = false"
+></app-user-card-transactions-modal>

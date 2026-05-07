@@ -22,7 +22,7 @@ export const SIDEBAR_ROUTE_MAP: Record<string, string> = {
   financial_records: '/home/wallet/financial_records',
 
   apply_card: '/home/apply_card',
-  transaction_records: '/home/transaction_records',
+  card_transactions: '/home/card_transactions',
   // Card
   card_grouping: '/home/card_management/card_grouping',
 
@@ -78,8 +78,8 @@ export const SIDEBAR_TABS: SidebarTab[] = [
     ],
   },
   {
-    key: 'transaction_records',
-    label: 'Transaction records',
+    key: 'card_transactions',
+    label: 'Card transactions',
     icon: 'fa-solid fa-arrow-right-arrow-left',
   },
 

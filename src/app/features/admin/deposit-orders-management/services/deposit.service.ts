@@ -2,25 +2,28 @@ import { Injectable } from '@angular/core';
 import { BaseApiService } from '../../../../core/http/base-api.service';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../../../../core/auth/auth.request';
-import { UpdateWithdrawStatusRequest, WithdrawOrderPageResponse } from '../model/widthdrawl.model';
-import { WithdrawOrderStatus } from '../../../wallet/types/wallet.type';
+import {
+  DepositOrderPageAdminResponse,
+  DepositOrderStatus,
+  UpdateDepositStatusRequest,
+} from '../types/deposit.type';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AdminWithdrawalsService extends BaseApiService {
-  protected override resource = 'admin/withdraw';
+export class DepositService extends BaseApiService {
+  protected override resource = 'admin/deposits';
 
-  getAllWithdrawOrders(
+  getAllDepositOrders(
     page: number = 0,
     params?: {
       orderNo?: string;
       username?: string;
-      status?: WithdrawOrderStatus;
+      status?: DepositOrderStatus;
       fromTime?: string;
       toTime?: string;
     },
-  ): Observable<ApiResponse<WithdrawOrderPageResponse>> {
+  ): Observable<ApiResponse<DepositOrderPageAdminResponse>> {
     const httpParams = this.buildPageParams(page, undefined, {
       order_no: params?.orderNo,
       username: params?.username,
@@ -32,10 +35,10 @@ export class AdminWithdrawalsService extends BaseApiService {
     return this.get('/orders', httpParams);
   }
 
-  updateWithdrawStatus(
-    order_no: string,
-    request: UpdateWithdrawStatusRequest,
+  updateDepositStatus(
+    orderNo: string,
+    request: UpdateDepositStatusRequest,
   ): Observable<ApiResponse<void>> {
-    return this.patch(`/${order_no}/status`, request);
+    return this.patch(`/${orderNo}/status`, request);
   }
 }
