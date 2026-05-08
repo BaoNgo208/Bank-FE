@@ -178,9 +178,7 @@ export class DepositOrdersComponent {
   handleConfirmUpdate = () => {
     const index = this.openNoteIndex;
 
-    if (index === null) {
-      return;
-    }
+    if (index === null) return;
 
     this.confirmUpdate(index);
   };

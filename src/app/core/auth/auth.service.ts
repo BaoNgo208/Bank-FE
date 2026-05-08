@@ -39,4 +39,8 @@ export class AuthService extends BaseApiService {
     localStorage.setItem('accessToken', tokens.access_token);
     localStorage.setItem('refreshToken', tokens.refresh_token);
   }
+
+  logout(): Observable<ApiResponse<void>> {
+    return this.post('/logout');
+  }
 }

@@ -181,6 +181,13 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'notifications',
+        loadComponent: () =>
+          import('./features/admin/notification-management/notification-management.component').then(
+            (m) => m.NotificationManagementComponent,
+          ),
+      },
+      {
         path: 'users',
         loadComponent: () =>
           import('./features/admin/user-management/user-management.component').then(
