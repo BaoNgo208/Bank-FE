@@ -1,9 +1,30 @@
-<div class="h-full flex items-center px-4 gap-3">
-  <!-- HAMBURGER (mobile + tablet only) -->
-  <button class="small_laptop:hidden text-xl" (click)="toggleSidebar.emit()">
-    <i class="fa-solid fa-bars"></i>
-  </button>
+<div class="h-full flex items-center justify-between px-4 gap-3">
+  <!-- LEFT -->
+  <div class="flex items-center gap-3">
+    <!-- HAMBURGER (mobile + tablet only) -->
+    <button
+      class="small_laptop:hidden w-9 h-9 rounded-lg flex items-center justify-center text-gray-600 hover:bg-gray-100 transition"
+      (click)="toggleSidebar.emit()"
+    >
+      <i class="fa-solid fa-bars"></i>
+    </button>
 
-  <!-- TITLE -->
-  <div class="font-semibold text-gray-700">Dashboard</div>
+    <div class="hidden sm:block">
+      <div class="text-sm font-semibold text-gray-800">Dashboard</div>
+      <div class="text-xs text-gray-400">Admin panel</div>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="flex items-center gap-3">
+    <!-- Logout -->
+    <button
+      type="button"
+      class="h-9 px-3 rounded-xl border border-red-100 text-red-500 bg-red-50 hover:bg-red-100 hover:text-red-600 transition flex items-center gap-2 text-sm font-medium"
+      (click)="logout()"
+    >
+      <i class="fa-solid fa-arrow-right-from-bracket text-sm"></i>
+      <span class="hidden sm:inline">Logout</span>
+    </button>
+  </div>
 </div>

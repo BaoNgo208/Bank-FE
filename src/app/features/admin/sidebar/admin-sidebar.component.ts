@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 export class AdminSidebarComponent {
   menu = [
     { label: 'Dashboard', icon: 'fa-home', path: '/admin/dashboard' },
+    { label: 'Notifications management', icon: 'fa-bell', path: '/admin/notifications' },
     { label: 'Users management', icon: 'fa-users', path: '/admin/users' },
     { label: 'Withdrawals orders', icon: 'fas fa-money-bill-transfer', path: '/admin/withdrawals' },
     { label: 'Deposits orders', icon: 'fas fa-money-bill-transfer', path: '/admin/deposits' },

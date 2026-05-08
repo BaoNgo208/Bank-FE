@@ -6,6 +6,7 @@ import { AuthService } from '../../../../core/auth/auth.service';
 import { SigninRequest } from '../../../../core/auth/auth.request';
 import { AdminAuthService } from '../../../../core/auth/admin-auth.service';
 import { AuthStore } from '../../../../core/auth/auth.store';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login-component',
@@ -17,6 +18,7 @@ export class AdminLoginComponent {
   private router = inject(Router);
   private adminAuthService = inject(AdminAuthService);
   private authStore = inject(AuthStore);
+  private toast = inject(ToastrService);
 
   loginForm = this.fb.group({
     username: ['', [Validators.required]],
@@ -40,6 +42,9 @@ export class AdminLoginComponent {
         this.authStore.setTokens(res.tokens.access_token, res.tokens.refresh_token);
 
         this.router.navigate(['/admin']);
+      },
+      error: (err) => {
+        this.toast.error(err?.error?.message);
       },
     });
   }

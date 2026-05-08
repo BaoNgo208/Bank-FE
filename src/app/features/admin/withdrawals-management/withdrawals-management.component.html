@@ -1,94 +1,89 @@
-<div>
-  <div class="rounded-base border border-default bg-neutral-primary overflow-hidden">
-    <!--  TOP TOOLBAR -->
-    <form [formGroup]="searchForm">
-      <div class="w-full flex flex-col gap-y-5 bg-white p-4 justify-center">
-        <div class="w-full flex flex-wrap sm:flex-row items-center gap-2 text-[0.85rem]">
-          <div class="flex items-center gap-2">
-            <span class="text-gray-600">Order number</span>
-            <input
-              formControlName="orderNo"
-              type="text"
-              placeholder="Please enter your order number"
-              class="h-9 px-3 border border-gray-300 rounded"
-            />
-          </div>
+<div class="space-y-5">
+  <!--  TOP TOOLBAR -->
+  <form [formGroup]="searchForm">
+    <div class="w-full flex flex-col gap-y-5 bg-white p-4 justify-center">
+      <div class="w-full flex flex-wrap sm:flex-row items-center gap-2 text-[0.85rem]">
+        <div class="flex items-center gap-2">
+          <span class="text-gray-600">Order number</span>
+          <input
+            formControlName="orderNo"
+            type="text"
+            placeholder="Please enter your order number"
+            class="h-9 px-3 border border-gray-300 rounded"
+          />
+        </div>
 
-          <div class="flex items-center gap-2">
-            <span class="text-gray-600">username</span>
-            <input
-              formControlName="username"
-              type="text"
-              placeholder="Please enter username"
-              class="h-9 px-3 border border-gray-300 rounded"
-            />
-          </div>
+        <div class="flex items-center gap-2">
+          <span class="text-gray-600">username</span>
+          <input
+            formControlName="username"
+            type="text"
+            placeholder="Please enter username"
+            class="h-9 px-3 border border-gray-300 rounded"
+          />
+        </div>
 
-          <div class="flex items-center gap-2">
-            <span class="text-gray-600">status</span>
-            <select formControlName="status" class="h-9 px-3 border border-gray-300 rounded">
-              <option [ngValue]="null">Please ...</option>
-              <option class="text-green-600" [ngValue]="WithdrawOrderStatus.SUCCESS">
-                SUCCESS
-              </option>
-              <option class="text-red-600" [ngValue]="WithdrawOrderStatus.FAILED">FAILED</option>
-              <option class="text-gray-400" [ngValue]="WithdrawOrderStatus.EXPIRED">EXPIRED</option>
+        <div class="flex items-center gap-2">
+          <span class="text-gray-600">status</span>
+          <select formControlName="status" class="h-9 px-3 border border-gray-300 rounded">
+            <option [ngValue]="null">Please ...</option>
+            <option class="text-green-600" [ngValue]="WithdrawOrderStatus.SUCCESS">SUCCESS</option>
+            <option class="text-red-600" [ngValue]="WithdrawOrderStatus.FAILED">FAILED</option>
+            <option class="text-gray-400" [ngValue]="WithdrawOrderStatus.EXPIRED">EXPIRED</option>
 
-              <option class="text-slate-600 font-medium" [ngValue]="WithdrawOrderStatus.CANCELLED">
-                CANCELLED
-              </option>
+            <option class="text-slate-600 font-medium" [ngValue]="WithdrawOrderStatus.CANCELLED">
+              CANCELLED
+            </option>
 
-              <option class="text-yellow-600" [ngValue]="WithdrawOrderStatus.PENDING_ADMIN">
-                PENDING_ADMIN
-              </option>
-              <option class="text-purple-600" [ngValue]="WithdrawOrderStatus.PENDING_OTP">
-                PENDING_OTP
-              </option>
+            <option class="text-yellow-600" [ngValue]="WithdrawOrderStatus.PENDING_ADMIN">
+              PENDING_ADMIN
+            </option>
+            <option class="text-purple-600" [ngValue]="WithdrawOrderStatus.PENDING_OTP">
+              PENDING_OTP
+            </option>
 
-              <option class="text-blue-600" [ngValue]="WithdrawOrderStatus.PROCESSING">
-                PROCESSING
-              </option>
-            </select>
-          </div>
+            <option class="text-blue-600" [ngValue]="WithdrawOrderStatus.PROCESSING">
+              PROCESSING
+            </option>
+          </select>
+        </div>
 
-          <div class="flex items-center gap-2">
-            <span class="text-gray-600">Creation time</span>
-            <div class="flex items-center border border-gray-300 rounded overflow-hidden">
-              <input type="date" formControlName="fromTime" class="h-9 px-2 outline-none" />
-              <span class="px-2 text-gray-400">-</span>
-              <input type="date" formControlName="toTime" class="h-9 px-2 outline-none" />
-              <!-- ERROR -->
-              <div
-                *ngIf="searchForm.errors?.['invalidDateRange']"
-                class="text-red-500 text-xs mt-1"
-              >
-                From date must be before To date
-              </div>
+        <div class="flex items-center gap-2">
+          <span class="text-gray-600">Creation time</span>
+          <div class="flex items-center border border-gray-300 rounded overflow-hidden">
+            <input type="date" formControlName="fromTime" class="h-9 px-2 outline-none" />
+            <span class="px-2 text-gray-400">-</span>
+            <input type="date" formControlName="toTime" class="h-9 px-2 outline-none" />
+            <!-- ERROR -->
+            <div *ngIf="searchForm.errors?.['invalidDateRange']" class="text-red-500 text-xs mt-1">
+              From date must be before To date
             </div>
           </div>
         </div>
-
-        <div class="w-full flex gap-x-2 text-[0.8rem]">
-          <button
-            (click)="onSearchClick()"
-            [disabled]="searchForm.invalid"
-            class="h-9 px-3 bg-red-600 text-white rounded transition flex items-center gap-2 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed"
-          >
-            <i class="fa-solid fa-magnifying-glass"></i> Search
-          </button>
-
-          <button
-            type="button"
-            (click)="onReset()"
-            [disabled]="searchForm.invalid"
-            class="h-9 px-3 bg-red-600 text-white rounded transition flex items-center gap-2 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed"
-          >
-            Reset
-          </button>
-        </div>
       </div>
-    </form>
 
+      <div class="w-full flex gap-x-2 text-[0.8rem]">
+        <button
+          (click)="onSearchClick()"
+          [disabled]="searchForm.invalid"
+          class="h-9 px-3 bg-red-600 text-white rounded transition flex items-center gap-2 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed"
+        >
+          <i class="fa-solid fa-magnifying-glass"></i> Search
+        </button>
+
+        <button
+          type="button"
+          (click)="onReset()"
+          [disabled]="searchForm.invalid"
+          class="h-9 px-3 bg-red-600 text-white rounded transition flex items-center gap-2 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed"
+        >
+          Reset
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <div class="rounded-base border border-default bg-neutral-primary overflow-hidden">
     <div class="overflow-x-auto">
       <form [formGroup]="form">
         <table class="w-full text-sm text-left border-collapse border border-default">

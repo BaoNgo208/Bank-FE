@@ -1,0 +1,178 @@
+<div class="h-full px-3 py-2 flex flex-col gap-y-5 overflow-auto">
+  <div class="min-w-0 rounded-base border border-default bg-neutral-primary">
+    <!-- HEADER -->
+    <div class="flex items-center justify-between px-4 py-2 bg-white border-b border-default">
+      <div class="text-sm font-medium text-heading">
+        <label>Notifications</label>
+      </div>
+
+      <button
+        (click)="showAnnouncementModal.set(true)"
+        class="h-9 px-3 bg-red-500 hover:bg-red-700 text-white rounded transition flex items-center gap-2 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed"
+      >
+        Create
+      </button>
+    </div>
+
+    <!-- TABLE -->
+    <form [formGroup]="form" class="overflow-x-auto">
+      <table class="w-full text-sm text-left border-collapse border border-default">
+        <!-- HEADER -->
+        <thead class="border-b bg-gray-50">
+          <tr class="text-gray-600">
+            <th class="px-3 py-3 border-r border-default">Id</th>
+            <th class="px-3 py-3 border-r border-default">Title</th>
+            <th class="px-3 py-3 border-r border-default">Content</th>
+            <th class="px-3 py-3 border-r border-default">Link url</th>
+            <th class="px-3 py-3 border-r border-default">Is active</th>
+            <th class="px-3 py-3 border-r border-default">Created at</th>
+            <th class="px-3 py-3 border-r border-default">Update at</th>
+            <th class="px-3 py-3 border-r border-default">Action</th>
+          </tr>
+        </thead>
+
+        <!-- BODY -->
+        <tbody formArrayName="rows">
+          <tr
+            *ngFor="let row of rows.controls; let i = index"
+            [formGroupName]="i"
+            class="border-b hover:bg-gray-50"
+          >
+            <!-- USER -->
+            <td class="px-3 py-3 border-r border-default">
+              {{ row.get('id')?.value }}
+            </td>
+
+            <!-- EMAIL -->
+            <td class="px-3 py-3 border-r border-default">
+              {{ row.get('title')?.value }}
+            </td>
+
+            <!-- SPENT -->
+            <td class="px-3 py-3 border-r border-default">
+              {{ row.get('content')?.value }}
+            </td>
+
+            <!-- IMAGE URLS -->
+            <td class="px-4 py-3 max-w-[220px] border-r border-default">
+              <div class="flex items-center gap-2 min-w-0 group">
+                <span
+                  class="min-w-0 flex-1 truncate px-2 py-1 text-xs text-blue-600 rounded cursor-pointer hover:underline"
+                  title="Click to view images"
+                  (click)="openLink(row.get('link_url')?.value); $event.stopPropagation()"
+                >
+                  {{ row.get('link_url')?.value }}
+                </span>
+
+                <i
+                  class="fa fa-copy shrink-0 text-gray-400 cursor-pointer opacity-0 group-hover:opacity-100 transition hover:text-gray-700"
+                  (click)="
+                    copyImageUrlsRecord(row.get('link_url')?.value); $event.stopPropagation()
+                  "
+                ></i>
+              </div>
+            </td>
+
+            <!-- UPDATED -->
+            <td class="px-3 py-3 border-r border-default">
+              {{ row.get('is_active')?.value | date: 'dd/MM/yyyy HH:mm' }}
+            </td>
+            <!-- UPDATED -->
+            <td class="px-3 py-3 border-r border-default">
+              {{ row.get('created_at')?.value | date: 'dd/MM/yyyy HH:mm' }}
+            </td>
+            <!-- UPDATED -->
+            <td class="px-3 py-3 border-r border-default">
+              {{ row.get('updated_at')?.value | date: 'dd/MM/yyyy HH:mm' }}
+            </td>
+
+            <td class="px-3 py-3 border-l border-default">
+              <button
+                type="button"
+                (click)="toggleDropdown(i, $event)"
+                class="px-3 py-1 text-xs bg-gray-200 rounded hover:bg-gray-300"
+              >
+                Action
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+
+    <app-pagination
+      [page]="notiPage"
+      [pageSize]="notiPageSize"
+      [totalItems]="notiTotalItems"
+      (pageChange)="onNotiPageChange($event)"
+      (pageSizeChange)="onNotiPageSizeChange($event)"
+    ></app-pagination>
+  </div>
+</div>
+
+<app-announcement-form-modal
+  *ngIf="showAnnouncementModal()"
+  [mode]="announcementModalMode()"
+  [announcement]="selectedAnnouncement()"
+  (close)="showAnnouncementModal.set(false)"
+  (saved)="onAnnouncementSaved($event)"
+></app-announcement-form-modal>
+
+<!-- DROPDOWN -->
+<div
+  *ngIf="openDropdownIndex !== null"
+  [ngStyle]="{
+    position: 'fixed',
+    top: dropdownPosition.top + 'px',
+    left: dropdownPosition.left + 'px',
+  }"
+  class="w-60 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-xl shadow-gray-200/60 text-sm"
+  (click)="$event.stopPropagation()"
+>
+  <!-- UPDATE CARD LIMIT -->
+  <button
+    type="button"
+    (click)="openUpdateAnnouncementModal(openDropdownIndex!)"
+    class="group flex w-full items-center gap-3 px-4 py-3 text-left text-gray-700 transition hover:bg-red-50 hover:text-orange-600"
+  >
+    <span
+      class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-500 transition group-hover:bg-red-100 group-hover:text-orange-600"
+    >
+      <i class="fa-solid fa-credit-card text-sm"></i>
+    </span>
+
+    <div class="flex">
+      <span class="font-medium">Update card open limit</span>
+    </div>
+  </button>
+
+  <!-- DELETE NOTIFICATION -->
+  <button
+    type="button"
+    [ngClass]="'hover:bg-orange-50 hover:text-red-600'"
+    (click)="this.showConfirmModal.set(true)"
+    class="group flex w-full items-center gap-3 px-4 py-3 text-left text-gray-700 transition"
+  >
+    <span
+      [ngClass]="'group-hover:bg-orange-100 group-hover:text-red-600'"
+      class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-500 transition"
+    >
+      <i [ngClass]="'fa-solid fa-trash'" class="text-sm"></i>
+    </span>
+
+    <div class="flex flex-col">
+      <span class="font-medium"> Delete Notification </span>
+
+      <span [ngClass]="'group-hover:text-red-500'" class="text-xs text-gray-400">
+        Delete this notification
+      </span>
+    </div>
+  </button>
+</div>
+
+<app-confirm-modal
+  [visible]="this.showConfirmModal()"
+  content="Are you sure you want to perform this action?"
+  [onConfirm]="handleConfirmUpdate"
+  (cancel)="this.showConfirmModal.set(false)"
+></app-confirm-modal>
