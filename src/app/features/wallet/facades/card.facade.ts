@@ -32,4 +32,8 @@ export class CardFacade {
   ) {
     return this.cardService.searchCards(page, params);
   }
+
+  getSensitiveDetail(cardId: number) {
+    return this.cardService.getSensitiveDetail(cardId);
+  }
 }

@@ -1,4 +1,58 @@
 <div class="h-full px-3 py-2 flex flex-col gap-y-5 overflow-auto">
+  <!-- Card Infos -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <!-- Total Balance -->
+    <div
+      class="flex items-center justify-between bg-white border border-gray-200 rounded-xl px-6 py-5 hover:shadow-md transition"
+    >
+      <div>
+        <p class="text-gray-700 text-sm">Total Card Balance</p>
+        <p class="text-2xl mt-2">
+          {{ dashboard()?.total_balance ?? 0 }}
+        </p>
+      </div>
+      <div
+        class="w-16 h-16 flex items-center justify-center border-4 border-red-500 rounded-full text-red-500 text-3xl"
+      >
+        <i class="fa-solid fa-wallet"></i>
+      </div>
+    </div>
+
+    <!-- Active -->
+    <div
+      class="flex items-center justify-between bg-white border border-gray-200 rounded-xl px-6 py-5 hover:shadow-md transition"
+    >
+      <div>
+        <p class="text-gray-700 text-sm">Card activation quantity</p>
+        <p class="text-2xl mt-2">
+          {{ dashboard()?.active_count ?? 0 }}
+        </p>
+      </div>
+      <div
+        class="w-16 h-16 flex items-center justify-center border-4 border-red-500 rounded-xl text-red-500 text-3xl"
+      >
+        <i class="fa-solid fa-circle-check"></i>
+      </div>
+    </div>
+
+    <!-- Blocked -->
+    <div
+      class="flex items-center justify-between bg-white border border-gray-200 rounded-xl px-6 py-5 hover:shadow-md transition"
+    >
+      <div>
+        <p class="text-gray-700 text-sm">Card Frozen Quantity</p>
+        <p class="text-2xl mt-2">
+          {{ dashboard()?.blocked_count ?? 0 }}
+        </p>
+      </div>
+      <div
+        class="w-16 h-16 flex items-center justify-center border-4 border-red-500 rounded-xl text-red-500 text-3xl"
+      >
+        <i class="fa-solid fa-lock"></i>
+      </div>
+    </div>
+  </div>
+
   <!-- Filter -->
   <form [formGroup]="searchForm">
     <div
@@ -67,60 +121,6 @@
       </div>
     </div>
   </form>
-
-  <!-- Card Infos -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-    <!-- Total Balance -->
-    <div
-      class="flex items-center justify-between bg-white border border-gray-200 rounded-xl px-6 py-5 hover:shadow-md transition"
-    >
-      <div>
-        <p class="text-gray-700 text-sm">Total Card Balance</p>
-        <p class="text-2xl mt-2">
-          {{ dashboard()?.total_balance ?? 0 }}
-        </p>
-      </div>
-      <div
-        class="w-16 h-16 flex items-center justify-center border-4 border-red-500 rounded-full text-red-500 text-3xl"
-      >
-        <i class="fa-solid fa-wallet"></i>
-      </div>
-    </div>
-
-    <!-- Active -->
-    <div
-      class="flex items-center justify-between bg-white border border-gray-200 rounded-xl px-6 py-5 hover:shadow-md transition"
-    >
-      <div>
-        <p class="text-gray-700 text-sm">Card activation quantity</p>
-        <p class="text-2xl mt-2">
-          {{ dashboard()?.active_count ?? 0 }}
-        </p>
-      </div>
-      <div
-        class="w-16 h-16 flex items-center justify-center border-4 border-red-500 rounded-xl text-red-500 text-3xl"
-      >
-        <i class="fa-solid fa-circle-check"></i>
-      </div>
-    </div>
-
-    <!-- Blocked -->
-    <div
-      class="flex items-center justify-between bg-white border border-gray-200 rounded-xl px-6 py-5 hover:shadow-md transition"
-    >
-      <div>
-        <p class="text-gray-700 text-sm">Card Frozen Quantity</p>
-        <p class="text-2xl mt-2">
-          {{ dashboard()?.blocked_count ?? 0 }}
-        </p>
-      </div>
-      <div
-        class="w-16 h-16 flex items-center justify-center border-4 border-red-500 rounded-xl text-red-500 text-3xl"
-      >
-        <i class="fa-solid fa-lock"></i>
-      </div>
-    </div>
-  </div>
 
   <!-- Card lists table -->
   <div class="min-w-0 rounded-base border border-default bg-neutral-primary">
@@ -227,38 +227,123 @@
     position: 'fixed',
     top: dropdownPosition.top + 'px',
     left: dropdownPosition.left + 'px',
-    'z-index': 9999,
   }"
-  class="w-40 bg-white border border-gray-200 rounded shadow-lg text-sm"
+  class="w-48 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-xl shadow-black/10 text-sm"
   (click)="$event.stopPropagation()"
 >
+  <!-- Card info -->
   <button
     type="button"
-    class="flex items-center gap-2 w-full px-3 py-2 hover:bg-gray-100"
+    class="group flex w-full items-center gap-3 px-4 py-3 text-left text-gray-700 transition hover:bg-purple-50 hover:text-primary"
+    (click)="openSensitiveDetail(rows.at(openDropdownIndex!).get('id')?.value)"
+  >
+    <span
+      class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-500 transition group-hover:bg-purple-100 group-hover:text-primary"
+    >
+      <i class="fa-regular fa-credit-card text-sm"></i>
+    </span>
+
+    <div class="flex flex-col">
+      <span class="font-medium">Card info</span>
+      <span class="text-xs text-gray-400 group-hover:text-primary/70">
+        View sensitive details
+      </span>
+    </div>
+  </button>
+
+  <div class="mx-3 border-t border-gray-100"></div>
+
+  <!-- Top up -->
+  <button
+    type="button"
+    class="group flex w-full items-center gap-3 px-4 py-3 text-left text-gray-700 transition hover:bg-green-50 hover:text-green-600"
     (click)="handleAction('TOP_UP')"
   >
-    💳 <span>Top up</span>
+    <span
+      class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-500 transition group-hover:bg-green-100 group-hover:text-green-600"
+    >
+      <i class="fa-solid fa-plus text-sm"></i>
+    </span>
+
+    <div class="flex flex-col">
+      <span class="font-medium">Top up</span>
+      <span class="text-xs text-gray-400 group-hover:text-green-600/70"> Add balance </span>
+    </div>
   </button>
+
+  <!-- Transfer out -->
   <button
     type="button"
-    class="flex items-center gap-2 w-full px-3 py-2 hover:bg-gray-100"
+    class="group flex w-full items-center gap-3 px-4 py-3 text-left text-gray-700 transition hover:bg-blue-50 hover:text-blue-600"
     (click)="handleAction('TRANSFER_OUT')"
   >
-    🔄 <span>Transfer out</span>
+    <span
+      class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-500 transition group-hover:bg-blue-100 group-hover:text-blue-600"
+    >
+      <i class="fa-solid fa-arrow-right-arrow-left text-sm"></i>
+    </span>
+
+    <div class="flex flex-col">
+      <span class="font-medium">Transfer out</span>
+      <span class="text-xs text-gray-400 group-hover:text-blue-600/70"> Move balance </span>
+    </div>
   </button>
+
+  <div class="mx-3 border-t border-gray-100"></div>
+
+  <!-- Freeze / Unfreeze -->
   <button
     type="button"
-    class="flex items-center gap-2 w-full px-3 py-2 hover:bg-gray-100"
+    class="group flex w-full items-center gap-3 px-4 py-3 text-left transition"
+    [ngClass]="
+      rows.at(openDropdownIndex!).get('status')?.value === 'ACTIVE'
+        ? 'text-gray-700 hover:bg-red-50 hover:text-red-600'
+        : 'text-gray-700 hover:bg-cyan-50 hover:text-cyan-600'
+    "
     (click)="
       handleAction(
         rows.at(openDropdownIndex!).get('status')?.value === 'ACTIVE' ? 'FREEZE' : 'UNFREEZE'
       )
     "
   >
-    🧊
-    <span>{{
-      rows.at(openDropdownIndex!).get('status')?.value === 'ACTIVE' ? 'Freeze' : 'Unfreeze'
-    }}</span>
+    <span
+      class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-500 transition"
+      [ngClass]="
+        rows.at(openDropdownIndex!).get('status')?.value === 'ACTIVE'
+          ? 'group-hover:bg-red-100 group-hover:text-red-600'
+          : 'group-hover:bg-cyan-100 group-hover:text-cyan-600'
+      "
+    >
+      <i
+        class="fa-solid text-sm"
+        [ngClass]="
+          rows.at(openDropdownIndex!).get('status')?.value === 'ACTIVE'
+            ? 'fa-snowflake'
+            : 'fa-unlock'
+        "
+      ></i>
+    </span>
+
+    <div class="flex flex-col">
+      <span class="font-medium">
+        {{ rows.at(openDropdownIndex!).get('status')?.value === 'ACTIVE' ? 'Freeze' : 'Unfreeze' }}
+      </span>
+
+      <span
+        class="text-xs text-gray-400"
+        [ngClass]="
+          rows.at(openDropdownIndex!).get('status')?.value === 'ACTIVE'
+            ? 'group-hover:text-red-600/70'
+            : 'group-hover:text-cyan-600/70'
+        "
+      >
+        {{
+          rows.at(openDropdownIndex!).get('status')?.value === 'ACTIVE'
+            ? 'Lock this card'
+            : 'Unlock this card'
+        }}
+      </span>
+    </div>
   </button>
 </div>
 
@@ -296,3 +381,9 @@
     <span class="text-sm text-gray-600">Processing...</span>
   </div>
 </div>
+
+<app-card-sensitive-detail-modal
+  *ngIf="showSensitiveModal() && cardSensitiveDetail()"
+  [card]="cardSensitiveDetail()!"
+  (close)="showSensitiveModal.set(false)"
+></app-card-sensitive-detail-modal>

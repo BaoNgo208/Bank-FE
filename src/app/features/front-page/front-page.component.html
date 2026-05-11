@@ -135,9 +135,9 @@
         sales or customer service for configuration and testing.
       </div>
 
-      <div class="w-full flex flex-col small_laptop:flex-row gap-x-10">
-        <div class="w-full small_laptop:w-[30%] max-h-[700px] overflow-y-auto bg-white">
-          <div class="w-full max-w-md rounded-xl p-4 shadow-sm">
+      <div class="w-full grid grid-cols-1 small_laptop:grid-cols-12 gap-6 pt-4 items-stretch">
+        <div class="w-full small_laptop:col-span-4 max-h-[700px] overflow-y-auto">
+          <div class="w-full max-w-md rounded-xl px-4 shadow-sm">
             <div class="flex flex-col gap-y-2">
               <!-- List wrapper -->
               <div
@@ -225,6 +225,9 @@
               </div>
             </div>
           </div>
+        </div>
+        <div class="small_laptop:col-span-8">
+          <app-asset-allocation-chart></app-asset-allocation-chart>
         </div>
       </div>
     </div>
