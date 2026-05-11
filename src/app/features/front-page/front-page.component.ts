@@ -6,10 +6,11 @@ import { DashboardResponse } from '../wallet/types/wallet.type';
 import { ToastrService } from 'ngx-toastr';
 import { AnnouncementResponse } from '../admin/notification-management/types/notification.type';
 import { PublicNotificationService } from '../admin/notification-management/services/public-notification.service';
+import { AssetAllocationChartComponent } from './components/charts/asset-allocation-chart.component';
 
 @Component({
   selector: 'app-front-page-component',
-  imports: [CountUpDirective, CommonModule],
+  imports: [CountUpDirective, CommonModule, AssetAllocationChartComponent],
   templateUrl: './front-page.component.html',
 })
 export class FrontPageComponent {

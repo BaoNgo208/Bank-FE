@@ -1,0 +1,122 @@
+<!-- OVERLAY -->
+<div
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4"
+  (click)="close.emit()"
+>
+  <!-- MODAL -->
+  <div
+    class="w-full max-w-md rounded-2xl bg-white shadow-xl overflow-hidden"
+    (click)="$event.stopPropagation()"
+  >
+    <!-- HEADER -->
+    <div class="flex items-center justify-between border-b px-5 py-4">
+      <div>
+        <h2 class="text-lg font-semibold text-gray-900">Card Sensitive Details</h2>
+      </div>
+
+      <button
+        type="button"
+        class="h-9 w-9 rounded-full hover:bg-gray-100 text-gray-500"
+        (click)="close.emit()"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <!-- BODY -->
+    <div class="px-5 py-5 space-y-4">
+      <!-- WARNING -->
+      <div class="flex gap-3 rounded-xl bg-red-50 border border-red-100 p-3">
+        <div class="text-red-500 mt-0.5">
+          <i class="fa-solid fa-shield-halved"></i>
+        </div>
+
+        <div>
+          <p class="text-sm font-medium text-red-700">Sensitive information</p>
+          <p class="text-xs text-red-600 mt-1">Do not share your PAN or CVV with anyone.</p>
+        </div>
+      </div>
+
+      <!-- PAN -->
+      <div class="rounded-xl border border-gray-200 p-4">
+        <div class="flex items-center justify-between mb-2">
+          <p class="text-xs font-medium uppercase text-gray-500">PAN</p>
+
+          <button
+            type="button"
+            class="text-xs text-gray-500 hover:text-gray-900"
+            (click)="copy(card.pan)"
+          >
+            <i class="fa-regular fa-copy mr-1"></i>
+            Copy
+          </button>
+        </div>
+
+        <p class="font-mono text-lg tracking-wider text-gray-900">
+          {{ showSensitive() ? formatPan(card.pan) : maskPan(card.pan) }}
+        </p>
+      </div>
+
+      <!-- INFO GRID -->
+      <div class="grid grid-cols-2 gap-3">
+        <!-- EXPIRY -->
+        <div class="rounded-xl border border-gray-200 p-4">
+          <p class="text-xs font-medium uppercase text-gray-500 mb-2">Expiry</p>
+
+          <p class="font-mono text-base font-semibold text-gray-900">
+            {{ formatExpiry(card.expiry_month, card.expiry_year) }}
+          </p>
+        </div>
+
+        <!-- CVV -->
+        <div class="rounded-xl border border-gray-200 p-4">
+          <div class="flex items-center justify-between mb-2">
+            <p class="text-xs font-medium uppercase text-gray-500">CVV</p>
+
+            <button
+              type="button"
+              class="text-xs text-gray-500 hover:text-gray-900"
+              (click)="copy(card.cvv)"
+            >
+              <i class="fa-regular fa-copy"></i>
+            </button>
+          </div>
+
+          <p class="font-mono text-base font-semibold text-gray-900">
+            {{ showSensitive() ? card.cvv : '•••' }}
+          </p>
+        </div>
+      </div>
+
+      <!-- CREATED AT -->
+      <div class="rounded-xl border border-gray-200 p-4">
+        <p class="text-xs font-medium uppercase text-gray-500 mb-2">Created At</p>
+
+        <p class="text-sm text-gray-800">
+          {{ formatDate(card.created_at) }}
+        </p>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="flex items-center justify-between border-t px-5 py-4 bg-gray-50">
+      <button
+        type="button"
+        class="inline-flex items-center gap-2 rounded-lg border border-gray-300 px-4 py-2 text-sm text-gray-700 hover:bg-white"
+        (click)="toggleSensitive()"
+      >
+        <i class="fa-solid" [ngClass]="showSensitive() ? 'fa-eye-slash' : 'fa-eye'"></i>
+
+        {{ showSensitive() ? 'Hide details' : 'Show details' }}
+      </button>
+
+      <button
+        type="button"
+        class="rounded-lg bg-gray-900 px-4 py-2 text-sm text-white hover:bg-gray-800"
+        (click)="close.emit()"
+      >
+        Close
+      </button>
+    </div>
+  </div>
+</div>

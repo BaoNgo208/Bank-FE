@@ -16,6 +16,8 @@ import { finalize } from 'rxjs';
 import { CardDashboardResponse } from '../wallet/types/card.type';
 import { toUtcEndOfDay, toUtcStartOfDay } from '../../utils/utc.util';
 import { dateRangeValidator } from '../../utils/form-validator.util';
+import { CardSensitiveDetailResponse } from './types/type';
+import { CardSensitiveDetailModalComponent } from './components/card-sensitive-detail-modal/card-sensitive-detail-modal.component';
 
 @Component({
   selector: 'app-inquiry-card-component',
@@ -27,6 +29,7 @@ import { dateRangeValidator } from '../../utils/form-validator.util';
     TopUpModalComponent,
     WidthdrawlCardModalComponent,
     ConfirmModalComponent,
+    CardSensitiveDetailModalComponent,
   ],
   templateUrl: './inquiry-card.component.html',
 })
@@ -49,6 +52,9 @@ export class InquiryCardComponent {
 
   openDropdownIndex: number | null = null;
   dropdownPosition = { top: 0, left: 0 };
+
+  showSensitiveModal = signal(false);
+  cardSensitiveDetail = signal<CardSensitiveDetailResponse | null>(null);
 
   form = this.fb.group({
     checkAll: [false],
@@ -112,6 +118,16 @@ export class InquiryCardComponent {
   @HostListener('document:click')
   onClickOutside() {
     this.openDropdownIndex = null;
+  }
+
+  openSensitiveDetail(cardId: number) {
+    this.cardFacade.getSensitiveDetail(cardId).subscribe({
+      next: (res) => {
+        this.cardSensitiveDetail.set(res.data);
+        this.showSensitiveModal.set(true);
+        this.openDropdownIndex = null;
+      },
+    });
   }
 
   updateTable(cards: any[]) {
@@ -192,21 +208,43 @@ export class InquiryCardComponent {
 
     const btn = event.currentTarget as HTMLElement;
     const rect = btn.getBoundingClientRect();
-    const dropdownWidth = 160;
-    const dropdownHeight = 160;
+
+    const dropdownWidth = 180;
+    const dropdownHeight = 220;
+    const gap = 8;
+    const padding = 12;
 
     const spaceBelow = window.innerHeight - rect.bottom;
     const spaceAbove = rect.top;
 
-    const top =
+    let top =
       spaceBelow < dropdownHeight && spaceAbove > spaceBelow
-        ? rect.top - dropdownHeight
-        : rect.bottom;
+        ? rect.top - dropdownHeight - gap
+        : rect.bottom + gap;
+
+    let left = rect.right - dropdownWidth;
+
+    if (top + dropdownHeight > window.innerHeight - padding) {
+      top = window.innerHeight - dropdownHeight - padding;
+    }
+
+    if (top < padding) {
+      top = padding;
+    }
+
+    if (left + dropdownWidth > window.innerWidth - padding) {
+      left = window.innerWidth - dropdownWidth - padding;
+    }
+
+    if (left < padding) {
+      left = padding;
+    }
 
     this.dropdownPosition = {
       top,
-      left: rect.right - dropdownWidth,
+      left,
     };
+
     this.openDropdownIndex = i;
   }
 

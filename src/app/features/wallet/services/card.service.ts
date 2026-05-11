@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { ApiResponse } from '../../../core/auth/auth.request';
 import { CardDashboardResponse, CardSearchParams } from '../types/card.type';
 import { CardPageResponse, CardStatus } from '../types/wallet.type';
+import { CardSensitiveDetailResponse } from '../../inquiry-card/types/type';
 
 @Injectable({ providedIn: 'root' })
 export class CardService extends BaseApiService {
@@ -41,5 +42,9 @@ export class CardService extends BaseApiService {
         toTime: params?.toTime,
       }),
     );
+  }
+
+  getSensitiveDetail(cardId: number): Observable<ApiResponse<CardSensitiveDetailResponse>> {
+    return this.get(`/${cardId}/sensitive-details`);
   }
 }
