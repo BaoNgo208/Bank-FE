@@ -9,9 +9,9 @@ import {
 } from '@angular/core';
 import { Chart, ChartConfiguration, registerables } from 'chart.js';
 import { finalize } from 'rxjs';
-import { DashboardService } from '../../services/dashboard.service';
+import { DashboardService } from '../../../services/dashboard.service';
 import { CommonModule, DecimalPipe } from '@angular/common';
-import { UserAssetAllocationResponse } from '../../types/dashboard.type';
+import { UserAssetAllocationResponse } from '../../../types/dashboard.type';
 
 Chart.register(...registerables);
 
