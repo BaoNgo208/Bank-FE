@@ -3,6 +3,16 @@ export interface SigninRequest {
   password: string | undefined;
 }
 
+export interface AdminSigninRequest {
+  username: string;
+  password: string;
+  otp: string;
+}
+
+export interface AdminLoginOtpRequest {
+  username: string;
+}
+
 export interface ApiResponse<T> {
   data: T;
   message: string;
