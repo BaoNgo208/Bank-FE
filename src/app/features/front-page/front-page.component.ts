@@ -6,11 +6,17 @@ import { DashboardResponse } from '../wallet/types/wallet.type';
 import { ToastrService } from 'ngx-toastr';
 import { AnnouncementResponse } from '../admin/notification-management/types/notification.type';
 import { PublicNotificationService } from '../admin/notification-management/services/public-notification.service';
-import { AssetAllocationChartComponent } from './components/charts/asset-allocation-chart.component';
+import { AssetAllocationChartComponent } from './components/charts/asset-allocation/asset-allocation-chart.component';
+import { UserCashFlowChartComponent } from './components/charts/cash-flow/user-cash-flow-chart.component';
 
 @Component({
   selector: 'app-front-page-component',
-  imports: [CountUpDirective, CommonModule, AssetAllocationChartComponent],
+  imports: [
+    CountUpDirective,
+    CommonModule,
+    AssetAllocationChartComponent,
+    UserCashFlowChartComponent,
+  ],
   templateUrl: './front-page.component.html',
 })
 export class FrontPageComponent {
