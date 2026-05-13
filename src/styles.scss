@@ -37,34 +37,57 @@ app-root {
   filter: blur(0);
 }
 
-.reveal {
+.reveal-up {
+  transform: translateY(24px);
   opacity: 0;
-  transition: all 1s ease;
+  transition:
+    transform 0.7s ease,
+    opacity 0.7s ease;
 }
 
-.reveal-up {
-  transform: translateY(40px);
-  filter: blur(10px);
+.reveal-up.active {
+  transform: translateY(0);
+  opacity: 1;
 }
 
 .reveal-left {
   transform: translateX(-60px);
   filter: blur(8px);
+  opacity: 0; /* 👈 */
+  transition:
+    transform 0.7s ease,
+    opacity 0.7s ease,
+    filter 0.7s ease; /* 👈 */
 }
 
 .reveal-right {
   transform: translateX(60px);
   filter: blur(8px);
+  opacity: 0;
+  transition:
+    transform 0.7s ease,
+    opacity 0.7s ease,
+    filter 0.7s ease;
 }
 
 .reveal-zoom {
   transform: scale(0.8);
   filter: blur(10px);
+  opacity: 0;
+  transition:
+    transform 0.7s ease,
+    opacity 0.7s ease,
+    filter 0.7s ease;
 }
 
 .reveal-rotate {
   transform: rotate(-5deg) scale(0.9);
   filter: blur(6px);
+  opacity: 0;
+  transition:
+    transform 0.7s ease,
+    opacity 0.7s ease,
+    filter 0.7s ease;
 }
 
 .reveal.active {

@@ -3,10 +3,18 @@ import { Router } from '@angular/router';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HeroComponent } from './components/hero/hero.component';
 import { AdsCardComponent } from './components/ads-card/ads-card.component';
+import { LowFeesComponent } from './components/low-fees/low-fees.component';
+import { ManageAssetsComponent } from './components/manage-assets/manage-assets.component';
 
 @Component({
   selector: 'app-landing-page',
-  imports: [NavbarComponent, HeroComponent, AdsCardComponent],
+  imports: [
+    NavbarComponent,
+    HeroComponent,
+    AdsCardComponent,
+    LowFeesComponent,
+    ManageAssetsComponent,
+  ],
   templateUrl: './landing-page.componet.html',
   styleUrl: './landing-page.component.scss',
 })
