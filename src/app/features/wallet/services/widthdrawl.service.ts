@@ -4,7 +4,9 @@ import {
   ConfirmWithdrawOtpRequest,
   CreateWithdrawOrderRequest,
   CreateWithdrawOrderResponse,
+  WithdrawDashboardResponse,
   WithdrawOrderStatus,
+  WithdrawSummaryResponse,
 } from '../types/wallet.type';
 import { ApiResponse } from '../../../core/auth/auth.request';
 import { Observable } from 'rxjs';
@@ -60,5 +62,13 @@ export class WidthdrawlService extends BaseApiService {
         toTime: params?.toTime,
       }),
     );
+  }
+
+  getWithdrawDashboard(): Observable<ApiResponse<WithdrawDashboardResponse>> {
+    return this.get('/dashboard');
+  }
+
+  getWithdrawSummary(): Observable<ApiResponse<WithdrawSummaryResponse>> {
+    return this.get('/summary');
   }
 }

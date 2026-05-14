@@ -18,21 +18,31 @@
       <!-- INFO TABLE -->
       <div class="border rounded-md overflow-hidden mb-4 text-xs">
         <div class="grid grid-cols-2 border-b">
-          <div class="p-2 border-r">Wallet ID</div>
-          <div class="p-2">3529</div>
+          <div class="p-2 border-r text-gray-500">Wallet ID</div>
+          <div class="p-2 font-medium text-gray-800">
+            {{ withdrawSummary()?.wallet_id ?? 0 }}
+          </div>
         </div>
+
         <div class="grid grid-cols-2 border-b">
-          <div class="p-2 border-r">Balance</div>
-          <div class="p-2">0.75</div>
+          <div class="p-2 border-r text-gray-500">Balance</div>
+          <div class="p-2 font-medium text-gray-800">
+            {{ withdrawSummary()?.balance ?? 0 }}
+          </div>
         </div>
+
         <div class="grid grid-cols-2 border-b">
-          <div class="p-2 border-r">Frozen Amount (USD)</div>
-          <div class="p-2">0</div>
+          <div class="p-2 border-r text-gray-500">Currency</div>
+          <div class="p-2 font-medium text-gray-800">
+            {{ withdrawSummary()?.currency ?? 'USDT' }}
+          </div>
         </div>
 
         <div class="grid grid-cols-2">
-          <div class="p-2 border-r">Minimum withdrawal amount</div>
-          <div class="p-2">50 USD</div>
+          <div class="p-2 border-r text-gray-500">Minimum withdrawal amount</div>
+          <div class="p-2 font-medium text-gray-800">
+            {{ withdrawSummary()?.minimum_withdrawal_amount ?? 0 }}
+          </div>
         </div>
       </div>
 
