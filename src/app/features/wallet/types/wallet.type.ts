@@ -167,3 +167,16 @@ export interface DashboardResponse {
   card_opening_limit: number;
   activated_card_count: number;
 }
+
+export interface WithdrawDashboardResponse {
+  total_amount: string;
+  success_count: number;
+  failed_count: number;
+}
+
+export interface WithdrawSummaryResponse {
+  wallet_id: number;
+  balance: string;
+  minimum_withdrawal_amount: string;
+  currency: Stablecoin;
+}

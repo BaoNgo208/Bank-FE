@@ -4,8 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { WalletUiStore } from '../stores/wallet-ui.store';
 import Swal from 'sweetalert2';
 import { WalletFacade } from '../facades/wallet.facade';
-import { CreateWithdrawOrderRequest, Stablecoin } from '../types/wallet.type';
+import {
+  CreateWithdrawOrderRequest,
+  Stablecoin,
+  WithdrawSummaryResponse,
+} from '../types/wallet.type';
 import { OtpModalComponent } from '../../../shared/components/otp/otp-modal.component';
+import { WidthdrawlService } from '../services/widthdrawl.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-widthdraw-component',
@@ -14,6 +20,8 @@ import { OtpModalComponent } from '../../../shared/components/otp/otp-modal.comp
 })
 export class WidthdrawlComponent {
   private walletFacade = inject(WalletFacade);
+  private withdrawlService = inject(WidthdrawlService);
+  private toast = inject(ToastrService);
   protected walletUiStore = inject(WalletUiStore);
 
   pendingOrderNo = signal<string | null>(null);
@@ -33,8 +41,33 @@ export class WidthdrawlComponent {
 
   showOtpModal = signal(false);
 
+  withdrawSummary = signal<WithdrawSummaryResponse | null>({
+    wallet_id: 0,
+    balance: '0',
+    minimum_withdrawal_amount: '0',
+    currency: Stablecoin.USDT,
+  });
+
   constructor() {
     effect(() => {});
+  }
+
+  ngOnInit() {
+    this.withdrawlService.getWithdrawSummary().subscribe({
+      next: (res) => {
+        const data = res.data;
+
+        this.withdrawSummary.set({
+          wallet_id: data.wallet_id ?? 0,
+          balance: String(data.balance ?? '0'),
+          minimum_withdrawal_amount: String(data.minimum_withdrawal_amount ?? '0'),
+          currency: data.currency ?? 'USDT',
+        });
+      },
+      error: (err) => {
+        this.toast.error(err?.error?.message);
+      },
+    });
   }
 
   handleOpenOtp() {
@@ -42,7 +75,6 @@ export class WidthdrawlComponent {
   }
 
   handleConfirmOtp = (otp: string) => {
-    // call API ở đây
     // this.withdrawFacade.confirmOtp(otp)
 
     this.showOtpModal.set(false);

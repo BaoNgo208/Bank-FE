@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, inject, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Input, signal } from '@angular/core';
 import { FormArray, FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
 import { WalletFacade } from '../../wallet/facades/wallet.facade';
 import { ToastrService } from 'ngx-toastr';
-import { WithdrawOrderStatus } from '../../wallet/types/wallet.type';
+import { WithdrawDashboardResponse, WithdrawOrderStatus } from '../../wallet/types/wallet.type';
 import { dateRangeValidator } from '../../../utils/form-validator.util';
 import { toUtcEndOfDay, toUtcStartOfDay } from '../../../utils/utc.util';
+import { WidthdrawlService } from '../../wallet/services/widthdrawl.service';
 
 @Component({
   selector: 'app-withdrawal-transaction',
@@ -16,6 +17,7 @@ import { toUtcEndOfDay, toUtcStartOfDay } from '../../../utils/utc.util';
 export class WithdrawalTransactionComponent {
   @Input() isPagination = true;
 
+  private withdrawalService = inject(WidthdrawlService);
   private fb = inject(FormBuilder);
   private walletFacade = inject(WalletFacade);
   private cd = inject(ChangeDetectorRef);
@@ -30,6 +32,8 @@ export class WithdrawalTransactionComponent {
   form = this.fb.group({
     transferRows: this.fb.array([]),
   });
+
+  dashboard = signal<WithdrawDashboardResponse | null>(null);
 
   searchForm = this.fb.group(
     {
@@ -47,6 +51,18 @@ export class WithdrawalTransactionComponent {
   }
 
   ngOnInit() {
+    this.withdrawalService.getWithdrawDashboard().subscribe({
+      next: (res) => {
+        this.dashboard.set({
+          total_amount: String(res.data.total_amount ?? '0'),
+          success_count: res.data.success_count ?? 0,
+          failed_count: res.data.failed_count ?? 0,
+        });
+      },
+      error: (err) => {
+        this.toast.error(err?.error?.message);
+      },
+    });
     this.loadTransferPage();
   }
 
