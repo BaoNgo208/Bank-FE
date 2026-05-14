@@ -2,7 +2,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BaseApiService } from '../http/base-api.service';
 import { Observable } from 'rxjs';
-import { ApiResponse, SigninRequest, SignupRequest } from './auth.request';
+import { ApiResponse, ResetPasswordRequest, SigninRequest, SignupRequest } from './auth.request';
 import { SigninResponse } from './auth.request';
 
 @Injectable({
@@ -42,5 +42,9 @@ export class AuthService extends BaseApiService {
 
   logout(): Observable<ApiResponse<void>> {
     return this.post('/logout');
+  }
+
+  resetPassword(request: ResetPasswordRequest): Observable<ApiResponse<any>> {
+    return this.post('/reset', request);
   }
 }

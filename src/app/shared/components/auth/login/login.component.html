@@ -42,7 +42,10 @@
 
       <!-- Forgot password -->
       <div class="flex justify-end">
-        <span class="text-[0.75rem] text-red-500 hover:underline cursor-pointer transition">
+        <span
+          (click)="redirectToForgotPassword()"
+          class="text-[0.75rem] text-red-500 hover:underline cursor-pointer transition"
+        >
           Forgot password?
         </span>
       </div>
