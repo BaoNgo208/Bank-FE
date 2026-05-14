@@ -15,14 +15,8 @@ export class AdminSidebarComponent {
     { label: 'Users management', icon: 'fa-users', path: '/admin/users' },
     { label: 'Withdrawals orders', icon: 'fas fa-money-bill-transfer', path: '/admin/withdrawals' },
     { label: 'Deposits orders', icon: 'fas fa-money-bill-transfer', path: '/admin/deposits' },
-    {
-      label: 'Deposit configurations',
-      icon: 'fa fa-cog',
-      children: [
-        { label: 'Deposit address', path: '/admin/deposits/address' },
-        { label: 'Deposit setting', path: '/admin/deposits/settings' },
-      ],
-    },
+    { label: 'Deposit address', icon: 'fa fa-cog', path: '/admin/deposit-address' },
+    { label: 'Wallet currency', icon: 'fa fa-wallet', path: '/admin/wallet-currency' },
     {
       label: 'Cashback',
       icon: 'fa-exchange',
