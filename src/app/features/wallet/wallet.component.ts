@@ -35,6 +35,7 @@ import { WithdrawalTransactionComponent } from '../wallet-transactions/withdrawa
 })
 export class WalletComponent {
   private walletFacade = inject(WalletFacade);
+  private toast = inject(ToastrService);
 
   protected walletStore = inject(WalletStore);
   protected walletUiStore = inject(WalletUiStore);
@@ -113,9 +114,10 @@ export class WalletComponent {
           this.showTopupModal = false;
 
           this.resetDepositForm();
+          this.toast.success('Create top up request successfully');
         },
-        error: () => {
-          alert('create order failed');
+        error: (err) => {
+          this.toast.error(err?.error?.message || 'Create order failed');
         },
       });
   }

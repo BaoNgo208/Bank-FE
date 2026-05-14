@@ -48,3 +48,14 @@ export interface OtpRequest {
   email: string;
   purpose: OtpPurpose;
 }
+
+export interface ResetPasswordRequest {
+  username: string;
+  otp: string;
+  new_password: string;
+  confirm_new_password: string;
+}
+
+export interface ForgotPasswordOtpRequest {
+  username: string;
+}

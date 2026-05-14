@@ -55,6 +55,7 @@ export class InquiryCardComponent {
 
   showSensitiveModal = signal(false);
   cardSensitiveDetail = signal<CardSensitiveDetailResponse | null>(null);
+  loadingSensitiveDetail = signal(false);
 
   form = this.fb.group({
     checkAll: [false],
@@ -121,13 +122,21 @@ export class InquiryCardComponent {
   }
 
   openSensitiveDetail(cardId: number) {
-    this.cardFacade.getSensitiveDetail(cardId).subscribe({
-      next: (res) => {
-        this.cardSensitiveDetail.set(res.data);
-        this.showSensitiveModal.set(true);
-        this.openDropdownIndex = null;
-      },
-    });
+    this.loadingSensitiveDetail.set(true);
+    this.openDropdownIndex = null;
+
+    this.cardFacade
+      .getSensitiveDetail(cardId)
+      .pipe(finalize(() => this.loadingSensitiveDetail.set(false)))
+      .subscribe({
+        next: (res) => {
+          this.cardSensitiveDetail.set(res.data);
+          this.showSensitiveModal.set(true);
+        },
+        error: (err) => {
+          this.toast.error(err?.error?.message || 'Failed to load card detail');
+        },
+      });
   }
 
   updateTable(cards: any[]) {

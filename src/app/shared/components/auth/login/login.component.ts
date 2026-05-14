@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../../../core/auth/auth.service';
 import { SigninRequest } from '../../../../core/auth/auth.request';
 import { AuthStore } from '../../../../core/auth/auth.store';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login-component',
@@ -16,6 +17,7 @@ export class LoginComponent {
   private router = inject(Router);
   private authService = inject(AuthService);
   private authStore = inject(AuthStore);
+  private toast = inject(ToastrService);
 
   loginForm = this.fb.group({
     username: ['', [Validators.required]],
@@ -38,10 +40,17 @@ export class LoginComponent {
         this.authStore.setTokens(res.tokens.access_token, res.tokens.refresh_token);
         this.router.navigate(['/home']);
       },
+      error: (err) => {
+        this.toast.error(err?.error?.message);
+      },
     });
   }
 
   redirectToRegister() {
     this.router.navigate(['/auth/register']);
+  }
+
+  redirectToForgotPassword() {
+    this.router.navigate(['/auth/forgot-password']);
   }
 }

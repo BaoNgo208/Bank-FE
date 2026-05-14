@@ -41,9 +41,12 @@ export class CardSensitiveDetailModalComponent {
   formatDate(value: string) {
     if (!value) return '-';
 
-    return new Date(value).toLocaleString('vi-VN', {
-      dateStyle: 'medium',
-      timeStyle: 'short',
+    const locale = navigator.language || 'en-US';
+
+    return new Date(value).toLocaleDateString(locale, {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
     });
   }
 
