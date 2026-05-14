@@ -208,29 +208,20 @@ export const routes: Routes = [
             (m) => m.DepositOrdersComponent,
           ),
       },
+
       {
-        path: 'deposits',
-        children: [
-          {
-            path: '',
-            redirectTo: 'address',
-            pathMatch: 'full',
-          },
-          {
-            path: 'address',
-            loadComponent: () =>
-              import('./features/admin/deposit-management/deposit-address/deposit-address.component').then(
-                (m) => m.DepositAddressComponent,
-              ),
-          },
-          {
-            path: 'settings',
-            loadComponent: () =>
-              import('./features/admin/deposit-management/deposit-setting/deposit-setting.component').then(
-                (m) => m.DepositSettingComponent,
-              ),
-          },
-        ],
+        path: 'deposit-address',
+        loadComponent: () =>
+          import('./features/admin/deposit-management/deposit-address/deposit-address.component').then(
+            (m) => m.DepositAddressComponent,
+          ),
+      },
+      {
+        path: 'wallet-currency',
+        loadComponent: () =>
+          import('./features/admin/wallet-currency-setting/wallet-currency.component').then(
+            (m) => m.WalletCurrencyComponent,
+          ),
       },
       {
         path: 'cashback',
