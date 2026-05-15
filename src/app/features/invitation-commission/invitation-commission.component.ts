@@ -21,7 +21,7 @@ export class InvitationCommissionComponent {
   }
 
   constructor() {
-    this.initData();
+    // this.initData();
   }
 
   private initData() {
