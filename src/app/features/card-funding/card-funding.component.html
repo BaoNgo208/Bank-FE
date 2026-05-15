@@ -1,0 +1,214 @@
+<div class="h-full w-full px-3 py-2 flex flex-col gap-y-5 overflow-auto">
+  <!-- Deposit history table -->
+  <div class="rounded-base border border-default bg-neutral-primary">
+    <!--  TOP TOOLBAR -->
+    <form [formGroup]="searchForm">
+      <div class="w-full flex flex-col gap-y-5 bg-white p-4 justify-center">
+        <div class="w-full flex flex-wrap sm:flex-row items-center gap-2 text-[0.85rem]">
+          <div class="flex items-center gap-2">
+            <span class="text-gray-600">Last 4 digit</span>
+            <input
+              formControlName="last4"
+              type="text"
+              placeholder="Please enter your Slash transaction id"
+              class="h-9 px-3 border border-gray-300 rounded"
+            />
+          </div>
+
+          <div class="flex items-center gap-2">
+            <span class="text-gray-600">Type</span>
+            <select formControlName="type" class="h-9 px-3 border border-gray-300 rounded">
+              <option [ngValue]="null">Please ...</option>
+              <option class="text-green-600" [ngValue]="CardTxnType.TOPUP">TOPUP</option>
+              <option class="text-red-600" [ngValue]="CardTxnType.WITHDRAW">WITHDRAW</option>
+            </select>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <span class="text-gray-600">status</span>
+            <select formControlName="status" class="h-9 px-3 border border-gray-300 rounded">
+              <option [ngValue]="null">Please ...</option>
+              <option class="text-green-600" [ngValue]="CardTxnStatus.SUCCESS">SUCCESS</option>
+              <option class="text-red-600" [ngValue]="CardTxnStatus.PENDING">PENDING</option>
+              <option class="text-gray-400" [ngValue]="CardTxnStatus.FAILED">FAILED</option>
+
+              <option class="text-slate-600 font-medium" [ngValue]="CardTxnStatus.CANCELLED">
+                CANCELLED
+              </option>
+            </select>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <span class="text-gray-600">Creation time</span>
+            <div class="flex items-center border border-gray-300 rounded overflow-hidden">
+              <input type="date" formControlName="fromTime" class="h-9 px-2 outline-none" />
+              <span class="px-2 text-gray-400">-</span>
+              <input type="date" formControlName="toTime" class="h-9 px-2 outline-none" />
+              <!-- ERROR -->
+              <div
+                *ngIf="searchForm.errors?.['invalidDateRange']"
+                class="text-red-500 text-xs mt-1"
+              >
+                From date must be before To date
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="w-full flex gap-x-2 text-[0.8rem]">
+          <button
+            (click)="onSearchClick()"
+            [disabled]="searchForm.invalid"
+            class="h-9 px-3 bg-red-600 text-white rounded transition flex items-center gap-2 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed"
+          >
+            <i class="fa-solid fa-magnifying-glass"></i> Search
+          </button>
+
+          <button
+            type="button"
+            (click)="onReset()"
+            [disabled]="searchForm.invalid"
+            class="h-9 px-3 bg-red-600 text-white rounded transition flex items-center gap-2 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed"
+          >
+            Reset
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <div class="overflow-x-auto">
+      <form [formGroup]="form">
+        <table class="w-full text-sm text-left border-collapse border border-default">
+          <!-- HEADER -->
+          <thead class="bg-gray-100 border-b border-default text-xs">
+            <tr class="text-center">
+              <th class="p-3 border-r border-default">Card id</th>
+              <th class="p-3 border-r border-default">Type</th>
+              <th class="p-3 border-r border-default">Amount</th>
+              <th class="p-3 border-r border-default">Status</th>
+              <th class="p-3 border-r border-default">Creatd at</th>
+            </tr>
+          </thead>
+
+          <!-- BODY -->
+          <tbody formArrayName="rows" class="divide-y divide-gray-100">
+            <tr
+              *ngFor="let row of rows.controls; let i = index"
+              [formGroupName]="i"
+              class="group text-center text-xs transition hover:bg-gray-50/80"
+            >
+              <!-- Card ID -->
+              <td class="px-4 py-4 border-r border-gray-100">
+                <div class="flex items-center justify-center gap-2">
+                  <div
+                    class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-500"
+                  >
+                    <i class="fa-regular fa-credit-card text-sm"></i>
+                  </div>
+
+                  <span class="font-semibold tracking-wide text-gray-700">
+                    {{ row.get('card_id')?.value || '-' }}
+                  </span>
+                </div>
+              </td>
+
+              <!-- Type -->
+              <td class="px-4 py-4 border-r border-gray-100">
+                <span
+                  class="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-bold"
+                  [ngClass]="{
+                    'bg-green-50 text-green-700 ring-1 ring-green-100':
+                      row.get('type')?.value === 'TOPUP',
+                    'bg-red-50 text-red-700 ring-1 ring-red-100':
+                      row.get('type')?.value === 'WITHDRAW',
+                  }"
+                >
+                  <i
+                    class="fa-solid text-[10px]"
+                    [ngClass]="{
+                      'fa-arrow-trend-up': row.get('type')?.value === 'TOPUP',
+                      'fa-arrow-trend-down': row.get('type')?.value === 'WITHDRAW',
+                    }"
+                  ></i>
+
+                  {{ row.get('type')?.value }}
+                </span>
+              </td>
+
+              <!-- Amount -->
+              <td class="px-4 py-4 border-r border-gray-100">
+                <div class="flex flex-col items-center">
+                  <span
+                    class="text-sm font-bold"
+                    [ngClass]="{
+                      'text-green-600': row.get('type')?.value === 'TOPUP',
+                      'text-red-600': row.get('type')?.value === 'WITHDRAW',
+                    }"
+                  >
+                    {{ row.get('type')?.value === 'WITHDRAW' ? '-' : '+' }}${{
+                      row.get('amount')?.value | number: '1.2-4'
+                    }}
+                  </span>
+
+                  <span class="mt-0.5 text-[10px] text-gray-400"> USD </span>
+                </div>
+              </td>
+
+              <!-- Status -->
+              <td class="px-4 py-4 border-r border-gray-100">
+                <span
+                  class="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-bold"
+                  [ngClass]="{
+                    'bg-yellow-50 text-yellow-700 ring-1 ring-yellow-100':
+                      row.get('status')?.value === 'PENDING',
+                    'bg-green-50 text-green-700 ring-1 ring-green-100':
+                      row.get('status')?.value === 'SUCCESS',
+                    'bg-red-50 text-red-700 ring-1 ring-red-100':
+                      row.get('status')?.value === 'FAILED' ||
+                      row.get('status')?.value === 'CANCELLED',
+                    'bg-gray-100 text-gray-600 ring-1 ring-gray-200':
+                      row.get('status')?.value === 'UNKNOWN',
+                  }"
+                >
+                  <span
+                    class="h-1.5 w-1.5 rounded-full"
+                    [ngClass]="{
+                      'bg-yellow-500': row.get('status')?.value === 'PENDING',
+                      'bg-green-500': row.get('status')?.value === 'SUCCESS',
+                      'bg-red-500':
+                        row.get('status')?.value === 'FAILED' ||
+                        row.get('status')?.value === 'CANCELLED',
+                      'bg-gray-400': row.get('status')?.value === 'UNKNOWN',
+                    }"
+                  ></span>
+
+                  {{ row.get('status')?.value }}
+                </span>
+              </td>
+
+              <!-- Created at -->
+              <td class="px-4 py-4">
+                <div class="flex flex-col items-center leading-tight">
+                  <span class="font-medium text-gray-700">
+                    {{ row.get('created_at')?.value | date: 'dd/MM/yyyy' }}
+                  </span>
+
+                  <span class="mt-1 text-[11px] text-gray-400">
+                    {{ row.get('created_at')?.value | date: 'HH:mm:ss' }}
+                  </span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+      <app-pagination
+        [page]="transactionPage"
+        [pageSize]="transactionPageSize"
+        [totalItems]="transactionTotalItems"
+        (pageChange)="onTransactionPageChange($event)"
+        (pageSizeChange)="onTransactionPageSizeChange($event)"
+      ></app-pagination>
+    </div>
+  </div>
+</div>

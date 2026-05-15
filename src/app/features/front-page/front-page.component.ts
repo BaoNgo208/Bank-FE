@@ -52,6 +52,10 @@ export class FrontPageComponent {
     });
   }
 
+  toNumber(value: string | number | null | undefined): number {
+    return Number(value ?? 0);
+  }
+
   onAnnouncementScroll(event: Event) {
     const el = event.target as HTMLElement;
 

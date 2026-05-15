@@ -91,6 +91,13 @@ export const routes: Routes = [
               ),
           },
           {
+            path: 'card_funding',
+            loadComponent: () =>
+              import('./features/card-funding/card-funding.component').then(
+                (m) => m.CardFundingComponent,
+              ),
+          },
+          {
             path: 'inquiry_card',
             loadComponent: () =>
               import('./features/inquiry-card/inquiry-card.component').then(
