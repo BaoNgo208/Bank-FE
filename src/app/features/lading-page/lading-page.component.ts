@@ -5,6 +5,8 @@ import { HeroComponent } from './components/hero/hero.component';
 import { AdsCardComponent } from './components/ads-card/ads-card.component';
 import { LowFeesComponent } from './components/low-fees/low-fees.component';
 import { ManageAssetsComponent } from './components/manage-assets/manage-assets.component';
+import { FeaturesComponent } from './components/features/features.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 @Component({
   selector: 'app-landing-page',
@@ -14,6 +16,8 @@ import { ManageAssetsComponent } from './components/manage-assets/manage-assets.
     AdsCardComponent,
     LowFeesComponent,
     ManageAssetsComponent,
+    FeaturesComponent,
+    DashboardComponent,
   ],
   templateUrl: './landing-page.componet.html',
   styleUrl: './landing-page.component.scss',
