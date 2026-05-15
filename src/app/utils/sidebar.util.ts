@@ -34,6 +34,7 @@ export const SIDEBAR_ROUTE_MAP: Record<string, string> = {
   deposit: '/home/wallet_transactions/deposit',
   withdrawal: '/home/wallet_transactions/withdrawal',
   invitation_commission: '/home/invitation_commission',
+  card_funding: '/home/card_funding',
 };
 
 /**
@@ -80,6 +81,11 @@ export const SIDEBAR_TABS: SidebarTab[] = [
   {
     key: 'card_transactions',
     label: 'Card transactions',
+    icon: 'fa-solid fa-arrow-right-arrow-left',
+  },
+  {
+    key: 'card_funding',
+    label: 'Card funding',
     icon: 'fa-solid fa-arrow-right-arrow-left',
   },
 

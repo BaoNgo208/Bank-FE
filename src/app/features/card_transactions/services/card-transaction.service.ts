@@ -3,6 +3,11 @@ import { BaseApiService } from '../../../core/http/base-api.service';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../../../core/auth/auth.request';
 import { CardTransactionPageResponse, CardTransactionStatus } from '../types/type';
+import {
+  CardFundingTransactionPageResponse,
+  CardTxnStatus,
+  CardTxnType,
+} from '../../card-funding/types/card-funding.type';
 
 @Injectable({
   providedIn: 'root',
@@ -29,5 +34,26 @@ export class CardTransactionService extends BaseApiService {
     });
 
     return this.get<ApiResponse<CardTransactionPageResponse>>('/orders', httpParams);
+  }
+
+  getFundingTransactions(
+    page: number = 0,
+    params?: {
+      last4?: string;
+      type?: CardTxnType;
+      status?: CardTxnStatus;
+      fromTime?: string;
+      toTime?: string;
+    },
+  ): Observable<ApiResponse<CardFundingTransactionPageResponse>> {
+    const httpParams = this.buildPageParams(page, undefined, {
+      last4: params?.last4,
+      type: params?.type,
+      status: params?.status,
+      fromTime: params?.fromTime,
+      toTime: params?.toTime,
+    });
+
+    return this.get('/search', httpParams);
   }
 }

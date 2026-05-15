@@ -13,119 +13,85 @@
   </head>
   <body class="font-sans">
     <div class="p-4 flex flex-col gap-4">
-      <!-- TOP GRID: 1 col → md:2 cols → lg:5 cols (assets=2, stats=2, profile=1) -->
-      <div class="grid grid-cols-1 lg:grid-cols-5 gap-2">
-        <!-- TOTAL ASSETS -->
-        <div class="lg:col-span-2 bg-red-600 text-white rounded-xl p-6 relative overflow-hidden">
-          <div class="text-sm opacity-80">Total Assets (USD)</div>
-          <div class="text-5xl font-bold mt-2 tabular-nums">
-            $<span [countUp]="dashboard()?.total_balance ?? 0"></span>
+      @if (dashboard(); as d) {
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-2">
+          <div class="lg:col-span-2 bg-red-600 text-white rounded-xl p-6 relative overflow-hidden">
+            <div class="text-sm opacity-80">Total Assets (USD)</div>
+
+            <div class="text-5xl font-bold mt-2 tabular-nums">
+              $<span [countUp]="toNumber(d.total_balance)"></span>
+            </div>
+
+            <div class="flex gap-2 mt-8 flex-wrap">
+              <div
+                class="bg-white/20 px-2 py-4 rounded-lg text-center flex flex-col items-center flex-1 min-w-[80px]"
+              >
+                <div class="text-xs mb-1">Balance</div>
+                <div class="text-xl font-semibold tabular-nums min-w-[80px]">
+                  $<span [countUp]="toNumber(d.available_balance)"></span>
+                </div>
+              </div>
+
+              <div
+                class="bg-white/20 px-2 py-4 rounded-lg text-center flex flex-col items-center flex-1 min-w-[80px]"
+              >
+                <div class="text-xs mb-1">Freeze</div>
+                <div class="text-xl font-semibold tabular-nums min-w-[80px]">
+                  $<span [countUp]="toNumber(d.frozen_balance)"></span>
+                </div>
+              </div>
+
+              <div
+                class="bg-white/20 px-2 py-4 rounded-lg text-center flex flex-col items-center flex-1 min-w-[80px]"
+              >
+                <div class="text-xs mb-1">Total card balance</div>
+                <div class="text-xl font-semibold tabular-nums min-w-[80px]">
+                  $<span [countUp]="toNumber(d.allocated_balance)"></span>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div class="flex gap-2 mt-8 flex-wrap">
+          <div class="md:col-span-2 lg:col-span-2 grid grid-cols-2 gap-1">
             <div
-              class="bg-white/20 px-2 py-4 rounded-lg text-center flex flex-col items-center flex-1 min-w-[80px]"
+              class="bg-white rounded-xl p-4 border border-gray-200 flex justify-between items-center"
             >
-              <div class="text-xs mb-1">Balance</div>
-              <div class="text-xl font-semibold tabular-nums min-w-[80px]">
-                $<span [countUp]="dashboard()?.available_balance ?? 0"></span>
+              <div>
+                <div class="text-xs text-gray-500">Card opening limit</div>
+                <div class="text-2xl mt-2">{{ d.card_opening_limit }}</div>
               </div>
             </div>
+
             <div
-              class="bg-white/20 px-2 py-4 rounded-lg text-center flex flex-col items-center flex-1 min-w-[80px]"
+              class="bg-white rounded-xl p-4 border border-gray-200 flex justify-between items-center"
             >
-              <div class="text-xs mb-1">Freeze</div>
-              <div class="text-xl font-semibold tabular-nums min-w-[80px]">
-                $<span [countUp]="dashboard()?.frozen_balance ?? 0"></span>
+              <div>
+                <div class="text-xs text-gray-500">Number of cards activated</div>
+                <div class="text-2xl mt-2">{{ d.activated_card_count }}</div>
               </div>
             </div>
+
             <div
-              class="bg-white/20 px-2 py-4 rounded-lg text-center flex flex-col items-center flex-1 min-w-[80px]"
+              class="bg-white rounded-xl p-4 border border-gray-200 flex justify-between items-center"
             >
-              <div class="text-xs mb-1">Total card balance</div>
-              <div class="text-xl font-semibold tabular-nums min-w-[80px]">
-                $<span [countUp]="dashboard()?.allocated_balance ?? 0"></span>
+              <div>
+                <div class="text-xs text-gray-500">User ID / Invitation Code</div>
+                <div class="text-2xl mt-2 flex items-center gap-2">
+                  {{ d.user_id }}
+                  <i class="fa-regular fa-copy text-orange-500 cursor-pointer text-base"></i>
+                </div>
               </div>
             </div>
           </div>
         </div>
-
-        <!-- STATS 4 mini cards -->
-        <div class="md:col-span-2 lg:col-span-2 grid grid-cols-2 gap-1">
-          <div
-            class="bg-white rounded-xl p-4 border border-gray-200 flex justify-between items-center"
-          >
-            <div>
-              <div class="text-xs text-gray-500">Card opening limit</div>
-              <div class="text-2xl mt-2">{{ this.dashboard()?.card_opening_limit ?? 0 }}</div>
-            </div>
-            <div class="w-12 h-12 rounded-lg bg-teal-100 flex items-center justify-center shrink-0">
-              <i class="fa-solid fa-credit-card text-teal-500"></i>
-            </div>
-          </div>
-          <div
-            class="bg-white rounded-xl p-4 border border-gray-200 flex justify-between items-center"
-          >
-            <div>
-              <div class="text-xs text-gray-500">Number of cards activated</div>
-              <div class="text-2xl mt-2">{{ this.dashboard()?.activated_card_count ?? 0 }}</div>
-            </div>
-            <div
-              class="w-12 h-12 rounded-lg bg-orange-100 flex items-center justify-center shrink-0"
-            >
-              <i class="fa-solid fa-id-card text-orange-500"></i>
-            </div>
-          </div>
-          <div
-            class="bg-white rounded-xl p-4 border border-gray-200 flex justify-between items-center"
-          >
-            <div>
-              <div class="text-xs text-gray-500 w-[70%]">Number of invited registrants</div>
-              <div class="text-2xl mt-2">0</div>
-            </div>
-            <div
-              class="w-12 h-12 rounded-lg bg-purple-100 flex items-center justify-center shrink-0"
-            >
-              <i class="fa-solid fa-user-plus text-purple-500"></i>
-            </div>
-          </div>
-          <div
-            class="bg-white rounded-xl p-4 border border-gray-200 flex justify-between items-center"
-          >
-            <div>
-              <div class="text-xs text-gray-500">User ID / Invitation Code</div>
-              <div class="text-2xl mt-2 flex items-center gap-2">
-                {{ this.dashboard()?.user_id ?? 0 }}
-                <i class="fa-regular fa-copy text-orange-500 cursor-pointer text-base"></i>
-              </div>
-            </div>
-            <div class="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center shrink-0">
-              <i class="fa-solid fa-qrcode text-blue-500"></i>
-            </div>
-          </div>
+      } @else {
+        <!-- skeleton/loading -->
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-2">
+          <div class="lg:col-span-2 h-56 rounded-xl bg-gray-200 animate-pulse"></div>
+          <div class="lg:col-span-2 h-56 rounded-xl bg-gray-200 animate-pulse"></div>
+          <div class="lg:col-span-1 h-56 rounded-xl bg-gray-200 animate-pulse"></div>
         </div>
-
-        <!-- USER PROFILE -->
-        <div
-          class="md:col-span-2 lg:col-span-1 bg-white rounded-xl border border-gray-200 overflow-hidden"
-        >
-          <div class="h-20 bg-red-600"></div>
-          <div class="flex flex-col items-center -mt-10 pb-6 px-5">
-            <img
-              src="https://i.pravatar.cc/100"
-              class="w-20 h-20 rounded-full border-4 border-white"
-              alt="avatar"
-            />
-            <div class="mt-4 text-xs text-gray-600 text-center">
-              Customer Service: @dajinniao123
-            </div>
-            <div class="text-xs text-gray-600 mt-1 text-center">
-              Business cooperation: @hzguanxi
-            </div>
-          </div>
-        </div>
-      </div>
-
+      }
       <!-- SYSTEM NOTICE -->
       <div
         class="bg-orange-50 text-orange-600 border border-orange-300 rounded-lg p-3 flex items-center gap-2 text-sm"

@@ -26,13 +26,11 @@ export class WidthdrawlComponent {
 
   pendingOrderNo = signal<string | null>(null);
 
-  withdrawAmount: number = 500;
+  withdrawAmount: number = 50;
   toAddress: string = '';
   otp: string = '';
   remark: string = '';
   currency: Stablecoin = Stablecoin.USDT;
-  minAmount = 500;
-  balance = 10000;
   network: string = 'TRC20';
   Stablecoin = Stablecoin;
 
@@ -115,11 +113,14 @@ export class WidthdrawlComponent {
   };
 
   validateAmount() {
+    const minAmount = Number(this.withdrawSummary()?.minimum_withdrawal_amount);
+    const balance = Number(this.withdrawSummary()?.balance);
+
     if (!this.withdrawAmount) {
       this.errors.amount = 'Amount is required';
-    } else if (this.withdrawAmount < this.minAmount) {
-      this.errors.amount = `Minimum is ${this.minAmount} USD`;
-    } else if (this.withdrawAmount > this.balance) {
+    } else if (this.withdrawAmount < minAmount) {
+      this.errors.amount = `Minimum is ${minAmount} USD`;
+    } else if (this.withdrawAmount > balance) {
       this.errors.amount = 'Insufficient balance';
     } else {
       this.errors.amount = '';
@@ -207,6 +208,12 @@ export class WidthdrawlComponent {
           title: 'Create failed',
           text: err?.error?.message,
           confirmButtonText: 'OK',
+        }).then((result) => {
+          console.log(result);
+          if (result.isConfirmed && err.error.status === 409) {
+            this.showOtpModal.set(true);
+            this.orderNo = err?.error?.data;
+          }
         });
       },
     });

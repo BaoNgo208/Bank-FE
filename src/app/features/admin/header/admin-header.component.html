@@ -1,20 +1,155 @@
-<header class="h-[70px] bg-white border-b flex items-center justify-between px-6">
+<header class="h-[70px] bg-white border-b border-gray-200 flex items-center justify-between px-6">
   <!-- Search -->
   <div class="w-[300px]">
-    <input
-      type="text"
-      placeholder="Search..."
-      class="w-full px-4 py-2 border rounded-lg text-sm outline-none"
-    />
+    <div class="relative">
+      <i
+        class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"
+      ></i>
+
+      <input
+        type="text"
+        placeholder="Search..."
+        class="w-full h-10 pl-9 pr-4 border border-gray-200 rounded-xl text-sm outline-none focus:border-red-300 focus:bg-red-50/20 transition"
+      />
+    </div>
   </div>
 
   <!-- Right -->
   <div class="flex items-center gap-4">
-    <i class="fa fa-bell text-gray-500"></i>
+    <!-- Notification -->
+    <button
+      type="button"
+      class="relative w-10 h-10 rounded-xl flex items-center justify-center text-gray-500 hover:bg-gray-100 transition"
+    >
+      <i class="fa-regular fa-bell text-base"></i>
 
-    <div class="flex items-center gap-2">
-      <div class="w-8 h-8 bg-gray-400 rounded-full"></div>
-      <span class="text-sm">Administrator</span>
+      <span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-red-500 ring-2 ring-white"></span>
+    </button>
+
+    <!-- PROFILE LOADING -->
+    <div *ngIf="loadingProfile()" class="flex items-center gap-2 animate-pulse">
+      <div class="w-9 h-9 rounded-full bg-gray-200"></div>
+      <div class="w-24 h-3 rounded bg-gray-200"></div>
+    </div>
+
+    <!-- ADMIN PROFILE DROPDOWN -->
+    <div
+      *ngIf="!loadingProfile() && profile() as admin"
+      class="relative"
+      (click)="$event.stopPropagation()"
+    >
+      <!-- TRIGGER -->
+      <button
+        type="button"
+        class="h-10 pl-1.5 pr-2 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 hover:border-red-100 transition flex items-center gap-2"
+        (click)="toggleProfileDropdown($event)"
+      >
+        <!-- AVATAR -->
+        <div
+          class="w-8 h-8 rounded-full bg-red-50 border border-red-100 text-red-500 flex items-center justify-center font-semibold text-sm shrink-0"
+        >
+          {{ getAvatarText(admin.username) }}
+        </div>
+
+        <!-- USERNAME -->
+        <span class="max-w-[140px] truncate text-sm font-medium text-gray-700">
+          {{ admin.username }}
+        </span>
+
+        <!-- CHEVRON -->
+        <i
+          class="fa-solid fa-chevron-down text-[11px] text-gray-400 transition"
+          [ngClass]="{
+            'rotate-180': profileDropdownOpen(),
+          }"
+        ></i>
+      </button>
+
+      <!-- DROPDOWN MENU -->
+      <div
+        *ngIf="profileDropdownOpen()"
+        class="absolute right-0 top-12 w-80 rounded-2xl border border-gray-200 bg-white shadow-xl shadow-gray-200/70 overflow-hidden z-50"
+      >
+        <!-- HEADER -->
+        <div class="p-4 bg-gradient-to-br from-red-50 to-white border-b border-gray-100">
+          <div class="flex items-center gap-3">
+            <div
+              class="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center font-bold text-lg border border-red-200 shrink-0"
+            >
+              {{ getAvatarText(admin.username) }}
+            </div>
+
+            <div class="min-w-0">
+              <p class="text-sm font-semibold text-gray-900 truncate">
+                {{ admin.username }}
+              </p>
+              <p class="text-xs text-gray-500 truncate">
+                {{ admin.email }}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- BODY -->
+        <div class="p-3 space-y-2">
+          <!-- ROLE -->
+          <div class="flex items-center justify-between rounded-xl bg-gray-50 px-3 py-3">
+            <div class="flex items-center gap-3">
+              <div
+                class="w-9 h-9 rounded-lg bg-red-50 text-red-500 flex items-center justify-center"
+              >
+                <i class="fa-solid fa-user-shield text-sm"></i>
+              </div>
+
+              <div>
+                <p class="text-xs text-gray-500">Account role</p>
+                <p class="text-sm font-semibold text-gray-800">Administrator</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- CHANGE PASSWORD -->
+          <button
+            type="button"
+            class="w-full flex items-center justify-between rounded-xl bg-gray-50 hover:bg-red-50 px-3 py-3 transition group"
+            (click)="openChangePassword()"
+          >
+            <div class="flex items-center gap-3">
+              <div
+                class="w-9 h-9 rounded-lg bg-red-50 text-red-500 flex items-center justify-center group-hover:bg-red-100"
+              >
+                <i class="fa-solid fa-lock text-sm"></i>
+              </div>
+
+              <div class="text-left">
+                <p class="text-sm font-semibold text-gray-800">Change password</p>
+                <p class="text-xs text-gray-500">Update admin password</p>
+              </div>
+            </div>
+
+            <i class="fa-solid fa-chevron-right text-xs text-gray-400"></i>
+          </button>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="p-3 border-t border-gray-100 bg-white">
+          <button
+            type="button"
+            class="w-full h-10 rounded-xl bg-red-50 text-red-500 hover:bg-red-100 hover:text-red-600 transition flex items-center justify-center gap-2 text-sm font-semibold"
+            (click)="logout()"
+          >
+            <i class="fa-solid fa-arrow-right-from-bracket text-sm"></i>
+            Logout
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </header>
+
+<app-change-password-modal
+  *ngIf="showChangePasswordModal()"
+  loginPath="/admin/auth/login"
+  [changePassword]="handleAdminChangePassword"
+  (close)="closeChangePassword()"
+></app-change-password-modal>

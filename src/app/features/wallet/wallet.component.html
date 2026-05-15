@@ -29,7 +29,7 @@
       <!-- EXCHANGE -->
       <div class="mb-4">
         <div class="text-sm opacity-80">Current exchange rate</div>
-        <div class="text-3xl font-bold">$<span [countUp]="1.0"></span></div>
+        <div class="text-3xl font-bold">$1.0</div>
       </div>
 
       <!-- BALANCE -->
@@ -39,24 +39,6 @@
           <div class="text-3xl font-bold">$<span [countUp]="walletBalance()"></span></div>
         </div>
       </div>
-    </div>
-
-    <!-- RIGHT BALANCE DETAILS -->
-    <div class="flex-1 bg-white rounded-xl border p-5">
-      <!-- HEADER -->
-      <div class="flex justify-between items-center mb-4">
-        <div class="flex items-center gap-2 font-medium text-gray-700">
-          <i class="fa-solid fa-coins text-red-500"></i>
-          Balance details
-        </div>
-
-        <button class="px-4 py-1 text-sm bg-red-500 text-white rounded-full hover:bg-red-600">
-          View all
-        </button>
-      </div>
-
-      <!-- EMPTY STATE -->
-      <div class="text-gray-400 text-sm">No balance records yet</div>
     </div>
   </div>
 

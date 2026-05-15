@@ -1,47 +1,50 @@
 <div class="h-full w-full px-3 py-2 flex flex-col gap-y-5 overflow-auto">
-  <div class="md:col-span-2 lg:col-span-2 grid grid-cols-1 xl:grid-cols-3 gap-3">
-    <!-- TOTAL WITHDRAW AMOUNT -->
-    <div class="bg-white rounded-xl p-4 border border-gray-200 flex justify-between items-center">
-      <div>
-        <div class="text-xs text-gray-500">Total withdraw amount</div>
-        <div class="text-2xl mt-2 font-semibold text-gray-800">
-          {{ dashboard()?.total_amount ?? 0 }}
+  @if (isPagination) {
+    <div class="md:col-span-2 lg:col-span-2 grid grid-cols-1 xl:grid-cols-3 gap-3">
+      <!-- TOTAL WITHDRAW AMOUNT -->
+      <div class="bg-white rounded-xl p-4 border border-gray-200 flex justify-between items-center">
+        <div>
+          <div class="text-xs text-gray-500">Total withdraw amount</div>
+          <div class="text-2xl mt-2 font-semibold text-gray-800">
+            {{ dashboard()?.total_amount ?? 0 }}
+          </div>
+        </div>
+
+        <div class="w-12 h-12 rounded-lg bg-red-50 flex items-center justify-center shrink-0">
+          <i class="fa-solid fa-money-bill-transfer text-red-500"></i>
         </div>
       </div>
 
-      <div class="w-12 h-12 rounded-lg bg-red-50 flex items-center justify-center shrink-0">
-        <i class="fa-solid fa-money-bill-transfer text-red-500"></i>
-      </div>
-    </div>
+      <!-- SUCCESS COUNT -->
+      <div class="bg-white rounded-xl p-4 border border-gray-200 flex justify-between items-center">
+        <div>
+          <div class="text-xs text-gray-500">Success count</div>
+          <div class="text-2xl mt-2 font-semibold text-emerald-600">
+            {{ dashboard()?.success_count ?? 0 }}
+          </div>
+        </div>
 
-    <!-- SUCCESS COUNT -->
-    <div class="bg-white rounded-xl p-4 border border-gray-200 flex justify-between items-center">
-      <div>
-        <div class="text-xs text-gray-500">Success count</div>
-        <div class="text-2xl mt-2 font-semibold text-emerald-600">
-          {{ dashboard()?.success_count ?? 0 }}
+        <div class="w-12 h-12 rounded-lg bg-emerald-50 flex items-center justify-center shrink-0">
+          <i class="fa-solid fa-circle-check text-emerald-500"></i>
         </div>
       </div>
 
-      <div class="w-12 h-12 rounded-lg bg-emerald-50 flex items-center justify-center shrink-0">
-        <i class="fa-solid fa-circle-check text-emerald-500"></i>
-      </div>
-    </div>
+      <!-- FAILED COUNT -->
+      <div class="bg-white rounded-xl p-4 border border-gray-200 flex justify-between items-center">
+        <div>
+          <div class="text-xs text-gray-500">Failed count</div>
+          <div class="text-2xl mt-2 font-semibold text-rose-600">
+            {{ dashboard()?.failed_count ?? 0 }}
+          </div>
+        </div>
 
-    <!-- FAILED COUNT -->
-    <div class="bg-white rounded-xl p-4 border border-gray-200 flex justify-between items-center">
-      <div>
-        <div class="text-xs text-gray-500">Failed count</div>
-        <div class="text-2xl mt-2 font-semibold text-rose-600">
-          {{ dashboard()?.failed_count ?? 0 }}
+        <div class="w-12 h-12 rounded-lg bg-rose-50 flex items-center justify-center shrink-0">
+          <i class="fa-solid fa-circle-xmark text-rose-500"></i>
         </div>
       </div>
-
-      <div class="w-12 h-12 rounded-lg bg-rose-50 flex items-center justify-center shrink-0">
-        <i class="fa-solid fa-circle-xmark text-rose-500"></i>
-      </div>
     </div>
-  </div>
+  }
+
   <div class="rounded-base border border-default bg-neutral-primary">
     @if (isPagination) {
       <!--  TOP TOOLBAR -->
