@@ -36,7 +36,7 @@ export class NotificationManagementComponent {
   showConfirmModal = signal<boolean>(false);
 
   notiPage = 1;
-  notiPageSize = 10;
+  notiPageSize = 15;
   notiTotalItems = 0;
 
   openDropdownIndex: number | null = null;

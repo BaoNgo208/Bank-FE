@@ -20,6 +20,10 @@ export class DepositOrdersComponent {
   private cd = inject(ChangeDetectorRef);
   private toast = inject(ToastrService);
   private depositService = inject(DepositService);
+  private readonly BLOCK_UPDATE_STATUSES = new Set<DepositOrderStatus>([
+    DepositOrderStatus.SUCCESS,
+    DepositOrderStatus.FAILED,
+  ]);
 
   @HostListener('document:click')
   onDocumentClick() {
@@ -243,6 +247,15 @@ export class DepositOrdersComponent {
 
   toggleDropdown(index: number, event: MouseEvent): void {
     event.stopPropagation();
+
+    const row = this.rows.at(index);
+    const status = row.get('status')?.value as DepositOrderStatus | null;
+
+    if (status && this.BLOCK_UPDATE_STATUSES.has(status)) {
+      this.openDropdownIndex = null;
+      this.openNoteIndex = null;
+      return;
+    }
 
     if (this.openDropdownIndex === index) {
       this.openDropdownIndex = null;

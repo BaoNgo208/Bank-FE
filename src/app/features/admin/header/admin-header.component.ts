@@ -76,11 +76,11 @@ export class AdminHeaderComponent implements OnInit {
     this.authService.logout().subscribe({
       next: () => {
         localStorage.clear();
-        this.router.navigate(['/admin/login']);
+        this.router.navigate(['/admin/auth/login']);
       },
       error: () => {
         localStorage.clear();
-        this.router.navigate(['/admin/login']);
+        this.router.navigate(['/admin/auth/login']);
       },
     });
   }

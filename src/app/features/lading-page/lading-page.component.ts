@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject } from '@angular/core';
+import { Component, ElementRef, inject, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HeroComponent } from './components/hero/hero.component';
@@ -7,6 +7,9 @@ import { LowFeesComponent } from './components/low-fees/low-fees.component';
 import { ManageAssetsComponent } from './components/manage-assets/manage-assets.component';
 import { FeaturesComponent } from './components/features/features.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { AboutWalletComponent } from './components/about-wallet/about-wallet.component';
+
+type LandingSection = 'about' | 'features' | 'pricing';
 
 @Component({
   selector: 'app-landing-page',
@@ -18,6 +21,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     ManageAssetsComponent,
     FeaturesComponent,
     DashboardComponent,
+    AboutWalletComponent,
   ],
   templateUrl: './landing-page.componet.html',
   styleUrl: './landing-page.component.scss',
@@ -25,7 +29,24 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 export class LandingPageComponent {
   private el = inject(ElementRef);
   private router = inject(Router);
+  @ViewChildren('landingSection', { read: ElementRef })
+  sections!: QueryList<ElementRef<HTMLElement>>;
 
+  scrollToSection(section: LandingSection) {
+    const target = this.sections.find(
+      (item) => item.nativeElement.getAttribute('data-section') === section,
+    );
+
+    if (!target) {
+      console.warn('Section not found:', section);
+      return;
+    }
+
+    target.nativeElement.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  }
   goToAuth() {
     const hasToken = !!localStorage.getItem('accessToken');
     const redirectUrl = hasToken ? '/home' : '/auth/login';

@@ -71,7 +71,7 @@ export const SIDEBAR_TABS: SidebarTab[] = [
   },
   {
     key: 'wallet_transactions',
-    label: 'Wallet Transactions',
+    label: 'Wallet transactions',
     icon: 'fa-solid fa-money-bill-transfer',
     children: [
       { key: 'deposit', label: 'Deposit' },

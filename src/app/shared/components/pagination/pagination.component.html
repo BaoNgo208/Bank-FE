@@ -55,12 +55,12 @@
 
     <span class="ml-3">A total of {{ totalItems() }} items</span>
 
-    <select
+    <!-- <select
       class="h-7 px-2 border border-default rounded focus:outline-none focus:ring-1 focus:ring-red-500"
       [ngModel]="pageSize()"
       (ngModelChange)="onPageSizeChange($event)"
     >
       <option *ngFor="let opt of pageSizeOptions()" [value]="opt">{{ opt }} items/page</option>
-    </select>
+    </select> -->
   </div>
 </div>
