@@ -29,6 +29,10 @@ export class WithdrawalsManagementComponent {
   private adminWithdrawalsService = inject(AdminWithdrawalsService);
   private cd = inject(ChangeDetectorRef);
   private toast = inject(ToastrService);
+  private readonly BLOCK_UPDATE_STATUSES = new Set<WithdrawOrderStatus>([
+    WithdrawOrderStatus.SUCCESS,
+    WithdrawOrderStatus.FAILED,
+  ]);
 
   protected withdrawalsStore = inject(WithdrawalsStore);
 
@@ -168,6 +172,15 @@ export class WithdrawalsManagementComponent {
 
   toggleDropdown(index: number, event: MouseEvent): void {
     event.stopPropagation();
+
+    const row = this.withdrawalsRows.at(index);
+    const status = row.get('status')?.value as WithdrawOrderStatus | null;
+
+    if (status && this.BLOCK_UPDATE_STATUSES.has(status)) {
+      this.openDropdownIndex = null;
+      this.openNoteIndex = null;
+      return;
+    }
 
     if (this.openDropdownIndex === index) {
       this.openDropdownIndex = null;

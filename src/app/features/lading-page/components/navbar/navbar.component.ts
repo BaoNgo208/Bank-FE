@@ -1,5 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { Router } from '@angular/router';
+
+export type LandingSection = 'about' | 'features' | 'pricing';
 
 @Component({
   selector: 'app-navbar',
@@ -9,7 +11,11 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent {
   private router = inject(Router);
+  @Output() navClick = new EventEmitter<LandingSection>();
 
+  goToSection(section: LandingSection) {
+    this.navClick.emit(section);
+  }
   goToAuth() {
     const hasToken = !!localStorage.getItem('accessToken');
 

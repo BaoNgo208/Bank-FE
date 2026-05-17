@@ -133,11 +133,11 @@ export class AssetAllocationChartComponent implements AfterViewInit, OnDestroy {
   formatAllocationKey(key: string) {
     switch (key) {
       case 'available_balance':
-        return 'Available Balance';
+        return 'Available balance';
       case 'allocated_balance':
-        return 'Allocated Balance';
+        return 'Allocated balance';
       case 'frozen_balance':
-        return 'Frozen Balance';
+        return 'Frozen balance';
       default:
         return key;
     }

@@ -3,6 +3,7 @@ import { inject } from '@angular/core';
 import { catchError, finalize, Observable, switchMap, throwError } from 'rxjs';
 import { AuthStore } from '../auth/auth.store';
 import { AuthService } from '../auth/auth.service';
+import { Router } from '@angular/router';
 
 export const SKIP_AUTH_URLS = [
   '/auth/signin',
@@ -14,10 +15,17 @@ export const SKIP_AUTH_URLS = [
 let isRefreshing = false;
 let refreshQueue: ((token: string) => void)[] = [];
 
+function resolveLoginUrl(router: Router): string {
+  const currentUrl = router.url;
+
+  return currentUrl.startsWith('/admin') ? '/admin/auth/login' : '/auth/login';
+}
+
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authStore = inject(AuthStore);
   const authService = inject(AuthService);
   const token = authStore.accessToken();
+  const router = inject(Router);
 
   if (SKIP_AUTH_URLS.some((path) => req.url.includes(path))) {
     return next(req);
@@ -68,6 +76,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
               refreshQueue = [];
 
               authStore.clearAuth();
+              router.navigate([resolveLoginUrl(router)]);
               return throwError(() => refreshErr);
             }),
           );
@@ -90,9 +99,9 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
           });
         });
       }),
-      finalize(() => {
-        isRefreshing = false;
-      }),
+      // finalize(() => {
+      //   isRefreshing = false;
+      // }),
     );
   } else {
     console.warn('[AuthInterceptor] No token found in localStorage!');

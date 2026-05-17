@@ -23,7 +23,7 @@
       class="flex items-center justify-between bg-white border border-gray-200 rounded-xl px-6 py-5 hover:shadow-md transition"
     >
       <div>
-        <p class="text-gray-700 text-sm">Card activation quantity</p>
+        <p class="text-gray-700 text-sm">Card Activation Quantity</p>
         <p class="text-2xl mt-2">
           {{ dashboard()?.active_count ?? 0 }}
         </p>
@@ -60,7 +60,7 @@
     >
       <div class="w-full flex flex-wrap items-center gap-4 text-[0.85rem]">
         <div class="flex items-center gap-2">
-          <span class="text-gray-600">card number</span>
+          <span class="text-gray-600">Card number</span>
           <input
             formControlName="cardNumber"
             type="text"
@@ -80,7 +80,7 @@
         </div>
 
         <div class="flex items-center gap-2">
-          <span class="text-gray-600">state</span>
+          <span class="text-gray-600">Status</span>
           <select formControlName="status" class="h-9 px-3 border border-gray-300 rounded">
             <option [ngValue]="null">Please ...</option>
             <option [ngValue]="CardStatus.ACTIVE">Active</option>
@@ -147,14 +147,14 @@
             <th class="px-3 py-3">
               <input type="checkbox" formControlName="checkAll" (change)="toggleAll()" />
             </th>
-            <th class="px-3 py-3 border-r border-default">card number</th>
-            <th class="px-3 py-3 border-r border-default">brand</th>
-            <th class="px-3 py-3 border-r border-default">name</th>
-            <th class="px-3 py-3 border-r border-default">currency</th>
-            <th class="px-3 py-3 border-r border-default">status</th>
-            <th class="px-2 py-3 border-r border-default w-[120px] truncate">remaining amount</th>
-            <th class="px-3 py-3 border-r border-default">created at</th>
-            <th class="px-3 py-3 border-r border-default w-[180px] truncate">note</th>
+            <th class="px-3 py-3 border-r border-default">Card number</th>
+            <th class="px-3 py-3 border-r border-default">Brand</th>
+            <th class="px-3 py-3 border-r border-default">Name</th>
+            <th class="px-3 py-3 border-r border-default">Currency</th>
+            <th class="px-3 py-3 border-r border-default">Status</th>
+            <th class="px-2 py-3 border-r border-default w-[120px] truncate">Remaining amount</th>
+            <th class="px-3 py-3 border-r border-default">Created at</th>
+            <th class="px-3 py-3 border-r border-default w-[180px] truncate">Note</th>
             <th class="px-3 py-3 border-r border-default">Action</th>
           </tr>
         </thead>

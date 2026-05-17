@@ -66,10 +66,10 @@ export interface DepositOrderPageResponse {
 export enum WithdrawOrderStatus {
   PENDING_OTP = 'PENDING_OTP',
   PENDING_ADMIN = 'PENDING_ADMIN',
-  PROCESSING = 'PROCESSING',
+  // PROCESSING = 'PROCESSING',
   SUCCESS = 'SUCCESS',
   FAILED = 'FAILED',
-  CANCELLED = 'CANCELLED',
+  // CANCELLED = 'CANCELLED',
   EXPIRED = 'EXPIRED',
 }
 
