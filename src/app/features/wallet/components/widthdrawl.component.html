@@ -108,6 +108,12 @@
   </div>
 </div>
 
+<app-loading-overlay
+  [show]="loading()"
+  title="Processing..."
+  message="Please wait a moment"
+></app-loading-overlay>
+
 <app-otp-modal
   [visible]="showOtpModal()"
   [length]="6"

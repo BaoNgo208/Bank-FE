@@ -12,10 +12,12 @@ import {
 import { OtpModalComponent } from '../../../shared/components/otp/otp-modal.component';
 import { WidthdrawlService } from '../services/widthdrawl.service';
 import { ToastrService } from 'ngx-toastr';
+import { LoadingOverlayComponent } from '../../../shared/components/loading-overlay/loading-overlay.component';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-widthdraw-component',
-  imports: [CommonModule, FormsModule, OtpModalComponent],
+  imports: [CommonModule, FormsModule, OtpModalComponent, LoadingOverlayComponent],
   templateUrl: './widthdrawl.component.html',
 })
 export class WidthdrawlComponent {
@@ -23,6 +25,8 @@ export class WidthdrawlComponent {
   private withdrawlService = inject(WidthdrawlService);
   private toast = inject(ToastrService);
   protected walletUiStore = inject(WalletUiStore);
+
+  loading = signal<boolean>(false);
 
   pendingOrderNo = signal<string | null>(null);
 
@@ -80,26 +84,31 @@ export class WidthdrawlComponent {
 
   ConfirmOtp(otp: string) {
     this.validateOtp();
+
+    this.loading.set(true);
     const confirmPayload = {
       orderNo: this.orderNo,
       otp: otp,
     };
-    this.walletFacade.confirmWithdrawOtp(confirmPayload).subscribe({
-      next: (_) => {
-        Swal.fire({
-          icon: 'success',
-          title: 'Create withdraw order success',
-        });
-        this.walletUiStore.showWithdrawModal.set(false);
-      },
-      error: (err) => {
-        Swal.fire({
-          icon: 'error',
-          title: 'OTP failed',
-          text: err?.error?.message,
-        });
-      },
-    });
+    this.walletFacade
+      .confirmWithdrawOtp(confirmPayload)
+      .pipe(finalize(() => this.loading.set(false)))
+      .subscribe({
+        next: (_) => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Create withdraw order success',
+          });
+          this.walletUiStore.showWithdrawModal.set(false);
+        },
+        error: (err) => {
+          Swal.fire({
+            icon: 'error',
+            title: 'OTP failed',
+            text: err?.error?.message,
+          });
+        },
+      });
   }
 
   closeWithdrawModal() {
@@ -165,14 +174,14 @@ export class WidthdrawlComponent {
   submitWithdraw() {
     this.validateAmount();
     // this.validateAddress();
-    Swal.fire({
-      title: 'Processing...',
-      text: 'Please wait',
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    });
+    // Swal.fire({
+    //   title: 'Processing...',
+    //   text: 'Please wait',
+    //   allowOutsideClick: false,
+    //   didOpen: () => {
+    //     Swal.showLoading();
+    //   },
+    // });
 
     if (this.errors.amount || this.errors.address || this.errors.otp) {
       const messages = [this.errors.amount, this.errors.address, this.errors.otp].filter(Boolean);
@@ -187,6 +196,8 @@ export class WidthdrawlComponent {
       return;
     }
 
+    this.loading.set(true);
+
     const payload: CreateWithdrawOrderRequest = {
       currency: this.currency,
       network: this.network,
@@ -194,28 +205,30 @@ export class WidthdrawlComponent {
       amount: this.withdrawAmount,
     };
 
-    this.walletFacade.createWithdrawOrder(payload).subscribe({
-      next: (res) => {
-        Swal.close();
-        this.orderNo = res.data.order_no;
-        this.showOtpModal.set(true);
-      },
-      error: (err) => {
-        this.orderNo = err?.error?.data;
-        Swal.close();
-        Swal.fire({
-          icon: 'error',
-          title: 'Create failed',
-          text: err?.error?.message,
-          confirmButtonText: 'OK',
-        }).then((result) => {
-          console.log(result);
-          if (result.isConfirmed && err.error.status === 409) {
-            this.showOtpModal.set(true);
-            this.orderNo = err?.error?.data;
-          }
-        });
-      },
-    });
+    this.walletFacade
+      .createWithdrawOrder(payload)
+      .pipe(finalize(() => this.loading.set(false)))
+      .subscribe({
+        next: (res) => {
+          Swal.close();
+          this.orderNo = res.data.order_no;
+          this.showOtpModal.set(true);
+        },
+        error: (err) => {
+          this.orderNo = err?.error?.data;
+          Swal.close();
+          Swal.fire({
+            icon: 'error',
+            title: 'Create failed',
+            text: err?.error?.message,
+            confirmButtonText: 'OK',
+          }).then((result) => {
+            if (result.isConfirmed && err.error.status === 409) {
+              this.showOtpModal.set(true);
+              this.orderNo = err?.error?.data;
+            }
+          });
+        },
+      });
   }
 }

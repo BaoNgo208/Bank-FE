@@ -383,21 +383,11 @@
 </div>
 
 <!-- LOADING SENSITIVE DETAIL -->
-<div
-  *ngIf="loadingSensitiveDetail()"
-  class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/40"
->
-  <div class="w-[320px] rounded-2xl bg-white p-6 shadow-xl flex flex-col items-center gap-4">
-    <div
-      class="h-10 w-10 rounded-full border-4 border-gray-200 border-t-red-500 animate-spin"
-    ></div>
-
-    <div class="text-center">
-      <p class="text-sm font-semibold text-gray-800">Loading sensitive detail...</p>
-      <p class="text-xs text-gray-500 mt-1">Please wait a moment</p>
-    </div>
-  </div>
-</div>
+<app-loading-overlay
+  [show]="loadingSensitiveDetail()"
+  title="Loading sensitive detail..."
+  message="Please wait a moment"
+></app-loading-overlay>
 
 <app-card-sensitive-detail-modal
   *ngIf="showSensitiveModal() && cardSensitiveDetail()"

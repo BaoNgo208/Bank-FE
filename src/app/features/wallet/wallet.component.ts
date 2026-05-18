@@ -1,6 +1,6 @@
 import { Component, inject, signal, ViewChild } from '@angular/core';
 import { CountUpDirective } from '../../utils/count-up.directive';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { WalletFacade } from './facades/wallet.facade';
 import { Stablecoin, WithdrawOrderStatus } from './types/wallet.type';
@@ -9,12 +9,13 @@ import { PaginationComponent } from '../../shared/components/pagination/paginati
 import Swal from 'sweetalert2';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { ChangeDetectorRef } from '@angular/core';
 import { WalletUiStore } from './stores/wallet-ui.store';
 import { WidthdrawlComponent } from './components/widthdrawl.component';
 import { ToastrService } from 'ngx-toastr';
 import { DepositTransactionsComponent } from '../wallet-transactions/deposits/deposit-transactions.component';
 import { WithdrawalTransactionComponent } from '../wallet-transactions/withdrawals/withdrawal-transactions.component';
+import { LoadingOverlayComponent } from '../../shared/components/loading-overlay/loading-overlay.component';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-wallet-component',
@@ -30,15 +31,16 @@ import { WithdrawalTransactionComponent } from '../wallet-transactions/withdrawa
     WidthdrawlComponent,
     DepositTransactionsComponent,
     WithdrawalTransactionComponent,
+    LoadingOverlayComponent,
   ],
   templateUrl: './wallet.component.html',
 })
 export class WalletComponent {
-  private walletFacade = inject(WalletFacade);
   private toast = inject(ToastrService);
 
   protected walletStore = inject(WalletStore);
   protected walletUiStore = inject(WalletUiStore);
+  protected walletFacade = inject(WalletFacade);
 
   @ViewChild(DepositTransactionsComponent)
   depositTransactionsComponent!: DepositTransactionsComponent;
@@ -94,7 +96,7 @@ export class WalletComponent {
       });
       return;
     }
-
+    this.walletFacade.loading.set(true);
     const file = this.proofFile;
 
     this.walletFacade
@@ -103,6 +105,7 @@ export class WalletComponent {
         amount: this.amount,
         network: this.selectedNetwork,
       })
+      .pipe(finalize(() => this.walletFacade.loading.set(false)))
       .subscribe({
         next: (res) => {
           const order = res.data;
@@ -135,8 +138,8 @@ export class WalletComponent {
   }
 
   openModal(): void {
-    this.showTopupModal = true;
     this.walletFacade.getDepositConfig(Stablecoin.USDT);
+    this.showTopupModal = true;
   }
   closeModal(): void {
     this.showTopupModal = false;

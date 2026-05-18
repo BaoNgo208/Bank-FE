@@ -55,12 +55,12 @@ export const SIDEBAR_TABS: SidebarTab[] = [
 
   {
     key: 'apply_card',
-    label: 'Apply for a card',
+    label: 'Apply For A Card',
     icon: 'fa-solid fa-id-card',
   },
   {
     key: 'inquiry_card',
-    label: 'Inquiry card',
+    label: 'Card Inquiry',
     icon: 'fa-solid fa-magnifying-glass',
   },
 
@@ -71,7 +71,7 @@ export const SIDEBAR_TABS: SidebarTab[] = [
   },
   {
     key: 'wallet_transactions',
-    label: 'Wallet transactions',
+    label: 'Wallet Transactions',
     icon: 'fa-solid fa-money-bill-transfer',
     children: [
       { key: 'deposit', label: 'Deposit' },
@@ -80,18 +80,18 @@ export const SIDEBAR_TABS: SidebarTab[] = [
   },
   {
     key: 'card_transactions',
-    label: 'Card transactions',
+    label: 'Card Transactions',
     icon: 'fa-solid fa-arrow-right-arrow-left',
   },
   {
     key: 'card_funding',
-    label: 'Card funding',
+    label: 'Card Funding',
     icon: 'fa-solid fa-arrow-right-arrow-left',
   },
 
   {
     key: 'invitation_commission',
-    label: 'Invitation commission',
+    label: 'Invitation Commission',
     icon: 'fa-solid fa-user-plus',
   },
 ];

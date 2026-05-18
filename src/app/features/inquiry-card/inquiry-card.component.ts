@@ -18,6 +18,7 @@ import { toUtcEndOfDay, toUtcStartOfDay } from '../../utils/utc.util';
 import { dateRangeValidator } from '../../utils/form-validator.util';
 import { CardSensitiveDetailResponse } from './types/type';
 import { CardSensitiveDetailModalComponent } from './components/card-sensitive-detail-modal/card-sensitive-detail-modal.component';
+import { LoadingOverlayComponent } from '../../shared/components/loading-overlay/loading-overlay.component';
 
 @Component({
   selector: 'app-inquiry-card-component',
@@ -30,6 +31,7 @@ import { CardSensitiveDetailModalComponent } from './components/card-sensitive-d
     WidthdrawlCardModalComponent,
     ConfirmModalComponent,
     CardSensitiveDetailModalComponent,
+    LoadingOverlayComponent,
   ],
   templateUrl: './inquiry-card.component.html',
 })

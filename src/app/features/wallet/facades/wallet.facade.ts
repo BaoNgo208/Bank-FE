@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { DepositService } from '../services/deposit.service';
 import {
   ConfirmWithdrawOtpRequest,
@@ -14,6 +14,7 @@ import {
 import { WalletStore } from '../stores/wallet.store';
 import { WidthdrawlService } from '../services/widthdrawl.service';
 import { WalletService } from '../services/wallet.service';
+import { delay, finalize } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -24,22 +25,32 @@ export class WalletFacade {
   private widthdrawlService = inject(WidthdrawlService);
   private walletService = inject(WalletService);
 
+  loading = signal<boolean>(false);
+
   getDepositConfig(currency: Stablecoin) {
-    this.depositService.getDepositConfig(currency).subscribe({
-      next: (res) => {
-        this.walletStore.depositConfig.set(res.data);
-      },
-      error: (_) => {},
-    });
+    this.loading.set(true);
+    this.depositService
+      .getDepositConfig(currency)
+      .pipe(finalize(() => this.loading.set(false)))
+      .subscribe({
+        next: (res) => {
+          this.walletStore.depositConfig.set(res.data);
+        },
+        error: (_) => {},
+      });
   }
 
   previewDeposit(request: DepositPreviewRequest) {
-    this.depositService.previewDeposit(request).subscribe({
-      next: (res) => {
-        this.walletStore.depositPreview.set(res.data);
-      },
-      error: (_) => {},
-    });
+    this.loading.set(true);
+    this.depositService
+      .previewDeposit(request)
+      .pipe(finalize(() => this.loading.set(false)))
+      .subscribe({
+        next: (res) => {
+          this.walletStore.depositPreview.set(res.data);
+        },
+        error: (_) => {},
+      });
   }
 
   createDepositOrder(request: CreateDepositOrderRequest) {
