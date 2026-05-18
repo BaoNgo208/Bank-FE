@@ -15,20 +15,20 @@
           class="px-4 py-1 rounded-full bg-white/20 hover:bg-white/30 text-sm"
           (click)="openModal()"
         >
-          Top up
+          Top Up
         </button>
 
         <button
           class="px-4 py-1 rounded-full bg-white/20 hover:bg-white/30 text-sm"
           (click)="openWidthdrawlModal()"
         >
-          Withdrawal
+          Withdraw
         </button>
       </div>
 
       <!-- EXCHANGE -->
       <div class="mb-4">
-        <div class="text-sm opacity-80">Current exchange rate</div>
+        <div class="text-sm opacity-80">Current Exchange Rate</div>
         <div class="text-3xl font-bold">$1.0</div>
       </div>
 
@@ -288,3 +288,8 @@
 </div>
 
 <app-widthdraw-component *ngIf="this.walletUiStore.showWithdrawModal()"></app-widthdraw-component>
+<app-loading-overlay
+  [show]="walletFacade.loading()"
+  title="Processing..."
+  message="Please wait a moment"
+></app-loading-overlay>

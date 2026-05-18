@@ -231,6 +231,8 @@
                     'bg-yellow-100 text-yellow-600': row.get('status')?.value === 'PENDING_ADMIN',
                     'bg-green-100 text-green-600': row.get('status')?.value === 'SUCCESS',
                     'bg-red-100 text-red-600': row.get('status')?.value === 'FAILED',
+                    'bg-gray-100 text-gray-600': row.get('status')?.value === 'EXPIRED',
+                    'bg-blue-100 text-blue-600': row.get('status')?.value === 'PENDING_OTP',
                   }"
                 >
                   {{ row.get('status')?.value }}

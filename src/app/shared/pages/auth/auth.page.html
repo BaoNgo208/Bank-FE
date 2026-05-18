@@ -30,7 +30,9 @@
           <p class="font-semibold text-gray-800 mb-2">Information:</p>
 
           <div class="flex flex-col gap-1">
-            <a class="text-red-500 underline cursor-pointer">User Agreement</a>
+            <a class="text-red-500 underline cursor-pointer" (click)="openAgreement()"
+              >User Agreement</a
+            >
             <a class="text-red-500 underline cursor-pointer">Privacy Policy</a>
             <a class="text-red-500 underline cursor-pointer">Confidentiality Agreement</a>
             <a class="text-red-500 underline cursor-pointer">Disclaimer Agreement</a>
@@ -65,7 +67,9 @@
         </p>
 
         <div class="flex flex-col gap-3 text-sm">
-          <a class="hover:underline text-white/90 cursor-pointer">User Agreement</a>
+          <a class="hover:underline text-white/90 cursor-pointer" (click)="openAgreement()"
+            >User Agreement</a
+          >
           <a class="hover:underline text-white/90 cursor-pointer">Privacy Policy</a>
           <a class="hover:underline text-white/90 cursor-pointer">Confidentiality Agreement</a>
           <a class="hover:underline text-white/90 cursor-pointer">Disclaimer Agreement</a>
@@ -81,3 +85,9 @@
     </div>
   </div>
 </div>
+
+<app-card-user-agreement
+  *ngIf="showAgreement()"
+  (agree)="handleAgreeAgreement()"
+  (cancel)="closeAgreement()"
+></app-card-user-agreement>

@@ -1,0 +1,182 @@
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
+  <div class="w-full max-w-4xl overflow-hidden rounded-2xl bg-white shadow-2xl">
+    <!-- Header -->
+    <div class="flex items-center justify-between border-b border-gray-200 px-6 py-4">
+      <div>
+        <h2 class="text-xl font-bold text-gray-900">User Card Usage Agreement</h2>
+        <p class="mt-1 text-sm text-gray-500">
+          Please read the agreement carefully before using card services.
+        </p>
+      </div>
+
+      <button
+        type="button"
+        (click)="onCancel()"
+        class="rounded-full p-2 text-gray-400 transition hover:bg-gray-100 hover:text-gray-700"
+      >
+        ✕
+      </button>
+    </div>
+
+    <!-- Content -->
+    <div class="max-h-[65vh] overflow-y-auto px-6 py-5 text-sm leading-6 text-gray-700">
+      <section class="space-y-3">
+        <p>
+          This system strictly regulates card usage in accordance with the issuing bank’s compliance
+          and risk control requirements.
+        </p>
+
+        <h3 class="pt-3 text-base font-semibold text-gray-900">
+          Key Compliance Management Points for Card Issuers
+        </h3>
+      </section>
+
+      <!-- Section 1 -->
+      <section class="mt-5 space-y-3">
+        <h4 class="font-semibold text-gray-900">
+          1. Prohibited and Illegal Transaction Activities
+        </h4>
+
+        <p>The following transaction activities are strictly prohibited in this system:</p>
+
+        <ul class="list-disc space-y-2 pl-5">
+          <li>Malicious or fraudulent submission of top-up information.</li>
+          <li>
+            Abuse of free trials, including but not limited to trial services on Alibaba Cloud,
+            gaming platforms, video websites, or similar services.
+          </li>
+          <li>
+            Using the card for prohibited payment scenarios as restricted by the issuing bank or
+            this platform.
+          </li>
+          <li>Using the card for PayPal, App Store, or other account verification purposes.</li>
+          <li>
+            Using the card for services provided by government agencies, legal institutions, credit
+            institutions, or similar organizations.
+          </li>
+          <li>
+            Using the card for any illegal activity, including but not limited to fraud or illegal
+            transactions on platforms such as Airbnb, Lyft, Uber, or similar platforms.
+          </li>
+        </ul>
+
+        <div class="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-red-700">
+          <strong>Friendly Reminder:</strong>
+          If any of the above violations are detected, the system may deactivate the card and close
+          the account without refunding any remaining balance. Please use your card responsibly.
+        </div>
+      </section>
+
+      <!-- Section 2 -->
+      <section class="mt-6 space-y-3">
+        <h4 class="font-semibold text-gray-900">2. Card Chargeback and Failed Transaction Rate</h4>
+
+        <ol class="list-decimal space-y-3 pl-5">
+          <li>
+            Please top up your card before making any transaction to ensure that the card has
+            sufficient balance. You should also carefully verify the card information during payment
+            to avoid transaction failures caused by incorrect information.
+          </li>
+
+          <li>
+            If the card is no longer in use, you must first remove it from all related accounts and
+            stop any advertising, subscription, or membership services linked to the card before
+            canceling it. Please do not cancel the card directly in the system if there are failed
+            transactions or if the card has not been removed from related accounts.
+          </li>
+
+          <li>
+            Please monitor failed transactions in the system transaction details. If a transaction
+            fails due to insufficient balance, you must top up the card immediately or remove the
+            card from the relevant account.
+          </li>
+
+          <li>
+            If the chargeback or failed transaction rate of a card segment reaches the platform’s
+            risk control threshold, the system may suspend card opening, top-up, and balance inquiry
+            functions for that card segment. If the rate reaches 30%, the system may automatically
+            deactivate all opened cards within that card segment, and no refund will be provided.
+          </li>
+        </ol>
+      </section>
+
+      <!-- Section 3 -->
+      <section class="mt-6 space-y-3">
+        <h4 class="font-semibold text-gray-900">3. Card Cancellation Rate</h4>
+
+        <p>
+          The platform does not provide tutorials or instructions on how to use cards or place
+          orders on any third-party website. The platform does not guarantee that the cards will
+          work on any specific website. If you need to test card segments, please plan the number of
+          cards you use carefully.
+        </p>
+      </section>
+
+      <!-- Disclaimer -->
+      <section class="mt-6 space-y-3">
+        <h4 class="font-semibold text-gray-900">Disclaimer</h4>
+
+        <ol class="list-decimal space-y-3 pl-5">
+          <li>
+            The platform shall not be liable for any losses or consequences caused by force majeure
+            events, including but not limited to card segment invalidation due to issuing banks,
+            financial institutions, government actions, regulatory policies, or other external
+            organizations.
+          </li>
+
+          <li>
+            The platform only provides card usage services. Users are strictly prohibited from
+            reselling cards or using cards for illegal purposes. The platform shall not be
+            responsible for any consequences arising from such actions.
+          </li>
+        </ol>
+      </section>
+
+      <!-- Acknowledgement -->
+      <section class="mt-6 rounded-xl bg-gray-50 px-4 py-4">
+        <h4 class="font-semibold text-gray-900">Acknowledgement</h4>
+
+        <p class="mt-2">
+          By using this system, you acknowledge that you have read, understood, and agreed to this
+          User Card Usage Agreement. You also agree to comply with all rules and requirements stated
+          above.
+        </p>
+      </section>
+    </div>
+
+    <!-- Footer -->
+    <div
+      class="flex flex-col gap-4 border-t border-gray-200 px-6 py-4 tablet:flex-row tablet:items-center tablet:justify-between"
+    >
+      <label class="flex cursor-pointer items-start gap-3 text-sm text-gray-700">
+        <input
+          type="checkbox"
+          [checked]="accepted()"
+          (change)="accepted.set($any($event.target).checked)"
+          class="mt-1 h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500"
+        />
+
+        <span> I have read and agree to the User Card Usage Agreement. </span>
+      </label>
+
+      <div class="flex justify-end gap-3">
+        <button
+          type="button"
+          (click)="onCancel()"
+          class="rounded-lg border border-gray-300 px-5 py-2 text-sm font-semibold text-gray-700 transition hover:bg-gray-100"
+        >
+          Cancel
+        </button>
+
+        <button
+          type="button"
+          [disabled]="!accepted()"
+          (click)="onAgree()"
+          class="rounded-lg bg-red-600 px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-red-700 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-500"
+        >
+          Agree and Continue
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
