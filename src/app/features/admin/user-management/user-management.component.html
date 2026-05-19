@@ -186,7 +186,26 @@
       </span>
     </div>
   </button>
+
+  <!-- VIEW USER CASHBACK HISTORY -->
+  <button
+    type="button"
+    (click)="openUserCashbackHistoryModal()"
+    class="group flex w-full items-center gap-3 px-4 py-3 text-left text-gray-700 transition hover:bg-purple-50 hover:text-purple-600"
+  >
+    <span
+      class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-500 transition group-hover:bg-purple-100 group-hover:text-purple-600"
+    >
+      <i class="fa-solid fa-coins text-sm"></i>
+    </span>
+
+    <div class="flex flex-col">
+      <span class="font-medium">View cashback history</span>
+      <span class="text-xs text-gray-400 group-hover:text-purple-500"> User cashback records </span>
+    </div>
+  </button>
 </div>
+
 <!-- UPDATE CARD OPEN LIMIT MODAL -->
 <div
   *ngIf="showUpdateLimitModal"
@@ -285,3 +304,11 @@
   [displayName]="selectedUser.username"
   (closed)="showUserCardTransactionsModal = false"
 ></app-user-card-transactions-modal>
+
+<app-cashback-history-modal
+  *ngIf="showUserCashbackHistory() && selectedUser !== null"
+  [userId]="selectedUser.id"
+  [displayName]="selectedUser.username"
+  (closed)="closeUserCashbackHistoryModal()"
+>
+</app-cashback-history-modal>

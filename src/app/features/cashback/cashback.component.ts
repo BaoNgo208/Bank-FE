@@ -52,7 +52,6 @@ export class CashbackComponent {
     // 👉 base position
     const base = currentIndex * segmentWidth;
 
-    // 👉 lấy mốc bắt đầu đúng: max của tier trước
     const prevMax = currentIndex === 0 ? current.min_spent : tiers[currentIndex - 1].max_spent;
 
     const range = current.max_spent - prevMax;

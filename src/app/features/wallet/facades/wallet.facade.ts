@@ -15,6 +15,7 @@ import { WalletStore } from '../stores/wallet.store';
 import { WidthdrawlService } from '../services/widthdrawl.service';
 import { WalletService } from '../services/wallet.service';
 import { delay, finalize } from 'rxjs';
+import { DepositOrderStatus } from '../../admin/deposit-orders-management/types/deposit.type';
 
 @Injectable({
   providedIn: 'root',
@@ -121,5 +122,18 @@ export class WalletFacade {
     },
   ) {
     return this.widthdrawlService.searchWidthdrawlOrders(page, params);
+  }
+
+  searchDepositOrders(
+    page?: number,
+    params?: {
+      orderNo?: string;
+      address?: string;
+      status?: DepositOrderStatus;
+      fromTime?: string;
+      toTime?: string;
+    },
+  ) {
+    return this.depositService.searchDepositOrders(page, params);
   }
 }

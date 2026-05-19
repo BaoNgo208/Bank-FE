@@ -4,6 +4,9 @@ import { FormArray, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
 import { WalletFacade } from '../../wallet/facades/wallet.facade';
 import { ToastrService } from 'ngx-toastr';
+import { dateRangeValidator } from '../../../utils/form-validator.util';
+import { DepositOrderStatus } from '../../admin/deposit-orders-management/types/deposit.type';
+import { toUtcEndOfDay, toUtcStartOfDay } from '../../../utils/utc.util';
 
 @Component({
   selector: 'app-widthdrawal-list-component',
@@ -21,17 +24,96 @@ export class DepositTransactionsComponent {
   rechargePage = 1;
   rechargePageSize = 10;
   rechargeTotalItems = 0;
+  isSearching = false;
 
   form = this.fb.group({
     rechargeRows: this.fb.array([]),
     transferRows: this.fb.array([]),
   });
+  searchForm = this.fb.group(
+    {
+      orderNo: [''],
+      address: [''],
+      status: [null],
+      fromTime: [null],
+      toTime: [null],
+    },
+    { validators: dateRangeValidator },
+  );
+
+  DepositOrderStatus = DepositOrderStatus;
 
   get rechargeRows(): FormArray {
     return this.form.get('rechargeRows') as FormArray;
   }
 
   ngOnInit() {
+    this.loadRechargePage();
+  }
+
+  onSearchClick(): void {
+    this.rechargePage = 1;
+    this.onSearch();
+  }
+
+  onSearch() {
+    this.isSearching = true;
+    const f = this.searchForm.value;
+
+    this.walletFacade
+      .searchDepositOrders(this.rechargePage - 1, {
+        orderNo: f.orderNo ?? undefined,
+        address: f.address ?? undefined,
+        status: f.status ?? undefined,
+        fromTime: toUtcStartOfDay(f.fromTime),
+        toTime: toUtcEndOfDay(f.toTime),
+      })
+      .subscribe({
+        next: (res) => {
+          this.updateTable(res.data.items);
+          this.rechargeTotalItems = res.data.total_size;
+          this.cd.markForCheck();
+        },
+      });
+  }
+
+  updateTable(orders: any[]) {
+    this.rechargeRows.clear();
+
+    orders.forEach((order) => {
+      this.rechargeRows.push(
+        this.fb.group({
+          order_no: [order.order_no],
+          currency: [order.currency],
+          network: [order.network],
+          address: [order.address],
+          amount: [order.amount],
+          expected_amount: [order.expected_amount],
+          status: [order.status],
+          admin_note: [order.admin_note],
+          created_at: [order.created_at],
+        }),
+      );
+    });
+
+    this.cd.detectChanges();
+  }
+
+  onReset() {
+    this.isSearching = false;
+    // 1. Reset form
+    this.searchForm.reset({
+      orderNo: '',
+      address: '',
+      status: null,
+      fromTime: null,
+      toTime: null,
+    });
+
+    // 2. Reset page về 1
+    this.rechargePage = 1;
+
+    // this.cd.detectChanges();
     this.loadRechargePage();
   }
 

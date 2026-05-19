@@ -9,6 +9,7 @@ import {
 } from '../types/type';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../../../../core/auth/auth.request';
+import { CashbackHistoryPageResponse } from '../../../cashback/types/type';
 
 @Injectable({
   providedIn: 'root',
@@ -56,5 +57,25 @@ export class CashbackService extends BaseApiService {
     });
 
     return this.post('/cashback/approve', request, { params });
+  }
+
+  rejectCashbackBatch(
+    month: string,
+    request: ApproveCashbackBatchRequest,
+  ): Observable<ApiResponse<void>> {
+    const params = this.buildPageParams(undefined, undefined, {
+      month: month,
+    });
+
+    return this.post('/cashback/reject', request, { params });
+  }
+
+  getUserCashbackHistory(
+    userId: number,
+    page: number,
+  ): Observable<ApiResponse<CashbackHistoryPageResponse>> {
+    const params = this.buildPageParams(page, undefined, undefined);
+
+    return this.get(`/history/users/${userId}`, params);
   }
 }

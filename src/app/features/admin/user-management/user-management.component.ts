@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, signal } from '@angular/core';
 import { UsersService } from './services/users.service';
 import { FormArray, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
@@ -6,6 +6,7 @@ import { AccountStatus, AdminUserResponse } from './types/type';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
 import { CommonModule } from '@angular/common';
 import { UserCardTransactionsModalComponent } from './components/card-transactions-history-modal/user-card-transactions-modal.component';
+import { CashbackHistoryModal } from './components/cashback-history/cashback-history.component';
 
 @Component({
   selector: 'app-user-management-component',
@@ -14,6 +15,7 @@ import { UserCardTransactionsModalComponent } from './components/card-transactio
     CommonModule,
     PaginationComponent,
     UserCardTransactionsModalComponent,
+    CashbackHistoryModal,
   ],
   templateUrl: './user-management.component.html',
 })
@@ -50,6 +52,7 @@ export class UserManagementComponent {
   isUpdatingLimit = false;
 
   showUserCardTransactionsModal = false;
+  showUserCashbackHistory = signal<boolean>(false);
 
   ngOnInit() {
     this.loadUsersPage();
@@ -97,6 +100,22 @@ export class UserManagementComponent {
     this.showUserCardTransactionsModal = true;
 
     this.openDropdownIndex = null;
+  }
+
+  openUserCashbackHistoryModal() {
+    if (this.openDropdownIndex === null) return;
+    const user = this.rows.at(this.openDropdownIndex).value as AdminUserResponse;
+
+    if (!user) return;
+
+    this.selectedUser = user;
+    this.showUserCashbackHistory.set(true);
+    this.openDropdownIndex = null;
+  }
+
+  closeUserCashbackHistoryModal() {
+    this.showUserCashbackHistory.set(false);
+    this.selectedUser = null;
   }
 
   closeUserCardTransactionsModal(): void {

@@ -18,10 +18,20 @@
         <div>
           <button
             [disabled]="selectedUserIds().length === 0"
-            (click)="this.showApproveConfirmModal.set(true)"
+            (click)="openApproveConfirmModal()"
             class="py-1.5 px-4 bg-red-600 text-[0.8rem] text-white rounded hover:bg-red-700 transition flex items-center gap-2 disabled:bg-red-300 disabled:cursor-not-allowed"
           >
             Approve
+          </button>
+        </div>
+
+        <div>
+          <button
+            [disabled]="selectedUserIds().length === 0"
+            (click)="openRejectConfirmModal()"
+            class="py-1.5 px-4 bg-red-600 text-[0.8rem] text-white rounded hover:bg-red-700 transition flex items-center gap-2 disabled:bg-red-300 disabled:cursor-not-allowed"
+          >
+            Reject
           </button>
         </div>
       </div>
@@ -118,7 +128,7 @@
 </div>
 
 <!-- CONFRIM MODAL -->
-@if (showApproveConfirmModal()) {
+@if (showCashbackConfirmModal()) {
   <div class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/40 px-4">
     <div
       class="w-full max-w-md rounded-2xl bg-white shadow-xl border border-gray-200 overflow-hidden"
@@ -131,7 +141,7 @@
         <button
           type="button"
           class="text-gray-400 hover:text-gray-600 transition"
-          (click)="this.showApproveConfirmModal.set(false)"
+          (click)="this.showCashbackConfirmModal.set(false)"
         >
           ✕
         </button>
@@ -148,15 +158,29 @@
 
           <div>
             <p class="text-sm text-gray-700 leading-6">
-              Are you sure you want to approve cashback for
-              <span class="font-semibold text-red-600">
+              Are you sure you want to
+              <span
+                class="font-semibold"
+                [ngClass]="confirmAction() === 'approve' ? 'text-emerald-600' : 'text-rose-600'"
+              >
+                {{ confirmAction() === 'approve' ? 'approve' : 'reject' }}
+              </span>
+              cashback for
+              <span
+                class="font-semibold"
+                [ngClass]="confirmAction() === 'approve' ? 'text-emerald-600' : 'text-rose-600'"
+              >
                 {{ selectedUserIds().length }}
               </span>
               selected user(s)?
             </p>
 
             <p class="text-xs text-gray-400 mt-2">
-              This action will approve cashback for the selected users in the current month.
+              {{
+                confirmAction() === 'approve'
+                  ? 'This action will approve cashback for the selected users in the current month.'
+                  : 'This action will reject cashback for the selected users in the current month.'
+              }}
             </p>
           </div>
         </div>
@@ -169,17 +193,22 @@
         <button
           type="button"
           class="px-4 py-2 rounded-lg border border-gray-300 text-sm text-gray-700 hover:bg-gray-100 transition"
-          (click)="this.showApproveConfirmModal.set(false)"
+          (click)="this.showCashbackConfirmModal.set(false)"
         >
           Cancel
         </button>
 
         <button
           type="button"
-          class="px-4 py-2 rounded-lg bg-red-600 text-sm text-white hover:bg-red-700 transition"
-          (click)="approveSelected()"
+          class="px-4 py-2 rounded-lg text-sm text-white transition"
+          [ngClass]="
+            confirmAction() === 'approve'
+              ? 'bg-emerald-600 hover:bg-emerald-700'
+              : 'bg-rose-600 hover:bg-rose-700'
+          "
+          (click)="confirmCashbackAction()"
         >
-          Yes, approve
+          {{ confirmAction() === 'approve' ? 'Yes, approve' : 'Yes, reject' }}
         </button>
       </div>
     </div>

@@ -1,90 +1,85 @@
 <div class="h-full w-full px-3 py-2 flex flex-col gap-y-5 overflow-auto">
-  <!-- Deposit history table -->
-  <div class="rounded-base border border-default bg-neutral-primary">
-    <!--  TOP TOOLBAR -->
-    <form [formGroup]="searchForm">
-      <div class="w-full flex flex-col gap-y-5 bg-white p-4 justify-center">
-        <div class="w-full flex flex-wrap sm:flex-row items-center gap-2 text-[0.85rem]">
-          <div class="flex items-center gap-2">
-            <span class="text-gray-600">Slash transaction id</span>
-            <input
-              formControlName="slashTransactionId"
-              type="text"
-              placeholder="Please enter your Slash transaction id"
-              class="h-9 px-3 border border-gray-300 rounded"
-            />
-          </div>
+  <!--  TOP TOOLBAR -->
+  <form [formGroup]="searchForm">
+    <div
+      class="w-full flex flex-col gap-y-5 bg-white p-4 border border-gray-200 rounded-xl justify-center"
+    >
+      <div class="w-full flex flex-wrap sm:flex-row items-center gap-2 text-[0.85rem]">
+        <div class="flex items-center gap-2">
+          <span class="text-gray-600">Slash transaction id</span>
+          <input
+            formControlName="slashTransactionId"
+            type="text"
+            placeholder="Please enter your Slash transaction id"
+            class="h-9 px-3 border border-gray-300 rounded"
+          />
+        </div>
 
-          <div class="flex items-center gap-2">
-            <span class="text-gray-600">Merchant description</span>
-            <input
-              formControlName="merchantDescription"
-              type="text"
-              placeholder="Please enter description"
-              class="h-9 px-3 border border-gray-300 rounded"
-            />
-          </div>
+        <div class="flex items-center gap-2">
+          <span class="text-gray-600">Merchant description</span>
+          <input
+            formControlName="merchantDescription"
+            type="text"
+            placeholder="Please enter description"
+            class="h-9 px-3 border border-gray-300 rounded"
+          />
+        </div>
 
-          <div class="flex items-center gap-2">
-            <span class="text-gray-600">status</span>
-            <select formControlName="status" class="h-9 px-3 border border-gray-300 rounded">
-              <option [ngValue]="null">Please ...</option>
-              <option class="text-green-600" [ngValue]="CardTransactionStatus.POSTED">
-                POSTED
-              </option>
-              <option class="text-red-600" [ngValue]="CardTransactionStatus.PENDING">
-                PENDING
-              </option>
-              <option class="text-gray-400" [ngValue]="CardTransactionStatus.FAILED">FAILED</option>
+        <div class="flex items-center gap-2">
+          <span class="text-gray-600">status</span>
+          <select formControlName="status" class="h-9 px-3 border border-gray-300 rounded">
+            <option [ngValue]="null">Please ...</option>
+            <option class="text-green-600" [ngValue]="CardTransactionStatus.POSTED">POSTED</option>
+            <option class="text-red-600" [ngValue]="CardTransactionStatus.PENDING">PENDING</option>
+            <option class="text-gray-400" [ngValue]="CardTransactionStatus.FAILED">FAILED</option>
 
-              <option class="text-slate-600 font-medium" [ngValue]="CardTransactionStatus.REVERSED">
-                REVERSED
-              </option>
+            <option class="text-slate-600 font-medium" [ngValue]="CardTransactionStatus.REVERSED">
+              REVERSED
+            </option>
 
-              <option class="text-yellow-600" [ngValue]="CardTransactionStatus.UNKNOWN">
-                UNKNOWN
-              </option>
-            </select>
-          </div>
+            <option class="text-yellow-600" [ngValue]="CardTransactionStatus.UNKNOWN">
+              UNKNOWN
+            </option>
+          </select>
+        </div>
 
-          <div class="flex items-center gap-2">
-            <span class="text-gray-600">Creation time</span>
-            <div class="flex items-center border border-gray-300 rounded overflow-hidden">
-              <input type="date" formControlName="fromTime" class="h-9 px-2 outline-none" />
-              <span class="px-2 text-gray-400">-</span>
-              <input type="date" formControlName="toTime" class="h-9 px-2 outline-none" />
-              <!-- ERROR -->
-              <div
-                *ngIf="searchForm.errors?.['invalidDateRange']"
-                class="text-red-500 text-xs mt-1"
-              >
-                From date must be before To date
-              </div>
+        <div class="flex items-center gap-2">
+          <span class="text-gray-600">Creation time</span>
+          <div class="flex items-center border border-gray-300 rounded overflow-hidden">
+            <input type="date" formControlName="fromTime" class="h-9 px-2 outline-none" />
+            <span class="px-2 text-gray-400">-</span>
+            <input type="date" formControlName="toTime" class="h-9 px-2 outline-none" />
+            <!-- ERROR -->
+            <div *ngIf="searchForm.errors?.['invalidDateRange']" class="text-red-500 text-xs mt-1">
+              From date must be before To date
             </div>
           </div>
         </div>
-
-        <div class="w-full flex gap-x-2 text-[0.8rem]">
-          <button
-            (click)="onSearchClick()"
-            [disabled]="searchForm.invalid"
-            class="h-9 px-3 bg-red-600 text-white rounded transition flex items-center gap-2 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed"
-          >
-            <i class="fa-solid fa-magnifying-glass"></i> Search
-          </button>
-
-          <button
-            type="button"
-            (click)="onReset()"
-            [disabled]="searchForm.invalid"
-            class="h-9 px-3 bg-red-600 text-white rounded transition flex items-center gap-2 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed"
-          >
-            Reset
-          </button>
-        </div>
       </div>
-    </form>
 
+      <div class="w-full flex gap-x-2 text-[0.8rem]">
+        <button
+          (click)="onSearchClick()"
+          [disabled]="searchForm.invalid"
+          class="h-9 px-3 bg-red-600 text-white rounded transition flex items-center gap-2 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed"
+        >
+          <i class="fa-solid fa-magnifying-glass"></i> Search
+        </button>
+
+        <button
+          type="button"
+          (click)="onReset()"
+          [disabled]="searchForm.invalid"
+          class="h-9 px-3 bg-red-600 text-white rounded transition flex items-center gap-2 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed"
+        >
+          Reset
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <!-- Deposit history table -->
+  <div class="rounded-base border border-default bg-neutral-primary">
     <div class="overflow-x-auto">
       <form [formGroup]="form">
         <table class="w-full text-sm text-left border-collapse border border-default">

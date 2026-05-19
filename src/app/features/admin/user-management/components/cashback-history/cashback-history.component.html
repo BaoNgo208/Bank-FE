@@ -1,0 +1,114 @@
+<div
+  class="fixed inset-0 z-[10000] flex items-center justify-center bg-black/40 px-4 py-6"
+  (click)="close()"
+>
+  <div
+    class="flex max-h-[92vh] w-full max-w-7xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl"
+    (click)="$event.stopPropagation()"
+  >
+    <!-- HEADER -->
+    <div class="flex items-center justify-between border-b border-default px-5 py-4">
+      <div>
+        <h2 class="text-lg font-bold text-gray-800">Cashback history</h2>
+
+        <p class="mt-1 text-sm text-gray-500">
+          User:
+          <span class="font-medium text-gray-700">
+            {{ displayName || '#' + userId }}
+          </span>
+        </p>
+      </div>
+
+      <button
+        type="button"
+        class="flex h-9 w-9 items-center justify-center rounded-full text-gray-500 transition hover:bg-gray-100 hover:text-gray-800"
+        (click)="close()"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div class="h-full px-3 py-2 flex flex-col gap-y-5 overflow-auto">
+      <div class="min-w-0 rounded-base border border-default bg-neutral-primary">
+        <div class="flex items-center justify-between px-4 py-2 bg-white border-b border-default">
+          <div class="font-medium text-heading">
+            <label>Cashback History</label>
+          </div>
+        </div>
+
+        <form [formGroup]="form" class="overflow-x-auto">
+          <table class="w-full text-sm text-left border-collapse border border-default">
+            <thead class="border-b bg-gray-50">
+              <tr class="text-gray-600">
+                <th class="px-3 py-3 border-r border-default">Month</th>
+                <th class="px-3 py-3 border-r border-default">Percent</th>
+                <th class="px-3 py-3 border-r border-default">Total spent</th>
+                <th class="px-3 py-3 border-r border-default">Cashback amount</th>
+                <th class="px-3 py-3 border-r border-default">Status</th>
+                <th class="px-3 w-[15%] py-3 border-r border-default">Approved at</th>
+              </tr>
+            </thead>
+            <tbody formArrayName="rows">
+              <tr
+                *ngFor="let row of rows.controls; let i = index"
+                [formGroupName]="i"
+                class="border-b hover:bg-gray-50"
+              >
+                <td class="px-3 py-3 border-r border-default">{{ row.get('month')?.value }}</td>
+                <td class="px-3 py-3 border-r border-default">
+                  <span class="px-2 py-1 text-xs rounded-full bg-blue-50 text-blue-600 font-medium">
+                    {{ row.get('percent')?.value }}%
+                  </span>
+                </td>
+                <td class="px-3 py-3 border-r border-default">
+                  <span class="font-medium text-gray-800">
+                    {{ row.get('total_spent')?.value }}
+                  </span>
+                  <span class="text-xs text-gray-400 ml-1">USD</span>
+                </td>
+                <td class="px-3 py-3 border-r border-default">
+                  <span class="font-semibold text-red-600">
+                    {{ row.get('cashback_amount')?.value }}
+                  </span>
+                  <span class="text-xs text-gray-400 ml-1">USD</span>
+                </td>
+
+                <td class="px-3 py-3 border-r border-default">
+                  <span
+                    class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-bold"
+                    [ngClass]="{
+                      'bg-amber-50 text-amber-700 border border-amber-200':
+                        row.get('cashback_status')?.value === 'PENDING',
+
+                      'bg-green-50 text-green-700 border border-green-200':
+                        row.get('cashback_status')?.value === 'APPROVED',
+
+                      'bg-rose-50 text-rose-700 border border-rose-200':
+                        row.get('cashback_status')?.value === 'REJECTED',
+                    }"
+                  >
+                    {{ row.get('cashback_status')?.value }}
+                  </span>
+                </td>
+                <td class="px-3 py-3 border-r border-default w-[140px]">
+                  <span class="text-gray-500 text-sm">
+                    {{ row.get('approved_at')?.value | date: 'dd/MM/yyyy' }}
+                  </span>
+                  <span class="text-xs text-gray-400">
+                    {{ row.get('approved_at')?.value | date: 'HH:mm' }}
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </form>
+        <app-pagination
+          [page]="cashbackHistoryPage()"
+          [pageSize]="cashbackHistoryPageSize()"
+          [totalItems]="cashbackHistoryTotalItems()"
+          (pageChange)="onHistoryPageChange($event)"
+          (pageSizeChange)="onHistorySizeChange($event)"
+        ></app-pagination>
+      </div>
+    </div>
+  </div>
+</div>
