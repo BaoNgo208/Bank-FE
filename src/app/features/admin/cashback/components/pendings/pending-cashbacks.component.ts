@@ -8,6 +8,8 @@ import { CommonModule } from '@angular/common';
 import { PaginationComponent } from '../../../../../shared/components/pagination/pagination.component';
 import { finalize } from 'rxjs';
 
+type CashbackConfirmAction = 'approve' | 'reject';
+
 @Component({
   selector: 'app-pending-cashback-component',
   imports: [ReactiveFormsModule, CommonModule, PaginationComponent],
@@ -27,7 +29,10 @@ export class PendingCashbacksComponent {
   openDropdownIndex: number | null = null;
 
   selectedUserIds = signal<number[]>([]);
-  showApproveConfirmModal = signal(false);
+
+  confirmAction = signal<CashbackConfirmAction>('approve');
+
+  showCashbackConfirmModal = signal(false);
 
   month = this.fb.nonNullable.control(this.getCurrentMonth());
 
@@ -71,6 +76,16 @@ export class PendingCashbacksComponent {
     this.openDropdownIndex = null;
   }
 
+  openApproveConfirmModal() {
+    this.confirmAction.set('approve');
+    this.showCashbackConfirmModal.set(true);
+  }
+
+  openRejectConfirmModal() {
+    this.confirmAction.set('reject');
+    this.showCashbackConfirmModal.set(true);
+  }
+
   toggleAll(event: Event) {
     const checked = (event.target as HTMLInputElement).checked;
 
@@ -112,7 +127,8 @@ export class PendingCashbacksComponent {
     });
   }
 
-  approveSelected() {
+  confirmCashbackAction() {
+    const action = this.confirmAction();
     const userIds = this.selectedUserIds();
 
     if (userIds.length === 0) {
@@ -128,19 +144,26 @@ export class PendingCashbacksComponent {
       user_ids: userIds,
     };
 
-    this.cashbackService
-      .approveCashbackBatch(this.month.value, request)
+    const actionRequest$ =
+      action === 'approve'
+        ? this.cashbackService.approveCashbackBatch(this.month.value, request)
+        : this.cashbackService.rejectCashbackBatch(this.month.value, request);
+
+    actionRequest$
       .pipe(
         finalize(() => {
-          this.showApproveConfirmModal.set(false);
+          this.showCashbackConfirmModal.set(false);
         }),
       )
       .subscribe({
-        next: (_) => {
+        next: () => {
           Swal.fire({
             icon: 'success',
             title: 'Success',
-            text: 'Approve cashback successfully',
+            text:
+              action === 'approve'
+                ? 'Approve cashback successfully'
+                : 'Reject cashback successfully',
           });
 
           this.loadPendingPage();
@@ -149,7 +172,7 @@ export class PendingCashbacksComponent {
           Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: err?.error?.message,
+            text: err?.error?.message || 'Something went wrong',
           });
         },
       });
