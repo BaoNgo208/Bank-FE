@@ -2,6 +2,32 @@
   <!-- NAVBAR -->
   <app-navbar (navClick)="scrollToSection($event)"></app-navbar>
 
+  <!-- FLOATING TELEGRAM BUTTON -->
+  <a
+    href="https://t.me/vcccardads"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Chat with us on Telegram"
+    class="fixed right-4 bottom-4 z-[99999] group md:right-6 md:bottom-6"
+  >
+    <!-- button -->
+    <div
+      class="flex h-14 w-14 items-center justify-center rounded-full bg-[#18a8e8] text-white shadow-xl transition-all duration-300 hover:scale-105 hover:bg-[#0d9bd8] md:h-16 md:w-16"
+    >
+      <i
+        class="fa-solid fa-paper-plane -translate-x-0.5 translate-y-0.5 text-[28px] md:text-[34px]"
+      ></i>
+    </div>
+
+    <!-- tooltip -->
+    <div
+      class="pointer-events-none absolute bottom-16 right-0 translate-y-2 whitespace-nowrap rounded-full bg-white px-4 py-2 text-xs font-bold text-gray-800 opacity-0 shadow-lg transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 md:bottom-20"
+    >
+      Chat with us
+      <span class="absolute -bottom-1 right-5 h-3 w-3 rotate-45 bg-white"></span>
+    </div>
+  </a>
+
   <!-- HERO -->
   <div class="pt-[68px]">
     <app-hero></app-hero>
@@ -329,4 +355,6 @@
       </div>
     </div>
   </section>
+
+  <app-footer></app-footer>
 </div>
