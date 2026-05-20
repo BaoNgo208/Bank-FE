@@ -7,7 +7,7 @@
   ></div>
   <div class="max-w-6xl w-full grid md:grid-cols-2 gap-10 items-center">
     <!-- LEFT: CARDS -->
-    <div class="relative w-full max-w-[420px] aspect-[4/3] mx-auto group">
+    <div class="relative w-full max-w-[420px] aspect-[4/3] mx-auto group order-2 md:order-1">
       <!-- FACEBOOK -->
       <div class="card fb-card float">
         <div class="card-top">
@@ -74,7 +74,7 @@
     </div>
 
     <!-- RIGHT: CONTENT -->
-    <div class="text-white space-y-6">
+    <div class="text-white space-y-6 order-1 md:order-2">
       <h2 class="text-4xl font-bold leading-tight reveal reveal-right">
         Optimal Solution For Advertising On
         <span class="text-yellow-300">Facebook, Google & TikTok</span>
@@ -104,6 +104,7 @@
         </ul>
 
         <button
+          (click)="navigateService.navigateToUserAuth()"
           class="mt-10 bg-white/80 text-red-600 px-7 py-3 rounded-full font-semibold shadow-[0_0_30px_rgba(255,255,255,0.35)] hover:bg-red-50 hover:scale-105 transition-all duration-300"
         >
           Issue Card <i class="fa fa-arrow-right text-[0.8rem]"></i>

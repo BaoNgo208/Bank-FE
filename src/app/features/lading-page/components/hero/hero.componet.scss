@@ -290,3 +290,158 @@
   bottom: -55px;
   border: 18px solid rgba(255, 255, 255, 0.12);
 }
+// Mobile keyframes — tên mới
+@keyframes cycleCardOneMobile {
+  0%,
+  28% {
+    left: 2.5rem;
+    top: -1.5rem;
+    width: 175px;
+    height: 90px;
+    opacity: 0.22;
+    filter: blur(1px);
+    z-index: 1;
+    transform: rotateY(-20deg) rotateX(4deg) rotateZ(-5deg) scale(0.96);
+  }
+  33%,
+  61% {
+    left: 0;
+    top: 0.75rem;
+    width: 190px;
+    height: 105px;
+    opacity: 1;
+    filter: blur(0);
+    z-index: 2;
+    transform: rotateY(-18deg) rotateX(4deg) rotateZ(-7deg) scale(1);
+  }
+  66%,
+  94% {
+    left: -3rem;
+    top: 4rem;
+    width: 210px;
+    height: 115px;
+    opacity: 1;
+    filter: blur(0);
+    z-index: 3;
+    transform: rotateY(-18deg) rotateX(4deg) rotateZ(-7deg) scale(1.02);
+  }
+  100% {
+    left: 2.5rem;
+    top: -1.5rem;
+    width: 175px;
+    height: 90px;
+    opacity: 0.22;
+    filter: blur(1px);
+    z-index: 1;
+    transform: rotateY(-20deg) rotateX(4deg) rotateZ(-5deg) scale(0.96);
+  }
+}
+
+@keyframes cycleCardTwoMobile {
+  0%,
+  28% {
+    left: 0;
+    top: 0.75rem;
+    width: 190px;
+    height: 105px;
+    opacity: 1;
+    filter: blur(0);
+    z-index: 2;
+    transform: rotateY(-18deg) rotateX(4deg) rotateZ(-7deg) scale(1);
+  }
+  33%,
+  61% {
+    left: -3rem;
+    top: 4rem;
+    width: 210px;
+    height: 115px;
+    opacity: 1;
+    filter: blur(0);
+    z-index: 3;
+    transform: rotateY(-18deg) rotateX(4deg) rotateZ(-7deg) scale(1.02);
+  }
+  66%,
+  94% {
+    left: 2.5rem;
+    top: -1.5rem;
+    width: 175px;
+    height: 90px;
+    opacity: 0.22;
+    filter: blur(1px);
+    z-index: 1;
+    transform: rotateY(-20deg) rotateX(4deg) rotateZ(-5deg) scale(0.96);
+  }
+  100% {
+    left: 0;
+    top: 0.75rem;
+    width: 190px;
+    height: 105px;
+    opacity: 1;
+    filter: blur(0);
+    z-index: 2;
+    transform: rotateY(-18deg) rotateX(4deg) rotateZ(-7deg) scale(1);
+  }
+}
+
+@keyframes cycleCardThreeMobile {
+  0%,
+  28% {
+    left: -3rem;
+    top: 4rem;
+    width: 210px;
+    height: 115px;
+    opacity: 1;
+    filter: blur(0);
+    z-index: 3;
+    transform: rotateY(-18deg) rotateX(4deg) rotateZ(-7deg) scale(1.02);
+  }
+  33%,
+  61% {
+    left: 2.5rem;
+    top: -1.5rem;
+    width: 175px;
+    height: 90px;
+    opacity: 0.22;
+    filter: blur(1px);
+    z-index: 1;
+    transform: rotateY(-20deg) rotateX(4deg) rotateZ(-5deg) scale(0.96);
+  }
+  66%,
+  94% {
+    left: 0;
+    top: 0.75rem;
+    width: 190px;
+    height: 105px;
+    opacity: 1;
+    filter: blur(0);
+    z-index: 2;
+    transform: rotateY(-18deg) rotateX(4deg) rotateZ(-7deg) scale(1);
+  }
+  100% {
+    left: -3rem;
+    top: 4rem;
+    width: 210px;
+    height: 115px;
+    opacity: 1;
+    filter: blur(0);
+    z-index: 3;
+    transform: rotateY(-18deg) rotateX(4deg) rotateZ(-7deg) scale(1.02);
+  }
+}
+
+// Override animation-name trên mobile
+@media (max-width: 640px) {
+  .animated-card {
+    transform-origin: top left;
+  }
+
+  .card-one {
+    animation-name: cycleCardOneMobile;
+  }
+  .card-two {
+    animation-name: cycleCardTwoMobile;
+  }
+  .card-three {
+    animation-name: cycleCardThreeMobile;
+  }
+}

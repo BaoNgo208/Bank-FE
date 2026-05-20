@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RevealDirective } from '../../../../shared/directives/reveal.directive';
+import { NavigateService } from '../../../../shared/services/navigate.service';
 
 @Component({
   selector: 'app-hero',
@@ -8,4 +9,6 @@ import { RevealDirective } from '../../../../shared/directives/reveal.directive'
   templateUrl: './hero.component.html',
   styleUrl: './hero.componet.scss',
 })
-export class HeroComponent {}
+export class HeroComponent {
+  protected navigateService = inject(NavigateService);
+}

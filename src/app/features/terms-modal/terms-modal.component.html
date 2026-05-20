@@ -1,0 +1,379 @@
+<div
+  class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 px-4 backdrop-blur-sm"
+  (click)="close()"
+>
+  <div
+    class="relative flex max-h-[85vh] w-full max-w-3xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl"
+    (click)="$event.stopPropagation()"
+  >
+    <!-- HEADER -->
+    <div class="flex items-center justify-between border-b border-gray-100 px-6 py-4">
+      <h2 class="text-xl font-bold text-gray-900">
+        {{ title }}
+      </h2>
+
+      <button
+        type="button"
+        (click)="close()"
+        class="flex h-9 w-9 items-center justify-center rounded-full bg-gray-100 text-gray-500 transition hover:bg-red-50 hover:text-red-500"
+        aria-label="Close modal"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <!-- BODY -->
+    <div class="flex-1 overflow-y-auto px-6 py-5 text-sm leading-7 text-gray-600">
+      @if (termType === 'privacy') {
+        <div class="space-y-5">
+          <section>
+            <h3 class="mb-2 text-base font-bold text-gray-900">Privacy Agreement</h3>
+            <p>Dear user, welcome to read this agreement</p>
+            <p>
+              Your privacy is important to us ("us" or "ours"). And we are committed to protecting
+              your privacy. Therefore, we have formulated a privacy policy. This Privacy Policy
+              ("Privacy Policy") explains that when you use the website and services, How do we
+              handle your information and protect your privacy, as well as the available rights and
+              options related to your information.We believe that you have the right to know our
+              practices regarding the information we may collect and use when using the website and
+              services ("Website and Services"). If you do not agree with the terms and conditions
+              set here, please do not use the website and services.
+            </p>
+          </section>
+
+          <section>
+            <h3 class="mb-2 text-base font-bold text-gray-900">
+              1.The information we process and the purpose of processing your information
+            </h3>
+            <p>
+              We will handle two categories of information. Our mission is to continuously improve
+              our website and services, and provide you with new or better experiences. As part of
+              this task, we will use your information for the following purposes. If there is any
+              new purpose for processing your personal data, we will notify you before starting to
+              process information related to that new purpose by making corresponding changes to
+              this privacy policy.
+            </p>
+          </section>
+
+          <section>
+            <h3 class="mb-2 text-base font-bold text-gray-900">
+              1.1 The information you submitted
+            </h3>
+
+            <p>
+              (1) ID card and photo (excluding facial photo). You can voluntarily grant us access to
+              the camera or photo album to retrieve photos on your mobile device. For such photos,
+              we neither store nor share them with any third party. This information is necessary
+              for the proper performance of the contract between you and us.
+            </p>
+
+            <p>
+              (2) Facial feature data. When using facial recognition for the first time, you can
+              voluntarily grant us access to the camera and photo album to obtain facial photos on
+              your mobile device. We can only access your camera and photo album if you confirm your
+              permission. Then, we will use a third-party SDK to analyze facial feature data,
+              identify the positions and shapes of the five senses in the photo, process the photo,
+              and provide feedback on the rendering to you. This rendering will not contain any
+              personal identification information. For such data, photos, and renderings, we neither
+              store nor share them with any third party. The purpose of processing such information
+              is only to operate the facial recognition function of the application (including but
+              not limited to aging effects, gender transformation, facial fusion, etc.).
+            </p>
+
+            <p>
+              (3) The purpose of processing such information is only to operate the facial
+              recognition function of the application (including but not limited to aging effect,
+              gender conversion effect, facial fusion effect, face changing effect, filter effect),
+              camera, and photos. In order to use certain features of the application, you may
+              voluntarily grant us access to the camera or photo album to retrieve photos on your
+              mobile device. We may use Photo Kit API is used to collect photos, images, and other
+              data that you upload or submit while using the application. This information is
+              necessary for the proper performance of the contract between you and us.
+            </p>
+
+            <p>
+              (4) Support related information. If you contact us through our support section or via
+              email, we may collect your contact information, your complaints or feedback, and any
+              information you voluntarily provide related to this support. This type of information
+              is only used to provide support services to you and will not be associated with any
+              other information collected from you through the website and services.
+            </p>
+
+            <p>(5) The purpose of the information you submitted is</p>
+
+            <ul class="list-decimal space-y-1 pl-5">
+              <li>Operate and update websites and services;</li>
+              <li>Improve and customize websites, services, and related services;</li>
+              <li>Maintain, test, and monitor the quality and operation of the website;</li>
+              <li>To provide you with support and handle your complaints and/or feedback;</li>
+              <li>
+                Take any measures when dealing with disputes related to your website and services;
+              </li>
+              <li>
+                Comply with and meet any applicable laws, regulations, legal procedures, or
+                enforceable government requirements.
+              </li>
+            </ul>
+          </section>
+
+          <section>
+            <h3 class="mb-2 text-base font-bold text-gray-900">
+              1.2 Automatically processed information
+            </h3>
+
+            <p>
+              (1) When you use the website and services, we will collect the following information
+            </p>
+
+            <ul class="list-disc space-y-1 pl-5">
+              <li>
+                Universal Unique Identifier(UUID), Types of mobile devices and the applications and
+                operating system versions installed on them;
+              </li>
+              <li>Country, Language;</li>
+            </ul>
+
+            <p>
+              (2) Metadata. Metadata can describe the location information and file creation time
+              contained in photos or other files, or the rough features of characters in photos and
+              other content contained in photos. We use photo metadata to provide you with certain
+              features, including precise facial recognition, keypoint recognition, and other custom
+              functions based on these basic features.
+            </p>
+
+            <p>
+              (3) Payment data. We may collect information about your purchase order, such as the
+              purchased item, order time, order status, and payment time. We do not collect, nor are
+              we responsible for collecting payment details or ensuring security. Payment
+              information is processed and stored by third-party companies. Before entering your
+              personal payment details, we recommend that you read and familiarize yourself with the
+              privacy policies of these third-party companies. When you start using the website and
+              services, information will be automatically processed through automated data
+              processing technology. The purpose of automatically processing information is to:
+            </p>
+
+            <ul class="list-decimal space-y-1 pl-5">
+              <li>
+                Operate and update websites and services, and provide you with existing and new
+                features and characteristics;
+              </li>
+              <li>Improve and customize websites, services, and related services;</li>
+              <li>
+                Maintain, test, monitor, and improve the quality and operation of the website;
+              </li>
+              <li>
+                Enforce the terms and conditions applicable to the website and services, and
+                prevent, detect, and investigate fraud, security vulnerabilities, potential
+                prohibited or illegal activities and their abuse, protect our trademarks, and
+                enforce our terms of use.
+              </li>
+            </ul>
+          </section>
+
+          <section>
+            <h3 class="mb-2 text-base font-bold text-gray-900">
+              2.Protecting personal information
+            </h3>
+            <p>
+              We take preventive measures, including administrative, technical, and physical
+              measures, to protect your personal information from loss, theft, and abuse, as well as
+              unauthorized access, disclosure, alteration, and destruction.
+            </p>
+            <p>
+              Ensure the security of your personal information; We will communicate our privacy and
+              security guidelines to all employees and strictly enforce the company's internal
+              privacy protection measures.
+            </p>
+            <p>
+              Unfortunately, neither the transmission method nor the electronic storage method on
+              the Internet is 100% secure. We do our best to protect your personal information, but
+              we cannot guarantee its absolute security. If your personal information is stolen due
+              to security breaches, we will immediately notify you in accordance with applicable
+              laws.
+            </p>
+            <p>
+              If you have any questions about the security of our website and services, you can
+              contact us via the email displayed below.
+            </p>
+          </section>
+
+          <section>
+            <h3 class="mb-2 text-base font-bold text-gray-900">
+              3.Sharing information with third parties
+            </h3>
+            <p>
+              We will not share any personally identifiable information we collect from you, except
+              for the following events
+            </p>
+            <p>
+              3.1 If the law requires us to disclose your information, we may share your information
+              with law enforcement agencies or other competent authorities and any third party as
+              necessary (e.g. to detect, prevent or otherwise address fraud, security or technical
+              issues); Respond to requests or comply with any legal procedures, subpoenas, or
+              government demands; Or protect the rights, property or personal safety of group users,
+              partners or the public);
+            </p>
+            <p>
+              3.2 If the team undergoes a business transition, such as a merger or acquisition of
+              another company, consolidation, change of control, restructuring, or sale of all or
+              part of its assets, your information will be included in the transferred assets.
+            </p>
+          </section>
+
+          <section>
+            <h3 class="mb-2 text-base font-bold text-gray-900">4.Third party content</h3>
+            <p>
+              Some websites and services may include and/or enable you to add content to them. The
+              form of content can be buttons, small tools, links to third-party advertisements,
+              websites, products, and services (including search services), as well as other ways
+              that third parties provide to you (collectively referred to as "third-party content
+              and services"). The use of such third-party content and services is subject to their
+              privacy policies. You should be aware that using third-party content and services may
+              enable these third parties to access, collect, store, and/or share your information,
+              including your PII and non personally identifiable information. For clarification
+              purposes, we do not review, approve, monitor, endorse, warrant or make any
+              representations regarding such third-party content and services, and your access to
+              any third-party content and services is at your own risk. For the practice of these
+              third-party content and services, we do not assume any responsibility for your use or
+              inability to use this information. You expressly exempt us from any liability arising
+              from the use of such third-party content and services. We recommend that you read
+              their terms, conditions, and privacy policies before using or accessing any
+              third-party content and services.
+            </p>
+          </section>
+
+          <section>
+            <h3 class="mb-2 text-base font-bold text-gray-900">
+              5.Transfer data outside of your area
+            </h3>
+            <p>
+              We work in international space and provide our website and services to users around
+              the world. We and third-party organizations that provide automated data processing
+              technology for websites and services may transfer cross-border automatically processed
+              information from your country or region to other countries or regions around the
+              world. According to legal requirements, you hereby expressly agree to transfer your
+              data to any location outside of your current location after using the website and
+              services. You can contact us at any time by phone through the following official
+              website to withdraw your consent.
+            </p>
+          </section>
+
+          <section>
+            <h3 class="mb-2 text-base font-bold text-gray-900">
+              6.How will we retain your personal data
+            </h3>
+            <p>
+              We usually keep your personal information until you fulfill the contract with us and
+              comply with our legal obligations. If you no longer wish us to use the information we
+              actually access and store, you may request us to erase your personal information and
+              close your account. Specifically, the facial data in this product is only used for
+              recognition, extraction, and operation during functional use, and is not stored in any
+              way. However, if information is needed to comply with legal obligations (taxation,
+              accounting, auditing) or to maintain security and data backup settings, prevent fraud
+              or other malicious behavior, certain data may still be stored for a period of time.
+            </p>
+          </section>
+
+          <section>
+            <h3 class="mb-2 text-base font-bold text-gray-900">7.Your data rights</h3>
+            <p>
+              You have the right to access, modify, correct or delete any personal data that we may
+              collect. To exercise this right, please contact us through the website. If you are in
+              the European Economic Area, you have the right (with few exceptions)
+            </p>
+
+            <ul class="list-roman space-y-1 pl-5">
+              <li>Request access to and correction or deletion of your personal information;</li>
+              <li>
+                Obtaining processing restrictions or opposing the processing of your personal
+                information;
+              </li>
+              <li>
+                Request a copy of your personal information in digital format. You also have the
+                right to file a complaint with the local data protection agency of the EEA regarding
+                the handling of your personal information.
+              </li>
+            </ul>
+          </section>
+
+          <section>
+            <h3 class="mb-2 text-base font-bold text-gray-900">8.Change Privacy Policy</h3>
+            <p>
+              This privacy policy may be changed from time to time. Any changes will be posted on
+              the website interface. Your continued use of the website and services will be deemed
+              as your acceptance of such updates.
+            </p>
+          </section>
+
+          <section>
+            <h3 class="mb-2 text-base font-bold text-gray-900">9.Privacy issues</h3>
+            <p>
+              All other rights not stated in this agreement still belong to the company. Our company
+              reserves the right of final interpretation of this agreement. If you have any other
+              questions or suggestions, you can contact us through the official website.
+            </p>
+          </section>
+        </div>
+      } @else {
+        <div class="space-y-5">
+          <section>
+            <h3 class="mb-2 text-base font-bold text-gray-900">Refund Agreement</h3>
+          </section>
+
+          <section>
+            <h3 class="mb-2 text-base font-bold text-gray-900">Refund conditions</h3>
+            <ol class="list-decimal space-y-1 pl-5">
+              <li>Correctly use platform funds without any violations or illegal activities.</li>
+              <li>There is a situation where the amount has failed to be credited.</li>
+            </ol>
+          </section>
+
+          <section>
+            <h3 class="mb-2 text-base font-bold text-gray-900">Refund method</h3>
+
+            <h4 class="mb-2 font-semibold text-gray-900">1.Refund deadline and channel</h4>
+            <p>
+              You will receive a full refund of your purchase within seven (7) days after the
+              application is approved. You can choose to refund through the same payment method you
+              used when making the purchase or accept the refund through the platform wallet. If you
+              use your personal other account balance for consumption, the refund related to it can
+              only be refunded to your personal other account balance. If the platform is unable to
+              process a refund through the payment method you used when making the purchase for any
+              reason, or if the payment method you used does not support refunds, the refund will be
+              returned to your platform account.
+            </p>
+          </section>
+
+          <section>
+            <h4 class="mb-2 font-semibold text-gray-900">2.How to request a refund</h4>
+            <p>
+              You can request a refund or receive other assistance on the platform's refund
+              application page. We do not accept refund requests initiated in any other way.
+            </p>
+          </section>
+
+          <section>
+            <h4 class="mb-2 font-semibold text-gray-900">3.Abuse</h4>
+            <p>
+              Refunds are designed to reduce the risk of failed recharge and consumption on the
+              platform, rather than to maliciously use the refund mechanism of this platform for
+              profit. If it appears to us that you are abusing the refund mechanism, we may not
+              approve your refund request.
+            </p>
+          </section>
+        </div>
+      }
+    </div>
+
+    <!-- FOOTER -->
+    <div class="flex justify-end border-t border-gray-100 px-6 py-4">
+      <button
+        type="button"
+        (click)="confirm()"
+        class="rounded-full bg-red-500 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-red-500/25 transition hover:bg-red-600"
+      >
+        I Understand
+      </button>
+    </div>
+  </div>
+</div>
