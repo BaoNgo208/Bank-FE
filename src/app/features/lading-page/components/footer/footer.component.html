@@ -1,5 +1,5 @@
 <footer
-  class="bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.22),transparent_32%),linear-gradient(180deg,#ef4444_0%,#dc2626_48%,#b91c1c_100%)] text-white"
+  class="bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.12),transparent_34%),linear-gradient(180deg,#b91c1c_0%,#991b1b_50%,#7f1d1d_100%)] text-white"
 >
   <!-- BOTTOM FOOTER -->
   <section class="px-6 py-12">
@@ -40,35 +40,40 @@
             >
               <i class="fa-solid fa-envelope"></i>
             </a>
-
-            <a
-              href="#"
-              class="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition hover:bg-red-600"
-            >
-              <i class="fa-brands fa-discord"></i>
-            </a>
           </div>
         </div>
 
         <!-- COMPANY -->
         <div>
-          <h4 class="font-extrabold">Company</h4>
+          <h4 class="font-extrabold">VCCCardAds</h4>
 
           <ul class="mt-5 space-y-3 text-sm text-white/60">
             <li>
-              <a href="#" class="transition hover:text-white">About Us</a>
+              <a href="#" class="transition hover:text-white" (click)="goToSection('about')"
+                >About
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="transition hover:text-white" (click)="termsStore.openAgreement()"
+                >User Agreement</a
+              >
             </li>
             <li>
-              <a href="#" class="transition hover:text-white">Pricing</a>
+              <a
+                href="#"
+                class="transition hover:text-white"
+                (click)="termsStore.openTerms('privacy')"
+                >Privacy Agreement</a
+              >
             </li>
             <li>
-              <a href="#" class="transition hover:text-white">API Docs</a>
-            </li>
-            <li>
-              <a href="#" class="transition hover:text-white">Terms of Service</a>
-            </li>
-            <li>
-              <a href="#" class="transition hover:text-white">Privacy Policy</a>
+              <a
+                href="#"
+                class="transition hover:text-white"
+                (click)="termsStore.openTerms('refund')"
+                >Refund Agreement</a
+              >
             </li>
           </ul>
         </div>
@@ -79,16 +84,16 @@
 
           <ul class="mt-5 space-y-3 text-sm text-white/60">
             <li>
-              <a href="#" class="transition hover:text-white">BIN Strategy</a>
+              <span class="cursor-not-allowed text-white/40">BIN Strategy — Coming soon</span>
             </li>
             <li>
-              <a href="#" class="transition hover:text-white">Ad Payment Guide</a>
+              <span class="cursor-not-allowed text-white/40">Ad Payment Guide — Coming soon</span>
             </li>
             <li>
-              <a href="#" class="transition hover:text-white">Cashback Program</a>
+              <span class="cursor-not-allowed text-white/40">Cashback Program — Coming soon</span>
             </li>
             <li>
-              <a href="#" class="transition hover:text-white">FAQ</a>
+              <span class="cursor-not-allowed text-white/40">FAQ — Coming soon</span>
             </li>
           </ul>
         </div>
@@ -131,3 +136,16 @@
     </div>
   </section>
 </footer>
+
+<app-card-user-agreement
+  *ngIf="termsStore.showAgreement()"
+  (agree)="termsStore.handleAgreeAgreement()"
+  (cancel)="termsStore.closeAgreement()"
+></app-card-user-agreement>
+
+<app-terms-modal
+  *ngIf="termsStore.showTerms()"
+  [termType]="termsStore.activeTerm()"
+  (agree)="termsStore.handleAgreeTerm()"
+  (cancel)="termsStore.closeTerms()"
+></app-terms-modal>

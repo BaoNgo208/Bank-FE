@@ -30,22 +30,28 @@
           <p class="font-semibold text-gray-800 mb-2">Information:</p>
 
           <div class="flex flex-col gap-1">
-            <a class="text-red-500 underline cursor-pointer" (click)="openAgreement()">
+            <a class="text-red-500 underline cursor-pointer" (click)="termsStore.openAgreement()">
               User Agreement
             </a>
 
-            <a class="text-red-500 underline cursor-pointer" (click)="openTerms('privacy')">
+            <a
+              class="text-red-500 underline cursor-pointer"
+              (click)="termsStore.openTerms('privacy')"
+            >
               Privacy Agreement
             </a>
 
-            <a class="text-red-500 underline cursor-pointer" (click)="openTerms('refund')">
+            <a
+              class="text-red-500 underline cursor-pointer"
+              (click)="termsStore.openTerms('refund')"
+            >
               Refund Agreement
             </a>
           </div>
 
           <p class="mt-2">
             Website:
-            <span class="text-red-500 underline">https://www.jqcard.com</span>
+            <span class="text-red-500 underline">https://vcccardads.com/</span>
           </p>
         </div>
       </div>
@@ -72,13 +78,21 @@
         </p>
 
         <div class="flex flex-col gap-3 text-sm">
-          <a class="hover:underline text-white/90 cursor-pointer" (click)="openAgreement()"
+          <a
+            class="hover:underline text-white/90 cursor-pointer"
+            (click)="termsStore.openAgreement()"
             >User Agreement</a
           >
-          <a class="hover:underline text-white/90 cursor-pointer" (click)="openTerms('privacy')">
+          <a
+            class="hover:underline text-white/90 cursor-pointer"
+            (click)="termsStore.openTerms('privacy')"
+          >
             Privacy Agreement</a
           >
-          <a class="hover:underline text-white/90 cursor-pointer" (click)="openTerms('refund')">
+          <a
+            class="hover:underline text-white/90 cursor-pointer"
+            (click)="termsStore.openTerms('refund')"
+          >
             Refund Agreement</a
           >
         </div>
@@ -95,14 +109,14 @@
 </div>
 
 <app-card-user-agreement
-  *ngIf="showAgreement()"
-  (agree)="handleAgreeAgreement()"
-  (cancel)="closeAgreement()"
+  *ngIf="termsStore.showAgreement()"
+  (agree)="termsStore.handleAgreeAgreement()"
+  (cancel)="termsStore.closeAgreement()"
 ></app-card-user-agreement>
 
 <app-terms-modal
-  *ngIf="showTerms()"
-  [termType]="activeTerm()"
-  (agree)="handleAgreeTerm()"
-  (cancel)="closeTerms()"
+  *ngIf="termsStore.showTerms()"
+  [termType]="termsStore.activeTerm()"
+  (agree)="termsStore.handleAgreeTerm()"
+  (cancel)="termsStore.closeTerms()"
 ></app-terms-modal>
