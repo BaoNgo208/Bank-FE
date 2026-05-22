@@ -1,129 +1,136 @@
 <section
-  class="min-h-screen flex flex-col tablet:flex-row items-center justify-between small_laptop:justify-center laptop:px-20 text-white bg-[linear-gradient(135deg,rgba(320,0,0,0.7),rgba(120,60,100,0.4))]"
+  class="min-h-screen text-white flex justify-center bg-[linear-gradient(135deg,rgba(320,0,0,0.7),rgba(120,60,100,0.4))]"
 >
   <div
-    class="relative small_laptop:min-h-screen overflow-hidden flex items-center pt-20 tablet:pt-0"
+    class="flex min-h-screen w-full max-w-[1280px] flex-col items-center justify-between gap-12 px-6 tablet:flex-row tablet:justify-between"
   >
-    <div class="max-w-6xl mx-auto w-full px-6 md:px-10">
-      <div class="max-w-[640px]">
-        <!-- BADGE -->
-        <div class="hero-item">
-          <span
-            class="inline-block bg-rose-300 text-red-900 text-[11px] md:text-sm font-extrabold px-4 py-2 rounded-2xl shadow shadow-red-900/10"
+    <div
+      class="relative small_laptop:min-h-screen overflow-hidden flex items-center pt-20 tablet:pt-0"
+    >
+      <div class="max-w-6xl mx-auto w-full px-6 md:px-10">
+        <div class="max-w-[640px]">
+          <!-- BADGE -->
+          <div class="hero-item">
+            <span
+              class="inline-block bg-rose-300 text-red-900 text-[11px] md:text-sm font-extrabold px-4 py-2 rounded-2xl shadow shadow-red-900/10"
+            >
+              Enterprise-Grade Visa Cards
+            </span>
+          </div>
+
+          <!-- TITLE -->
+          <h1
+            class="relative mt-5 text-white font-extrabold leading-[1.08] text-[34px] sm:text-[42px] md:text-[58px] hero-item"
           >
-            Enterprise-Grade Visa Cards
-          </span>
+            Cards Built For
+            <br />
+            Global Ad Spend
+          </h1>
+
+          <!-- DESCRIPTION -->
+          <p
+            class="mt-6 md:mt-8 text-white/95 text-[15px] sm:text-base md:text-lg pc:text-[1.4rem] hero-item font-semibold leading-relaxed max-w-[560px]"
+          >
+            Built for advertisers, agencies, and scaling teams with
+            <span class="relative inline-block font-extrabold text-white">
+              0 issuance fees
+              <span
+                class="absolute left-0 -bottom-1 w-full h-[3px] bg-white/45 rounded-full"
+              ></span>
+            </span>
+            <span class="text-white/85">
+              , high cashback, instant virtual card creation, flexible spend control, and stable
+              payment performance.
+            </span>
+          </p>
+
+          <p
+            class="mt-3 text-white/70 text-sm md:text-base pc:text-[1.15rem] hero-item font-medium leading-relaxed max-w-[540px]"
+          >
+            Support Facebook, TikTok, Google, and cross-border business payments with secure
+            infrastructure, fast top-up, and scalable card management.
+          </p>
+          <!-- BUTTON -->
+          <button
+            (click)="navigateService.navigateToUserAuth()"
+            class="mt-8 md:mt-14 group hero-item flex items-center gap-5 md:gap-8 rounded-full bg-[linear-gradient(135deg,rgba(320,0,0,0.7),rgba(220,60,100,0.4))] hover:bg-red-700 text-white font-bold px-6 md:px-7 py-2.5 shadow-lg shadow-red-900/20 transition-all duration-300"
+          >
+            <span>Issue Card</span>
+
+            <span
+              class="w-10 h-10 md:w-11 md:h-11 rounded-full bg-red-600 group-hover:bg-red-400 flex items-center justify-center transition-all duration-300"
+            >
+              <i class="fa-solid fa-arrow-right text-base md:text-lg"></i>
+            </span>
+          </button>
         </div>
-
-        <!-- TITLE -->
-        <h1
-          class="relative mt-5 text-white font-extrabold leading-[1.08] text-[34px] sm:text-[42px] md:text-[58px] hero-item"
-        >
-          Cards Built For
-          <br />
-          Global Ad Spend
-        </h1>
-
-        <!-- DESCRIPTION -->
-        <p
-          class="mt-6 md:mt-8 text-white text-[15px] sm:text-base md:text-lg hero-item font-medium leading-relaxed max-w-[560px]"
-        >
-          Built for advertisers, agencies, and scaling teams with
-          <span class="relative inline-block font-extrabold">
-            0 issuance fees
-            <span class="absolute left-0 -bottom-1 w-full h-[3px] bg-red-200 rounded-full"></span>
-          </span>
-          , high cashback, instant virtual card creation, flexible spend control, and stable payment
-          performance.
-        </p>
-
-        <p
-          class="mt-3 text-white/90 text-sm md:text-base hero-item font-medium leading-relaxed max-w-[560px]"
-        >
-          Support Facebook, TikTok, Google, and cross-border business payments with secure
-          infrastructure, fast top-up, and scalable card management.
-        </p>
-
-        <!-- BUTTON -->
-        <button
-          (click)="navigateService.navigateToUserAuth()"
-          class="mt-8 md:mt-14 group hero-item flex items-center gap-5 md:gap-8 rounded-full bg-[linear-gradient(135deg,rgba(320,0,0,0.7),rgba(220,60,100,0.4))] hover:bg-red-700 text-white font-bold px-6 md:px-7 py-2.5 shadow-lg shadow-red-900/20 transition-all duration-300"
-        >
-          <span>Issue Card</span>
-
-          <span
-            class="w-10 h-10 md:w-11 md:h-11 rounded-full bg-red-600 group-hover:bg-red-400 flex items-center justify-center transition-all duration-300"
-          >
-            <i class="fa-solid fa-arrow-right text-base md:text-lg"></i>
-          </span>
-        </button>
       </div>
     </div>
-  </div>
 
-  <div class="relative w-full max-w-[420px] h-[340px] sm:h-[520px] mx-auto hero-image-enter">
-    <!-- PHONE -->
-    <img
-      src="/phone-container.png"
-      alt="phone"
-      class="absolute right-0 top-[-10px] sm:top-[-20px] h-[120%] sm:h-[135%] max-w-none z-10 pointer-events-none select-none"
-    />
+    <div class="relative w-full max-w-[420px] h-[340px] sm:h-[520px] hero-image-enter">
+      <!-- PHONE -->
+      <img
+        src="/phone-container.png"
+        alt="phone"
+        class="absolute right-0 top-[-10px] sm:top-[-20px] h-[120%] sm:h-[135%] max-w-none z-10 pointer-events-none select-none"
+      />
 
-    <!-- CARD WRAPPER -->
-    <div
-      class="absolute right-2 sm:right-0 top-[90px] sm:top-[150px] w-[260px] sm:w-[390px] h-[200px] sm:h-[250px] z-20 [perspective:900px] [transform-style:preserve-3d]"
-    >
-      <!-- TIKTOK CARD -->
+      <!-- CARD WRAPPER -->
       <div
-        class="animated-card card card-one rounded-2xl tk-card backdrop-blur-md border border-white/20 shadow-2xl"
+        class="absolute right-0 top-[80px] sm:top-[150px] w-[300px] sm:w-[390px] h-[240px] sm:h-[250px] z-20 [perspective:900px] [transform-style:preserve-3d]"
       >
-        <div class="flex justify-between items-start p-4 text-white">
-          <span class="text-2xl font-bold">
-            <i class="fa-brands fa-tiktok"></i>
-          </span>
+        <!-- TIKTOK CARD -->
+        <div
+          class="animated-card card card-one rounded-2xl tk-card backdrop-blur-md border border-white/20 shadow-2xl"
+        >
+          <div class="flex justify-between items-start p-4 text-white">
+            <span class="text-2xl font-bold">
+              <i class="fa-brands fa-tiktok"></i>
+            </span>
+          </div>
+
+          <div class="px-4 mt-4 text-white text-sm tracking-widest">**** **** **** 9999</div>
+
+          <div class="absolute bottom-4 left-4 right-4 flex justify-between text-white text-sm">
+            <span>TikTok Ads</span>
+            <span>USD</span>
+          </div>
         </div>
 
-        <div class="px-4 mt-4 text-white text-sm tracking-widest">**** **** **** 9999</div>
+        <!-- GOOGLE CARD  -->
+        <div
+          class="animated-card card card-two rounded-2xl gg-card border border-white/20 shadow-2xl"
+        >
+          <div class="flex justify-between items-start p-4 text-white">
+            <span class="text-2xl font-bold">
+              <i class="fa-brands fa-google"></i>
+            </span>
+          </div>
 
-        <div class="absolute bottom-4 left-4 right-4 flex justify-between text-white text-sm">
-          <span>TikTok Ads</span>
-          <span>USD</span>
-        </div>
-      </div>
+          <div class="px-4 mt-4 text-white text-sm tracking-widest">**** **** **** 9999</div>
 
-      <!-- GOOGLE CARD  -->
-      <div
-        class="animated-card card card-two rounded-2xl gg-card border border-white/20 shadow-2xl"
-      >
-        <div class="flex justify-between items-start p-4 text-white">
-          <span class="text-2xl font-bold">
-            <i class="fa-brands fa-google"></i>
-          </span>
-        </div>
-
-        <div class="px-4 mt-4 text-white text-sm tracking-widest">**** **** **** 9999</div>
-
-        <div class="absolute bottom-4 left-4 right-4 flex justify-between text-white text-sm">
-          <span>Google Ads</span>
-          <span>USD</span>
-        </div>
-      </div>
-
-      <!-- FACEBOOK CARD -->
-      <div
-        class="animated-card card card-three rounded-2xl fb-card border border-white/20 shadow-2xl"
-      >
-        <div class="flex justify-between items-start p-4 text-white">
-          <span class="text-2xl font-bold">
-            <i class="fa-brands fa-facebook-f"></i>
-          </span>
+          <div class="absolute bottom-4 left-4 right-4 flex justify-between text-white text-sm">
+            <span>Google Ads</span>
+            <span>USD</span>
+          </div>
         </div>
 
-        <div class="px-4 mt-4 text-white text-sm tracking-widest">**** **** **** 9999</div>
+        <!-- FACEBOOK CARD -->
+        <div
+          class="animated-card card card-three rounded-2xl fb-card border border-white/20 shadow-2xl"
+        >
+          <div class="flex justify-between items-start p-4 text-white">
+            <span class="text-2xl font-bold">
+              <i class="fa-brands fa-facebook-f"></i>
+            </span>
+          </div>
 
-        <div class="absolute bottom-4 left-4 right-4 flex justify-between text-white text-sm">
-          <span>Facebook Ads</span>
-          <span>USD</span>
+          <div class="px-4 mt-4 text-white text-sm tracking-widest">**** **** **** 9999</div>
+
+          <div class="absolute bottom-4 left-4 right-4 flex justify-between text-white text-sm">
+            <span>Facebook Ads</span>
+            <span>USD</span>
+          </div>
         </div>
       </div>
     </div>

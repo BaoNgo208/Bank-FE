@@ -290,7 +290,7 @@
   bottom: -55px;
   border: 18px solid rgba(255, 255, 255, 0.12);
 }
-// Mobile keyframes — tên mới
+
 @keyframes cycleCardOneMobile {
   0%,
   28% {
@@ -429,19 +429,14 @@
   }
 }
 
-// Override animation-name trên mobile
 @media (max-width: 640px) {
-  .animated-card {
-    transform-origin: top left;
-  }
-
   .card-one {
-    animation-name: cycleCardOneMobile;
+    animation: cycleCardOneMobile 7s ease-in-out infinite;
   }
   .card-two {
-    animation-name: cycleCardTwoMobile;
+    animation: cycleCardTwoMobile 7s ease-in-out infinite;
   }
   .card-three {
-    animation-name: cycleCardThreeMobile;
+    animation: cycleCardThreeMobile 7s ease-in-out infinite;
   }
 }
