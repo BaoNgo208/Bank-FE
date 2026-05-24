@@ -58,13 +58,19 @@ export class OtpModalComponent implements OnChanges {
     this.inputRefs?.toArray()[i]?.nativeElement.focus();
   }
 
-  // Xoá hàm onInput cũ, thay bằng onKeyDown xử lý hết
-
   onKeyDown(event: KeyboardEvent, idx: number): void {
     const key = event.key;
 
-    // Chặn mọi ký tự không phải số / điều hướng
+    // Cho phép Ctrl/Command + V, C, A, X
+    if (event.ctrlKey || event.metaKey) {
+      const allowedCtrlKeys = ['v', 'c', 'a', 'x'];
+      if (allowedCtrlKeys.includes(key.toLowerCase())) {
+        return;
+      }
+    }
+
     const allowed = ['Backspace', 'ArrowLeft', 'ArrowRight', 'Tab', 'Enter'];
+
     if (!/^\d$/.test(key) && !allowed.includes(key)) {
       event.preventDefault();
       return;
@@ -72,10 +78,12 @@ export class OtpModalComponent implements OnChanges {
 
     if (/^\d$/.test(key)) {
       event.preventDefault();
+
       const values = [...this.otpValues];
       values[idx] = key;
       this.otpValues = values;
       this.errorMsg = '';
+
       if (idx < this.length - 1) {
         setTimeout(() => this.focusIndex(idx + 1), 0);
       }
@@ -83,7 +91,9 @@ export class OtpModalComponent implements OnChanges {
 
     if (key === 'Backspace') {
       event.preventDefault();
+
       const values = [...this.otpValues];
+
       if (values[idx]) {
         values[idx] = '';
         this.otpValues = values;
@@ -95,6 +105,37 @@ export class OtpModalComponent implements OnChanges {
     if (key === 'ArrowLeft' && idx > 0) this.focusIndex(idx - 1);
     if (key === 'ArrowRight' && idx < this.length - 1) this.focusIndex(idx + 1);
     if (key === 'Enter' && this.isComplete) this.onConfirmClick();
+  }
+
+  onInput(event: Event, startIdx: number): void {
+    const input = event.target as HTMLInputElement;
+
+    const text = input.value.replace(/\D/g, '');
+
+    if (!text) {
+      input.value = this.otpValues[startIdx] ?? '';
+      return;
+    }
+
+    const values = [...this.otpValues];
+
+    for (let i = 0; i < text.length && startIdx + i < this.length; i++) {
+      values[startIdx + i] = text[i];
+    }
+
+    this.otpValues = values;
+    this.errorMsg = '';
+
+    const nextFocus = Math.min(startIdx + text.length, this.length - 1);
+
+    setTimeout(() => {
+      this.focusIndex(nextFocus);
+
+      const nextInput = this.inputRefs?.toArray()[nextFocus]?.nativeElement;
+      if (nextInput) {
+        nextInput.value = this.otpValues[nextFocus] ?? '';
+      }
+    }, 0);
   }
 
   onPaste(event: ClipboardEvent, startIdx: number): void {

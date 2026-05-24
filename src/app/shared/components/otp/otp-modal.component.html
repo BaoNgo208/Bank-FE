@@ -42,9 +42,10 @@
         #otpInput
         type="text"
         inputmode="numeric"
-        maxlength="1"
+        autocomplete="one-time-code"
         [value]="val"
         (keydown)="onKeyDown($event, i)"
+        (input)="onInput($event, i)"
         (paste)="onPaste($event, i)"
         (focus)="onFocus($event)"
         class="w-11 text-center text-xl font-semibold border rounded-xl bg-gray-50 text-gray-900 outline-none transition-all duration-150 border-gray-200 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-100 caret-transparent"
