@@ -7,33 +7,39 @@
         class="reveal reveal-up delay-1 inline-flex items-center gap-2 rounded-full bg-red-50 px-4 py-2 shadow-sm border border-red-100"
       >
         <span class="h-2 w-2 rounded-full bg-red-600"></span>
-        <span class="text-sm font-medium text-red-700">Transparent pricing</span>
+        <span class="text-sm font-medium text-red-700">
+          {{ 'low_fees.badge' | translate }}
+        </span>
       </div>
 
       <h2
         class="reveal reveal-rotate delay-1 text-4xl md:text-5xl lg:text-6xl font-bold text-gray-950 leading-tight"
       >
-        Low Fees,
-        <span class="block text-red-600">More Savings</span>
+        {{ 'low_fees.title_line_1' | translate }}
+        <span class="block text-red-600">
+          {{ 'low_fees.title_line_2' | translate }}
+        </span>
       </h2>
-
       <p
         class="reveal reveal-up delay-2 text-gray-600 text-base md:text-lg max-w-xl mx-auto lg:mx-0"
       >
-        Save more on every transaction with simple, transparent fees designed to keep your money
-        moving smarter.
+        {{ 'low_fees.description' | translate }}
       </p>
 
       <!-- STATS -->
       <div class="reveal reveal-up delay-3 grid grid-cols-2 gap-4 max-w-md mx-auto lg:mx-0">
         <div class="rounded-2xl bg-white p-5 shadow-sm border border-red-100">
           <p class="text-3xl font-bold text-gray-950">0%</p>
-          <p class="mt-1 text-sm text-gray-500">Transaction fee</p>
+          <p class="mt-1 text-sm text-gray-500">
+            {{ 'low_fees.stats.transaction_fee' | translate }}
+          </p>
         </div>
 
         <div class="rounded-2xl bg-white p-5 shadow-sm border border-red-100">
           <p class="text-3xl font-bold text-gray-950">24/7</p>
-          <p class="mt-1 text-sm text-gray-500">Fast transfer</p>
+          <p class="mt-1 text-sm text-gray-500">
+            {{ 'low_fees.stats.fast_transfer' | translate }}
+          </p>
         </div>
       </div>
 
@@ -46,7 +52,7 @@
           type="button"
           class="rounded-full bg-red-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-red-600/25 hover:bg-red-700 transition"
         >
-          Start Saving Now
+          {{ 'low_fees.cta' | translate }}
         </button>
       </div>
     </div>
@@ -62,7 +68,7 @@
         <div class="overflow-hidden rounded-[1.5rem] relative">
           <img
             [src]="imageUrl"
-            alt="Low transaction fee savings"
+            [alt]="'low_fees.image_alt' | translate"
             class="h-[320px] md:h-[420px] w-full object-cover"
           />
 
@@ -84,14 +90,16 @@
               </div>
 
               <div>
-                <p class="text-sm font-semibold text-gray-950">Fee saved</p>
-                <p class="text-xs text-gray-500">This month</p>
+                <p class="text-sm font-semibold text-gray-950">
+                  {{ 'low_fees.saving_card.title' | translate }}
+                </p>
+                <p class="text-xs text-gray-500">{{ 'low_fees.saving_card.period' | translate }}</p>
               </div>
             </div>
 
             <div class="text-right">
               <p class="text-xl font-bold text-red-600">$128.40</p>
-              <p class="text-xs text-gray-400">+18% better</p>
+              <p class="text-xs text-gray-400">{{ 'low_fees.saving_card.period' | translate }}</p>
             </div>
           </div>
 

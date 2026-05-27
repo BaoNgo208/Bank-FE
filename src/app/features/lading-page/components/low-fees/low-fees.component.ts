@@ -1,10 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { NavigateService } from '../../../../shared/services/navigate.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-low-fees-section',
   standalone: true,
-  imports: [],
+  imports: [TranslatePipe],
   templateUrl: './low-fees.component.html',
 })
 export class LowFeesComponent {

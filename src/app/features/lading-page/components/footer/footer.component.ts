@@ -4,10 +4,11 @@ import { TermsModalComponent } from '../../../terms-modal/terms-modal.component'
 import { TermsStore } from '../../../../shared/stores/terms.store';
 import { CommonModule } from '@angular/common';
 import { LandingSection } from '../navbar/navbar.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-footer',
-  imports: [CommonModule, CardUserAgreementComponent, TermsModalComponent],
+  imports: [CommonModule, CardUserAgreementComponent, TermsModalComponent, TranslatePipe],
   templateUrl: './footer.component.html',
 })
 export class FooterComponent {

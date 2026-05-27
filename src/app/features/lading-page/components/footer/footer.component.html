@@ -16,13 +16,12 @@
 
             <div>
               <h3 class="text-lg font-extrabold">VCCCardAds</h3>
-              <p class="text-xs text-white/50">Visa cards for ad payments</p>
+              <p class="text-xs text-white/50">{{ 'footer.brand.tagline' | translate }}</p>
             </div>
           </div>
 
           <p class="mt-5 text-sm leading-7 text-white/55">
-            Enterprise-grade virtual card solution for advertisers, agencies, and scaling media
-            buying teams.
+            {{ 'footer.brand.description' | translate }}
           </p>
 
           <div class="mt-5 flex gap-3">
@@ -49,58 +48,75 @@
 
           <ul class="mt-5 space-y-3 text-sm text-white/60">
             <li>
-              <a href="#" class="transition hover:text-white" (click)="goToSection('about')"
-                >About
+              <a href="#" class="transition hover:text-white" (click)="goToSection('about')">
+                {{ 'footer.company.about' | translate }}
               </a>
             </li>
 
             <li>
-              <a href="#" class="transition hover:text-white" (click)="termsStore.openAgreement()"
-                >User Agreement</a
-              >
+              <a href="#" class="transition hover:text-white" (click)="termsStore.openAgreement()">
+                {{ 'footer.company.user_agreement' | translate }}
+              </a>
             </li>
             <li>
               <a
                 href="#"
                 class="transition hover:text-white"
                 (click)="termsStore.openTerms('privacy')"
-                >Privacy Agreement</a
               >
+                {{ 'footer.company.privacy_agreement' | translate }}
+              </a>
             </li>
             <li>
               <a
                 href="#"
                 class="transition hover:text-white"
                 (click)="termsStore.openTerms('refund')"
-                >Refund Agreement</a
               >
+                {{ 'footer.company.refund_agreement' | translate }}
+              </a>
             </li>
           </ul>
         </div>
 
         <!-- RESOURCES -->
         <div>
-          <h4 class="font-extrabold">Resources</h4>
+          <h4 class="font-extrabold">
+            {{ 'footer.resources.title' | translate }}
+          </h4>
 
           <ul class="mt-5 space-y-3 text-sm text-white/60">
             <li>
-              <span class="cursor-not-allowed text-white/40">BIN Strategy — Coming soon</span>
+              <span class="cursor-not-allowed text-white/40">
+                {{ 'footer.resources.bin_strategy' | translate }}
+              </span>
             </li>
+
             <li>
-              <span class="cursor-not-allowed text-white/40">Ad Payment Guide — Coming soon</span>
+              <span class="cursor-not-allowed text-white/40">
+                {{ 'footer.resources.ad_payment_guide' | translate }}
+              </span>
             </li>
+
             <li>
-              <span class="cursor-not-allowed text-white/40">Cashback Program — Coming soon</span>
+              <span class="cursor-not-allowed text-white/40">
+                {{ 'footer.resources.cashback_program' | translate }}
+              </span>
             </li>
+
             <li>
-              <span class="cursor-not-allowed text-white/40">FAQ — Coming soon</span>
+              <span class="cursor-not-allowed text-white/40">
+                {{ 'footer.resources.faq' | translate }}
+              </span>
             </li>
           </ul>
         </div>
 
         <!-- QUICK CONTACT -->
         <div>
-          <h4 class="font-extrabold">Quick Contact</h4>
+          <h4 class="font-extrabold">
+            {{ 'footer.contact.title' | translate }}
+          </h4>
 
           <ul class="mt-5 space-y-3 text-sm text-white/60">
             <li class="flex gap-3">
@@ -115,12 +131,12 @@
 
             <li class="flex gap-3">
               <i class="fa-solid fa-clock mt-1 text-red-300"></i>
-              <span>Live Chat Support 24/7</span>
+              <span>{{ 'footer.contact.live_chat' | translate }}</span>
             </li>
 
             <li class="flex gap-3">
               <i class="fa-solid fa-globe mt-1 text-red-300"></i>
-              <span>Global business payments</span>
+              <span>{{ 'footer.contact.global_payments' | translate }}</span>
             </li>
           </ul>
         </div>
@@ -129,9 +145,13 @@
       <div
         class="mt-10 flex flex-col gap-4 border-t border-white/10 pt-6 text-sm text-white/45 md:flex-row md:items-center md:justify-between"
       >
-        <p>© 2026 VCCCardAds. All rights reserved.</p>
+        <p>
+          {{ 'footer.bottom.copyright' | translate }}
+        </p>
 
-        <p>Built for secure, scalable, and compliant virtual card management.</p>
+        <p>
+          {{ 'footer.bottom.description' | translate }}
+        </p>
       </div>
     </div>
   </section>

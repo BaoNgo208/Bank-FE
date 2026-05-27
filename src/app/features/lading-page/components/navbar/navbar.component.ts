@@ -1,12 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { LanguageSwitcherComponent } from '../../../../shared/components/language-switcher/language-switcher.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 export type LandingSection = 'about' | 'features' | 'pricing';
 
 @Component({
   selector: 'app-navbar',
-  imports: [CommonModule],
+  imports: [CommonModule, LanguageSwitcherComponent, TranslatePipe],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
 })

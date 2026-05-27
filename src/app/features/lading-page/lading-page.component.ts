@@ -9,6 +9,7 @@ import { FeaturesComponent } from './components/features/features.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AboutWalletComponent } from './components/about-wallet/about-wallet.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 type LandingSection = 'about' | 'features' | 'pricing';
 
@@ -24,6 +25,7 @@ type LandingSection = 'about' | 'features' | 'pricing';
     DashboardComponent,
     AboutWalletComponent,
     FooterComponent,
+    TranslatePipe,
   ],
   templateUrl: './landing-page.componet.html',
   styleUrl: './landing-page.component.scss',

@@ -15,22 +15,21 @@
         appReveal
       >
         <span class="w-2 h-2 rounded-full bg-red-500"></span>
-        Smart banking features
+        {{ 'features.badge' | translate }}
       </div>
       <div class="reveal reveal-up delay-2 mt-5 overflow-visible" appReveal>
         <h2 class="text-4xl sm:text-5xl font-bold tracking-tight text-gray-900 leading-[1.18]">
-          Everything You Need To Manage
+          {{ 'features.title_line_1' | translate }}
           <span
             class="block leading-[1.25] pb-2 bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent"
           >
-            Your Digital Money.
+            {{ 'features.title_line_2' | translate }}
           </span>
         </h2>
       </div>
 
       <p class="reveal reveal-up delay-3 mt-5 text-lg leading-8 text-gray-600" appReveal>
-        Control your wallet balance, fund virtual cards, track transactions, and earn cashback from
-        one secure dashboard.
+        {{ 'features.description' | translate }}
       </p>
     </div>
 
@@ -47,9 +46,11 @@
           <i class="fa-solid fa-wallet text-xl"></i>
         </div>
 
-        <h3 class="text-xl font-bold text-gray-900 mb-3">Wallet Balance</h3>
+        <h3 class="text-xl font-bold text-gray-900 mb-3">
+          {{ 'features.items.wallet.title' | translate }}
+        </h3>
         <p class="text-gray-600 leading-7">
-          View total balance, available balance, allocated funds, and frozen amount in real time.
+          {{ 'features.items.wallet.description' | translate }}
         </p>
       </div>
 
@@ -64,9 +65,11 @@
           <i class="fa-solid fa-credit-card text-xl"></i>
         </div>
 
-        <h3 class="text-xl font-bold text-gray-900 mb-3">Virtual Cards</h3>
+        <h3 class="text-xl font-bold text-gray-900 mb-3">
+          {{ 'features.items.virtual_cards.title' | translate }}
+        </h3>
         <p class="text-gray-600 leading-7">
-          Create and manage virtual cards, allocate spending limits, and monitor card usage easily.
+          {{ 'features.items.virtual_cards.description' | translate }}
         </p>
       </div>
 
@@ -81,9 +84,11 @@
           <i class="fa-solid fa-arrow-right-arrow-left text-xl"></i>
         </div>
 
-        <h3 class="text-xl font-bold text-gray-900 mb-3">Deposit & Withdraw</h3>
+        <h3 class="text-xl font-bold text-gray-900 mb-3">
+          {{ 'features.items.deposit_withdraw.title' | translate }}
+        </h3>
         <p class="text-gray-600 leading-7">
-          Preview fees, create deposit or withdrawal orders, and follow every order status clearly.
+          {{ 'features.items.deposit_withdraw.description' | translate }}
         </p>
       </div>
 
@@ -98,9 +103,11 @@
           <i class="fa-solid fa-receipt text-xl"></i>
         </div>
 
-        <h3 class="text-xl font-bold text-gray-900 mb-3">Transaction History</h3>
+        <h3 class="text-xl font-bold text-gray-900 mb-3">
+          {{ 'features.items.transaction_history.title' | translate }}
+        </h3>
         <p class="text-gray-600 leading-7">
-          Search card transactions by type, status, amount, card number, and created time.
+          {{ 'features.items.transaction_history.description' | translate }}
         </p>
       </div>
 
@@ -115,9 +122,11 @@
           <i class="fa-solid fa-gift text-xl"></i>
         </div>
 
-        <h3 class="text-xl font-bold text-gray-900 mb-3">Monthly Cashback</h3>
+        <h3 class="text-xl font-bold text-gray-900 mb-3">
+          {{ 'features.items.cashback.title' | translate }}
+        </h3>
         <p class="text-gray-600 leading-7">
-          Track your monthly spending tier, cashback percentage, and approved reward amount.
+          {{ 'features.items.cashback.description' | translate }}
         </p>
       </div>
 
@@ -132,9 +141,11 @@
           <i class="fa-solid fa-shield-halved text-xl"></i>
         </div>
 
-        <h3 class="text-xl font-bold text-gray-900 mb-3">Secure Account</h3>
+        <h3 class="text-xl font-bold text-gray-900 mb-3">
+          {{ 'features.items.secure_account.title' | translate }}
+        </h3>
         <p class="text-gray-600 leading-7">
-          Protect your account with OTP verification, password control, and secure session handling.
+          {{ 'features.items.secure_account.description' | translate }}
         </p>
       </div>
     </div>

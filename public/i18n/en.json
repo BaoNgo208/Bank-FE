@@ -1,0 +1,249 @@
+{
+  "navbar": {
+    "about": "About",
+    "features": "Features",
+    "get_started": "Get Started",
+    "select_language": "Select language"
+  },
+  "hero": {
+    "badge": "Enterprise-Grade Visa Cards",
+    "title_line_1": "Cards Built For",
+    "title_line_2": "Global Ad Spend",
+    "description_prefix": "Built for advertisers, agencies, and scaling teams with",
+    "zero_fee": "0 issuance fees",
+    "description_suffix": ", high cashback, instant virtual card creation, flexible spend control, and stable payment performance.",
+    "sub_description": "Support Facebook, TikTok, Google, and cross-border business payments with secure infrastructure, fast top-up, and scalable card management.",
+    "issue_card": "Issue Card",
+    "cards": {
+      "tiktok": "TikTok Ads",
+      "google": "Google Ads",
+      "facebook": "Facebook Ads"
+    }
+  },
+  "about": {
+    "badge": "About",
+    "title": "A Smarter Way To Manage Your Digital Money",
+    "description": {
+      "part_1": "helps users manage",
+      "balances": "balances",
+      "cards": "cards",
+      "deposits": "deposits",
+      "withdrawals": "withdrawals",
+      "and": "and",
+      "transactions": "transactions",
+      "part_2": "in one secure place. The platform is designed for",
+      "speed": "speed",
+      "clarity": "clarity",
+      "part_3": "and a smooth payment experience across devices."
+    },
+    "stats": {
+      "access": "Access anytime",
+      "secure": "Secure experience"
+    },
+    "overview": {
+      "title": "Platform Overview",
+      "wallet_balance": "Wallet balance",
+      "active": "Active",
+      "deposit": "Deposit",
+      "withdraw": "Withdraw",
+      "security_level": "Security level",
+      "high": "High"
+    }
+  },
+  "secure": {
+    "floating_badge": {
+      "title": "Bank-level protection",
+      "description": "Encrypted transactions"
+    },
+    "badge": "Secure digital banking",
+    "title_line_1": "Secure Wallet",
+    "title_line_2": "Built For Trust.",
+    "description": "Your assets are protected with advanced encryption, smart risk control, and secure transaction monitoring designed for modern digital finance.",
+    "features": {
+      "encrypted_storage": "Encrypted storage",
+      "realtime_protection": "Real-time protection"
+    }
+  },
+  "ad_platform": {
+    "cards": {
+      "facebook": "Facebook Ads",
+      "google": "Google Ads",
+      "tiktok": "TikTok Ads"
+    },
+    "title_prefix": "Optimal Solution For Advertising On",
+    "title_highlight": "Facebook, Google & TikTok",
+    "description": "Use virtual cards to run ads without limits. Manage budgets, issue cards instantly, and scale campaigns across multiple platforms with ease.",
+    "features": {
+      "unlimited_cards": "Unlimited virtual cards",
+      "instant_topup": "Instant top-up",
+      "major_platforms": "Works with all major ad platforms"
+    },
+    "issue_card": "Issue Card"
+  },
+  "low_fees": {
+    "badge": "Transparent pricing",
+    "title_line_1": "Low Fees,",
+    "title_line_2": "More Savings",
+    "description": "Save more on every transaction with simple, transparent fees designed to keep your money moving smarter.",
+    "image_alt": "Low transaction fee savings",
+    "stats": {
+      "transaction_fee": "Transaction fee",
+      "fast_transfer": "Fast transfer"
+    },
+    "cta": "Start Saving Now",
+    "saving_card": {
+      "title": "Fee saved",
+      "period": "This month",
+      "better": "+18% better"
+    }
+  },
+  "scale_tools": {
+    "badge": "Built for modern spending",
+    "title_line_1": "Everything You Need",
+    "title_line_2": "To Scale Faster",
+    "description": "Issue cards, control budgets, track transactions, and manage your financial workflow with a clean and secure platform.",
+    "cards": {
+      "instant": {
+        "title": "Instant Virtual Cards",
+        "description": "Create cards quickly for ads, subscriptions, or team spending without waiting for manual setup.",
+        "action": "Create card"
+      },
+      "secure": {
+        "title": "Secure Control",
+        "description": "Freeze cards, monitor activity, and keep every transaction visible with better spending protection.",
+        "security_level": "Security level",
+        "high": "High"
+      },
+      "insights": {
+        "title": "Clear Spending Insights",
+        "description": "Understand where your money goes with simple reports, balances, and usage summaries.",
+        "budget_used": "Budget used"
+      }
+    }
+  },
+  "asset_control": {
+    "badge": "Smart asset control",
+    "title_line_1": "Manage Assets",
+    "title_line_2": "In One Place",
+    "description": "Track balances, monitor spending, and manage every virtual card from a clean dashboard built for fast decisions.",
+    "image_alt": "Asset management dashboard",
+    "cta": "Explore Dashboard",
+    "cards": {
+      "wallet": {
+        "title": "Wallet Overview",
+        "description": "View available, allocated, and frozen balances instantly."
+      },
+      "tracking": {
+        "title": "Live Tracking",
+        "description": "Follow card usage and transactions in real time."
+      }
+    },
+    "dashboard": {
+      "total_assets": "Total Assets",
+      "available_balance": "Available balance",
+      "allocated_cards": "Allocated cards"
+    },
+    "growth": "Growth"
+  },
+  "features": {
+    "badge": "Smart banking features",
+    "title_line_1": "Everything You Need To Manage",
+    "title_line_2": "Your Digital Money.",
+    "description": "Control your wallet balance, fund virtual cards, track transactions, and earn cashback from one secure dashboard.",
+    "items": {
+      "wallet": {
+        "title": "Wallet Balance",
+        "description": "View total balance, available balance, allocated funds, and frozen amount in real time."
+      },
+      "virtual_cards": {
+        "title": "Virtual Cards",
+        "description": "Create and manage virtual cards, allocate spending limits, and monitor card usage easily."
+      },
+      "deposit_withdraw": {
+        "title": "Deposit & Withdraw",
+        "description": "Preview fees, create deposit or withdrawal orders, and follow every order status clearly."
+      },
+      "transaction_history": {
+        "title": "Transaction History",
+        "description": "Search card transactions by type, status, amount, card number, and created time."
+      },
+      "cashback": {
+        "title": "Monthly Cashback",
+        "description": "Track your monthly spending tier, cashback percentage, and approved reward amount."
+      },
+      "secure_account": {
+        "title": "Secure Account",
+        "description": "Protect your account with OTP verification, password control, and secure session handling."
+      }
+    }
+  },
+  "dashboard_preview": {
+    "badge": "Dashboard preview",
+    "title_line_1": "See Your Financial Data",
+    "title_line_2": "In one Clean Dashboard.",
+    "description": "Track total assets, cashback progress, deposits, withdrawals, and card activity with a visual dashboard built for modern digital banking.",
+    "cards": {
+      "assets": {
+        "subtitle": "Wallet overview",
+        "title": "Total Assets",
+        "image_alt": "Total assets dashboard preview"
+      },
+      "cashback": {
+        "subtitle": "Reward tracking",
+        "title": "Cashback Progress",
+        "image_alt": "Cashback dashboard preview"
+      },
+      "cash_flow": {
+        "subtitle": "Cash flow analytics",
+        "title": "Deposit vs Withdraw",
+        "image_alt": "Deposit and withdraw chart dashboard preview"
+      }
+    },
+    "filters": {
+      "week": "Week",
+      "month": "Month",
+      "year": "Year"
+    },
+    "stats": {
+      "total_deposit": "Total Deposit",
+      "total_withdraw": "Total Withdraw",
+      "current_cashback": "Current Cashback"
+    }
+  },
+  "final_cta": {
+    "badge": "Secure Digital Wallet",
+    "title_start": "Start Your",
+    "title_highlight": "Crypto Journey",
+    "title_end": "Today",
+    "description": "Manage your wallet, track assets, and make secure transactions with a fast, modern, and reliable crypto banking experience.",
+    "button": "Get Started"
+  },
+  "footer": {
+    "brand": {
+      "tagline": "Visa cards for ad payments",
+      "description": "Enterprise-grade virtual card solution for advertisers, agencies, and scaling media buying teams."
+    },
+    "company": {
+      "about": "About",
+      "user_agreement": "User Agreement",
+      "privacy_agreement": "Privacy Agreement",
+      "refund_agreement": "Refund Agreement"
+    },
+    "resources": {
+      "title": "Resources",
+      "bin_strategy": "BIN Strategy — Coming soon",
+      "ad_payment_guide": "Ad Payment Guide — Coming soon",
+      "cashback_program": "Cashback Program — Coming soon",
+      "faq": "FAQ — Coming soon"
+    },
+    "contact": {
+      "title": "Quick Contact",
+      "live_chat": "Live Chat Support 24/7",
+      "global_payments": "Global business payments"
+    },
+    "bottom": {
+      "copyright": "© 2026 VCCCardAds. All rights reserved.",
+      "description": "Built for secure, scalable, and compliant virtual card management."
+    }
+  }
+}
