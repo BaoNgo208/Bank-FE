@@ -19,7 +19,7 @@
         <div class="card-number">**** **** **** 1234</div>
 
         <div class="card-bottom">
-          <span>Facebook Ads</span>
+          <span>{{ 'ad_platform.cards.facebook' | translate }}</span>
           <span>USD</span>
         </div>
       </div>
@@ -35,7 +35,7 @@
         <div class="card-number">**** **** **** 5678</div>
 
         <div class="card-bottom">
-          <span>Google Ads</span>
+          <span>{{ 'ad_platform.cards.google' | translate }}</span>
           <span>EUR</span>
         </div>
       </div>
@@ -51,7 +51,7 @@
         <div class="card-number">**** **** **** 9999</div>
 
         <div class="card-bottom">
-          <span>TikTok Ads</span>
+          <span>{{ 'ad_platform.cards.tiktok' | translate }}</span>
           <span>USD</span>
         </div>
       </div>
@@ -76,38 +76,37 @@
     <!-- RIGHT: CONTENT -->
     <div class="text-white space-y-6 order-1 md:order-2">
       <h2 class="text-4xl font-bold leading-tight reveal reveal-right">
-        Optimal Solution For Advertising On
-        <span class="text-yellow-300">Facebook, Google & TikTok</span>
+        {{ 'ad_platform.title_prefix' | translate }}
+        <span class="text-yellow-300"> {{ 'ad_platform.title_highlight' | translate }}</span>
       </h2>
 
       <div class="reveal reveal-zoom">
         <p class="text-white/80 text-lg">
-          Use virtual cards to run ads without limits. Manage budgets, issue cards instantly, and
-          scale campaigns across multiple platforms with ease.
+          {{ 'ad_platform.description' | translate }}
         </p>
 
         <ul class="mt-5 space-y-4 text-white/90">
           <li class="flex items-center gap-3">
             <i class="fa-solid fa-circle-check text-red-300 text-lg"></i>
-            <span>Unlimited virtual cards</span>
+            <span>{{ 'ad_platform.features.unlimited_cards' | translate }}</span>
           </li>
 
           <li class="flex items-center gap-3">
             <i class="fa-solid fa-circle-check text-red-300 text-lg"></i>
-            <span>Instant top-up</span>
+            <span>{{ 'ad_platform.features.instant_topup' | translate }}</span>
           </li>
 
           <li class="flex items-center gap-3">
             <i class="fa-solid fa-circle-check text-red-300 text-lg"></i>
-            <span>Works with all major ad platforms</span>
+            <span>{{ 'ad_platform.features.major_platforms' | translate }}</span>
           </li>
         </ul>
-
         <button
           (click)="navigateService.navigateToUserAuth()"
           class="mt-10 bg-white/80 text-red-600 px-7 py-3 rounded-full font-semibold shadow-[0_0_30px_rgba(255,255,255,0.35)] hover:bg-red-50 hover:scale-105 transition-all duration-300"
         >
-          Issue Card <i class="fa fa-arrow-right text-[0.8rem]"></i>
+          {{ 'ad_platform.issue_card' | translate }}
+          <i class="fa fa-arrow-right text-[0.8rem]"></i>
         </button>
       </div>
     </div>

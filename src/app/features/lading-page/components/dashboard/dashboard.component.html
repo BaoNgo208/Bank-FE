@@ -15,22 +15,21 @@
         appReveal
       >
         <span class="w-2 h-2 rounded-full bg-red-500"></span>
-        Dashboard preview
+        {{ 'dashboard_preview.badge' | translate }}
       </div>
 
       <h2
         class="reveal reveal-up delay-2 mt-5 text-4xl sm:text-5xl font-bold tracking-tight text-gray-900"
         appReveal
       >
-        See Your Financial Data
+        {{ 'dashboard_preview.title_line_1' | translate }}
         <span class="block bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent">
-          In one Clean Dashboard.
+          {{ 'dashboard_preview.title_line_2' | translate }}
         </span>
       </h2>
 
       <p class="reveal reveal-up delay-3 mt-5 text-lg leading-8 text-gray-600" appReveal>
-        Track total assets, cashback progress, deposits, withdrawals, and card activity with a
-        visual dashboard built for modern digital banking.
+        {{ 'dashboard_preview.description' | translate }}
       </p>
     </div>
 
@@ -45,8 +44,12 @@
         >
           <div class="mb-4 flex items-center justify-between px-2">
             <div>
-              <p class="text-sm font-medium text-gray-500">Wallet overview</p>
-              <h3 class="text-xl font-bold text-gray-900">Total Assets</h3>
+              <p class="text-sm font-medium text-gray-500">
+                {{ 'dashboard_preview.cards.assets.subtitle' | translate }}
+              </p>
+              <h3 class="text-xl font-bold text-gray-900">
+                {{ 'dashboard_preview.cards.assets.title' | translate }}
+              </h3>
             </div>
 
             <div
@@ -73,8 +76,12 @@
         >
           <div class="mb-4 flex items-center justify-between px-2">
             <div>
-              <p class="text-sm font-medium text-gray-500">Reward tracking</p>
-              <h3 class="text-xl font-bold text-gray-900">Cashback Progress</h3>
+              <p class="text-sm font-medium text-gray-500">
+                {{ 'dashboard_preview.cards.cashback.subtitle' | translate }}
+              </p>
+              <h3 class="text-xl font-bold text-gray-900">
+                {{ 'dashboard_preview.cards.cashback.title' | translate }}
+              </h3>
             </div>
 
             <div
@@ -102,18 +109,28 @@
       >
         <div class="mb-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 px-1">
           <div>
-            <p class="text-sm font-medium text-gray-500">Cash flow analytics</p>
-            <h3 class="text-2xl font-bold text-gray-900">Deposit vs Withdraw</h3>
+            <p class="text-sm font-medium text-gray-500">
+              {{ 'dashboard_preview.cards.cash_flow.subtitle' | translate }}
+            </p>
+            <h3 class="text-2xl font-bold text-gray-900">
+              {{ 'dashboard_preview.cards.cash_flow.title' | translate }}
+            </h3>
           </div>
 
           <div class="inline-flex w-fit rounded-2xl bg-gray-100 p-1">
-            <button class="px-4 py-2 rounded-xl text-sm font-medium text-gray-500">Week</button>
+            <button class="px-4 py-2 rounded-xl text-sm font-medium text-gray-500">
+              {{ 'dashboard_preview.filters.week' | translate }}
+            </button>
+
             <button
               class="px-4 py-2 rounded-xl bg-white text-sm font-semibold text-red-500 shadow-sm"
             >
-              Month
+              {{ 'dashboard_preview.filters.month' | translate }}
             </button>
-            <button class="px-4 py-2 rounded-xl text-sm font-medium text-gray-500">Year</button>
+
+            <button class="px-4 py-2 rounded-xl text-sm font-medium text-gray-500">
+              {{ 'dashboard_preview.filters.year' | translate }}
+            </button>
           </div>
         </div>
 
@@ -129,17 +146,23 @@
         <!-- MINI STATS -->
         <div class="mt-6 grid sm:grid-cols-3 gap-4">
           <div class="rounded-2xl border border-gray-100 bg-gray-50 p-4">
-            <p class="text-sm text-gray-500">Total Deposit</p>
+            <p class="text-sm text-gray-500">
+              {{ 'dashboard_preview.stats.total_deposit' | translate }}
+            </p>
             <p class="mt-2 text-2xl font-bold text-gray-900">$1,240</p>
           </div>
 
           <div class="rounded-2xl border border-gray-100 bg-gray-50 p-4">
-            <p class="text-sm text-gray-500">Total Withdraw</p>
+            <p class="text-sm text-gray-500">
+              {{ 'dashboard_preview.stats.total_withdraw' | translate }}
+            </p>
             <p class="mt-2 text-2xl font-bold text-gray-900">$3,500</p>
           </div>
 
           <div class="rounded-2xl border border-gray-100 bg-gray-50 p-4">
-            <p class="text-sm text-gray-500">Current Cashback</p>
+            <p class="text-sm text-gray-500">
+              {{ 'dashboard_preview.stats.current_cashback' | translate }}
+            </p>
             <p class="mt-2 text-2xl font-bold text-red-500">5%</p>
           </div>
         </div>

@@ -14,7 +14,7 @@
             <span
               class="inline-block bg-rose-300 text-red-900 text-[11px] md:text-sm font-extrabold px-4 py-2 rounded-2xl shadow shadow-red-900/10"
             >
-              Enterprise-Grade Visa Cards
+              {{ 'hero.badge' | translate }}
             </span>
           </div>
 
@@ -22,40 +22,40 @@
           <h1
             class="relative mt-5 text-white font-extrabold leading-[1.08] text-[34px] sm:text-[42px] md:text-[58px] hero-item"
           >
-            Cards Built For
+            {{ 'hero.title_line_1' | translate }}
             <br />
-            Global Ad Spend
+            {{ 'hero.title_line_2' | translate }}
           </h1>
 
           <!-- DESCRIPTION -->
           <p
             class="mt-6 md:mt-8 text-white/95 text-[15px] sm:text-base md:text-lg pc:text-[1.4rem] hero-item font-semibold leading-relaxed max-w-[560px]"
           >
-            Built for advertisers, agencies, and scaling teams with
+            {{ 'hero.description_prefix' | translate }}
             <span class="relative inline-block font-extrabold text-white">
-              0 issuance fees
+              {{ 'hero.zero_fee' | translate }}
               <span
                 class="absolute left-0 -bottom-1 w-full h-[3px] bg-white/45 rounded-full"
               ></span>
             </span>
             <span class="text-white/85">
-              , high cashback, instant virtual card creation, flexible spend control, and stable
-              payment performance.
+              {{ 'hero.description_suffix' | translate }}
             </span>
           </p>
 
           <p
             class="mt-3 text-white/70 text-sm md:text-base pc:text-[1.15rem] hero-item font-medium leading-relaxed max-w-[540px]"
           >
-            Support Facebook, TikTok, Google, and cross-border business payments with secure
-            infrastructure, fast top-up, and scalable card management.
+            {{ 'hero.sub_description' | translate }}
           </p>
           <!-- BUTTON -->
           <button
             (click)="navigateService.navigateToUserAuth()"
             class="mt-8 md:mt-14 group hero-item flex items-center gap-5 md:gap-8 rounded-full bg-[linear-gradient(135deg,rgba(320,0,0,0.7),rgba(220,60,100,0.4))] hover:bg-red-700 text-white font-bold px-6 md:px-7 py-2.5 shadow-lg shadow-red-900/20 transition-all duration-300"
           >
-            <span>Issue Card</span>
+            <span>
+              <span>{{ 'hero.issue_card' | translate }}</span></span
+            >
 
             <span
               class="w-10 h-10 md:w-11 md:h-11 rounded-full bg-red-600 group-hover:bg-red-400 flex items-center justify-center transition-all duration-300"

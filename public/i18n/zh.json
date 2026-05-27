@@ -1,0 +1,249 @@
+{
+  "navbar": {
+    "about": "关于我们",
+    "features": "功能",
+    "get_started": "立即开始",
+    "select_language": "选择语言"
+  },
+  "hero": {
+    "badge": "企业级 Visa 卡",
+    "title_line_1": "专为全球广告支出",
+    "title_line_2": "打造的虚拟卡",
+    "description_prefix": "专为广告主、代理商和快速增长团队打造，提供",
+    "zero_fee": "0 开卡费用",
+    "description_suffix": "、高额返现、即时虚拟卡创建、灵活支出控制和稳定的支付表现。",
+    "sub_description": "支持 Facebook、TikTok、Google 以及跨境业务支付，提供安全基础设施、快速充值和可扩展的卡片管理。",
+    "issue_card": "开通卡片",
+    "cards": {
+      "tiktok": "TikTok 广告",
+      "google": "Google 广告",
+      "facebook": "Facebook 广告"
+    }
+  },
+  "about": {
+    "badge": "关于",
+    "title": "更智能地管理您的数字资金",
+    "description": {
+      "part_1": "帮助用户在一个安全的平台中管理",
+      "balances": "余额",
+      "cards": "卡片",
+      "deposits": "充值",
+      "withdrawals": "提现",
+      "and": "和",
+      "transactions": "交易",
+      "part_2": "。该平台专为",
+      "speed": "速度",
+      "clarity": "清晰度",
+      "part_3": "以及跨设备的流畅支付体验而设计。"
+    },
+    "stats": {
+      "access": "随时访问",
+      "secure": "安全体验"
+    },
+    "overview": {
+      "title": "平台概览",
+      "wallet_balance": "钱包余额",
+      "active": "启用中",
+      "deposit": "充值",
+      "withdraw": "提现",
+      "security_level": "安全等级",
+      "high": "高"
+    }
+  },
+  "secure": {
+    "floating_badge": {
+      "title": "银行级保护",
+      "description": "加密交易"
+    },
+    "badge": "安全数字银行",
+    "title_line_1": "安全钱包",
+    "title_line_2": "为信任而构建。",
+    "description": "您的资产受到高级加密、智能风险控制和安全交易监控的保护，专为现代数字金融而设计。",
+    "features": {
+      "encrypted_storage": "加密存储",
+      "realtime_protection": "实时保护"
+    }
+  },
+  "ad_platform": {
+    "cards": {
+      "facebook": "Facebook 广告",
+      "google": "Google 广告",
+      "tiktok": "TikTok 广告"
+    },
+    "title_prefix": "适用于广告投放的最佳解决方案",
+    "title_highlight": "Facebook、Google 和 TikTok",
+    "description": "使用虚拟卡无限制地投放广告。轻松管理预算、即时开卡，并在多个平台上扩展广告活动。",
+    "features": {
+      "unlimited_cards": "无限虚拟卡",
+      "instant_topup": "即时充值",
+      "major_platforms": "支持所有主流广告平台"
+    },
+    "issue_card": "开通卡片"
+  },
+  "low_fees": {
+    "badge": "透明定价",
+    "title_line_1": "低费用，",
+    "title_line_2": "更多节省",
+    "description": "通过简单透明的费用结构，在每笔交易中节省更多，让您的资金流转更高效。",
+    "image_alt": "低交易费用节省",
+    "stats": {
+      "transaction_fee": "交易费用",
+      "fast_transfer": "快速转账"
+    },
+    "cta": "立即开始节省",
+    "saving_card": {
+      "title": "已节省费用",
+      "period": "本月",
+      "better": "+18% 更优"
+    }
+  },
+  "scale_tools": {
+    "badge": "专为现代支出打造",
+    "title_line_1": "您所需要的一切",
+    "title_line_2": "助您更快扩展",
+    "description": "发行卡片、控制预算、跟踪交易，并通过简洁安全的平台管理您的财务流程。",
+    "cards": {
+      "instant": {
+        "title": "即时虚拟卡",
+        "description": "快速创建用于广告、订阅或团队支出的卡片，无需等待人工设置。",
+        "action": "创建卡片"
+      },
+      "secure": {
+        "title": "安全控制",
+        "description": "冻结卡片、监控活动，并让每笔交易清晰可见，提供更好的支出保护。",
+        "security_level": "安全等级",
+        "high": "高"
+      },
+      "insights": {
+        "title": "清晰的支出洞察",
+        "description": "通过简单的报表、余额和使用摘要，了解您的资金流向。",
+        "budget_used": "已用预算"
+      }
+    }
+  },
+  "asset_control": {
+    "badge": "智能资产控制",
+    "title_line_1": "集中管理资产",
+    "title_line_2": "尽在一处",
+    "description": "通过简洁的仪表盘跟踪余额、监控支出并管理每张虚拟卡，帮助您快速做出决策。",
+    "image_alt": "资产管理仪表盘",
+    "cta": "查看仪表盘",
+    "cards": {
+      "wallet": {
+        "title": "钱包概览",
+        "description": "即时查看可用、已分配和冻结余额。"
+      },
+      "tracking": {
+        "title": "实时跟踪",
+        "description": "实时跟踪卡片使用情况和交易记录。"
+      }
+    },
+    "dashboard": {
+      "total_assets": "总资产",
+      "available_balance": "可用余额",
+      "allocated_cards": "已分配卡片"
+    },
+    "growth": "增长"
+  },
+  "features": {
+    "badge": "智能银行功能",
+    "title_line_1": "管理数字资金所需的一切",
+    "title_line_2": "尽在这里。",
+    "description": "通过一个安全的仪表盘控制钱包余额、为虚拟卡充值、跟踪交易并获得返现。",
+    "items": {
+      "wallet": {
+        "title": "钱包余额",
+        "description": "实时查看总余额、可用余额、已分配资金和冻结金额。"
+      },
+      "virtual_cards": {
+        "title": "虚拟卡",
+        "description": "轻松创建和管理虚拟卡，分配支出限额，并监控卡片使用情况。"
+      },
+      "deposit_withdraw": {
+        "title": "充值与提现",
+        "description": "预览费用，创建充值或提现订单，并清晰跟踪每个订单状态。"
+      },
+      "transaction_history": {
+        "title": "交易记录",
+        "description": "按类型、状态、金额、卡号和创建时间搜索卡片交易。"
+      },
+      "cashback": {
+        "title": "每月返现",
+        "description": "跟踪您的月度消费等级、返现比例和已批准的奖励金额。"
+      },
+      "secure_account": {
+        "title": "安全账户",
+        "description": "通过 OTP 验证、密码控制和安全会话处理保护您的账户。"
+      }
+    }
+  },
+  "dashboard_preview": {
+    "badge": "仪表盘预览",
+    "title_line_1": "查看您的财务数据",
+    "title_line_2": "尽在一个清晰的仪表盘中。",
+    "description": "通过为现代数字银行打造的可视化仪表盘，跟踪总资产、返现进度、充值、提现和卡片活动。",
+    "cards": {
+      "assets": {
+        "subtitle": "钱包概览",
+        "title": "总资产",
+        "image_alt": "总资产仪表盘预览"
+      },
+      "cashback": {
+        "subtitle": "奖励跟踪",
+        "title": "返现进度",
+        "image_alt": "返现仪表盘预览"
+      },
+      "cash_flow": {
+        "subtitle": "现金流分析",
+        "title": "充值与提现",
+        "image_alt": "充值和提现图表仪表盘预览"
+      }
+    },
+    "filters": {
+      "week": "周",
+      "month": "月",
+      "year": "年"
+    },
+    "stats": {
+      "total_deposit": "总充值",
+      "total_withdraw": "总提现",
+      "current_cashback": "当前返现"
+    }
+  },
+  "final_cta": {
+    "badge": "安全数字钱包",
+    "title_start": "立即开启您的",
+    "title_highlight": "加密之旅",
+    "title_end": "",
+    "description": "通过快速、现代且可靠的加密银行体验，管理钱包、跟踪资产并进行安全交易。",
+    "button": "立即开始"
+  },
+  "footer": {
+    "brand": {
+      "tagline": "用于广告支付的 Visa 卡",
+      "description": "面向广告主、代理商和快速增长的媒体采购团队的企业级虚拟卡解决方案。"
+    },
+    "company": {
+      "about": "关于我们",
+      "user_agreement": "用户协议",
+      "privacy_agreement": "隐私协议",
+      "refund_agreement": "退款协议"
+    },
+    "resources": {
+      "title": "资源",
+      "bin_strategy": "BIN 策略 — 即将推出",
+      "ad_payment_guide": "广告支付指南 — 即将推出",
+      "cashback_program": "返现计划 — 即将推出",
+      "faq": "常见问题 — 即将推出"
+    },
+    "contact": {
+      "title": "快速联系",
+      "live_chat": "在线客服 24/7",
+      "global_payments": "全球商业支付"
+    },
+    "bottom": {
+      "copyright": "© 2026 VCCCardAds。保留所有权利。",
+      "description": "专为安全、可扩展且合规的虚拟卡管理而打造。"
+    }
+  }
+}
