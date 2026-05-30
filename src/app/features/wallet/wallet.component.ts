@@ -68,7 +68,9 @@ export class WalletComponent {
       next: (res) => {
         this.walletBalance.set(res.data.wallet_balance);
       },
-      error: (_) => {},
+      error: (err) => {
+        this.toast.error(err?.error?.message);
+      },
     });
   }
 

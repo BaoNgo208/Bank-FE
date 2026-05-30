@@ -245,5 +245,14 @@
       "copyright": "© 2026 VCCCardAds。保留所有权利。",
       "description": "专为安全、可扩展且合规的虚拟卡管理而打造。"
     }
+  },
+  "userDropdown": {
+    "cardOpenLimit": "开卡额度",
+    "joinedDate": "加入日期",
+    "language": "语言",
+    "selectLanguage": "选择语言",
+    "changePassword": "修改密码",
+    "changePasswordDescription": "更新您的账户密码",
+    "logout": "退出登录"
   }
 }

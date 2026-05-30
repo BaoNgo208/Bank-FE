@@ -6,6 +6,32 @@
     (click)="closeSidebar()"
   ></div>
 
+  <!-- FLOATING TELEGRAM BUTTON -->
+  <a
+    href="https://t.me/vcccardads"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Chat with us on Telegram"
+    class="fixed right-4 bottom-4 small_laptop:left-4 z-[99999] group md:right-6 md:bottom-6"
+  >
+    <!-- button -->
+    <div
+      class="flex h-14 w-14 md:h-12 md:w-12 items-center justify-center rounded-full bg-[#18a8e8] text-white shadow-xl transition-all duration-300 hover:scale-105 hover:bg-[#0d9bd8]"
+    >
+      <i
+        class="fa-solid fa-paper-plane -translate-x-0.5 translate-y-0.5 text-[13px] md:text-[1.8rem]"
+      ></i>
+    </div>
+
+    <!-- tooltip -->
+    <div
+      class="pointer-events-none absolute bottom-16 right-0 small_laptop:left-0 w-24 whitespace-nowrap rounded-full bg-white px-4 py-2 text-xs font-bold text-gray-800 opacity-0 shadow-lg transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 md:bottom-20"
+    >
+      Chat with us
+      <span class="absolute -bottom-1 right-5 h-3 w-3 rotate-45 bg-white"></span>
+    </div>
+  </a>
+
   <!-- MOBILE SIDEBAR -->
   <div
     class="fixed top-0 left-0 h-full w-[260px] bg-white z-50 transform transition-transform duration-300 small_laptop:hidden"
