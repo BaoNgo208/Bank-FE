@@ -245,5 +245,14 @@
       "copyright": "© 2026 VCCCardAds. Все права защищены.",
       "description": "Создано для безопасного, масштабируемого и соответствующего требованиям управления виртуальными картами."
     }
+  },
+  "userDropdown": {
+    "cardOpenLimit": "Лимит открытия карт",
+    "joinedDate": "Дата регистрации",
+    "language": "Язык",
+    "selectLanguage": "Выберите язык",
+    "changePassword": "Изменить пароль",
+    "changePasswordDescription": "Обновите пароль вашей учетной записи",
+    "logout": "Выйти"
   }
 }

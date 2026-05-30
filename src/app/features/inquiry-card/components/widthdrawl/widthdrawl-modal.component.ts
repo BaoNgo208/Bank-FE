@@ -39,7 +39,9 @@ export class WidthdrawlCardModalComponent {
       next: (res) => {
         this.availableBalance.set(res.data.card_balance);
       },
-      error: (_) => {},
+      error: (err) => {
+        this.toast.error(err?.error?.message);
+      },
     });
   }
 

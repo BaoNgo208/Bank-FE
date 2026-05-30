@@ -1,13 +1,13 @@
 <div class="relative inline-flex items-center">
   <select
     class="h-9 w-[115px] appearance-none rounded-full border border-red-300/60 bg-rose-400 px-3 pr-8 text-sm font-bold text-white shadow-sm outline-none transition hover:bg-rose-500 hover:border-red-400 focus:bg-rose-500 focus:border-red-500 focus:ring-4 focus:ring-red-100"
-    [value]="languageService.currentLang()"
-    (change)="changeLanguage($event)"
+    [ngModel]="languageService.currentLang()"
+    (ngModelChange)="changeLanguage($event)"
     aria-label="Select language"
   >
     <option
       *ngFor="let lang of languageService.languages"
-      [value]="lang.code"
+      [ngValue]="lang.code"
       class="bg-white text-gray-800"
     >
       {{ lang.flag }} {{ lang.nativeLabel }}

@@ -16,6 +16,7 @@ import { WidthdrawlService } from '../services/widthdrawl.service';
 import { WalletService } from '../services/wallet.service';
 import { delay, finalize } from 'rxjs';
 import { DepositOrderStatus } from '../../admin/deposit-orders-management/types/deposit.type';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +26,7 @@ export class WalletFacade {
   private walletStore = inject(WalletStore);
   private widthdrawlService = inject(WidthdrawlService);
   private walletService = inject(WalletService);
+  private toast = inject(ToastrService);
 
   loading = signal<boolean>(false);
 
@@ -37,7 +39,9 @@ export class WalletFacade {
         next: (res) => {
           this.walletStore.depositConfig.set(res.data);
         },
-        error: (_) => {},
+        error: (err) => {
+          this.toast.error(err?.error?.message);
+        },
       });
   }
 
@@ -50,7 +54,9 @@ export class WalletFacade {
         next: (res) => {
           this.walletStore.depositPreview.set(res.data);
         },
-        error: (_) => {},
+        error: (err) => {
+          this.toast.error(err?.error?.message);
+        },
       });
   }
 
@@ -67,7 +73,9 @@ export class WalletFacade {
       next: () => {
         this.walletStore.uploadSuccess.set(true);
       },
-      error: (_) => {},
+      error: (err) => {
+        this.toast.error(err?.error?.message);
+      },
     });
   }
 

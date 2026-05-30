@@ -20,11 +20,13 @@ import {
   UserProfileResponse,
 } from '../../../features/profile/types/profile.type';
 import { ChangePasswordModalComponent } from './components/change-password-modal/change-password-modal/change-password-modal.component';
+import { AppLanguage, LanguageService } from '../../../core/services/language.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-navigation-component',
   standalone: true,
-  imports: [CommonModule, ChangePasswordModalComponent],
+  imports: [CommonModule, ChangePasswordModalComponent, TranslatePipe],
   templateUrl: './navigation.component.html',
 })
 export class NavigationComponent implements OnInit {
@@ -34,6 +36,8 @@ export class NavigationComponent implements OnInit {
   private toast = inject(ToastrService);
   private elementRef = inject(ElementRef);
   private profileService = inject(ProfileService);
+
+  protected languageService = inject(LanguageService);
 
   @Output() toggleSidebar = new EventEmitter<void>();
 
@@ -45,6 +49,11 @@ export class NavigationComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadProfile();
+  }
+
+  changeLanguage(event: Event) {
+    const lang = (event.target as HTMLSelectElement).value as AppLanguage;
+    this.languageService.use(lang);
   }
 
   @HostListener('document:click', ['$event'])

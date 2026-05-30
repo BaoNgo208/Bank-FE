@@ -245,5 +245,14 @@
       "copyright": "© 2026 VCCCardAds. All rights reserved.",
       "description": "Built for secure, scalable, and compliant virtual card management."
     }
+  },
+  "userDropdown": {
+    "cardOpenLimit": "Card open limit",
+    "joinedDate": "Joined date",
+    "language": "Language",
+    "selectLanguage": "Select language",
+    "changePassword": "Change password",
+    "changePasswordDescription": "Update your account password",
+    "logout": "Logout"
   }
 }
