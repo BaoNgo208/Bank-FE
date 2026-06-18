@@ -52,8 +52,13 @@
       </div>
 
       <div>
-        <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Daily Limit</p>
-        <p class="text-lg font-black text-slate-900">$5,000</p>
+        <p class="text-xs font-bold uppercase tracking-wider text-slate-400">
+          {{ 'vcc_infrastructure_cta.floating_cards.daily_limit_label' | translate }}
+        </p>
+
+        <p class="text-lg font-black text-slate-900">
+          {{ 'vcc_infrastructure_cta.floating_cards.daily_limit_value' | translate }}
+        </p>
       </div>
     </div>
   </div>
@@ -67,8 +72,13 @@
       </div>
 
       <div>
-        <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Card Status</p>
-        <p class="text-lg font-black text-slate-900">Ready</p>
+        <p class="text-xs font-bold uppercase tracking-wider text-slate-400">
+          {{ 'vcc_infrastructure_cta.floating_cards.card_status_label' | translate }}
+        </p>
+
+        <p class="text-lg font-black text-slate-900">
+          {{ 'vcc_infrastructure_cta.floating_cards.card_status_value' | translate }}
+        </p>
       </div>
     </div>
   </div>
@@ -79,40 +89,44 @@
       class="mx-auto mb-6 inline-flex items-center gap-2 rounded-full border border-rose-100 bg-white/80 px-4 py-2 text-xs font-black uppercase tracking-wide text-rose-500 shadow-lg shadow-rose-100/70 backdrop-blur"
     >
       <span class="h-2 w-2 rounded-full bg-rose-500"></span>
-      Virtual Card Infrastructure
+      {{ 'vcc_infrastructure_cta.badge' | translate }}
     </div>
 
     <h2
       class="mx-auto max-w-[1080px] text-center text-4xl font-black leading-[1.05] tracking-tight text-slate-800 md:text-[56px] lg:text-[58px]"
     >
-      <span class="block"> Take Advantage of Fast Registration </span>
+      <span class="block">
+        {{ 'vcc_infrastructure_cta.title.line_1' | translate }}
+      </span>
 
       <span class="block">
-        and
+        {{ 'vcc_infrastructure_cta.title.line_2_prefix' | translate }}
         <span
           class="bg-gradient-to-r from-red-500 via-rose-500 to-pink-500 bg-clip-text text-transparent"
         >
-          Smooth Online Transactions
+          {{ 'vcc_infrastructure_cta.title.highlight' | translate }}
         </span>
       </span>
 
-      <span class="block"> with VCC </span>
+      <span class="block">
+        {{ 'vcc_infrastructure_cta.title.line_3' | translate }}
+      </span>
     </h2>
 
     <div class="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
       <div class="flex items-center gap-3 text-sm font-bold text-slate-500 md:text-base">
         <i class="fa-solid fa-check text-rose-500"></i>
-        <span>Create a card in 60 seconds</span>
+        <span>{{ 'vcc_infrastructure_cta.features.fast_card' | translate }}</span>
       </div>
 
       <div class="flex items-center gap-3 text-sm font-bold text-slate-500 md:text-base">
         <i class="fa-solid fa-check text-rose-500"></i>
-        <span>Forget about spending limitations</span>
+        <span>{{ 'vcc_infrastructure_cta.features.no_limits' | translate }}</span>
       </div>
 
       <div class="flex items-center gap-3 text-sm font-bold text-slate-500 md:text-base">
         <i class="fa-solid fa-check text-rose-500"></i>
-        <span>Receive 24/7 support</span>
+        <span>{{ 'vcc_infrastructure_cta.features.support' | translate }}</span>
       </div>
     </div>
 
@@ -121,22 +135,37 @@
       <div
         class="rounded-3xl border border-rose-100 bg-white/80 p-5 shadow-xl shadow-rose-100/70 backdrop-blur"
       >
-        <p class="text-3xl font-black text-slate-950">60s</p>
-        <p class="mt-1 text-sm font-bold text-slate-400">Card issuing</p>
+        <p class="text-3xl font-black text-slate-950">
+          {{ 'vcc_infrastructure_cta.stats.card_issuing.value' | translate }}
+        </p>
+
+        <p class="mt-1 text-sm font-bold text-slate-400">
+          {{ 'vcc_infrastructure_cta.stats.card_issuing.label' | translate }}
+        </p>
       </div>
 
       <div
         class="rounded-3xl border border-rose-100 bg-white/80 p-5 shadow-xl shadow-rose-100/70 backdrop-blur"
       >
-        <p class="text-3xl font-black text-slate-950">24/7</p>
-        <p class="mt-1 text-sm font-bold text-slate-400">Support</p>
+        <p class="text-3xl font-black text-slate-950">
+          {{ 'vcc_infrastructure_cta.stats.support.value' | translate }}
+        </p>
+
+        <p class="mt-1 text-sm font-bold text-slate-400">
+          {{ 'vcc_infrastructure_cta.stats.support.label' | translate }}
+        </p>
       </div>
 
       <div
         class="rounded-3xl border border-rose-100 bg-white/80 p-5 shadow-xl shadow-rose-100/70 backdrop-blur"
       >
-        <p class="text-3xl font-black text-slate-950">API</p>
-        <p class="mt-1 text-sm font-bold text-slate-400">Ready</p>
+        <p class="text-3xl font-black text-slate-950">
+          {{ 'vcc_infrastructure_cta.stats.api.value' | translate }}
+        </p>
+
+        <p class="mt-1 text-sm font-bold text-slate-400">
+          {{ 'vcc_infrastructure_cta.stats.api.label' | translate }}
+        </p>
       </div>
     </div>
 
@@ -146,7 +175,7 @@
         (click)="navigateService.navigateToUserAuth()"
         class="group hero-item flex items-center gap-5 rounded-full bg-gradient-to-r from-red-500 via-rose-500 to-pink-500 px-6 py-2.5 font-bold text-white shadow-lg shadow-red-900/20 transition-all duration-300 hover:-translate-y-0.5 hover:from-red-600 hover:via-rose-600 hover:to-pink-600 hover:shadow-red-900/30 active:translate-y-0 md:gap-8 md:px-7"
       >
-        <span>Open a card</span>
+        <span>{{ 'vcc_infrastructure_cta.cta' | translate }}</span>
 
         <span
           class="flex h-10 w-10 items-center justify-center rounded-full bg-red-600 transition-all duration-300 group-hover:bg-red-400 md:h-11 md:w-11"

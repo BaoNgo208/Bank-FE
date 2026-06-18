@@ -11,8 +11,8 @@
     "title_highlight": "Infrastructure",
     "title_part_2": "for Global Payments",
     "description_prefix": "VCC provides secure, scalable virtual card issuing and payment management for",
-    "payment_use_cases": "advertising, cloud services, AI tools, subscriptions, and cross-border procurement",
-    "description_suffix": "—designed for the operational demands of modern global businesses.",
+    "payment_use_cases": "advertising",
+    "description_suffix": "— designed for the operational demands of modern global businesses.",
     "features": {
       "instant_card": "Instant Card Issuing",
       "multi_currency": "Multi-Currency Settlement",
@@ -250,10 +250,10 @@
     },
     "resources": {
       "title": "Resources",
-      "bin_strategy": "BIN Strategy — Coming soon",
-      "ad_payment_guide": "Ad Payment Guide — Coming soon",
-      "cashback_program": "Cashback Program — Coming soon",
-      "faq": "FAQ — Coming soon"
+      "bin_strategy": "BIN Strategy",
+      "ad_payment_guide": "Ad Payment Guide",
+      "cashback_program": "Cashback Program",
+      "faq": "FAQ"
     },
     "contact": {
       "title": "Quick Contact",
@@ -298,5 +298,478 @@
       "instant_topup": "Instant top-up via API or dashboard"
     },
     "cta": "Learn More"
+  },
+  "facebook_ads_vcc": {
+    "hero": {
+      "badge": "Facebook Ads VCC",
+      "title_part_1": "Virtual Cards for",
+      "title_highlight": "Facebook Ads",
+      "description": "Run successful Facebook ad campaigns with a VCC. Get a virtual card for Facebook ads & manage your budget easily.",
+      "primary_cta": "Get Started"
+    },
+    "mockup": {
+      "budget_control": "Budget Control",
+      "card_limits": "Card Limits",
+      "daily_spend": "Daily Spend",
+      "campaign": "Campaign",
+      "active": "Active",
+      "payment_safety": "Payment Safety",
+      "ads_ready": "Ads Ready",
+      "bin_options": "BIN Options",
+      "control": "Control",
+      "card_ready": "Virtual card ready",
+      "facebook_ads": "Facebook Ads"
+    }
+  },
+  "google_ads_vcc": {
+    "hero": {
+      "badge": "Google Ads VCC",
+      "title_part_1": "Virtual Cards for",
+      "title_highlight": "Google Ads",
+      "description": "Stop billing surprises. Create a VCC for Google Ads, set spend caps, and keep campaigns live without risking your primary card.",
+      "primary_cta": "Get Started"
+    },
+    "mockup": {
+      "spend_control": "Spend Control",
+      "ad_budget": "Ad Budget",
+      "daily_limit": "Daily Limit",
+      "campaign_spend": "Campaign Spend",
+      "active": "Active",
+      "billing_safety": "Billing Safety",
+      "ads_ready": "Ads Ready",
+      "fast": "Fast",
+      "card_issue": "Card Issue",
+      "live": "Live",
+      "control": "Control",
+      "card_ready": "Virtual card ready",
+      "google_ads": "Google Ads",
+      "campaign_budget": "Campaign Budget"
+    }
+  },
+  "tiktok_ads_vcc": {
+    "hero": {
+      "badge": "TikTok Ads VCC",
+      "title_part_1": "Virtual Cards for",
+      "title_highlight": "TikTok Ads",
+      "description": "Stop billing surprises. Create a VCC for TikTok Ads, set spend caps, and keep campaigns live without risking your primary card.",
+      "primary_cta": "Get Started"
+    },
+    "mockup": {
+      "campaign_spend": "Campaign Spend",
+      "budget_caps": "Budget Caps",
+      "daily_budget": "Daily Budget",
+      "ad_delivery": "Ad Delivery",
+      "running": "Running",
+      "payment_safety": "Payment Safety",
+      "ads_ready": "Ads Ready",
+      "fast": "Fast",
+      "issue_card": "Issue Card",
+      "live": "Live",
+      "spend_view": "Spend View",
+      "card_ready": "Virtual card ready",
+      "tiktok_ads": "TikTok Ads",
+      "campaign_budget": "Campaign Budget"
+    }
+  },
+  "facebook_ads_vcc_overview": {
+    "visual_card": {
+      "title_line_1": "For advertising",
+      "title_line_2": "services",
+      "label": "Facebook Ads"
+    },
+    "badge": "Facebook Ads VCC",
+    "title_prefix": "What is a Virtual Card for",
+    "title_highlight": "Facebook Ads?",
+    "description": "A virtual card for Facebook Ads is a digital payment card created for advertising transactions. Instead of using one personal or business card for every ad account, you can create dedicated cards to separate budgets, manage payments, and keep advertising spend easier to track.",
+    "cards": {
+      "budget_control": {
+        "title": "Budget Control",
+        "description": "Assign different cards to different ad accounts, clients, or campaign groups."
+      },
+      "payment_separation": {
+        "title": "Payment Separation",
+        "description": "Keep ad payments separated instead of mixing every account on one main card."
+      }
+    },
+    "cta": "Open a card",
+    "overview": {
+      "digital_card": {
+        "title": "Digital card, real payments",
+        "description": "A virtual card works like a regular payment card, but it is created online and can be used for digital billing. For Facebook Ads, it helps you connect a dedicated card to your ad payment method without relying on a physical card."
+      },
+      "ad_account_management": {
+        "title": "Built for ad account management",
+        "description": "When you manage many campaigns, clients, or business managers, one shared card can become hard to control. Virtual cards let you organize payments by account, campaign type, or team workflow."
+      },
+      "billing_records": {
+        "title": "Cleaner billing records",
+        "description": "Each card can represent a specific advertising purpose. This makes it easier to review transactions, compare spending, and understand where your Facebook Ads budget is going."
+      }
+    },
+    "function": {
+      "badge": "Card function",
+      "title": "How does it support Facebook Ads payments?",
+      "description": "The card acts as a dedicated payment layer between your advertising budget and Facebook billing. It helps you separate spending, reduce confusion between accounts, and manage payment activity in a more structured way.",
+      "items": {
+        "separate_payment_source": {
+          "title": "Separate payment source",
+          "description": "Use one card for one ad account, client, or campaign group."
+        },
+        "spend_tracking": {
+          "title": "Clearer spend tracking",
+          "description": "Review transactions by card instead of checking one mixed payment history."
+        },
+        "shared_card_exposure": {
+          "title": "Less shared-card exposure",
+          "description": "Avoid using your main card across too many advertising accounts."
+        },
+        "flexible_operation": {
+          "title": "Flexible operation",
+          "description": "Create, replace, or assign cards based on your advertising workflow."
+        }
+      }
+    },
+    "flow": {
+      "step_01": {
+        "number": "01",
+        "title": "Create a virtual card",
+        "description": "Generate a digital card for a specific Facebook Ads payment purpose."
+      },
+      "step_02": {
+        "number": "02",
+        "title": "Add it to Facebook billing",
+        "description": "Use the card as a payment method for your selected ad account or campaign workflow."
+      },
+      "step_03": {
+        "number": "03",
+        "title": "Monitor and manage spend",
+        "description": "Track payments separately and keep your advertising budget easier to understand."
+      }
+    }
+  },
+
+  "google_ads_vcc_overview": {
+    "visual_card": {
+      "title_line_1": "For Google Ads",
+      "title_line_2": "services",
+      "label": "Google Ads"
+    },
+    "badge": "Google Ads Card",
+    "title_prefix": "Virtual Cards Built for",
+    "title_highlight": "Google Advertising",
+    "description": "Create dedicated virtual cards for your Google Ads payments. Separate campaign spending, manage billing more clearly, and keep your advertising budget easier to monitor across different accounts or projects.",
+    "cards": {
+      "ad_budget_control": {
+        "title": "Ad Budget Control",
+        "description": "Use separate cards for different Google Ads accounts, clients, or campaigns."
+      },
+      "cleaner_billing": {
+        "title": "Cleaner Billing",
+        "description": "Keep Google Ads payment activity organized without mixing every campaign on one card."
+      }
+    },
+    "cta": "Create Google Ads Card",
+    "overview": {
+      "digital_card": {
+        "title": "Digital card for ad billing",
+        "description": "A virtual card for Google Ads works like a regular payment card, but it is created online and used mainly for digital advertising payments. It helps you connect a dedicated payment source to your Google Ads billing instead of relying on one main card for every account."
+      },
+      "campaign_control": {
+        "title": "Designed for campaign control",
+        "description": "When you manage several Google Ads accounts, clients, or campaign groups, virtual cards make it easier to separate payment activity. Each card can be assigned to a specific advertising purpose, project, or client workflow."
+      },
+      "payment_records": {
+        "title": "Cleaner payment records",
+        "description": "Instead of mixing every Google Ads payment on one card, you can separate transactions by account or campaign. This makes billing review, budget checking, and client reporting much clearer."
+      }
+    },
+    "function": {
+      "badge": "Card function",
+      "title": "How does it support Google Ads payments?",
+      "description": "The card acts as a dedicated payment layer for your Google Ads billing. It helps you separate advertising spend, reduce confusion between different accounts, and manage campaign payments in a more structured way.",
+      "items": {
+        "separate_billing_source": {
+          "title": "Separate billing source",
+          "description": "Use different cards for different Google Ads accounts, clients, or campaign groups."
+        },
+        "spend_tracking": {
+          "title": "Clearer spend tracking",
+          "description": "Review spending by card instead of checking one mixed payment history."
+        },
+        "main_card_exposure": {
+          "title": "Less main-card exposure",
+          "description": "Avoid attaching the same primary card to too many advertising accounts."
+        },
+        "flexible_operation": {
+          "title": "Flexible operation",
+          "description": "Create, replace, or assign cards based on your Google Ads workflow."
+        }
+      }
+    },
+    "flow": {
+      "step_01": {
+        "number": "01",
+        "title": "Create a virtual card",
+        "description": "Generate a dedicated card for a specific Google Ads account, client, or campaign purpose."
+      },
+      "step_02": {
+        "number": "02",
+        "title": "Add it to Google billing",
+        "description": "Use the card as a payment method for your selected Google Ads billing setup."
+      },
+      "step_03": {
+        "number": "03",
+        "title": "Monitor campaign spend",
+        "description": "Track payment activity separately and keep your Google Ads budget easier to understand."
+      }
+    }
+  },
+  "tiktok_ads_vcc_overview": {
+    "visual_card": {
+      "title_line_1": "For advertising",
+      "title_line_2": "services",
+      "label": "TikTok Ads"
+    },
+    "badge": "TikTok Ads VCC",
+    "title_prefix": "What is a Virtual Card for",
+    "title_highlight": "TikTok Ads?",
+    "description": "A virtual card for TikTok Ads is a digital payment card created for advertising transactions on TikTok. Instead of using one main card for every ad account, you can create dedicated cards to separate budgets, manage campaign payments, and keep ad spending easier to track.",
+    "cards": {
+      "budget_control": {
+        "title": "Budget Control",
+        "description": "Assign different cards to different TikTok ad accounts, clients, or campaign groups."
+      },
+      "payment_separation": {
+        "title": "Payment Separation",
+        "description": "Keep TikTok ad payments separated instead of mixing every account on one main card."
+      }
+    },
+    "cta": "Open a card",
+    "overview": {
+      "digital_card": {
+        "title": "Digital card, real payments",
+        "description": "A virtual card works like a regular payment card, but it is created online and can be used for digital billing. For TikTok Ads, it helps you connect a dedicated card to your ad payment method without relying on a physical card."
+      },
+      "ad_account_management": {
+        "title": "Built for ad account management",
+        "description": "When you manage many TikTok campaigns, clients, or ad accounts, one shared card can become hard to control. Virtual cards let you organize payments by account, campaign type, or team workflow."
+      },
+      "billing_records": {
+        "title": "Cleaner billing records",
+        "description": "Each card can represent a specific advertising purpose. This makes it easier to review transactions, compare spending, and understand where your TikTok Ads budget is going."
+      }
+    },
+    "function": {
+      "badge": "Card function",
+      "title": "How does it support TikTok Ads payments?",
+      "description": "The card acts as a dedicated payment layer between your advertising budget and TikTok billing. It helps you separate spending, reduce confusion between accounts, and manage payment activity in a more structured way.",
+      "items": {
+        "separate_payment_source": {
+          "title": "Separate payment source",
+          "description": "Use one card for one TikTok ad account, client, or campaign group."
+        },
+        "spend_tracking": {
+          "title": "Clearer spend tracking",
+          "description": "Review transactions by card instead of checking one mixed payment history."
+        },
+        "shared_card_exposure": {
+          "title": "Less shared-card exposure",
+          "description": "Avoid using your main card across too many TikTok advertising accounts."
+        },
+        "flexible_operation": {
+          "title": "Flexible operation",
+          "description": "Create, replace, or assign cards based on your TikTok advertising workflow."
+        }
+      }
+    },
+    "flow": {
+      "step_01": {
+        "number": "01",
+        "title": "Create a virtual card",
+        "description": "Generate a digital card for a specific TikTok Ads payment purpose."
+      },
+      "step_02": {
+        "number": "02",
+        "title": "Add it to TikTok billing",
+        "description": "Use the card as a payment method for your selected TikTok ad account or campaign workflow."
+      },
+      "step_03": {
+        "number": "03",
+        "title": "Monitor and manage spend",
+        "description": "Track payments separately and keep your TikTok advertising budget easier to understand."
+      }
+    }
+  },
+  "how_it_works": {
+    "title": "How does it work?",
+    "description": "Setting up your virtual credit card (VCC) takes just minutes — and it’s designed for seamless use on top advertising platforms like Facebook Ads Manager, Google, or TikTok.",
+    "steps": {
+      "step_01": {
+        "number": "01",
+        "title": "1. Create an account",
+        "description": "Sign up quickly — no long forms or delays. Get instant access to your dashboard and start using a VCC without waiting for approvals."
+      },
+      "step_02": {
+        "number": "02",
+        "title": "2. Generate a VCC",
+        "description_part_1": "Choose from Visa or Mastercard and",
+        "highlight_1": "instantly generate",
+        "description_part_2": "a VCC with high compatibility across payment methods on ad platforms. You can choose from",
+        "highlight_2": "20+ BIN options",
+        "description_part_3": "."
+      },
+      "step_03": {
+        "number": "03",
+        "title": "3. Fund & Link",
+        "description": "Top up your card with crypto or traditional payments, then link it as a payment method in your ads manager."
+      },
+      "step_04": {
+        "number": "04",
+        "title": "4. Launch & Monitor",
+        "description_part_1": "Run campaigns immediately with",
+        "highlight_1": "high limits",
+        "description_part_2": "and",
+        "highlight_2": "full control",
+        "description_part_3": ". Monitor spending in",
+        "highlight_3": "real-time",
+        "description_part_4": ", receive",
+        "highlight_4": "instant alerts",
+        "description_part_5": ", and manage everything from your dashboard."
+      }
+    }
+  },
+  "vcc_infrastructure_cta": {
+    "floating_cards": {
+      "daily_limit_label": "Daily Limit",
+      "daily_limit_value": "$5,000",
+      "card_status_label": "Card Status",
+      "card_status_value": "Ready"
+    },
+    "badge": "Virtual Card Infrastructure",
+    "title": {
+      "line_1": "Take Advantage of Fast Registration",
+      "line_2_prefix": "and",
+      "highlight": "Smooth Online Transactions",
+      "line_3": "with VCC"
+    },
+    "features": {
+      "fast_card": "Create a card in 60 seconds",
+      "no_limits": "Forget about spending limitations",
+      "support": "Receive 24/7 support"
+    },
+    "stats": {
+      "card_issuing": {
+        "value": "60s",
+        "label": "Card issuing"
+      },
+      "support": {
+        "value": "24/7",
+        "label": "Support"
+      },
+      "api": {
+        "value": "API",
+        "label": "Ready"
+      }
+    },
+    "cta": "Open a card"
+  },
+  "why_facebook_ads_vcc": {
+    "badge": "Facebook Ads VCC",
+    "title_prefix": "Why use a virtual credit card",
+    "title_highlight": "for Facebook Advertising?",
+    "description": "Virtual cards help advertisers separate budgets, reduce payment risks, and manage Facebook ad spending with more control and visibility.",
+    "items": {
+      "separate_budgets": {
+        "title": "Separate ad budgets",
+        "description": "Create dedicated VCCs for different Facebook ad accounts, campaigns, or clients, so each budget stays clean and easy to track."
+      },
+      "reduce_payment_risk": {
+        "title": "Reduce payment risk",
+        "description": "Avoid using one main card across multiple ad accounts. A virtual card helps limit exposure and keeps your primary payment source safer."
+      },
+      "instant_cards": {
+        "title": "Create cards instantly",
+        "description": "Generate ready-to-use virtual cards quickly and start assigning them to your Facebook advertising workflows without waiting for physical cards."
+      },
+      "track_spending": {
+        "title": "Track spending clearly",
+        "description": "Monitor card transactions separately, making it easier to understand which campaign, account, or client is spending money."
+      },
+      "control_each_card": {
+        "title": "Control each card",
+        "description": "Manage each VCC independently for campaign spending, payment control, and easier operation across multiple advertising accounts."
+      },
+      "scale_operations": {
+        "title": "Scale ad operations",
+        "description": "For teams running multiple Facebook ad accounts, VCCs make payment management more organized, flexible, and scalable."
+      }
+    },
+    "bottom_note": "With virtual cards, Facebook advertising payments become easier to separate, monitor, and control — especially when managing multiple campaigns or accounts."
+  },
+  "why_google_ads_vcc": {
+    "badge": "Google Ads Card",
+    "title_prefix": "Why use a virtual card",
+    "title_highlight": "for Google Advertising?",
+    "description": "Virtual cards help advertisers organize Google Ads billing, separate campaign budgets, and manage ad payments with better visibility and control.",
+    "items": {
+      "separate_budgets": {
+        "title": "Separate ad budgets",
+        "description": "Create dedicated cards for different Google Ads accounts, campaigns, or clients, so each advertising budget stays easier to manage."
+      },
+      "reduce_billing_risk": {
+        "title": "Reduce billing risk",
+        "description": "Avoid placing every Google Ads account on one main card. Virtual cards help limit exposure and keep payment sources more organized."
+      },
+      "create_cards_quickly": {
+        "title": "Create cards quickly",
+        "description": "Generate virtual cards for Google Ads payments quickly and assign them to your ad accounts without waiting for physical cards."
+      },
+      "track_ad_spending": {
+        "title": "Track ad spending",
+        "description": "Monitor card transactions separately, making it easier to understand which Google Ads account, campaign, or client is using budget."
+      },
+      "control_each_card": {
+        "title": "Control each card",
+        "description": "Manage each card independently for Google Ads billing, campaign payments, and cleaner operation across multiple advertising accounts."
+      },
+      "scale_operations": {
+        "title": "Scale ad operations",
+        "description": "For teams managing multiple Google Ads accounts, virtual cards make payment workflows more organized, flexible, and scalable."
+      }
+    },
+    "bottom_note": "With virtual cards, Google Ads payments become easier to separate, monitor, and control — especially when managing multiple campaigns, clients, or advertising accounts."
+  },
+  "why_tiktok_ads_vcc": {
+    "badge": "TikTok Ads Card",
+    "title_prefix": "Why use a virtual card",
+    "title_highlight": "for TikTok Advertising?",
+    "description": "Virtual cards help advertisers organize TikTok Ads billing, separate campaign budgets, and manage ad payments with better visibility and control.",
+    "items": {
+      "separate_budgets": {
+        "title": "Separate ad budgets",
+        "description": "Create dedicated cards for different TikTok Ads accounts, campaigns, or clients, so each advertising budget stays easier to manage."
+      },
+      "reduce_billing_risk": {
+        "title": "Reduce billing risk",
+        "description": "Avoid placing every TikTok Ads account on one main card. Virtual cards help limit exposure and keep payment sources more organized."
+      },
+      "create_cards_quickly": {
+        "title": "Create cards quickly",
+        "description": "Generate virtual cards for TikTok Ads payments quickly and assign them to your ad accounts without waiting for physical cards."
+      },
+      "track_ad_spending": {
+        "title": "Track ad spending",
+        "description": "Monitor card transactions separately, making it easier to understand which TikTok Ads account, campaign, or client is using budget."
+      },
+      "control_each_card": {
+        "title": "Control each card",
+        "description": "Manage each card independently for TikTok Ads billing, campaign payments, and cleaner operation across multiple advertising accounts."
+      },
+      "scale_operations": {
+        "title": "Scale ad operations",
+        "description": "For teams managing multiple TikTok Ads accounts, virtual cards make payment workflows more organized, flexible, and scalable."
+      }
+    },
+    "bottom_note": "With virtual cards, TikTok Ads payments become easier to separate, monitor, and control — especially when managing multiple campaigns, clients, or advertising accounts."
   }
 }
