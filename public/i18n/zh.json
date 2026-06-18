@@ -11,8 +11,8 @@
     "title_highlight": "基础设施",
     "title_part_2": "用于全球支付",
     "description_prefix": "VCC 为以下场景提供安全、可扩展的虚拟卡发行与支付管理：",
-    "payment_use_cases": "广告投放、云服务、AI 工具、订阅服务和跨境采购",
-    "description_suffix": "——专为现代全球企业的运营需求而设计。",
+    "payment_use_cases": "广告投放",
+    "description_suffix": "—— 专为现代全球企业的运营需求而设计。",
     "features": {
       "instant_card": "即时发卡",
       "multi_currency": "多币种结算",
@@ -298,5 +298,477 @@
       "instant_topup": "通过 API 或仪表盘即时充值"
     },
     "cta": "了解更多"
+  },
+  "facebook_ads_vcc": {
+    "hero": {
+      "badge": "Facebook Ads VCC",
+      "title_part_1": "适用于",
+      "title_highlight": "Facebook Ads",
+      "description": "使用 VCC 轻松开展成功的 Facebook 广告活动。获取适用于 Facebook Ads 的虚拟卡，并轻松管理广告预算。",
+      "primary_cta": "立即开始"
+    },
+    "mockup": {
+      "budget_control": "预算控制",
+      "card_limits": "卡片限额",
+      "daily_spend": "每日支出",
+      "campaign": "广告活动",
+      "active": "运行中",
+      "payment_safety": "支付安全",
+      "ads_ready": "广告就绪",
+      "bin_options": "BIN 选项",
+      "control": "控制",
+      "card_ready": "虚拟卡已准备就绪",
+      "facebook_ads": "Facebook Ads"
+    }
+  },
+  "google_ads_vcc": {
+    "hero": {
+      "badge": "Google Ads VCC",
+      "title_part_1": "适用于",
+      "title_highlight": "Google Ads",
+      "description": "避免意外扣费。为 Google Ads 创建 VCC，设置支出上限，并让广告活动持续运行，同时降低主卡风险。",
+      "primary_cta": "立即开始"
+    },
+    "mockup": {
+      "spend_control": "支出控制",
+      "ad_budget": "广告预算",
+      "daily_limit": "每日限额",
+      "campaign_spend": "广告活动支出",
+      "active": "运行中",
+      "billing_safety": "账单安全",
+      "ads_ready": "广告就绪",
+      "fast": "快速",
+      "card_issue": "发卡",
+      "live": "实时",
+      "control": "控制",
+      "card_ready": "虚拟卡已准备就绪",
+      "google_ads": "Google Ads",
+      "campaign_budget": "广告活动预算"
+    }
+  },
+  "tiktok_ads_vcc": {
+    "hero": {
+      "badge": "TikTok Ads VCC",
+      "title_part_1": "适用于",
+      "title_highlight": "TikTok Ads",
+      "description": "避免意外扣费。为 TikTok Ads 创建 VCC，设置支出上限，并让广告活动持续运行，同时降低主卡风险。",
+      "primary_cta": "立即开始"
+    },
+    "mockup": {
+      "campaign_spend": "广告活动支出",
+      "budget_caps": "预算上限",
+      "daily_budget": "每日预算",
+      "ad_delivery": "广告投放",
+      "running": "运行中",
+      "payment_safety": "支付安全",
+      "ads_ready": "广告就绪",
+      "fast": "快速",
+      "issue_card": "发卡",
+      "live": "实时",
+      "spend_view": "支出视图",
+      "card_ready": "虚拟卡已准备就绪",
+      "tiktok_ads": "TikTok Ads",
+      "campaign_budget": "广告活动预算"
+    }
+  },
+  "facebook_ads_vcc_overview": {
+    "visual_card": {
+      "title_line_1": "用于广告",
+      "title_line_2": "服务",
+      "label": "Facebook Ads"
+    },
+    "badge": "Facebook Ads VCC",
+    "title_prefix": "什么是用于",
+    "title_highlight": "Facebook Ads 的虚拟卡？",
+    "description": "Facebook Ads 虚拟卡是一种为广告交易而创建的数字支付卡。你无需为每个广告账户都使用同一张个人卡或企业卡，而是可以创建专用卡片，用于区分预算、管理付款，并更轻松地追踪广告支出。",
+    "cards": {
+      "budget_control": {
+        "title": "预算控制",
+        "description": "为不同的广告账户、客户或广告系列组分配不同的卡片。"
+      },
+      "payment_separation": {
+        "title": "付款分离",
+        "description": "将广告付款分开管理，而不是把所有账户都混在同一张主卡上。"
+      }
+    },
+    "cta": "开通卡片",
+    "overview": {
+      "digital_card": {
+        "title": "数字卡片，真实付款",
+        "description": "虚拟卡的使用方式类似普通支付卡，但它是在线创建的，并可用于数字账单支付。对于 Facebook Ads，它可以帮助你将专用卡片连接到广告付款方式，而不必依赖实体卡。"
+      },
+      "ad_account_management": {
+        "title": "专为广告账户管理而构建",
+        "description": "当你管理多个广告系列、客户或商务管理平台时，使用一张共享卡会变得难以控制。虚拟卡可以让你按账户、广告系列类型或团队工作流程来组织付款。"
+      },
+      "billing_records": {
+        "title": "更清晰的账单记录",
+        "description": "每张卡都可以代表一个特定的广告用途。这让你更容易查看交易、比较支出，并了解 Facebook Ads 预算的去向。"
+      }
+    },
+    "function": {
+      "badge": "卡片功能",
+      "title": "它如何支持 Facebook Ads 付款？",
+      "description": "这张卡会作为广告预算与 Facebook 账单之间的专用支付层。它可以帮助你区分支出，减少账户之间的混乱，并以更有条理的方式管理付款活动。",
+      "items": {
+        "separate_payment_source": {
+          "title": "独立付款来源",
+          "description": "为一个广告账户、客户或广告系列组使用一张卡。"
+        },
+        "spend_tracking": {
+          "title": "更清晰的支出追踪",
+          "description": "按卡片查看交易记录，而不是查看混合在一起的付款历史。"
+        },
+        "shared_card_exposure": {
+          "title": "减少共享卡风险",
+          "description": "避免在过多广告账户中使用你的主卡。"
+        },
+        "flexible_operation": {
+          "title": "灵活操作",
+          "description": "根据你的广告工作流程创建、替换或分配卡片。"
+        }
+      }
+    },
+    "flow": {
+      "step_01": {
+        "number": "01",
+        "title": "创建虚拟卡",
+        "description": "为特定的 Facebook Ads 付款用途生成一张数字卡。"
+      },
+      "step_02": {
+        "number": "02",
+        "title": "添加到 Facebook 账单",
+        "description": "将该卡作为所选广告账户或广告系列流程的付款方式。"
+      },
+      "step_03": {
+        "number": "03",
+        "title": "监控并管理支出",
+        "description": "单独追踪付款，让你的广告预算更容易理解。"
+      }
+    }
+  },
+  "google_ads_vcc_overview": {
+    "visual_card": {
+      "title_line_1": "用于 Google Ads",
+      "title_line_2": "服务",
+      "label": "Google Ads"
+    },
+    "badge": "Google Ads 卡片",
+    "title_prefix": "专为",
+    "title_highlight": "Google 广告打造的虚拟卡",
+    "description": "为你的 Google Ads 付款创建专用虚拟卡。区分广告系列支出，更清晰地管理账单，并更轻松地监控不同账户或项目中的广告预算。",
+    "cards": {
+      "ad_budget_control": {
+        "title": "广告预算控制",
+        "description": "为不同的 Google Ads 账户、客户或广告系列使用不同的卡片。"
+      },
+      "cleaner_billing": {
+        "title": "更清晰的账单",
+        "description": "让 Google Ads 付款活动保持有序，而不是把所有广告系列都混在一张卡上。"
+      }
+    },
+    "cta": "创建 Google Ads 卡片",
+    "overview": {
+      "digital_card": {
+        "title": "用于广告账单的数字卡",
+        "description": "Google Ads 虚拟卡的使用方式类似普通支付卡，但它是在线创建的，主要用于数字广告付款。它可以帮助你将专用付款来源连接到 Google Ads 账单，而不是每个账户都依赖同一张主卡。"
+      },
+      "campaign_control": {
+        "title": "专为广告系列控制而设计",
+        "description": "当你管理多个 Google Ads 账户、客户或广告系列组时，虚拟卡可以让付款活动更容易分开管理。每张卡都可以分配给特定的广告用途、项目或客户工作流程。"
+      },
+      "payment_records": {
+        "title": "更清晰的付款记录",
+        "description": "你无需把所有 Google Ads 付款都混在一张卡上，而是可以按账户或广告系列区分交易。这会让账单检查、预算核对和客户报告更加清楚。"
+      }
+    },
+    "function": {
+      "badge": "卡片功能",
+      "title": "它如何支持 Google Ads 付款？",
+      "description": "这张卡会作为 Google Ads 账单的专用支付层。它可以帮助你区分广告支出，减少不同账户之间的混乱，并以更有条理的方式管理广告系列付款。",
+      "items": {
+        "separate_billing_source": {
+          "title": "独立账单来源",
+          "description": "为不同的 Google Ads 账户、客户或广告系列组使用不同的卡片。"
+        },
+        "spend_tracking": {
+          "title": "更清晰的支出追踪",
+          "description": "按卡片查看支出，而不是查看混合在一起的付款历史。"
+        },
+        "main_card_exposure": {
+          "title": "减少主卡暴露",
+          "description": "避免将同一张主卡绑定到过多广告账户。"
+        },
+        "flexible_operation": {
+          "title": "灵活操作",
+          "description": "根据你的 Google Ads 工作流程创建、替换或分配卡片。"
+        }
+      }
+    },
+    "flow": {
+      "step_01": {
+        "number": "01",
+        "title": "创建虚拟卡",
+        "description": "为特定的 Google Ads 账户、客户或广告系列用途生成一张专用卡。"
+      },
+      "step_02": {
+        "number": "02",
+        "title": "添加到 Google 账单",
+        "description": "将该卡作为所选 Google Ads 账单设置的付款方式。"
+      },
+      "step_03": {
+        "number": "03",
+        "title": "监控广告系列支出",
+        "description": "单独追踪付款活动，让你的 Google Ads 预算更容易理解。"
+      }
+    }
+  },
+  "tiktok_ads_vcc_overview": {
+    "visual_card": {
+      "title_line_1": "用于广告",
+      "title_line_2": "服务",
+      "label": "TikTok Ads"
+    },
+    "badge": "TikTok Ads VCC",
+    "title_prefix": "什么是用于",
+    "title_highlight": "TikTok Ads 的虚拟卡？",
+    "description": "TikTok Ads 虚拟卡是一种为 TikTok 广告交易而创建的数字支付卡。你无需为每个广告账户都使用同一张主卡，而是可以创建专用卡片，用于区分预算、管理广告系列付款，并更轻松地追踪广告支出。",
+    "cards": {
+      "budget_control": {
+        "title": "预算控制",
+        "description": "为不同的 TikTok 广告账户、客户或广告系列组分配不同的卡片。"
+      },
+      "payment_separation": {
+        "title": "付款分离",
+        "description": "将 TikTok 广告付款分开管理，而不是把所有账户都混在同一张主卡上。"
+      }
+    },
+    "cta": "开通卡片",
+    "overview": {
+      "digital_card": {
+        "title": "数字卡片，真实付款",
+        "description": "虚拟卡的使用方式类似普通支付卡，但它是在线创建的，并可用于数字账单支付。对于 TikTok Ads，它可以帮助你将专用卡片连接到广告付款方式，而不必依赖实体卡。"
+      },
+      "ad_account_management": {
+        "title": "专为广告账户管理而构建",
+        "description": "当你管理多个 TikTok 广告系列、客户或广告账户时，使用一张共享卡会变得难以控制。虚拟卡可以让你按账户、广告系列类型或团队工作流程来组织付款。"
+      },
+      "billing_records": {
+        "title": "更清晰的账单记录",
+        "description": "每张卡都可以代表一个特定的广告用途。这让你更容易查看交易、比较支出，并了解 TikTok Ads 预算的去向。"
+      }
+    },
+    "function": {
+      "badge": "卡片功能",
+      "title": "它如何支持 TikTok Ads 付款？",
+      "description": "这张卡会作为广告预算与 TikTok 账单之间的专用支付层。它可以帮助你区分支出，减少账户之间的混乱，并以更有条理的方式管理付款活动。",
+      "items": {
+        "separate_payment_source": {
+          "title": "独立付款来源",
+          "description": "为一个 TikTok 广告账户、客户或广告系列组使用一张卡。"
+        },
+        "spend_tracking": {
+          "title": "更清晰的支出追踪",
+          "description": "按卡片查看交易记录，而不是查看混合在一起的付款历史。"
+        },
+        "shared_card_exposure": {
+          "title": "减少共享卡风险",
+          "description": "避免在过多 TikTok 广告账户中使用你的主卡。"
+        },
+        "flexible_operation": {
+          "title": "灵活操作",
+          "description": "根据你的 TikTok 广告工作流程创建、替换或分配卡片。"
+        }
+      }
+    },
+    "flow": {
+      "step_01": {
+        "number": "01",
+        "title": "创建虚拟卡",
+        "description": "为特定的 TikTok Ads 付款用途生成一张数字卡。"
+      },
+      "step_02": {
+        "number": "02",
+        "title": "添加到 TikTok 账单",
+        "description": "将该卡作为所选 TikTok 广告账户或广告系列流程的付款方式。"
+      },
+      "step_03": {
+        "number": "03",
+        "title": "监控并管理支出",
+        "description": "单独追踪付款，让你的 TikTok 广告预算更容易理解。"
+      }
+    }
+  },
+  "how_it_works": {
+    "title": "它是如何运作的？",
+    "description": "设置你的虚拟信用卡（VCC）只需几分钟，并且它专为在 Facebook Ads Manager、Google 或 TikTok 等主流广告平台上顺畅使用而设计。",
+    "steps": {
+      "step_01": {
+        "number": "01",
+        "title": "1. 创建账户",
+        "description": "快速注册——无需填写冗长表单，也无需长时间等待。立即访问你的仪表板，并无需等待审批即可开始使用 VCC。"
+      },
+      "step_02": {
+        "number": "02",
+        "title": "2. 生成 VCC",
+        "description_part_1": "选择 Visa 或 Mastercard，并",
+        "highlight_1": "即时生成",
+        "description_part_2": "一张在广告平台付款方式中具有高兼容性的 VCC。你可以从",
+        "highlight_2": "20+ 个 BIN 选项",
+        "description_part_3": "中选择。"
+      },
+      "step_03": {
+        "number": "03",
+        "title": "3. 充值并绑定",
+        "description": "使用加密货币或传统付款方式为卡片充值，然后将其作为付款方式绑定到你的广告管理平台。"
+      },
+      "step_04": {
+        "number": "04",
+        "title": "4. 启动并监控",
+        "description_part_1": "立即运行广告系列，并享有",
+        "highlight_1": "高额度",
+        "description_part_2": "和",
+        "highlight_2": "完全控制",
+        "description_part_3": "。你可以",
+        "highlight_3": "实时",
+        "description_part_4": "监控支出，接收",
+        "highlight_4": "即时提醒",
+        "description_part_5": "，并从仪表板管理所有内容。"
+      }
+    }
+  },
+  "vcc_infrastructure_cta": {
+    "floating_cards": {
+      "daily_limit_label": "Денний ліміт",
+      "daily_limit_value": "$5,000",
+      "card_status_label": "Статус картки",
+      "card_status_value": "Готова"
+    },
+    "badge": "Інфраструктура віртуальних карток",
+    "title": {
+      "line_1": "Скористайтеся швидкою реєстрацією",
+      "line_2_prefix": "та",
+      "highlight": "зручними онлайн-транзакціями",
+      "line_3": "з VCC"
+    },
+    "features": {
+      "fast_card": "Створіть картку за 60 секунд",
+      "no_limits": "Забудьте про обмеження витрат",
+      "support": "Отримуйте підтримку 24/7"
+    },
+    "stats": {
+      "card_issuing": {
+        "value": "60с",
+        "label": "Випуск картки"
+      },
+      "support": {
+        "value": "24/7",
+        "label": "Підтримка"
+      },
+      "api": {
+        "value": "API",
+        "label": "Готово"
+      }
+    },
+    "cta": "Відкрити картку"
+  },
+  "why_facebook_ads_vcc": {
+    "badge": "Facebook Ads VCC",
+    "title_prefix": "为什么要使用虚拟信用卡",
+    "title_highlight": "进行 Facebook 广告投放？",
+    "description": "虚拟卡可以帮助广告主区分预算、降低支付风险，并以更高的控制力和可见性管理 Facebook 广告支出。",
+    "items": {
+      "separate_budgets": {
+        "title": "区分广告预算",
+        "description": "为不同的 Facebook 广告账户、广告系列或客户创建专用 VCC，让每个预算都保持清晰并易于追踪。"
+      },
+      "reduce_payment_risk": {
+        "title": "降低支付风险",
+        "description": "避免在多个广告账户中使用同一张主卡。虚拟卡有助于减少暴露风险，并让你的主要付款来源更加安全。"
+      },
+      "instant_cards": {
+        "title": "即时创建卡片",
+        "description": "快速生成可立即使用的虚拟卡，并将其分配到你的 Facebook 广告工作流程中，无需等待实体卡。"
+      },
+      "track_spending": {
+        "title": "清晰追踪支出",
+        "description": "单独监控每张卡的交易记录，让你更容易了解哪个广告系列、账户或客户正在花费预算。"
+      },
+      "control_each_card": {
+        "title": "控制每张卡片",
+        "description": "独立管理每张 VCC，用于广告系列支出、付款控制，并让多个广告账户的运营更加轻松。"
+      },
+      "scale_operations": {
+        "title": "扩展广告运营",
+        "description": "对于管理多个 Facebook 广告账户的团队来说，VCC 可以让付款管理更有条理、更灵活，也更易于扩展。"
+      }
+    },
+    "bottom_note": "使用虚拟卡后，Facebook 广告付款会更容易区分、监控和控制——尤其适合管理多个广告系列或账户的场景。"
+  },
+  "why_google_ads_vcc": {
+    "badge": "Картка для Google Ads",
+    "title_prefix": "Навіщо використовувати віртуальну картку",
+    "title_highlight": "для реклами в Google?",
+    "description": "Віртуальні картки допомагають рекламодавцям упорядкувати білінг Google Ads, розділяти бюджети кампаній і керувати рекламними платежами з кращою прозорістю та контролем.",
+    "items": {
+      "separate_budgets": {
+        "title": "Розділяйте рекламні бюджети",
+        "description": "Створюйте окремі картки для різних акаунтів Google Ads, кампаній або клієнтів, щоб кожним рекламним бюджетом було простіше керувати."
+      },
+      "reduce_billing_risk": {
+        "title": "Зменшуйте ризики білінгу",
+        "description": "Не прив’язуйте всі акаунти Google Ads до однієї основної картки. Віртуальні картки допомагають обмежити ризики та краще організувати джерела оплати."
+      },
+      "create_cards_quickly": {
+        "title": "Створюйте картки швидко",
+        "description": "Швидко генеруйте віртуальні картки для платежів Google Ads і призначайте їх рекламним акаунтам без очікування фізичних карток."
+      },
+      "track_ad_spending": {
+        "title": "Відстежуйте рекламні витрати",
+        "description": "Відстежуйте транзакції за картками окремо, щоб легше розуміти, який акаунт Google Ads, кампанія або клієнт використовує бюджет."
+      },
+      "control_each_card": {
+        "title": "Контролюйте кожну картку",
+        "description": "Керуйте кожною карткою окремо для білінгу Google Ads, платежів кампаній і чистішої роботи з кількома рекламними акаунтами."
+      },
+      "scale_operations": {
+        "title": "Масштабуйте рекламні операції",
+        "description": "Для команд, які керують кількома акаунтами Google Ads, віртуальні картки роблять платіжні процеси більш організованими, гнучкими та масштабованими."
+      }
+    },
+    "bottom_note": "З віртуальними картками платежі Google Ads легше розділяти, відстежувати та контролювати — особливо під час керування кількома кампаніями, клієнтами або рекламними акаунтами."
+  },
+  "why_tiktok_ads_vcc": {
+    "badge": "TikTok Ads 卡片",
+    "title_prefix": "为什么要使用虚拟卡",
+    "title_highlight": "进行 TikTok 广告投放？",
+    "description": "虚拟卡可以帮助广告主整理 TikTok Ads 账单、区分广告系列预算，并以更高的可见性和控制力管理广告付款。",
+    "items": {
+      "separate_budgets": {
+        "title": "区分广告预算",
+        "description": "为不同的 TikTok Ads 账户、广告系列或客户创建专用卡片，让每个广告预算都更容易管理。"
+      },
+      "reduce_billing_risk": {
+        "title": "降低账单风险",
+        "description": "避免将所有 TikTok Ads 账户都绑定到同一张主卡。虚拟卡有助于减少暴露风险，并让付款来源更有条理。"
+      },
+      "create_cards_quickly": {
+        "title": "快速创建卡片",
+        "description": "快速生成用于 TikTok Ads 付款的虚拟卡，并将其分配给广告账户，无需等待实体卡。"
+      },
+      "track_ad_spending": {
+        "title": "追踪广告支出",
+        "description": "单独监控每张卡的交易记录，让你更容易了解哪个 TikTok Ads 账户、广告系列或客户正在使用预算。"
+      },
+      "control_each_card": {
+        "title": "控制每张卡片",
+        "description": "独立管理每张卡，用于 TikTok Ads 账单、广告系列付款，并让多个广告账户的运营更加清晰。"
+      },
+      "scale_operations": {
+        "title": "扩展广告运营",
+        "description": "对于管理多个 TikTok Ads 账户的团队来说，虚拟卡可以让付款流程更有条理、更灵活，也更易于扩展。"
+      }
+    },
+    "bottom_note": "使用虚拟卡后，TikTok Ads 付款会更容易区分、监控和控制——尤其适合管理多个广告系列、客户或广告账户的场景。"
   }
 }

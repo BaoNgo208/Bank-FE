@@ -16,12 +16,11 @@
       <h2
         class="bg-gradient-to-r from-red-500 via-rose-500 to-pink-500 bg-clip-text text-4xl font-black tracking-tight text-transparent sm:text-5xl md:text-6xl"
       >
-        How does it work?
+        {{ 'how_it_works.title' | translate }}
       </h2>
 
       <p class="mt-5 text-base leading-7 text-slate-600 sm:text-lg">
-        Setting up your virtual credit card (VCC) takes just minutes — and it’s designed for
-        seamless use on top advertising platforms like Meta Ads Manager, Google, or TikTok.
+        {{ 'how_it_works.description' | translate }}
       </p>
     </div>
 
@@ -47,7 +46,7 @@
           <div
             class="absolute left-1/2 top-0 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-gradient-to-br from-red-400 via-rose-500 to-red-600 text-sm font-black text-white shadow-lg shadow-rose-300/70"
           >
-            01
+            {{ 'how_it_works.steps.step_01.number' | translate }}
           </div>
 
           <div
@@ -56,11 +55,12 @@
             <i class="fa-regular fa-user text-4xl"></i>
           </div>
 
-          <h3 class="mt-8 text-xl font-black text-slate-950">1. Create an account</h3>
+          <h3 class="mt-8 text-xl font-black text-slate-950">
+            {{ 'how_it_works.steps.step_01.title' | translate }}
+          </h3>
 
           <p class="mt-5 text-[15px] font-medium leading-7 text-slate-600">
-            Sign up quickly — no long forms or delays. Get instant access to your dashboard and
-            start using a VCC without waiting for approvals.
+            {{ 'how_it_works.steps.step_01.description' | translate }}
           </p>
         </article>
       </div>
@@ -85,7 +85,7 @@
           <div
             class="absolute left-1/2 top-0 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-gradient-to-br from-red-400 via-rose-500 to-red-600 text-sm font-black text-white shadow-lg shadow-rose-300/70"
           >
-            02
+            {{ 'how_it_works.steps.step_02.number' | translate }}
           </div>
 
           <div
@@ -94,14 +94,19 @@
             <i class="fa-regular fa-credit-card text-4xl"></i>
           </div>
 
-          <h3 class="mt-8 text-xl font-black text-slate-950">2. Generate a VCC</h3>
+          <h3 class="mt-8 text-xl font-black text-slate-950">
+            {{ 'how_it_works.steps.step_02.title' | translate }}
+          </h3>
 
           <p class="mt-5 text-[15px] font-medium leading-7 text-slate-600">
-            Choose from Visa or Mastercard and
-            <span class="font-bold text-rose-600">instantly generate</span>
-            a VCC with high compatibility across payment methods on ad platforms. You can choose
-            from
-            <span class="font-bold text-rose-600">20+ BIN options</span>.
+            {{ 'how_it_works.steps.step_02.description_part_1' | translate }}
+            <span class="font-bold text-rose-600">
+              {{ 'how_it_works.steps.step_02.highlight_1' | translate }}
+            </span>
+            {{ 'how_it_works.steps.step_02.description_part_2' | translate }}
+            <span class="font-bold text-rose-600">
+              {{ 'how_it_works.steps.step_02.highlight_2' | translate }} </span
+            >{{ 'how_it_works.steps.step_02.description_part_3' | translate }}
           </p>
         </article>
       </div>
@@ -126,7 +131,7 @@
           <div
             class="absolute left-1/2 top-0 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-gradient-to-br from-red-400 via-rose-500 to-red-600 text-sm font-black text-white shadow-lg shadow-rose-300/70"
           >
-            03
+            {{ 'how_it_works.steps.step_03.number' | translate }}
           </div>
 
           <div
@@ -135,11 +140,12 @@
             <i class="fa-solid fa-wallet text-4xl"></i>
           </div>
 
-          <h3 class="mt-8 text-xl font-black text-slate-950">3. Fund & Link</h3>
+          <h3 class="mt-8 text-xl font-black text-slate-950">
+            {{ 'how_it_works.steps.step_03.title' | translate }}
+          </h3>
 
           <p class="mt-5 text-[15px] font-medium leading-7 text-slate-600">
-            Top up your card with crypto or traditional payments, then link it as a payment method
-            in your ads manager.
+            {{ 'how_it_works.steps.step_03.description' | translate }}
           </p>
         </article>
       </div>
@@ -152,7 +158,7 @@
           <div
             class="absolute left-1/2 top-0 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-gradient-to-br from-red-400 via-rose-500 to-red-600 text-sm font-black text-white shadow-lg shadow-rose-300/70"
           >
-            04
+            {{ 'how_it_works.steps.step_04.number' | translate }}
           </div>
 
           <div
@@ -161,16 +167,25 @@
             <i class="fa-solid fa-chart-line text-4xl"></i>
           </div>
 
-          <h3 class="mt-8 text-xl font-black text-slate-950">4. Launch & Monitor</h3>
+          <h3 class="mt-8 text-xl font-black text-slate-950">
+            {{ 'how_it_works.steps.step_04.title' | translate }}
+          </h3>
 
           <p class="mt-5 text-[15px] font-medium leading-7 text-slate-600">
-            Run campaigns immediately with
-            <span class="font-bold text-rose-600">high limits</span>
-            and
-            <span class="font-bold text-rose-600">full control</span>. Monitor spending in
-            <span class="font-bold text-rose-600">real-time</span>, receive
-            <span class="font-bold text-rose-600">instant alerts</span>, and manage everything from
-            your dashboard.
+            {{ 'how_it_works.steps.step_04.description_part_1' | translate }}
+            <span class="font-bold text-rose-600">
+              {{ 'how_it_works.steps.step_04.highlight_1' | translate }}
+            </span>
+            {{ 'how_it_works.steps.step_04.description_part_2' | translate }}
+            <span class="font-bold text-rose-600">
+              {{ 'how_it_works.steps.step_04.highlight_2' | translate }} </span
+            >{{ 'how_it_works.steps.step_04.description_part_3' | translate }}
+            <span class="font-bold text-rose-600">
+              {{ 'how_it_works.steps.step_04.highlight_3' | translate }} </span
+            >{{ 'how_it_works.steps.step_04.description_part_4' | translate }}
+            <span class="font-bold text-rose-600">
+              {{ 'how_it_works.steps.step_04.highlight_4' | translate }} </span
+            >{{ 'how_it_works.steps.step_04.description_part_5' | translate }}
           </p>
         </article>
       </div>
