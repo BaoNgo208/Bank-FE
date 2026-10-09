@@ -7,15 +7,18 @@ import { PaginationComponent } from '../../../shared/components/pagination/pagin
 import { CommonModule } from '@angular/common';
 import { UserCardTransactionsModalComponent } from './components/card-transactions-history-modal/user-card-transactions-modal.component';
 import { CashbackHistoryModal } from './components/cashback-history/cashback-history.component';
+import { UserFinancialStatisticsPanelComponent } from './components/financial-statistics-panel/user-financial-statistics-panel.component';
 
 @Component({
   selector: 'app-user-management-component',
+  standalone: true,
   imports: [
     ReactiveFormsModule,
     CommonModule,
     PaginationComponent,
     UserCardTransactionsModalComponent,
     CashbackHistoryModal,
+    UserFinancialStatisticsPanelComponent,
   ],
   templateUrl: './user-management.component.html',
 })
@@ -53,6 +56,7 @@ export class UserManagementComponent {
 
   showUserCardTransactionsModal = false;
   showUserCashbackHistory = signal<boolean>(false);
+  showFinancialStatistics = false;
 
   ngOnInit() {
     this.loadUsersPage();
@@ -120,6 +124,22 @@ export class UserManagementComponent {
 
   closeUserCardTransactionsModal(): void {
     this.showUserCardTransactionsModal = false;
+    this.selectedUser = null;
+  }
+
+  openFinancialStatistics(): void {
+    if (this.openDropdownIndex === null) return;
+
+    const user = this.rows.at(this.openDropdownIndex).value as AdminUserResponse;
+    if (!user) return;
+
+    this.selectedUser = user;
+    this.showFinancialStatistics = true;
+    this.openDropdownIndex = null;
+  }
+
+  closeFinancialStatistics(): void {
+    this.showFinancialStatistics = false;
     this.selectedUser = null;
   }
 
@@ -200,20 +220,27 @@ export class UserManagementComponent {
 
     const btn = event.currentTarget as HTMLElement;
     const rect = btn.getBoundingClientRect();
-    const dropdownWidth = 160;
-    const dropdownHeight = 160;
+    const dropdownWidth = 240;
+    const dropdownHeight = 360;
+    const viewportPadding = 8;
 
     const spaceBelow = window.innerHeight - rect.bottom;
     const spaceAbove = rect.top;
 
-    const top =
+    const preferredTop =
       spaceBelow < dropdownHeight && spaceAbove > spaceBelow
         ? rect.top - dropdownHeight
         : rect.bottom;
 
     this.dropdownPosition = {
-      top,
-      left: rect.right - dropdownWidth,
+      top: Math.max(
+        viewportPadding,
+        Math.min(preferredTop, window.innerHeight - dropdownHeight - viewportPadding),
+      ),
+      left: Math.max(
+        viewportPadding,
+        Math.min(rect.right - dropdownWidth, window.innerWidth - dropdownWidth - viewportPadding),
+      ),
     };
     this.openDropdownIndex = i;
   }

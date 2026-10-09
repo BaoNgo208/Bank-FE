@@ -1,0 +1,261 @@
+<div class="fixed inset-0 z-[10000] bg-slate-950/10" (click)="close()">
+  <aside
+    class="absolute inset-y-0 right-0 flex w-full max-w-[430px] flex-col bg-gray-50 shadow-2xl"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="financial-statistics-title"
+    (click)="$event.stopPropagation()"
+  >
+    <header class="flex items-center justify-between border-b border-gray-200 bg-white px-5 py-4">
+      <h2 id="financial-statistics-title" class="text-base font-bold text-gray-900">
+        User financial statistics
+      </h2>
+
+      <button
+        type="button"
+        aria-label="Close financial statistics"
+        class="flex h-8 w-8 items-center justify-center rounded-lg text-gray-400 transition hover:bg-gray-100 hover:text-gray-700"
+        (click)="close()"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </header>
+
+    <div class="border-b border-gray-200 bg-white px-5 py-4">
+      <div class="flex items-center gap-3">
+        <div
+          class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-red-50 text-sm font-bold text-red-600 ring-1 ring-red-100"
+        >
+          {{ avatarText }}
+        </div>
+
+        <div class="min-w-0 flex-1">
+          <div class="flex items-center gap-2">
+            <p class="truncate text-sm font-semibold text-gray-900">{{ user.username }}</p>
+            <span
+              class="rounded-full px-2 py-0.5 text-[10px] font-bold"
+              [ngClass]="{
+                'bg-green-50 text-green-700': user.status === 'ACTIVE',
+                'bg-red-50 text-red-700': user.status === 'LOCKED',
+                'bg-gray-100 text-gray-600': user.status === 'DELETED',
+              }"
+            >
+              {{ user.status }}
+            </span>
+          </div>
+          <p class="mt-0.5 text-xs text-gray-500">ID: {{ user.id }}</p>
+          <p class="truncate text-xs text-gray-500">{{ user.email }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="loading()" class="flex flex-1 items-center justify-center p-8">
+      <div class="flex flex-col items-center gap-3 text-sm text-gray-500">
+        <i class="fa-solid fa-spinner fa-spin text-2xl text-red-500"></i>
+        <span>Loading financial statistics...</span>
+      </div>
+    </div>
+
+    <div *ngIf="!loading() && errorMessage()" class="flex flex-1 items-center justify-center p-6">
+      <div class="w-full rounded-2xl border border-red-100 bg-red-50 p-5 text-center">
+        <i class="fa-solid fa-circle-exclamation text-2xl text-red-500"></i>
+        <p class="mt-2 text-sm text-red-700">{{ errorMessage() }}</p>
+        <button
+          type="button"
+          class="mt-4 rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700"
+          (click)="loadStatistics()"
+        >
+          Try again
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="!loading() && statistics() as stats" class="flex-1 space-y-4 overflow-y-auto p-4">
+      <section class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+        <div class="flex items-center gap-2 border-b border-gray-100 px-4 py-3">
+          <span
+            class="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600"
+          >
+            <i class="fa-solid fa-arrow-down text-xs"></i>
+          </span>
+          <h3 class="text-sm font-bold text-gray-800">Deposits</h3>
+        </div>
+
+        <dl class="divide-y divide-gray-100 px-4 text-xs">
+          <div class="flex items-center justify-between py-2.5">
+            <dt class="text-gray-500">Successful transactions</dt>
+            <dd class="font-semibold text-gray-800">{{ stats.deposit.success_count | number }}</dd>
+          </div>
+          <div class="flex items-center justify-between py-2.5">
+            <dt class="text-gray-500">Successful amount</dt>
+            <dd class="font-semibold text-gray-800">
+              {{ stats.deposit.success_amount | number: '1.0-2' }} VND
+            </dd>
+          </div>
+          <div class="flex items-center justify-between py-2.5">
+            <dt class="text-gray-500">Pending transactions</dt>
+            <dd class="font-semibold text-amber-600">{{ stats.deposit.pending_count | number }}</dd>
+          </div>
+          <div class="flex items-center justify-between py-2.5">
+            <dt class="text-gray-500">Pending amount</dt>
+            <dd class="font-semibold text-amber-600">
+              {{ stats.deposit.pending_amount | number: '1.0-2' }} VND
+            </dd>
+          </div>
+          <div class="flex items-center justify-between py-2.5">
+            <dt class="text-gray-500">Failed transactions</dt>
+            <dd class="font-semibold text-red-600">{{ stats.deposit.failed_count | number }}</dd>
+          </div>
+          <div class="flex items-center justify-between py-2.5">
+            <dt class="text-gray-500">Failed amount</dt>
+            <dd class="font-semibold text-red-600">
+              {{ stats.deposit.failed_amount | number: '1.0-2' }} VND
+            </dd>
+          </div>
+          <div class="flex items-center justify-between py-2.5">
+            <dt class="font-medium text-gray-600">Success rate</dt>
+            <dd class="font-bold text-emerald-600">
+              {{ stats.deposit.success_rate | number: '1.0-2' }}%
+            </dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+        <div class="flex items-center gap-2 border-b border-gray-100 px-4 py-3">
+          <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-red-50 text-red-600">
+            <i class="fa-solid fa-arrow-up text-xs"></i>
+          </span>
+          <h3 class="text-sm font-bold text-gray-800">Withdrawals</h3>
+        </div>
+
+        <dl class="divide-y divide-gray-100 px-4 text-xs">
+          <div class="flex items-center justify-between py-2.5">
+            <dt class="text-gray-500">Successful transactions</dt>
+            <dd class="font-semibold text-gray-800">{{ stats.withdraw.success_count | number }}</dd>
+          </div>
+          <div class="flex items-center justify-between py-2.5">
+            <dt class="text-gray-500">Successful amount</dt>
+            <dd class="font-semibold text-gray-800">
+              {{ stats.withdraw.success_amount | number: '1.0-2' }} VND
+            </dd>
+          </div>
+          <div class="flex items-center justify-between py-2.5">
+            <dt class="text-gray-500">Pending transactions</dt>
+            <dd class="font-semibold text-amber-600">
+              {{ stats.withdraw.pending_count | number }}
+            </dd>
+          </div>
+          <div class="flex items-center justify-between py-2.5">
+            <dt class="text-gray-500">Pending amount</dt>
+            <dd class="font-semibold text-amber-600">
+              {{ stats.withdraw.pending_amount | number: '1.0-2' }} VND
+            </dd>
+          </div>
+          <div class="flex items-center justify-between py-2.5">
+            <dt class="text-gray-500">Failed transactions</dt>
+            <dd class="font-semibold text-red-600">{{ stats.withdraw.failed_count | number }}</dd>
+          </div>
+          <div class="flex items-center justify-between py-2.5">
+            <dt class="text-gray-500">Failed amount</dt>
+            <dd class="font-semibold text-red-600">
+              {{ stats.withdraw.failed_amount | number: '1.0-2' }} VND
+            </dd>
+          </div>
+          <div class="flex items-center justify-between py-2.5">
+            <dt class="font-medium text-gray-600">Success rate</dt>
+            <dd class="font-bold text-emerald-600">
+              {{ stats.withdraw.success_rate | number: '1.0-2' }}%
+            </dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+        <div class="flex items-center gap-2 border-b border-gray-100 px-4 py-3">
+          <span
+            class="flex h-7 w-7 items-center justify-center rounded-lg bg-violet-50 text-violet-600"
+          >
+            <i class="fa-solid fa-credit-card text-xs"></i>
+          </span>
+          <h3 class="text-sm font-bold text-gray-800">Card transactions</h3>
+        </div>
+
+        <dl class="divide-y divide-gray-100 px-4 text-xs">
+          <div class="flex items-center justify-between py-2.5">
+            <dt class="text-gray-500">Successful transactions</dt>
+            <dd class="font-semibold text-gray-800">
+              {{ stats.card_transaction.success_count | number }}
+            </dd>
+          </div>
+          <div class="flex items-center justify-between py-2.5">
+            <dt class="text-gray-500">Successful amount</dt>
+            <dd class="font-semibold text-gray-800">
+              {{ stats.card_transaction.success_amount | number: '1.0-2' }} VND
+            </dd>
+          </div>
+          <div class="flex items-center justify-between py-2.5">
+            <dt class="text-gray-500">Posted transactions</dt>
+            <dd class="font-semibold text-blue-600">
+              {{ stats.card_transaction.posted_count | number }}
+            </dd>
+          </div>
+          <div class="flex items-center justify-between py-2.5">
+            <dt class="text-gray-500">Posted amount</dt>
+            <dd class="font-semibold text-blue-600">
+              {{ stats.card_transaction.posted_amount | number: '1.0-2' }} VND
+            </dd>
+          </div>
+          <div class="flex items-center justify-between py-2.5">
+            <dt class="text-gray-500">Pending transactions</dt>
+            <dd class="font-semibold text-amber-600">
+              {{ stats.card_transaction.pending_count | number }}
+            </dd>
+          </div>
+          <div class="flex items-center justify-between py-2.5">
+            <dt class="text-gray-500">Pending amount</dt>
+            <dd class="font-semibold text-amber-600">
+              {{ stats.card_transaction.pending_amount | number: '1.0-2' }} VND
+            </dd>
+          </div>
+          <div class="flex items-center justify-between py-2.5">
+            <dt class="text-gray-500">Failed transactions</dt>
+            <dd class="font-semibold text-red-600">
+              {{ stats.card_transaction.failed_count | number }}
+            </dd>
+          </div>
+          <div class="flex items-center justify-between py-2.5">
+            <dt class="text-gray-500">Failed amount</dt>
+            <dd class="font-semibold text-red-600">
+              {{ stats.card_transaction.failed_amount | number: '1.0-2' }} VND
+            </dd>
+          </div>
+          <div class="flex items-center justify-between py-2.5">
+            <dt class="text-gray-500">Reversed transactions</dt>
+            <dd class="font-semibold text-orange-600">
+              {{ stats.card_transaction.reversed_count | number }}
+            </dd>
+          </div>
+          <div class="flex items-center justify-between py-2.5">
+            <dt class="text-gray-500">Reversed amount</dt>
+            <dd class="font-semibold text-orange-600">
+              {{ stats.card_transaction.reversed_amount | number: '1.0-2' }} VND
+            </dd>
+          </div>
+          <div class="flex items-center justify-between py-2.5">
+            <dt class="font-medium text-gray-600">Success rate</dt>
+            <dd class="font-bold text-emerald-600">
+              {{ stats.card_transaction.success_rate | number: '1.0-2' }}%
+            </dd>
+          </div>
+          <div class="flex items-center justify-between py-2.5">
+            <dt class="font-medium text-gray-600">Refund rate</dt>
+            <dd class="font-bold text-orange-600">
+              {{ stats.card_transaction.refund_rate | number: '1.0-2' }}%
+            </dd>
+          </div>
+        </dl>
+      </section>
+    </div>
+  </aside>
+</div>
