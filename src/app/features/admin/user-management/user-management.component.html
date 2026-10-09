@@ -204,6 +204,26 @@
       <span class="text-xs text-gray-400 group-hover:text-purple-500"> User cashback records </span>
     </div>
   </button>
+
+  <!-- VIEW FINANCIAL STATISTICS -->
+  <button
+    type="button"
+    (click)="openFinancialStatistics()"
+    class="group flex w-full items-center gap-3 px-4 py-3 text-left text-gray-700 transition hover:bg-emerald-50 hover:text-emerald-700"
+  >
+    <span
+      class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-500 transition group-hover:bg-emerald-100 group-hover:text-emerald-700"
+    >
+      <i class="fa-solid fa-chart-column text-sm"></i>
+    </span>
+
+    <div class="flex flex-col">
+      <span class="font-medium">View financial statistics</span>
+      <span class="text-xs text-gray-400 group-hover:text-emerald-600">
+        Deposit, withdrawal and card
+      </span>
+    </div>
+  </button>
 </div>
 
 <!-- UPDATE CARD OPEN LIMIT MODAL -->
@@ -312,3 +332,9 @@
   (closed)="closeUserCashbackHistoryModal()"
 >
 </app-cashback-history-modal>
+
+<app-user-financial-statistics-panel
+  *ngIf="showFinancialStatistics && selectedUser !== null"
+  [user]="selectedUser"
+  (closed)="closeFinancialStatistics()"
+></app-user-financial-statistics-panel>

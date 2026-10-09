@@ -3,6 +3,7 @@ import { BaseApiService } from '../../../../core/http/base-api.service';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../../../../core/auth/auth.request';
 import {
+  AdminUserFinancialStatisticsResponse,
   AdminUserPageResponse,
   AdminUserResponse,
   UpdateCardOpenLimitRequest,
@@ -17,6 +18,12 @@ export class UsersService extends BaseApiService {
   getUsers(page: number = 0): Observable<ApiResponse<AdminUserPageResponse>> {
     const params = this.buildPageParams(page, undefined, undefined);
     return this.get('', params);
+  }
+
+  getFinancialStatistics(
+    userId: number,
+  ): Observable<ApiResponse<AdminUserFinancialStatisticsResponse>> {
+    return this.get(`/${userId}/financial-statistics`);
   }
 
   updateCardOpenLimit(
