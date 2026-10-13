@@ -11,6 +11,7 @@ export interface DepositOrderPageAdminResponse {
 export interface DepositOrderListAdminResponse {
   order_no: string;
   user_id: number;
+  username: string;
   currency: Stablecoin;
   network: string;
   amount: number;
