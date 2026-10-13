@@ -1,5 +1,5 @@
-import { ChangeDetectorRef, Component, HostListener, inject, signal } from '@angular/core';
-import { FormArray, FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { Component, HostListener, inject, OnDestroy, signal } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { DepositService } from './services/deposit.service';
 import { DepositOrderListAdminResponse, DepositOrderStatus } from './types/deposit.type';
@@ -9,17 +9,18 @@ import { PaginationComponent } from '../../../shared/components/pagination/pagin
 import { dateRangeValidator } from '../../../utils/form-validator.util';
 import { toUtcEndOfDay, toUtcStartOfDay } from '../../../utils/utc.util';
 import { ConfirmModalComponent } from '../../../shared/components/confirm-modal/confirm-modal.component';
+import { finalize, Subscription } from 'rxjs';
 
 @Component({
   selector: 'admin-deposit-orders-component',
   imports: [ReactiveFormsModule, CommonModule, PaginationComponent, ConfirmModalComponent],
   templateUrl: './deposit-orders.component.html',
 })
-export class DepositOrdersComponent {
+export class DepositOrdersComponent implements OnDestroy {
   private fb = inject(FormBuilder);
-  private cd = inject(ChangeDetectorRef);
   private toast = inject(ToastrService);
   private depositService = inject(DepositService);
+  private loadSubscription?: Subscription;
   private readonly BLOCK_UPDATE_STATUSES = new Set<DepositOrderStatus>([
     DepositOrderStatus.SUCCESS,
     DepositOrderStatus.FAILED,
@@ -33,7 +34,9 @@ export class DepositOrdersComponent {
   depositPage = 1;
 
   depositPageSize = 15;
-  depositTotalItems = 0;
+  depositTotalItems = signal(0);
+  orders = signal<DepositOrderListAdminResponse[]>([]);
+  isLoading = signal(false);
 
   openNoteIndex: number | null = null;
   DepositOrderStatus = DepositOrderStatus;
@@ -51,9 +54,6 @@ export class DepositOrdersComponent {
   selectedImageUrls: string[] = [];
   showConfirmModal = signal(false);
 
-  form = this.fb.group({
-    rows: this.fb.array([]),
-  });
   searchForm = this.fb.group(
     {
       orderNo: [''],
@@ -65,12 +65,12 @@ export class DepositOrdersComponent {
     { validators: dateRangeValidator },
   );
 
-  get rows(): FormArray {
-    return this.form.get('rows') as FormArray;
-  }
-
   ngOnInit() {
     this.loadOrdersPage();
+  }
+
+  ngOnDestroy(): void {
+    this.loadSubscription?.unsubscribe();
   }
 
   openImageUrlsModal(value: string | string[] | null | undefined): void {
@@ -103,24 +103,7 @@ export class DepositOrdersComponent {
 
   onSearch() {
     this.isSearching = true;
-
-    const f = this.searchForm.value;
-
-    this.depositService
-      .getAllDepositOrders(this.depositPage - 1, {
-        orderNo: f.orderNo ?? undefined,
-        username: f.username ?? undefined,
-        status: f.status ?? undefined,
-        fromTime: toUtcStartOfDay(f.fromTime),
-        toTime: toUtcEndOfDay(f.toTime),
-      })
-      .subscribe({
-        next: (res) => {
-          this.updateTable(res.data.items);
-          this.depositTotalItems = res.data.total_size;
-          this.cd.markForCheck();
-        },
-      });
+    this.loadOrdersPage();
   }
 
   copyImageUrlsRecord(value: string | null | undefined) {
@@ -129,31 +112,6 @@ export class DepositOrdersComponent {
     navigator.clipboard.writeText(value);
 
     this.toast.success('Copied to clipboard');
-  }
-
-  updateTable(orders: any[]) {
-    this.rows.clear();
-
-    orders.forEach((trans) => {
-      this.rows.push(
-        this.fb.group({
-          username: [trans.username],
-          user_id: [trans.user_id],
-          expected_amount: [trans.expected_amount],
-          deposit_address: [trans.deposit_address],
-          fee: [trans.fee],
-          updated_at: [trans.updated_at],
-          currency: [trans.currency],
-          amount: [trans.amount],
-          order_no: [trans.order_no],
-          network: [trans.network],
-          status: [trans.status],
-          image_urls: [trans.image_urls],
-        }),
-      );
-    });
-
-    this.cd.detectChanges();
   }
 
   onReset() {
@@ -171,7 +129,6 @@ export class DepositOrdersComponent {
     // 2. Reset page về 1
     this.depositPage = 1;
 
-    // this.cd.detectChanges();
     this.loadOrdersPage();
   }
 
@@ -190,24 +147,29 @@ export class DepositOrdersComponent {
   confirmUpdate(index: number, event?: MouseEvent) {
     event?.stopPropagation();
     if (!this.selectedStatus) return;
-    const row = this.rows.at(index);
-    const orderNo = row.get('order_no')?.value;
+    const order = this.orders()[index];
+
+    if (!order) return;
+
+    const orderNo = order.order_no;
+    const status = this.selectedStatus;
 
     const request = {
-      status: this.selectedStatus,
+      status,
       admin_note: this.adminNote,
     };
 
     this.depositService.updateDepositStatus(orderNo, request).subscribe({
       next: () => {
-        row.patchValue({ status: this.selectedStatus });
+        this.orders.update((orders) =>
+          orders.map((item) => (item.order_no === orderNo ? { ...item, status } : item)),
+        );
 
         this.openNoteIndex = null;
         this.selectedStatus = null;
         this.openDropdownIndex = null;
         this.adminNote = '';
 
-        this.cd.detectChanges();
         this.toast.success('Update order successfully');
       },
 
@@ -248,8 +210,7 @@ export class DepositOrdersComponent {
   toggleDropdown(index: number, event: MouseEvent): void {
     event.stopPropagation();
 
-    const row = this.rows.at(index);
-    const status = row.get('status')?.value as DepositOrderStatus | null;
+    const status = this.orders()[index]?.status;
 
     if (status && this.BLOCK_UPDATE_STATUSES.has(status)) {
       this.openDropdownIndex = null;
@@ -284,26 +245,40 @@ export class DepositOrdersComponent {
     this.loadOrdersPage();
   }
 
-  private loadOrdersPage() {
-    this.depositService.getAllDepositOrders(this.depositPage - 1).subscribe({
-      next: (res) => {
-        const content = res.data.items;
-        this.depositTotalItems = res.data.total_size;
+  private loadOrdersPage(): void {
+    const formValue = this.searchForm.value;
+    const filters = this.isSearching
+      ? {
+          orderNo: formValue.orderNo ?? undefined,
+          username: formValue.username ?? undefined,
+          status: formValue.status ?? undefined,
+          fromTime: toUtcStartOfDay(formValue.fromTime),
+          toTime: toUtcEndOfDay(formValue.toTime),
+        }
+      : undefined;
 
-        this.rows.clear();
-        content.forEach((item: DepositOrderListAdminResponse) =>
-          this.rows.push(this.fb.group({ ...item })),
-        );
-        this.cd.detectChanges();
-      },
-      error: (err) => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: err?.error?.message,
-          confirmButtonText: 'OK',
-        });
-      },
-    });
+    // Prevent an older response from overwriting the latest table state.
+    this.loadSubscription?.unsubscribe();
+    this.isLoading.set(true);
+
+    this.loadSubscription = this.depositService
+      .getAllDepositOrders(this.depositPage - 1, filters)
+      .pipe(finalize(() => this.isLoading.set(false)))
+      .subscribe({
+        next: (res) => {
+          this.orders.set(res.data.items ?? []);
+          this.depositTotalItems.set(res.data.total_size ?? 0);
+        },
+        error: (err) => {
+          this.orders.set([]);
+          this.depositTotalItems.set(0);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: err?.error?.message,
+            confirmButtonText: 'OK',
+          });
+        },
+      });
   }
 }

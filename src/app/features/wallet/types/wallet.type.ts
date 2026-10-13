@@ -8,6 +8,19 @@ export interface DepositConfigResponse {
 export enum Stablecoin {
   USDT = 'USDT',
   USDC = 'USDC',
+  USD = 'USD',
+}
+
+export enum CryptoNetwork {
+  TRC20 = 'TRC20',
+  BEP20 = 'BEP20',
+  BASE = 'BASE',
+}
+
+export interface CreateWalletExternalAddressRequest {
+  currency: Stablecoin;
+  network: CryptoNetwork;
+  address: string;
 }
 
 export interface DepositPreviewRequest {
@@ -28,8 +41,8 @@ export interface DepositPreviewResponse {
 
 export interface CreateDepositOrderRequest {
   currency: Stablecoin;
-  amount: number;
   network: string;
+  amount: number;
 }
 
 export interface CreateDepositOrderResponse {

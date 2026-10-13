@@ -4,6 +4,7 @@ import {
   BalanceResponse,
   CardPageResponse,
   CreateCardRequest,
+  CreateWalletExternalAddressRequest,
   DashboardResponse,
   TopupCardRequest,
   WithDrawCardRequest,
@@ -16,6 +17,16 @@ import { ApiResponse } from '../../../core/auth/auth.request';
 })
 export class WalletService extends BaseApiService {
   protected override resource = 'wallet';
+
+  isExternalAddressConfigured(): Observable<ApiResponse<boolean>> {
+    return this.get<ApiResponse<boolean>>('/external-address/configured');
+  }
+
+  createExternalAddress(
+    request: CreateWalletExternalAddressRequest,
+  ): Observable<ApiResponse<void>> {
+    return this.post<ApiResponse<void>>('/external-address', request);
+  }
 
   createCard(request: CreateCardRequest): Observable<ApiResponse<void>> {
     return this.post('/create-card', request);

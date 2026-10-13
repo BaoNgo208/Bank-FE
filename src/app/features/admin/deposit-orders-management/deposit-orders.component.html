@@ -52,6 +52,7 @@
 
       <div class="w-full flex gap-x-2 text-[0.8rem]">
         <button
+          type="button"
           (click)="onSearchClick()"
           [disabled]="searchForm.invalid"
           class="h-9 px-3 bg-red-600 text-white rounded transition flex items-center gap-2 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed"
@@ -73,155 +74,151 @@
   <div class="rounded-base border border-default bg-neutral-primary">
     <!-- TABLE -->
     <div class="overflow-x-auto">
-      <form [formGroup]="form">
-        <table class="w-full text-sm text-left border-collapse border border-default">
-          <!-- HEADER -->
-          <thead class="border-b bg-gray-50">
-            <tr class="text-gray-600">
-              <th class="px-3 py-3 border-r border-default">Order no</th>
-              <th class="px-3 py-3 border-r border-default">User id</th>
-              <th class="px-3 py-3 border-r border-default">Username</th>
-              <th class="px-3 py-3 border-r border-default">Image urls</th>
-              <th class="px-3 py-3 border-r border-default">Currency</th>
-              <th class="px-3 py-3 border-r border-default">Network</th>
-              <th class="px-3 py-3 border-r border-default">Amount</th>
-              <th class="px-3 py-3 border-r border-default">Fee</th>
-              <th class="px-3 py-3 border-r border-default">Expected amount</th>
-              <th class="px-3 py-3 border-r border-default">Deposit address</th>
-              <th class="px-3 py-3 border-r border-default">Status</th>
-              <th class="px-3 py-3 border-r border-default">Updated at</th>
-              <th class="px-3 py-3 border-r border-default">Action</th>
-            </tr>
-          </thead>
+      <table class="w-full text-sm text-left border-collapse border border-default">
+        <!-- HEADER -->
+        <thead class="border-b bg-gray-50">
+          <tr class="text-gray-600">
+            <th class="px-3 py-3 border-r border-default">Order no</th>
+            <th class="px-3 py-3 border-r border-default">User id</th>
+            <th class="px-3 py-3 border-r border-default">Username</th>
+            <th class="px-3 py-3 border-r border-default">Image urls</th>
+            <th class="px-3 py-3 border-r border-default">Currency</th>
+            <th class="px-3 py-3 border-r border-default">Network</th>
+            <th class="px-3 py-3 border-r border-default">Amount</th>
+            <th class="px-3 py-3 border-r border-default">Fee</th>
+            <th class="px-3 py-3 border-r border-default">Expected amount</th>
+            <th class="px-3 py-3 border-r border-default">Deposit address</th>
+            <th class="px-3 py-3 border-r border-default">Status</th>
+            <th class="px-3 py-3 border-r border-default">Updated at</th>
+            <th class="px-3 py-3 border-r border-default">Action</th>
+          </tr>
+        </thead>
 
-          <!-- BODY -->
-          <tbody formArrayName="rows">
-            <tr
-              *ngFor="let row of rows.controls; let i = index"
-              [formGroupName]="i"
-              class="border-b hover:bg-gray-50"
+        <!-- BODY -->
+        <tbody>
+          <tr *ngIf="isLoading()">
+            <td colspan="13" class="px-3 py-8 text-center text-gray-500">Loading...</td>
+          </tr>
+
+          <tr *ngIf="!isLoading() && orders().length === 0">
+            <td colspan="13" class="px-3 py-8 text-center text-gray-500">No data found</td>
+          </tr>
+
+          <tr *ngFor="let row of orders(); let i = index" class="border-b hover:bg-gray-50">
+            <!-- ORDER NO -->
+            <td class="px-3 py-3 border-r border-default font-medium">
+              {{ row.order_no }}
+            </td>
+
+            <!-- USER ID -->
+            <td class="px-3 py-3 border-r border-default">
+              {{ row.user_id }}
+            </td>
+
+            <!-- USER name -->
+            <td class="px-4 py-3 border-r border-default">
+              <span class="px-2 py-1 text-xs text-blue-600 rounded">
+                {{ row.username }}
+              </span>
+            </td>
+
+            <!-- IMAGE URLS -->
+            <td class="px-4 py-3 max-w-[220px] border-r border-default">
+              <div class="flex items-center gap-2 min-w-0 group">
+                <span
+                  class="min-w-0 flex-1 truncate px-2 py-1 text-xs text-blue-600 rounded cursor-pointer hover:underline"
+                  (click)="openImageUrlsModal(row.image_urls); $event.stopPropagation()"
+                  title="Click to view images"
+                >
+                  {{ row.image_urls }}
+                </span>
+
+                <i
+                  class="fa fa-copy shrink-0 text-gray-400 cursor-pointer opacity-0 group-hover:opacity-100 transition hover:text-gray-700"
+                  (click)="copyImageUrlsRecord(row.image_urls); $event.stopPropagation()"
+                ></i>
+              </div>
+            </td>
+
+            <!-- CURRENCY -->
+            <td class="px-4 py-3 border-r border-default">
+              <span class="px-2 py-1 text-xs bg-blue-100 text-blue-600 rounded">
+                {{ row.currency }}
+              </span>
+            </td>
+
+            <!-- NETWORK -->
+            <td
+              class="px-4 py-3 border-r border-default"
+              [ngClass]="{
+                'text-yellow-600 bg-yellow-100':
+                  row.network === 'Tron (TRC20)' || row.network === 'TRC20',
+                'text-green-600 bg-green-100':
+                  row.network === 'ETH (ERC20)' || row.network === 'ERC20',
+              }"
             >
-              <!-- ORDER NO -->
-              <td class="px-3 py-3 border-r border-default font-medium">
-                {{ row.get('order_no')?.value }}
-              </td>
+              <span class="px-2 py-1 text-xs rounded">
+                {{ row.network }}
+              </span>
+            </td>
 
-              <!-- USER ID -->
-              <td class="px-3 py-3 border-r border-default">
-                {{ row.get('user_id')?.value }}
-              </td>
+            <!-- AMOUNT -->
+            <td class="px-3 py-3 border-r border-default">
+              {{ row.amount | number: '1.2-4' }}
+            </td>
 
-              <!-- USER name -->
-              <td class="px-4 py-3 border-r border-default">
-                <span class="px-2 py-1 text-xs text-blue-600 rounded">
-                  {{ row.get('username')?.value }}
-                </span>
-              </td>
+            <!-- FEE -->
+            <td class="px-3 py-3 border-r border-default">
+              {{ row.fee | number: '1.2-4' }}
+            </td>
 
-              <!-- IMAGE URLS -->
-              <td class="px-4 py-3 max-w-[220px] border-r border-default">
-                <div class="flex items-center gap-2 min-w-0 group">
-                  <span
-                    class="min-w-0 flex-1 truncate px-2 py-1 text-xs text-blue-600 rounded cursor-pointer hover:underline"
-                    (click)="
-                      openImageUrlsModal(row.get('image_urls')?.value); $event.stopPropagation()
-                    "
-                    title="Click to view images"
-                  >
-                    {{ row.get('image_urls')?.value }}
-                  </span>
+            <!-- EXPECTED AMOUNT -->
+            <td class="px-3 py-3 border-r border-default font-medium">
+              {{ row.expected_amount | number: '1.2-4' }}
+            </td>
 
-                  <i
-                    class="fa fa-copy shrink-0 text-gray-400 cursor-pointer opacity-0 group-hover:opacity-100 transition hover:text-gray-700"
-                    (click)="
-                      copyImageUrlsRecord(row.get('image_urls')?.value); $event.stopPropagation()
-                    "
-                  ></i>
-                </div>
-              </td>
+            <!-- DEPOSIT ADDRESS -->
+            <td class="px-3 py-3 border-r border-default max-w-[220px] truncate">
+              {{ row.deposit_address }}
+            </td>
 
-              <!-- CURRENCY -->
-              <td class="px-4 py-3 border-r border-default">
-                <span class="px-2 py-1 text-xs bg-blue-100 text-blue-600 rounded">
-                  {{ row.get('currency')?.value }}
-                </span>
-              </td>
-
-              <!-- NETWORK -->
-              <td
-                class="px-4 py-3 border-r border-default"
+            <!-- STATUS -->
+            <td class="px-3 py-3 border-r border-default font-medium">
+              <span
+                class="px-2 py-1 rounded-full text-xs font-semibold"
                 [ngClass]="{
-                  'text-yellow-600 bg-yellow-100':
-                    row.get('network')?.value === 'Tron (TRC20)' ||
-                    row.get('network')?.value === 'TRC20',
-                  'text-green-600 bg-green-100':
-                    row.get('network')?.value === 'ETH (ERC20)' ||
-                    row.get('network')?.value === 'ERC20',
+                  'text-yellow-600 bg-yellow-100': row.status === 'PENDING',
+                  'text-green-600 bg-green-100': row.status === 'SUCCESS',
+                  'text-red-600 bg-red-100': row.status === 'FAILED',
                 }"
               >
-                <span class="px-2 py-1 text-xs rounded">
-                  {{ row.get('network')?.value }}
-                </span>
-              </td>
+                {{ row.status }}
+              </span>
+            </td>
 
-              <!-- AMOUNT -->
-              <td class="px-3 py-3 border-r border-default">
-                {{ row.get('amount')?.value | number: '1.2-4' }}
-              </td>
+            <!-- UPDATED -->
+            <td class="px-3 py-3 border-r border-default">
+              {{ row.updated_at | date: 'dd/MM/yyyy HH:mm' }}
+            </td>
 
-              <!-- FEE -->
-              <td class="px-3 py-3 border-r border-default">
-                {{ row.get('fee')?.value | number: '1.2-4' }}
-              </td>
-
-              <!-- EXPECTED AMOUNT -->
-              <td class="px-3 py-3 border-r border-default font-medium">
-                {{ row.get('expected_amount')?.value | number: '1.2-4' }}
-              </td>
-
-              <!-- DEPOSIT ADDRESS -->
-              <td class="px-3 py-3 border-r border-default max-w-[220px] truncate">
-                {{ row.get('deposit_address')?.value }}
-              </td>
-
-              <!-- STATUS -->
-              <td class="px-3 py-3 border-r border-default font-medium">
-                <span
-                  class="px-2 py-1 rounded-full text-xs font-semibold"
-                  [ngClass]="{
-                    'text-yellow-600 bg-yellow-100': row.get('status')?.value === 'PENDING',
-                    'text-green-600 bg-green-100': row.get('status')?.value === 'SUCCESS',
-                    'text-red-600 bg-red-100': row.get('status')?.value === 'FAILED',
-                  }"
-                >
-                  {{ row.get('status')?.value }}
-                </span>
-              </td>
-
-              <!-- UPDATED -->
-              <td class="px-3 py-3 border-r border-default">
-                {{ row.get('updated_at')?.value | date: 'dd/MM/yyyy HH:mm' }}
-              </td>
-
-              <!-- ACTION -->
-              <td class="px-4 py-3 border-l border-default">
-                <button
-                  type="button"
-                  (click)="toggleDropdown(i, $event)"
-                  class="px-3 py-1 text-xs bg-gray-200 rounded hover:bg-gray-300"
-                >
-                  Action
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </form>
+            <!-- ACTION -->
+            <td class="px-4 py-3 border-l border-default">
+              <button
+                type="button"
+                (click)="toggleDropdown(i, $event)"
+                class="px-3 py-1 text-xs bg-gray-200 rounded hover:bg-gray-300"
+              >
+                Action
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
       <app-pagination
         [page]="depositPage"
         [pageSize]="depositPageSize"
-        [totalItems]="depositTotalItems"
+        [totalItems]="depositTotalItems()"
         (pageChange)="onDepositPageChange($event)"
         (pageSizeChange)="onDepositPageSizeChange($event)"
       ></app-pagination>
