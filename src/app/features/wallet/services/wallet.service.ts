@@ -22,6 +22,10 @@ export class WalletService extends BaseApiService {
     return this.get<ApiResponse<boolean>>('/external-address/configured');
   }
 
+  isWalletQualified(): Observable<ApiResponse<boolean>> {
+    return this.get<ApiResponse<boolean>>('/qualified');
+  }
+
   createExternalAddress(
     request: CreateWalletExternalAddressRequest,
   ): Observable<ApiResponse<void>> {

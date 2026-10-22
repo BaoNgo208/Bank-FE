@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { MainLayout } from './layouts/main-layout/main-layout.component';
 import { authGuard } from './guards/auth.guard';
 import { adminAuthGuard } from './guards/admin-auth.guardd';
+import { walletQualifiedGuard } from './guards/wallet-qualified.guard';
 import { LandingLayoutComponent } from './features/lading-page/layouts/landing-layout.component';
 
 export const routes: Routes = [
@@ -93,6 +94,7 @@ export const routes: Routes = [
               },
               {
                 path: 'appy_a_card',
+                canActivate: [walletQualifiedGuard],
                 loadComponent: () =>
                   import('./features/apply-card/apply-card.component').then(
                     (m) => m.ApplyCardComponent,
@@ -109,6 +111,7 @@ export const routes: Routes = [
           },
           {
             path: 'apply_card',
+            canActivate: [walletQualifiedGuard],
             loadComponent: () =>
               import('./features/apply-card/apply-card.component').then(
                 (m) => m.ApplyCardComponent,
