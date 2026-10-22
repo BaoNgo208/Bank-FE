@@ -1,0 +1,109 @@
+<div class="fixed inset-0 z-[60] flex items-center justify-center bg-black/40 p-4">
+  <div class="w-full max-w-lg rounded-xl bg-white p-6 shadow-xl" role="dialog" aria-modal="true">
+    <div class="mb-5 flex items-start justify-between gap-4">
+      <div>
+        <h2 class="text-lg font-semibold text-gray-900">Configure wallet address</h2>
+        <p class="mt-1 text-sm text-gray-500">
+          Add the external address used for wallet transactions.
+        </p>
+      </div>
+
+      <button
+        type="button"
+        class="text-xl leading-none text-gray-400 hover:text-gray-700 disabled:cursor-not-allowed"
+        [disabled]="submitting()"
+        aria-label="Close"
+        (click)="cancel()"
+      >
+        &times;
+      </button>
+    </div>
+
+    <div class="mb-5 rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800">
+      A wallet can have only one external address. Check the currency, network and address carefully
+      before saving.
+    </div>
+
+    <form class="space-y-4" [formGroup]="form" (ngSubmit)="submit()">
+      <div>
+        <label for="external-address-currency" class="mb-1 block text-sm font-medium text-gray-700">
+          Currency
+        </label>
+        <select
+          id="external-address-currency"
+          formControlName="currency"
+          class="w-full rounded-md border border-gray-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-red-400 focus:ring-2 focus:ring-red-100"
+        >
+          <option [ngValue]="Stablecoin.USDT">USDT</option>
+          <option [ngValue]="Stablecoin.USDC">USDC</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="external-address-network" class="mb-1 block text-sm font-medium text-gray-700">
+          Network
+        </label>
+        <select
+          id="external-address-network"
+          formControlName="network"
+          class="w-full rounded-md border border-gray-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-red-400 focus:ring-2 focus:ring-red-100"
+        >
+          <option *ngFor="let network of availableNetworks" [ngValue]="network">
+            {{ network }}
+          </option>
+        </select>
+      </div>
+
+      <div>
+        <label for="external-wallet-address" class="mb-1 block text-sm font-medium text-gray-700">
+          Wallet address
+        </label>
+        <input
+          id="external-wallet-address"
+          type="text"
+          formControlName="address"
+          autocomplete="off"
+          placeholder="Enter your wallet address"
+          class="w-full rounded-md border border-gray-300 px-3 py-2.5 text-sm outline-none focus:border-red-400 focus:ring-2 focus:ring-red-100"
+        />
+        <p
+          *ngIf="form.controls.address.touched && form.controls.address.hasError('required')"
+          class="mt-1 text-xs text-red-500"
+        >
+          Wallet address is required.
+        </p>
+        <p
+          *ngIf="form.controls.address.touched && form.controls.address.hasError('maxlength')"
+          class="mt-1 text-xs text-red-500"
+        >
+          Wallet address must not exceed 255 characters.
+        </p>
+      </div>
+
+      <div class="flex justify-end gap-3 pt-2">
+        <button
+          type="button"
+          class="rounded-md border border-gray-300 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-60"
+          [disabled]="submitting()"
+          (click)="cancel()"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="rounded-md bg-red-500 px-4 py-2 text-sm font-medium text-white hover:bg-red-600 disabled:cursor-not-allowed disabled:opacity-60"
+          [disabled]="submitting()"
+        >
+          {{ submitting() ? 'Saving...' : 'Save address' }}
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <app-confirm-modal
+    [visible]="showConfirmModal()"
+    content="Are you sure you want to save this external wallet address?"
+    [onConfirm]="confirmSubmit"
+    (cancel)="showConfirmModal.set(false)"
+  ></app-confirm-modal>
+</div>

@@ -16,6 +16,8 @@ import { DepositTransactionsComponent } from '../wallet-transactions/deposits/de
 import { WithdrawalTransactionComponent } from '../wallet-transactions/withdrawals/withdrawal-transactions.component';
 import { LoadingOverlayComponent } from '../../shared/components/loading-overlay/loading-overlay.component';
 import { finalize } from 'rxjs';
+import { WalletAccessService } from './services/wallet-access.service';
+import { ExternalAddressModalComponent } from './components/external-address-modal.component';
 
 @Component({
   selector: 'app-wallet-component',
@@ -32,11 +34,13 @@ import { finalize } from 'rxjs';
     DepositTransactionsComponent,
     WithdrawalTransactionComponent,
     LoadingOverlayComponent,
+    ExternalAddressModalComponent,
   ],
   templateUrl: './wallet.component.html',
 })
 export class WalletComponent {
   private toast = inject(ToastrService);
+  private walletAccessService = inject(WalletAccessService);
 
   protected walletStore = inject(WalletStore);
   protected walletUiStore = inject(WalletUiStore);
@@ -58,6 +62,8 @@ export class WalletComponent {
   proofFile: File | null = null;
   proofPreview: string | null = null;
   showCurrencyModal = false;
+  showExternalAddressModal = false;
+  private pendingWalletAction: (() => void) | null = null;
   currency: Stablecoin = Stablecoin.USDT;
   Stablecoin = Stablecoin;
 
@@ -75,7 +81,7 @@ export class WalletComponent {
   }
 
   openWidthdrawlModal() {
-    this.walletUiStore.showWithdrawModal.set(true);
+    this.runIfWalletConfigured(() => this.walletUiStore.showWithdrawModal.set(true));
   }
 
   // ── Proof upload ──────────────────────────────────────────────────────
@@ -103,8 +109,8 @@ export class WalletComponent {
 
     this.walletFacade
       .createDepositOrder({
-        currency: Stablecoin.USDT,
         amount: this.amount,
+        currency: Stablecoin.USDT,
         network: this.selectedNetwork,
       })
       .pipe(finalize(() => this.walletFacade.loading.set(false)))
@@ -140,8 +146,10 @@ export class WalletComponent {
   }
 
   openModal(): void {
-    this.walletFacade.getDepositConfig(Stablecoin.USDT);
-    this.showTopupModal = true;
+    this.runIfWalletConfigured(() => {
+      this.walletFacade.getDepositConfig(Stablecoin.USD);
+      this.showTopupModal = true;
+    });
   }
   closeModal(): void {
     this.showTopupModal = false;
@@ -182,5 +190,35 @@ export class WalletComponent {
       this.countdown.set(`${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`);
       if (this.seconds <= 0) clearInterval(this.timer);
     }, 1000);
+  }
+
+  private runIfWalletConfigured(action: () => void): void {
+    this.walletAccessService.checkConfigured().subscribe({
+      next: (configured) => {
+        if (!configured) {
+          this.pendingWalletAction = action;
+          this.showExternalAddressModal = true;
+          return;
+        }
+
+        action();
+      },
+      error: () => {
+        this.toast.error('Unable to verify your wallet address. Please try again.');
+      },
+    });
+  }
+
+  onExternalAddressCreated(): void {
+    this.showExternalAddressModal = false;
+
+    const action = this.pendingWalletAction;
+    this.pendingWalletAction = null;
+    action?.();
+  }
+
+  closeExternalAddressModal(): void {
+    this.showExternalAddressModal = false;
+    this.pendingWalletAction = null;
   }
 }

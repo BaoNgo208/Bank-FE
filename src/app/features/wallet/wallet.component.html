@@ -284,6 +284,11 @@
 </div>
 
 <app-widthdraw-component *ngIf="this.walletUiStore.showWithdrawModal()"></app-widthdraw-component>
+<app-external-address-modal
+  *ngIf="showExternalAddressModal"
+  (created)="onExternalAddressCreated()"
+  (cancelled)="closeExternalAddressModal()"
+></app-external-address-modal>
 <app-loading-overlay
   [show]="walletFacade.loading()"
   title="Processing..."
