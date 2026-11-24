@@ -1,83 +1,78 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { InquiryStore } from '../../stores/inquiry.store';
 import { InquiryUiStore } from '../../stores/inquiry-ui.store';
-import { WalletFacade } from '../../../wallet/facades/wallet.facade';
 import { finalize } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
+import { InfiniFundingFlow } from '../../../wallet/services/infini-card.service';
+import { INFINI_FUNDING_MIN_AMOUNT } from '../../../wallet/types/infini-card.type';
 
 @Component({
   selector: 'app-widthdrawl-card-modal',
-  imports: [FormsModule, CommonModule],
+  imports: [CommonModule],
   templateUrl: './widthdrawl-modal.component.html',
 })
 export class WidthdrawlCardModalComponent {
   private inquiryStore = inject(InquiryStore);
-  private walletFacade = inject(WalletFacade);
+  private funding = inject(InfiniFundingFlow);
   private toast = inject(ToastrService);
 
   protected inquiryUiStore = inject(InquiryUiStore);
 
-  availableBalance = signal(1.01);
-  currency = signal('USD');
-  transferAmount = signal(0.1);
-  isLoading = signal(false);
-  readonly MIN_AMOUNT = 0.1;
+  readonly MIN_AMOUNT = INFINI_FUNDING_MIN_AMOUNT;
 
-  isInvalid = computed(() => {
-    return this.transferAmount() < this.MIN_AMOUNT;
-  });
+  card = this.inquiryStore.selectedCard;
+  currency = signal('USD');
+  transferAmount = signal(INFINI_FUNDING_MIN_AMOUNT);
+  isLoading = signal(false);
+
+  // The backend checks the real card balance at the provider before moving funds.
+  cardBalance = computed(() => Number(this.card()?.remaining_amount ?? 0));
 
   error = computed(() => {
-    return this.isInvalid() ? 'Minimum amount is 0.1' : '';
+    const amount = this.transferAmount();
+    if (amount < this.MIN_AMOUNT) return `Minimum amount is ${this.MIN_AMOUNT} USD`;
+    if (!/^\d+(\.\d{1,2})?$/.test(String(amount))) return 'Use at most 2 decimal places';
+    if (amount > this.cardBalance()) return 'Insufficient card balance';
+    return '';
   });
-
-  ngOnInit() {
-    this.walletFacade.getBalance().subscribe({
-      next: (res) => {
-        this.availableBalance.set(res.data.card_balance);
-      },
-      error: (err) => {
-        this.toast.error(err?.error?.message);
-      },
-    });
-  }
+  isInvalid = computed(() => !!this.error());
 
   handleWidthdrawl() {
-    const selectedCard = this.inquiryStore.selectedCard();
-    if (!selectedCard) return;
+    const card = this.card();
+    if (!card || this.isLoading() || this.isInvalid()) return;
     this.isLoading.set(true);
 
-    this.walletFacade
-      .withDrawCard(selectedCard?.id, {
-        amount: this.transferAmount(),
-      })
-      .pipe(
-        finalize(() => {
-          this.isLoading.set(false);
-          this.inquiryStore.selectedCard.set(null);
-          this.inquiryUiStore.isWidthdrawlOpen.set(false);
-        }),
-      )
+    this.funding
+      .run('withdraw', card.id, this.transferAmount())
+      .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe({
-        next: (_) => {
-          this.inquiryStore.cardActionResult.set({
-            type: 'WITHDRAW',
-            cardId: selectedCard.id,
-            amount: this.transferAmount(),
-          });
-          this.toast.success('Successfully widthdrawl!');
+        next: (order) => {
+          if (order.status === 'FAILED') {
+            this.showError('The withdrawal was rejected. No funds were moved.');
+            return;
+          }
+          if (order.status === 'SUCCEEDED') {
+            this.toast.success('Funds moved to your wallet successfully.');
+          } else {
+            this.toast.info('The withdrawal is still being processed.');
+          }
+
+          this.inquiryStore.fundingChanged.update((n) => n + 1);
+          this.close();
         },
-        error: (err) => {
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: err?.error?.message,
-            confirmButtonText: 'OK',
-          });
-        },
+        error: (err) =>
+          this.showError(err?.error?.message ?? 'Unable to reach the server. Please try again.'),
       });
+  }
+
+  close() {
+    this.inquiryStore.selectedCard.set(null);
+    this.inquiryUiStore.isWidthdrawlOpen.set(false);
+  }
+
+  private showError(text: string) {
+    Swal.fire({ icon: 'error', title: 'Error', text, confirmButtonText: 'OK' });
   }
 }

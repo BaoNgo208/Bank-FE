@@ -2,13 +2,10 @@ import { inject, Injectable, signal } from '@angular/core';
 import { DepositService } from '../services/deposit.service';
 import {
   ConfirmWithdrawOtpRequest,
-  CreateCardRequest,
   CreateDepositOrderRequest,
   CreateWithdrawOrderRequest,
   DepositPreviewRequest,
   Stablecoin,
-  TopupCardRequest,
-  WithDrawCardRequest,
   WithdrawOrderStatus,
 } from '../types/wallet.type';
 import { WalletStore } from '../stores/wallet.store';
@@ -89,22 +86,6 @@ export class WalletFacade {
 
   resendWithdrawOtp(orderNo: string) {
     return this.widthdrawlService.resendWithdrawOtp(orderNo);
-  }
-
-  createCard(request: CreateCardRequest) {
-    return this.walletService.createCard(request);
-  }
-
-  topupCard(cardId: number, request: TopupCardRequest) {
-    return this.walletService.topupCard(cardId, request);
-  }
-
-  getCards(page: number) {
-    return this.walletService.getCards(page);
-  }
-
-  withDrawCard(cardId: number, request: WithDrawCardRequest) {
-    return this.walletService.withDrawCard(cardId, request);
   }
 
   getBalance() {

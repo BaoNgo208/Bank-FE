@@ -1,6 +1,9 @@
-import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { InfiniCardResponse } from '../../../wallet/types/infini-card.type';
 import { CardSensitiveDetailResponse } from '../../types/type';
+
+const AUTO_HIDE_MS = 30_000;
 
 @Component({
   selector: 'app-card-sensitive-detail-modal',
@@ -8,14 +11,25 @@ import { CardSensitiveDetailResponse } from '../../types/type';
   imports: [CommonModule],
   templateUrl: './card-sensitive-detail-modal.component.html',
 })
-export class CardSensitiveDetailModalComponent {
-  @Input({ required: true }) card!: CardSensitiveDetailResponse;
+export class CardSensitiveDetailModalComponent implements OnDestroy {
+  @Input({ required: true }) info!: InfiniCardResponse;
+  /** Null when the number is not available (locked card or failed request). */
+  @Input() card: CardSensitiveDetailResponse | null = null;
   @Output() close = new EventEmitter<void>();
 
   showSensitive = signal(false);
+  private hideTimer?: ReturnType<typeof setTimeout>;
 
   toggleSensitive() {
+    clearTimeout(this.hideTimer);
     this.showSensitive.update((v) => !v);
+    if (this.showSensitive()) {
+      this.hideTimer = setTimeout(() => this.showSensitive.set(false), AUTO_HIDE_MS);
+    }
+  }
+
+  ngOnDestroy() {
+    clearTimeout(this.hideTimer);
   }
 
   maskPan(pan: string) {

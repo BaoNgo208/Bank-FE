@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { BaseApiService } from '../../../core/http/base-api.service';
 import {
   BalanceResponse,
-  CardPageResponse,
-  CreateCardRequest,
   CreateWalletExternalAddressRequest,
   DashboardResponse,
-  TopupCardRequest,
-  WithDrawCardRequest,
 } from '../types/wallet.type';
+import {
+  CardCreationConfigResponse,
+  CardCreationResponse,
+  CreateInfiniCardRequest,
+} from '../types/infini-card.type';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../../../core/auth/auth.request';
 
@@ -28,21 +29,16 @@ export class WalletService extends BaseApiService {
     return this.post<ApiResponse<void>>('/external-address', request);
   }
 
-  createCard(request: CreateCardRequest): Observable<ApiResponse<void>> {
+  createCard(request: CreateInfiniCardRequest): Observable<ApiResponse<CardCreationResponse>> {
     return this.post('/create-card', request);
   }
 
-  topupCard(cardId: number, request: TopupCardRequest): Observable<ApiResponse<void>> {
-    return this.post(`/cards/${cardId}/topup`, request);
+  getCardCreationConfig(): Observable<ApiResponse<CardCreationConfigResponse>> {
+    return this.get('/card-creation-config');
   }
 
-  getCards(page: number = 0): Observable<ApiResponse<CardPageResponse>> {
-    const params = this.buildPageParams(page);
-    return this.get('/cards', params);
-  }
-
-  withDrawCard(cardId: number, request: WithDrawCardRequest): Observable<ApiResponse<void>> {
-    return this.post(`/cards/${cardId}/withdraw`, request);
+  getCardCreation(requestId: string): Observable<ApiResponse<CardCreationResponse>> {
+    return this.get(`/card-creation/${requestId}`);
   }
 
   getBalance(): Observable<ApiResponse<BalanceResponse>> {
