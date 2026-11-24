@@ -8,7 +8,7 @@
       <div>
         <p class="text-gray-700 text-sm">Total Card Balance</p>
         <p class="text-2xl mt-2">
-          {{ dashboard()?.total_balance ?? 0 }}
+          {{ cardBalance() | number: '1.2-2' }}
         </p>
       </div>
       <div
@@ -25,7 +25,7 @@
       <div>
         <p class="text-gray-700 text-sm">Card Activation Quantity</p>
         <p class="text-2xl mt-2">
-          {{ dashboard()?.active_count ?? 0 }}
+          {{ dashboard()?.activated_card_count ?? 0 }}
         </p>
       </div>
       <div
@@ -40,163 +40,80 @@
       class="flex items-center justify-between bg-white border border-gray-200 rounded-xl px-6 py-5 hover:shadow-md transition"
     >
       <div>
-        <p class="text-gray-700 text-sm">Card Frozen Quantity</p>
+        <p class="text-gray-700 text-sm">Card Opening Limit</p>
         <p class="text-2xl mt-2">
-          {{ dashboard()?.blocked_count ?? 0 }}
+          {{ dashboard()?.card_opening_limit ?? 0 }}
         </p>
       </div>
       <div
         class="w-16 h-16 flex items-center justify-center border-4 border-red-500 rounded-xl text-red-500 text-3xl"
       >
-        <i class="fa-solid fa-lock"></i>
+        <i class="fa-solid fa-credit-card"></i>
       </div>
     </div>
   </div>
 
-  <!-- Filter -->
-  <form [formGroup]="searchForm">
-    <div
-      class="w-full flex flex-col gap-y-5 bg-white p-4 rounded-xl border border-gray-200 justify-center"
-    >
-      <div class="w-full flex flex-wrap items-center gap-4 text-[0.85rem]">
-        <div class="flex items-center gap-2">
-          <span class="text-gray-600">Card number</span>
-          <input
-            formControlName="cardNumber"
-            type="text"
-            placeholder="Please enter your card number"
-            class="h-9 px-3 border border-gray-300 rounded"
-          />
-        </div>
-
-        <div class="flex items-center gap-2">
-          <span class="text-gray-600">Card name</span>
-          <input
-            formControlName="cardName"
-            type="text"
-            placeholder="Please enter"
-            class="h-9 px-3 border border-gray-300 rounded"
-          />
-        </div>
-
-        <div class="flex items-center gap-2">
-          <span class="text-gray-600">Status</span>
-          <select formControlName="status" class="h-9 px-3 border border-gray-300 rounded">
-            <option [ngValue]="null">Please ...</option>
-            <option [ngValue]="CardStatus.ACTIVE">Active</option>
-            <option [ngValue]="CardStatus.BLOCKED">Blocked</option>
-          </select>
-        </div>
-
-        <div class="flex items-center gap-2">
-          <span class="text-gray-600">Creation time</span>
-          <div class="flex items-center border border-gray-300 rounded overflow-hidden">
-            <input type="date" formControlName="fromTime" class="h-9 px-2 outline-none" />
-            <span class="px-2 text-gray-400">-</span>
-            <input type="date" formControlName="toTime" class="h-9 px-2 outline-none" />
-            <!-- ERROR -->
-            <div *ngIf="searchForm.errors?.['invalidDateRange']" class="text-red-500 text-xs mt-1">
-              From date must be before To date
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="w-full flex gap-x-5 text-[0.8rem]">
-        <button
-          [disabled]="searchForm.invalid"
-          (click)="onSearch()"
-          class="h-9 px-3 bg-red-600 text-white rounded hover:bg-red-700 transition flex items-center gap-2 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed"
-        >
-          <i class="fa-solid fa-magnifying-glass"></i> Search
-        </button>
-        <button
-          [disabled]="searchForm.invalid"
-          class="h-9 px-3 bg-red-600 text-white rounded hover:bg-red-700 transition flex items-center gap-2 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed"
-          type="button"
-          (click)="onReset()"
-        >
-          Reset
-        </button>
-      </div>
-    </div>
-  </form>
+  <!-- Card being created -->
+  <div
+    *ngIf="creation.submitting() || creation.polling()"
+    class="flex items-center gap-3 rounded-xl border border-blue-200 bg-blue-50 px-5 py-4 text-sm text-blue-700"
+  >
+    <i class="fa-solid fa-spinner fa-spin"></i>
+    Your card is being created. It will appear below when it is ready.
+  </div>
 
   <!-- Card lists table -->
   <div class="min-w-0 rounded-base border border-default bg-neutral-primary">
     <div class="flex items-center justify-between px-4 py-2 bg-white border-b border-default">
       <div class="text-sm font-medium text-heading"><label>Card List</label></div>
-      <div class="flex items-center gap-1 small_laptop:gap-2">
-        <button
-          class="flex items-center gap-2 px-1 tablet:px-4 h-9 text-[0.8rem] tablet:text-sm rounded-lg bg-amber-100 text-amber-700 hover:bg-amber-200 transition"
-        >
-          <i class="fa-solid fa-snowflake text-xs"></i> Freeze (0)
-        </button>
-        <button
-          class="flex items-center gap-2 px-1 tablet:px-4 h-9 text-[0.8rem] tablet:text-sm rounded-lg bg-emerald-100 text-emerald-700 hover:bg-emerald-200 transition"
-        >
-          <i class="fa-solid fa-unlock text-xs"></i> Thawing (0)
-        </button>
-      </div>
+      <button
+        type="button"
+        [disabled]="loadingCards()"
+        (click)="reload()"
+        class="flex items-center gap-2 px-4 h-9 text-sm rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 transition disabled:opacity-50"
+      >
+        <i class="fa-solid fa-rotate text-xs" [class.fa-spin]="loadingCards()"></i> Refresh
+      </button>
     </div>
 
-    <form [formGroup]="form" class="overflow-x-auto">
+    <div class="overflow-x-auto">
       <table class="w-full text-sm text-left border-collapse border border-default">
         <thead class="border-b bg-gray-50">
           <tr class="text-gray-600">
-            <th class="px-3 py-3">
-              <input type="checkbox" formControlName="checkAll" (change)="toggleAll()" />
-            </th>
             <th class="px-3 py-3 border-r border-default">Card number</th>
-            <th class="px-3 py-3 border-r border-default">Brand</th>
             <th class="px-3 py-3 border-r border-default">Name</th>
             <th class="px-3 py-3 border-r border-default">Currency</th>
             <th class="px-3 py-3 border-r border-default">Status</th>
-            <th class="px-2 py-3 border-r border-default w-[120px] truncate">Remaining amount</th>
+            <th class="px-3 py-3 border-r border-default">Remaining amount</th>
             <th class="px-3 py-3 border-r border-default">Created at</th>
-            <th class="px-3 py-3 border-r border-default w-[180px] truncate">Note</th>
-            <th class="px-3 py-3 border-r border-default">Action</th>
+            <th class="px-3 py-3 border-r border-default w-[180px]">Note</th>
+            <th class="px-3 py-3">Action</th>
           </tr>
         </thead>
-        <tbody formArrayName="rows">
-          <tr
-            *ngFor="let row of rows.controls; let i = index"
-            [formGroupName]="i"
-            class="border-b hover:bg-gray-50"
-          >
-            <td class="px-3 py-3">
-              <input type="checkbox" formControlName="selected" />
+        <tbody>
+          <tr *ngFor="let card of cards(); let i = index" class="border-b hover:bg-gray-50">
+            <td class="px-3 py-3 border-r border-default whitespace-nowrap">
+              {{ card.masked_card }}
             </td>
-            <td class="px-3 py-3 border-r border-default">{{ row.get('masked_card')?.value }}</td>
+            <td class="px-3 py-3 border-r border-default">{{ card.name }}</td>
+            <td class="px-3 py-3 border-r border-default">{{ card.currency }}</td>
             <td class="px-3 py-3 border-r border-default">
-              <img
-                *ngIf="row.get('brand')?.value === 'VISA'"
-                src="/visa.png"
-                alt="VISA"
-                class="h-8 w-8 object-contain"
-              />
-
-              <span *ngIf="row.get('brand')?.value !== 'VISA'">
-                {{ row.get('brand')?.value }}
+              {{ card.status }}
+              <span
+                *ngIf="card.status === CardStatus.BLOCKED && !canUnlock(card)"
+                class="block text-xs text-red-500"
+              >
+                Locked by administrator
               </span>
             </td>
-            <td class="px-3 py-3 border-r border-default">{{ row.get('name')?.value }}</td>
             <td class="px-3 py-3 border-r border-default">
-              {{ row.get('currency')?.value ?? 'USD' }}
+              {{ card.remaining_amount | number: '1.2-2' }}
             </td>
-            <td class="px-3 py-3 border-r border-default">{{ row.get('status')?.value }}</td>
-            <td class="px-3 py-3 border-r border-default w-[120px]">
-              {{ row.get('remaining_amount')?.value }}
+            <td class="px-3 py-3 border-r border-default whitespace-nowrap">
+              {{ card.created_at | date: 'dd/MM/yyyy HH:mm' }}
             </td>
-            <td class="px-3 py-3 border-r border-default">
-              {{ row.get('created_at')?.value | date: 'dd/MM/yyyy HH:mm' }}
-            </td>
-            <td class="px-3 py-3 border-r border-default w-[180px]">
-              {{ row.get('note')?.value }}
-            </td>
-
-            <!-- Action cell -->
-            <td class="px-3 py-3 border-l border-default">
+            <td class="px-3 py-3 border-r border-default w-[180px]">{{ card.note }}</td>
+            <td class="px-3 py-3">
               <button
                 type="button"
                 (click)="toggleDropdown(i, $event)"
@@ -206,36 +123,38 @@
               </button>
             </td>
           </tr>
+          <tr *ngIf="!loadingCards() && cards().length === 0">
+            <td colspan="8" class="px-3 py-8 text-center text-gray-400">No cards yet</td>
+          </tr>
         </tbody>
       </table>
-    </form>
+    </div>
 
     <app-pagination
-      [page]="cardPage"
-      [pageSize]="cardPageSize"
-      [totalItems]="CardTotalItems"
+      [page]="cardPage()"
+      [pageSize]="cardPageSize()"
+      [totalItems]="totalCards()"
       (pageChange)="onCardPageChange($event)"
-      (pageSizeChange)="onCardPageSizeChange($event)"
     ></app-pagination>
   </div>
 </div>
 
 <!-- DROPDOWN -->
 <div
-  *ngIf="openDropdownIndex !== null"
+  *ngIf="menuCard() as card"
   [ngStyle]="{
     position: 'fixed',
-    top: dropdownPosition.top + 'px',
-    left: dropdownPosition.left + 'px',
+    top: dropdownPosition().top + 'px',
+    left: dropdownPosition().left + 'px',
   }"
-  class="w-48 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-xl shadow-black/10 text-sm"
+  class="z-40 w-48 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-xl shadow-black/10 text-sm"
   (click)="$event.stopPropagation()"
 >
   <!-- Card info -->
   <button
     type="button"
     class="group flex w-full items-center gap-3 px-4 py-3 text-left text-gray-700 transition hover:bg-purple-50 hover:text-primary"
-    (click)="openSensitiveDetail(rows.at(openDropdownIndex!).get('id')?.value)"
+    (click)="openDetail(card)"
   >
     <span
       class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-500 transition group-hover:bg-purple-100 group-hover:text-primary"
@@ -255,9 +174,10 @@
 
   <!-- Top up -->
   <button
+    *ngIf="card.status === CardStatus.ACTIVE"
     type="button"
     class="group flex w-full items-center gap-3 px-4 py-3 text-left text-gray-700 transition hover:bg-green-50 hover:text-green-600"
-    (click)="handleAction('TOP_UP')"
+    (click)="openTopUp(card)"
   >
     <span
       class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-500 transition group-hover:bg-green-100 group-hover:text-green-600"
@@ -273,9 +193,10 @@
 
   <!-- Transfer out -->
   <button
+    *ngIf="card.status === CardStatus.ACTIVE"
     type="button"
     class="group flex w-full items-center gap-3 px-4 py-3 text-left text-gray-700 transition hover:bg-blue-50 hover:text-blue-600"
-    (click)="handleAction('TRANSFER_OUT')"
+    (click)="openWithdraw(card)"
   >
     <span
       class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-500 transition group-hover:bg-blue-100 group-hover:text-blue-600"
@@ -293,55 +214,44 @@
 
   <!-- Freeze / Unfreeze -->
   <button
+    *ngIf="card.status === CardStatus.ACTIVE || canUnlock(card)"
     type="button"
     class="group flex w-full items-center gap-3 px-4 py-3 text-left transition"
     [ngClass]="
-      rows.at(openDropdownIndex!).get('status')?.value === 'ACTIVE'
+      card.status === CardStatus.ACTIVE
         ? 'text-gray-700 hover:bg-red-50 hover:text-red-600'
         : 'text-gray-700 hover:bg-cyan-50 hover:text-cyan-600'
     "
-    (click)="
-      handleAction(
-        rows.at(openDropdownIndex!).get('status')?.value === 'ACTIVE' ? 'FREEZE' : 'UNFREEZE'
-      )
-    "
+    (click)="openFreeze(card)"
   >
     <span
       class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-500 transition"
       [ngClass]="
-        rows.at(openDropdownIndex!).get('status')?.value === 'ACTIVE'
+        card.status === CardStatus.ACTIVE
           ? 'group-hover:bg-red-100 group-hover:text-red-600'
           : 'group-hover:bg-cyan-100 group-hover:text-cyan-600'
       "
     >
       <i
         class="fa-solid text-sm"
-        [ngClass]="
-          rows.at(openDropdownIndex!).get('status')?.value === 'ACTIVE'
-            ? 'fa-snowflake'
-            : 'fa-unlock'
-        "
+        [ngClass]="card.status === CardStatus.ACTIVE ? 'fa-snowflake' : 'fa-unlock'"
       ></i>
     </span>
 
     <div class="flex flex-col">
       <span class="font-medium">
-        {{ rows.at(openDropdownIndex!).get('status')?.value === 'ACTIVE' ? 'Freeze' : 'Unfreeze' }}
+        {{ card.status === CardStatus.ACTIVE ? 'Freeze' : 'Unfreeze' }}
       </span>
 
       <span
         class="text-xs text-gray-400"
         [ngClass]="
-          rows.at(openDropdownIndex!).get('status')?.value === 'ACTIVE'
+          card.status === CardStatus.ACTIVE
             ? 'group-hover:text-red-600/70'
             : 'group-hover:text-cyan-600/70'
         "
       >
-        {{
-          rows.at(openDropdownIndex!).get('status')?.value === 'ACTIVE'
-            ? 'Lock this card'
-            : 'Unlock this card'
-        }}
+        {{ card.status === CardStatus.ACTIVE ? 'Lock this card' : 'Unlock this card' }}
       </span>
     </div>
   </button>
@@ -390,13 +300,8 @@
 ></app-loading-overlay>
 
 <app-card-sensitive-detail-modal
-  *ngIf="showSensitiveModal() && cardSensitiveDetail()"
-  [card]="cardSensitiveDetail()!"
-  (close)="showSensitiveModal.set(false)"
-></app-card-sensitive-detail-modal>
-
-<app-card-sensitive-detail-modal
-  *ngIf="showSensitiveModal() && cardSensitiveDetail()"
-  [card]="cardSensitiveDetail()!"
-  (close)="showSensitiveModal.set(false)"
+  *ngIf="detailCard() as info"
+  [info]="info"
+  [card]="sensitiveDetail()"
+  (close)="closeDetail()"
 ></app-card-sensitive-detail-modal>

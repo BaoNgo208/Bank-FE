@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BaseApiService } from '../../../core/http/base-api.service';
 import {
-  CreateCardRequest,
   CreateDepositOrderRequest,
   CreateDepositOrderResponse,
   DepositConfigResponse,

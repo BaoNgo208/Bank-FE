@@ -1,14 +1,11 @@
 import { Injectable, signal } from '@angular/core';
-import { CardListResponse } from '../../wallet/types/wallet.type';
-
-type CardActionResult =
-  | { type: 'TOP_UP'; cardId: number; amount: number }
-  | { type: 'WITHDRAW'; cardId: number; amount: number };
+import { InfiniCardResponse } from '../../wallet/types/infini-card.type';
 
 @Injectable({
   providedIn: 'root',
 })
 export class InquiryStore {
-  selectedCard = signal<CardListResponse | null>(null);
-  cardActionResult = signal<CardActionResult | null>(null);
+  selectedCard = signal<InfiniCardResponse | null>(null);
+  /** Increases after a top-up or withdrawal, so that the list reloads. */
+  fundingChanged = signal(0);
 }

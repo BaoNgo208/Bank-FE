@@ -1,31 +1,38 @@
-import { ChangeDetectorRef, Component, effect, HostListener, inject, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  DestroyRef,
+  effect,
+  HostListener,
+  inject,
+  signal,
+  untracked,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormArray, FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { finalize } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
 import { WalletFacade } from '../wallet/facades/wallet.facade';
-import { CardListResponse, CardStatus } from '../wallet/types/wallet.type';
+import { InfiniCardService } from '../wallet/services/infini-card.service';
+import { CardCreationStore } from '../wallet/stores/card-creation.store';
+import { InfiniCardResponse } from '../wallet/types/infini-card.type';
+import { CardStatus, DashboardResponse } from '../wallet/types/wallet.type';
 import { PaginationComponent } from '../../shared/components/pagination/pagination.component';
+import { ConfirmModalComponent } from '../../shared/components/confirm-modal/confirm-modal.component';
+import { LoadingOverlayComponent } from '../../shared/components/loading-overlay/loading-overlay.component';
 import { InquiryUiStore } from './stores/inquiry-ui.store';
 import { InquiryStore } from './stores/inquiry.store';
-import Swal from 'sweetalert2';
 import { TopUpModalComponent } from './components/top-up/topup-modal.component';
 import { WidthdrawlCardModalComponent } from './components/widthdrawl/widthdrawl-modal.component';
-import { ConfirmModalComponent } from '../../shared/components/confirm-modal/confirm-modal.component';
-import { CardFacade } from '../wallet/facades/card.facade';
-import { ToastrService } from 'ngx-toastr';
-import { finalize } from 'rxjs';
-import { CardDashboardResponse } from '../wallet/types/card.type';
-import { toUtcEndOfDay, toUtcStartOfDay } from '../../utils/utc.util';
-import { dateRangeValidator } from '../../utils/form-validator.util';
-import { CardSensitiveDetailResponse } from './types/type';
 import { CardSensitiveDetailModalComponent } from './components/card-sensitive-detail-modal/card-sensitive-detail-modal.component';
-import { LoadingOverlayComponent } from '../../shared/components/loading-overlay/loading-overlay.component';
+import { CardSensitiveDetailResponse } from './types/type';
 
 @Component({
   selector: 'app-inquiry-card-component',
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule,
     PaginationComponent,
     TopUpModalComponent,
     WidthdrawlCardModalComponent,
@@ -36,333 +43,213 @@ import { LoadingOverlayComponent } from '../../shared/components/loading-overlay
   templateUrl: './inquiry-card.component.html',
 })
 export class InquiryCardComponent {
-  private fb = inject(FormBuilder);
   private walletFacade = inject(WalletFacade);
-  private cd = inject(ChangeDetectorRef);
+  private infiniCards = inject(InfiniCardService);
   private inquiryStore = inject(InquiryStore);
-  private cardFacade = inject(CardFacade);
   private toast = inject(ToastrService);
+  private destroyRef = inject(DestroyRef);
 
   protected inquiryUiStore = inject(InquiryUiStore);
-  protected dashboard = signal<CardDashboardResponse | null>(null);
+  protected creation = inject(CardCreationStore);
 
-  cardPage = 1;
-  cardPageSize = 10;
-  CardTotalItems = 0;
+  readonly CardStatus = CardStatus;
+  private destroyed = false;
+
+  cards = signal<InfiniCardResponse[]>([]);
+  cardPage = signal(1);
+  cardPageSize = signal(10);
+  totalCards = signal(0);
+  loadingCards = signal(false);
   isLoading = signal(false);
-  CardStatus = CardStatus;
 
-  openDropdownIndex: number | null = null;
-  dropdownPosition = { top: 0, left: 0 };
+  dashboard = signal<DashboardResponse | null>(null);
+  cardBalance = signal(0);
 
-  showSensitiveModal = signal(false);
-  cardSensitiveDetail = signal<CardSensitiveDetailResponse | null>(null);
-  loadingSensitiveDetail = signal(false);
-
-  form = this.fb.group({
-    checkAll: [false],
-    rows: this.fb.array([]),
+  openDropdownIndex = signal<number | null>(null);
+  dropdownPosition = signal({ top: 0, left: 0 });
+  menuCard = computed(() => {
+    const index = this.openDropdownIndex();
+    return index === null ? null : (this.cards()[index] ?? null);
   });
 
-  searchForm = this.fb.group(
-    {
-      cardNumber: [''],
-      cardName: [''],
-      status: [null],
-      fromTime: [null],
-      toTime: [null],
-    },
-    { validators: dateRangeValidator },
-  );
+  detailCard = signal<InfiniCardResponse | null>(null);
+  sensitiveDetail = signal<CardSensitiveDetailResponse | null>(null);
+  loadingSensitiveDetail = signal(false);
 
   constructor() {
+    this.creation.resume();
+    // Reloads after a card was created or funded.
     effect(() => {
-      const action = this.inquiryStore.cardActionResult();
-      if (!action) return;
-
-      const index = this.findRowIndex(action.cardId);
-      if (index === -1) return;
-
-      const control = this.rows.at(index);
-      const current = control.value.remaining_amount ?? 0;
-      let delta = 0;
-
-      switch (action.type) {
-        case 'TOP_UP':
-          delta = action.amount;
-          break;
-
-        case 'WITHDRAW':
-          delta = -action.amount;
-          break;
-      }
-      const newAmount = (Math.round(current * 100) + Math.round(delta * 100)) / 100;
-
-      this.updateRow(action.cardId, {
-        remaining_amount: Math.max(0, newAmount),
-      });
-
-      this.inquiryStore.cardActionResult.set(null);
+      this.creation.completed();
+      this.inquiryStore.fundingChanged();
+      untracked(() => this.reload());
     });
-  }
-
-  ngOnInit() {
-    this.loadCardPage();
-    this.cardFacade.getCardDashboard().subscribe({
-      next: (res) => {
-        this.dashboard.set(res.data);
-      },
-      error: (err) => {
-        this.toast.error(err?.error?.message);
-      },
+    this.destroyRef.onDestroy(() => {
+      this.destroyed = true;
+      this.inquiryStore.selectedCard.set(null);
+      this.inquiryUiStore.isTopUpModalOpen.set(false);
+      this.inquiryUiStore.isWidthdrawlOpen.set(false);
+      this.inquiryUiStore.isConfirmFreezeOpen.set(false);
     });
   }
 
   @HostListener('document:click')
   onClickOutside() {
-    this.openDropdownIndex = null;
+    this.openDropdownIndex.set(null);
   }
 
-  openSensitiveDetail(cardId: number) {
-    this.loadingSensitiveDetail.set(true);
-    this.openDropdownIndex = null;
-
-    this.cardFacade
-      .getSensitiveDetail(cardId)
-      .pipe(finalize(() => this.loadingSensitiveDetail.set(false)))
-      .subscribe({
-        next: (res) => {
-          this.cardSensitiveDetail.set(res.data);
-          this.showSensitiveModal.set(true);
-        },
-        error: (err) => {
-          this.toast.error(err?.error?.message || 'Failed to load card detail');
-        },
-      });
+  reload() {
+    this.loadCards();
+    this.loadSummary();
   }
 
-  updateTable(cards: any[]) {
-    this.rows.clear();
-
-    cards.forEach((card) => {
-      this.rows.push(
-        this.fb.group({
-          id: [card.id],
-          masked_card: [card.masked_card],
-          brand: [card.brand],
-          name: [card.name],
-          currency: [card.currency],
-          status: [card.status],
-          remaining_amount: [card.remaining_amount],
-          created_at: [card.created_at],
-          note: [card.note],
-          selected: [false],
-        }),
-      );
-    });
-    this.cd.detectChanges();
-  }
-
-  onSearch() {
-    const f = this.searchForm.value;
-
-    this.cardFacade
-      .searchCards(this.cardPage - 1, {
-        cardNumber: f.cardNumber ?? undefined,
-        cardName: f.cardName ?? undefined,
-        status: f.status ?? undefined,
-        fromTime: toUtcStartOfDay(f.fromTime),
-        toTime: toUtcEndOfDay(f.toTime),
-      })
-      .subscribe({
-        next: (res) => {
-          this.updateTable(res.data.items);
-          this.CardTotalItems = res.data.total_size;
-          this.cd.markForCheck();
-        },
-      });
-  }
-
-  onReset() {
-    this.searchForm.reset({
-      cardNumber: '',
-      cardName: '',
-      status: null,
-      fromTime: null,
-      toTime: null,
-    });
-
-    this.cardPage = 1;
-
-    this.loadCardPage();
-  }
-
-  private findRowIndex(cardId: number): number {
-    return this.rows.controls.findIndex((c) => c.value.id === cardId);
-  }
-
-  private updateRow(cardId: number, data: Partial<any>) {
-    const index = this.findRowIndex(cardId);
-    if (index === -1) return;
-
-    const control = this.rows.at(index);
-    control.patchValue(data);
+  /** Only the card owner's own lock can be released here. */
+  canUnlock(card: InfiniCardResponse): boolean {
+    return card.status === CardStatus.BLOCKED && (!card.locked_by || card.locked_by === 'USER');
   }
 
   toggleDropdown(i: number, event: MouseEvent) {
     event.stopPropagation();
 
-    if (this.openDropdownIndex === i) {
-      this.openDropdownIndex = null;
+    if (this.openDropdownIndex() === i) {
+      this.openDropdownIndex.set(null);
       return;
     }
 
-    const btn = event.currentTarget as HTMLElement;
-    const rect = btn.getBoundingClientRect();
-
-    const dropdownWidth = 180;
-    const dropdownHeight = 220;
-    const gap = 8;
+    const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
+    const width = 192;
+    const height = 280;
     const padding = 12;
+    const below = rect.bottom + 8;
+    const top = below + height > window.innerHeight - padding ? rect.top - height - 8 : below;
 
-    const spaceBelow = window.innerHeight - rect.bottom;
-    const spaceAbove = rect.top;
-
-    let top =
-      spaceBelow < dropdownHeight && spaceAbove > spaceBelow
-        ? rect.top - dropdownHeight - gap
-        : rect.bottom + gap;
-
-    let left = rect.right - dropdownWidth;
-
-    if (top + dropdownHeight > window.innerHeight - padding) {
-      top = window.innerHeight - dropdownHeight - padding;
-    }
-
-    if (top < padding) {
-      top = padding;
-    }
-
-    if (left + dropdownWidth > window.innerWidth - padding) {
-      left = window.innerWidth - dropdownWidth - padding;
-    }
-
-    if (left < padding) {
-      left = padding;
-    }
-
-    this.dropdownPosition = {
-      top,
-      left,
-    };
-
-    this.openDropdownIndex = i;
+    this.dropdownPosition.set({
+      top: Math.max(padding, top),
+      left: Math.max(padding, Math.min(rect.right - width, window.innerWidth - width - padding)),
+    });
+    this.openDropdownIndex.set(i);
   }
 
-  handleAction(action: 'TOP_UP' | 'TRANSFER_OUT' | 'FREEZE' | 'CANCEL' | 'UNFREEZE') {
-    const i = this.openDropdownIndex!;
-    const row = this.rows.at(i).value;
+  openDetail(card: InfiniCardResponse) {
+    this.openDropdownIndex.set(null);
 
-    this.openDropdownIndex = null;
-
-    switch (action) {
-      case 'TOP_UP':
-        this.inquiryUiStore.isTopUpModalOpen.set(true);
-        this.inquiryStore.selectedCard.set(row);
-        break;
-      case 'TRANSFER_OUT':
-        this.inquiryUiStore.isWidthdrawlOpen.set(true);
-        this.inquiryStore.selectedCard.set(row);
-        break;
-      case 'FREEZE':
-        this.inquiryUiStore.isConfirmFreezeOpen.set(true);
-        this.inquiryStore.selectedCard.set(row);
-        break;
-      case 'UNFREEZE':
-        this.inquiryUiStore.isConfirmFreezeOpen.set(true);
-        this.inquiryStore.selectedCard.set(row);
-        break;
-      case 'CANCEL':
-        this.updateCardStatus(row.id, 'CANCELED');
-        break;
+    // Number and CVV are only available for active cards.
+    if (card.status !== CardStatus.ACTIVE) {
+      this.sensitiveDetail.set(null);
+      this.detailCard.set(card);
+      return;
     }
+
+    this.loadingSensitiveDetail.set(true);
+    this.infiniCards
+      .getSensitiveDetail(card.id)
+      .pipe(
+        finalize(() => this.loadingSensitiveDetail.set(false)),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe({
+        next: (res) => {
+          this.sensitiveDetail.set(res.data);
+          this.detailCard.set(card);
+        },
+        error: (err) => {
+          // Still show the basic information.
+          this.toast.error(err?.error?.message || 'Failed to load card number');
+          this.sensitiveDetail.set(null);
+          this.detailCard.set(card);
+        },
+      });
+  }
+
+  closeDetail() {
+    this.sensitiveDetail.set(null);
+    this.detailCard.set(null);
+  }
+
+  openTopUp(card: InfiniCardResponse) {
+    this.openDropdownIndex.set(null);
+    this.inquiryStore.selectedCard.set(card);
+    this.inquiryUiStore.isTopUpModalOpen.set(true);
+  }
+
+  openWithdraw(card: InfiniCardResponse) {
+    this.openDropdownIndex.set(null);
+    this.inquiryStore.selectedCard.set(card);
+    this.inquiryUiStore.isWidthdrawlOpen.set(true);
+  }
+
+  openFreeze(card: InfiniCardResponse) {
+    this.openDropdownIndex.set(null);
+    this.inquiryStore.selectedCard.set(card);
+    this.inquiryUiStore.isConfirmFreezeOpen.set(true);
   }
 
   handleFreezeCard() {
-    const selectedCard = this.inquiryStore.selectedCard();
+    const card = this.inquiryStore.selectedCard();
+    if (!card || this.isLoading()) return;
+
+    const freeze = card.status === CardStatus.ACTIVE;
     this.isLoading.set(true);
-    if (!selectedCard) return;
 
-    const { id, status } = selectedCard;
-
-    const isFreeze = status === 'ACTIVE';
-
-    const action$ = isFreeze ? this.cardFacade.lockCard(id) : this.cardFacade.unlockCard(id);
-
-    action$.pipe(finalize(() => this.isLoading.set(false))).subscribe({
-      next: () => {
-        this.updateCardStatus(selectedCard.id, isFreeze ? 'BLOCKED' : 'ACTIVE');
-        this.cd.detectChanges();
-        this.toast.success(isFreeze ? 'Successfully froze card' : 'Successfully unfroze card');
-      },
-      error: (err) => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: err?.error?.message,
-          confirmButtonText: 'OK',
-        });
-      },
-    });
-  }
-
-  updateCardStatus(cardId: number, status: 'BLOCKED' | 'CANCELED' | 'ACTIVE') {
-    const index = this.rows.controls.findIndex((r) => r.get('id')?.value === cardId);
-    if (index !== -1) {
-      this.rows.at(index).patchValue({ status });
-    }
-  }
-
-  get rows(): FormArray {
-    return this.form.get('rows') as FormArray;
-  }
-
-  toggleAll() {
-    const checked = this.form.value.checkAll;
-    this.rows.controls.forEach((row) => row.get('selected')?.setValue(checked));
+    (freeze ? this.infiniCards.lockCard(card.id) : this.infiniCards.unlockCard(card.id))
+      .pipe(
+        finalize(() => {
+          this.isLoading.set(false);
+          this.inquiryStore.selectedCard.set(null);
+          if (!this.destroyed) this.reload();
+        }),
+      )
+      .subscribe({
+        next: () =>
+          this.toast.success(freeze ? 'Successfully froze card' : 'Successfully unfroze card'),
+        error: (err) =>
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: err?.error?.message ?? 'Unable to reach the server. Please try again.',
+            confirmButtonText: 'OK',
+          }),
+      });
   }
 
   onCardPageChange(page: number) {
-    this.cardPage = page;
-    this.loadCardPage();
+    this.cardPage.set(page);
+    this.loadCards();
   }
 
-  onCardPageSizeChange(size: number) {
-    this.cardPageSize = size;
-    this.cardPage = 1;
-    this.loadCardPage();
+  private loadCards() {
+    this.loadingCards.set(true);
+    this.openDropdownIndex.set(null);
+    this.infiniCards
+      .getCards(this.cardPage() - 1)
+      .pipe(
+        finalize(() => this.loadingCards.set(false)),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe({
+        next: (res) => {
+          this.cards.set(res.data.items);
+          this.totalCards.set(res.data.total_size);
+          this.cardPageSize.set(res.data.size);
+        },
+        error: (err) => this.toast.error(err?.error?.message ?? 'Unable to load cards'),
+      });
   }
 
-  private loadCardPage() {
-    this.walletFacade.getCards(this.cardPage - 1).subscribe({
-      next: (res) => {
-        const content = res.data.items;
-        const total = res.data.total_size;
-        this.CardTotalItems = total;
-        this.rows.clear();
-        content.forEach((item: CardListResponse) =>
-          this.rows.push(this.fb.group({ ...item, selected: [false] })),
-        );
-        this.cd.detectChanges();
-      },
-      error: (err) => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: err?.error?.message,
-          confirmButtonText: 'OK',
-        });
-      },
-    });
+  private loadSummary() {
+    this.walletFacade
+      .getBalance()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (res) => this.cardBalance.set(Number(res.data.card_balance)),
+        error: () => undefined,
+      });
+    this.walletFacade
+      .getDashboard()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (res) => this.dashboard.set(res.data),
+        error: () => undefined,
+      });
   }
 }

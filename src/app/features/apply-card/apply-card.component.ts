@@ -1,72 +1,81 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, signal } from '@angular/core';
-import { BINS, US_STATES } from '../../utils/constant';
-import { CreateCardRequest } from '../wallet/types/wallet.type';
-import { WalletFacade } from '../wallet/facades/wallet.facade';
-import { ToastrService } from 'ngx-toastr';
-import Swal from 'sweetalert2';
+import { Component, computed, DestroyRef, effect, inject, signal, untracked } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { RouterLink } from '@angular/router';
+import { WalletService } from '../wallet/services/wallet.service';
+import { CardCreationStore } from '../wallet/stores/card-creation.store';
+import { CardCreationConfigResponse } from '../wallet/types/infini-card.type';
 
 @Component({
   selector: 'app-apply-card-component',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './apply-card.component.html',
 })
 export class ApplyCardComponent {
-  private walletFacade = inject(WalletFacade);
-  private toast = inject(ToastrService);
+  private walletService = inject(WalletService);
+  private destroyRef = inject(DestroyRef);
+  protected creation = inject(CardCreationStore);
 
-  usStates = US_STATES;
-  bins: string[] = BINS;
+  config = signal<CardCreationConfigResponse | null>(null);
+  configError = signal<string | null>(null);
 
-  selectedBin: string | null = null;
-  // form signals
-  bin = signal<string>('');
-  cardName = signal<string>('');
-  amount = signal<number>(5);
-  remark = signal<string>('');
+  cardName = signal('');
+  holderName = signal('');
+  amount = signal(10);
+  remark = signal('');
 
-  // holder signals
-  firstName = signal<string>('');
-  lastName = signal<string>('');
-  addressLine = signal<string>('');
-  city = signal<string>('');
-  state = signal<string>('');
-  postalCode = signal<string>('');
-  country = signal<string>('US');
+  busy = computed(() => this.creation.submitting() || this.creation.polling());
+  total = computed(() => this.amount() + Number(this.config()?.creation_fee ?? 0));
 
-  payload = computed<CreateCardRequest>(() => ({
-    bin: this.bin(),
-    name: this.cardName(),
-    amount: this.amount(),
-    holder: {
-      firstName: this.firstName(),
-      lastName: this.lastName(),
-      addressLine: this.addressLine(),
-      city: this.city(),
-      state: this.state(),
-      postalCode: this.postalCode(),
-      country: this.country(),
-    },
-  }));
+  amountError = computed(() => {
+    const config = this.config();
+    const amount = this.amount();
+    if (!config) return '';
+    if (amount < Number(config.min_amount)) return `Minimum amount is ${config.min_amount} USD`;
+    if (!/^\d+(\.\d{1,2})?$/.test(String(amount))) return 'Use at most 2 decimal places';
+    if (amount > Number(config.max_amount)) return 'Insufficient wallet balance for amount and fee';
+    return '';
+  });
 
-  selectBin(bin: string) {
-    this.selectedBin = bin;
-    this.bin.set(bin);
+  canSubmit = computed(
+    () =>
+      !this.busy() &&
+      !!this.config()?.can_create &&
+      !this.amountError() &&
+      !!this.cardName().trim() &&
+      !!this.holderName().trim(),
+  );
+
+  constructor() {
+    this.creation.resume();
+    // Reloads the balance whenever a creation starts or ends.
+    effect(() => {
+      this.busy();
+      untracked(() => this.loadConfig());
+    });
   }
 
   onSubmit() {
-    this.walletFacade.createCard(this.payload()).subscribe({
-      next: (_) => {
-        this.toast.success('Successfully created new card!');
-      },
-      error: (err) => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: err?.error?.message,
-          confirmButtonText: 'OK',
-        });
-      },
+    if (!this.canSubmit()) return;
+    this.creation.submit({
+      name: this.cardName().trim(),
+      holderName: this.holderName().trim(),
+      amount: this.amount(),
+      note: this.remark().trim() || undefined,
     });
+  }
+
+  private loadConfig() {
+    this.walletService
+      .getCardCreationConfig()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (res) => {
+          this.config.set(res.data);
+          this.configError.set(null);
+        },
+        error: (err) =>
+          this.configError.set(err?.error?.message ?? 'Unable to load card settings.'),
+      });
   }
 }

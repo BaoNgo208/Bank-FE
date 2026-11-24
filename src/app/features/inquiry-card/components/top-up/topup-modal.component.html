@@ -1,5 +1,5 @@
 <div class="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-  <div class="bg-white rounded-xl w-[50%] shadow-xl p-6 relative">
+  <div class="bg-white rounded-xl w-[92%] tablet:w-[60%] max-w-xl shadow-xl p-6 relative">
     <!-- Header  -->
     <div class="flex justify-between items-center mb-4">
       <h2 class="text-lg font-semibold flex items-center gap-2">
@@ -7,27 +7,22 @@
         top up
       </h2>
 
-      <button
-        (click)="this.inquiryUiStore.isTopUpModalOpen.set(false)"
-        class="text-gray-400 hover:text-black"
-      >
-        ✕
-      </button>
+      <button (click)="close()" class="text-gray-400 hover:text-black">✕</button>
     </div>
 
     <div class="space-y-3 text-sm">
       <div class="flex justify-between items-center">
         <span>Wallet balance</span>
         <span class="border rounded px-3 py-1 w-40 text-right text-gray-700">
-          {{ walletBalance() | number: '1.2-2' }} {{ currency() }}
+          {{ walletBalance() ?? 0 | number: '1.2-2' }} {{ currency() }}
         </span>
       </div>
 
       <div class="flex justify-between items-center">
-        <span>Available Balance</span>
+        <span>Card balance</span>
         <input
           class="border rounded px-3 py-1 w-40 text-right text-gray-700"
-          [value]="availableBalance() | number: '1.2-2'"
+          [value]="card()?.remaining_amount ?? 0 | number: '1.2-2'"
           disabled
         />
       </div>
@@ -41,14 +36,6 @@
         />
       </div>
 
-      <div class="flex justify-between items-center">
-        <span>Recharge fee</span>
-        <input
-          class="border rounded px-3 py-1 text-gray-700 w-40 text-right"
-          [value]="rechargeFee()"
-          disabled
-        />
-      </div>
       <div class="flex flex-col gap-1">
         <div class="flex justify-between items-center">
           <span class="text-red-500">* Recharge amount</span>
@@ -58,7 +45,7 @@
             class="border rounded px-3 py-1 w-40 text-right"
             [class.border-red-500]="error()"
             [value]="rechargeAmount()"
-            min="0.1"
+            [min]="MIN_AMOUNT"
             step="0.01"
             (input)="rechargeAmount.set($any($event.target).valueAsNumber || 0)"
           />
@@ -74,7 +61,7 @@
         <span> Estimated cost</span>
         <input
           class="border rounded px-3 py-1 w-40 text-right"
-          [value]="estimatedCost() | number: '1.2-2'"
+          [value]="rechargeAmount() | number: '1.2-2'"
           disabled
         />
       </div>
@@ -83,19 +70,14 @@
     <!-- Buttons -->
     <div class="flex justify-center gap-3 mt-6">
       <button
-        [disabled]="isInvalid()"
+        [disabled]="isInvalid() || isLoading()"
         (click)="handleTopup()"
         class="bg-red-500 text-white px-5 py-2 rounded hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         Sure
       </button>
 
-      <button
-        (click)="this.inquiryUiStore.isTopUpModalOpen.set(false)"
-        class="border px-5 py-2 rounded hover:bg-gray-100"
-      >
-        Cancel
-      </button>
+      <button (click)="close()" class="border px-5 py-2 rounded hover:bg-gray-100">Cancel</button>
     </div>
   </div>
   <div

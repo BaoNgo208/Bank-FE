@@ -104,33 +104,6 @@ export interface ConfirmWithdrawOtpRequest {
   otp: string;
 }
 
-export interface CreateCardRequest {
-  bin: string;
-  name: string;
-  amount: number;
-  holder: CardHolderRequest;
-}
-
-export interface CardHolderRequest {
-  firstName: string;
-  lastName: string;
-  addressLine: string;
-  city: string;
-  state: string;
-  postalCode: string;
-  country: string;
-}
-
-export interface TopupCardRequest {
-  amount: number;
-  referenceId?: string;
-}
-
-export interface WithDrawCardRequest {
-  amount: number;
-  referenceId?: string;
-}
-
 export enum CardBrand {
   VISA = 'VISA',
   MASTERCARD = 'MASTERCARD',
